@@ -1,0 +1,145 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": "7d826ca5-5a15-4285-986b-566f2e4a130e"
+  },
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "marketplace2": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:application": {
+          "strict": true
+        }
+      },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/marketplace2",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.app.json",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets",
+              "src/app/paginas/shared/img/products",
+              "src/app/paginas/shared/img/awards",
+              "src/app/paginas/shared/img"
+            ],
+            "styles": [
+              "node_modules/devextreme/dist/css/dx.light.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/styles.css",
+
+              "src/app/paginas/shared/css/plugins/fontawesome.min.css",
+              "src/app/paginas/shared/css/plugins/linearIcons.css",
+              "src/app/paginas/shared/css/plugins/slick.css",
+              "src/app/paginas/shared/css/plugins/fontawesome-stars.css",
+              "src/app/paginas/shared/css/plugins/select2.min.css",
+              "src/app/paginas/shared/css/plugins/scrollUp.css",
+              "src/app/paginas/shared/css/plugins/dataTables.bootstrap4.min.css",
+              "src/app/paginas/shared/css/plugins/responsive.bootstrap.datatable.min.css",
+              "src/app/paginas/shared/css/style.css",
+              "src/app/paginas/shared/css/market-place-4.css"
+            ],
+            "scripts": [
+              "src/app/paginas/shared/css/plugins/lightgallery.min.css",
+              "src/app/paginas/shared/css/plugins/owl.carousel.css",
+              "src/app/paginas/shared/css/plugins/jquery-ui.min.css",
+              "src/app/paginas/shared/js/plugins/jquery-1.12.4.min.js",
+              "src/app/paginas/shared/js/plugins/owl.carousel.min.js",
+              "src/app/paginas/shared/js/plugins/imagesloaded.pkgd.min.js",
+              "src/app/paginas/shared/js/plugins/masonry.pkgd.min.js",
+              "src/app/paginas/shared/js/plugins/isotope.pkgd.min.js",
+              "src/app/paginas/shared/js/plugins/jquery.matchHeight-min.js",
+              "src/app/paginas/shared/js/plugins/slick.min.js",
+              "src/app/paginas/shared/js/plugins/jquery.barrating.min.js",
+              "src/app/paginas/shared/js/plugins/slick-animation.min.js",
+              "src/app/paginas/shared/js/plugins/lightgallery-all.min.js",
+              "src/app/paginas/shared/js/plugins/jquery-ui.min.js",
+              "src/app/paginas/shared/js/plugins/sticky-sidebar.min.js",
+              "src/app/paginas/shared/js/plugins/jquery.slimscroll.min.js",
+              "src/app/paginas/shared/js/plugins/scrollUP.js"
+            ]
+          },
+
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "marketplace2:build:production"
+            },
+            "development": {
+              "browserTarget": "marketplace2:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "marketplace2:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "src/test.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.spec.json",
+            "karmaConfig": "karma.conf.js",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "node_modules/devextreme/dist/css/dx.light.css",
+              "src/styles.css"
+            ],
+            "scripts": []
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "marketplace2"
+}

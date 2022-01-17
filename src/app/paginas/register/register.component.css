@@ -1,0 +1,21 @@
+.header__content {
+  background-color: #1db61d;
+  color: white;
+}
+
+.ps-logo{
+  margin-top: -1em;
+}
+
+.icon-user{
+  color: white;
+}
+
+.color-principal{
+    background-color: #1db61d;
+    color: white;
+}
+
+.controles{
+    height: 4rem;
+}
