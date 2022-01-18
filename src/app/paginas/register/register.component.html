@@ -1,6 +1,5 @@
 
 <body>
-
     <header class="header header--standard header--market-place-4" data-sticky="true">
       	<!--=====================================
 		Header Content
@@ -208,7 +207,7 @@
 
 
     <div *ngIf="mostrarLoading">
-        <app-loading></app-loading>
+        <app-loading [messagge]="mensajeLoading"></app-loading>
     </div>
 
     <div class="ps-my-account">
@@ -258,10 +257,10 @@
                                 <dx-select-box [items]="generos"   placeholder="Selecciona tu genero" (onValueChanged)="setearValorGenero($event)" ></dx-select-box>
                             </div>
 
-                            <!-- <div class="form-group">
-                                <dx-date-box [(value)]="fecha" type="datetime"> </dx-date-box>
-                            </div> -->
-
+                            <div class="form-group">
+                                <dx-date-box [(value)]="fecha" type="date" placeholder="Ingrese fecha Nacimiento"> </dx-date-box>
+                            </div>
+                             
                             <div class="form-group">
                                 <dx-select-box [items]="listaCantones" displayExpr="descripcion" placeholder="Seleccionar canton" (onValueChanged)="setearValorCanton($event)" ></dx-select-box>
                             </div>

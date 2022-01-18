@@ -21,9 +21,10 @@ export class RegisterComponent implements OnInit {
   listaCantones : Canton []=[]
   tiposUsuarios : TipoUsuario []=[]
  // fecha : Date = new Date();
-  fecha: Date = new Date(Date.now());
+  fecha: any;
   ff =""
-  mostrarLoading = true;
+  mostrarLoading = false;
+  mensajeLoading = "";
 
   
   generos:string[]= ["Maculino", "Femenino"]
@@ -56,6 +57,7 @@ export class RegisterComponent implements OnInit {
     )
   }
 
+
   traerListadoTiposUsuarios(){
     this._tipoUsuarioService.traerListado().subscribe(
       (res) => { var lista = res as TipoUsuario[];
@@ -72,12 +74,13 @@ export class RegisterComponent implements OnInit {
   }
 
   registrar(){
-   // this.usuarioNuevo.cedula = this.usuarioNuevo.cedula
-
-   this.usuarioNuevo.fecha_nacimiento = this.fecha;
-   console.log(this.fecha)
-    /* this._usuarioService.registrar(this.usuarioNuevo).subscribe(
+    this.mensajeLoading = "Guardando Usuario";
+    this.mostrarLoading = true;
+    this.usuarioNuevo.fecha_nacimiento = this.fecha;
+    console.log(this.usuarioNuevo)
+     this._usuarioService.registrar(this.usuarioNuevo).subscribe(
       (res) => {
+        this.mostrarLoading = false;
         Swal.fire({
           title: 'Usuario creado',
           text: "Ya puedo logearse",
@@ -91,10 +94,8 @@ export class RegisterComponent implements OnInit {
         }) 
       
       },
-      (err) => { 
-        Swal.fire('error')
-      }
-    ) */
+      (err) => {  this.mostrarLoading = false; Swal.fire('error')}
+    ) 
 
   }
 

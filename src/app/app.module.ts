@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { PrincipalComponent } from './paginas/principal/principal.component';
 import { Pagina2Component } from './paginas/pagina2/pagina2.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { DxAutocompleteModule, DxButtonModule, DxDataGridModule, DxDateBoxModule, DxGalleryModule, DxLoadIndicatorModule, DxMenuModule, DxNumberBoxModule, DxSelectBoxModule, DxTextAreaModule, DxTextBoxModule, DxValidationSummaryModule, DxValidatorModule } from 'devextreme-angular';
+import { DxAutocompleteModule, DxButtonModule, DxCheckBoxModule, DxDataGridModule, DxDateBoxModule, DxGalleryModule, DxLoadIndicatorModule, DxMenuModule, DxNumberBoxModule, DxPopupModule, DxSelectBoxModule, DxTextAreaModule, DxTextBoxModule, DxValidationSummaryModule, DxValidatorModule } from 'devextreme-angular';
 import { UsuarioVendedorComponent } from './paginas/usuario-vendedor/usuario-vendedor.component';
 import { LoginComponent } from './paginas/login/login.component';
 import { RegisterComponent } from './paginas/register/register.component';
@@ -17,6 +17,8 @@ import { SeccionTiendaComponent } from './paginas/usuario-vendedor/seccion-tiend
 import { SeccionProductoComponent } from './paginas/usuario-vendedor/seccion-producto/seccion-producto.component';
 import { OrdenesVendedorComponent } from './paginas/usuario-vendedor/ordenes-vendedor/ordenes-vendedor.component';
 import { LoadingComponent } from './paginas/shared/loading/loading.component';
+import { FormsModule } from '@angular/forms';
+import { SeccionPagoComponent } from './paginas/usuario-vendedor/seccion-pago/seccion-pago.component';
 
 @NgModule({
   declarations: [
@@ -30,9 +32,11 @@ import { LoadingComponent } from './paginas/shared/loading/loading.component';
     SeccionTiendaComponent,
     SeccionProductoComponent,
     OrdenesVendedorComponent,
-    LoadingComponent
+    LoadingComponent,
+    SeccionPagoComponent
   ],
   imports: [
+    FormsModule,
     BrowserModule,
     AppRoutingModule,
     NgbModule,
@@ -49,7 +53,9 @@ import { LoadingComponent } from './paginas/shared/loading/loading.component';
     DxDateBoxModule,
     DxTextAreaModule,
     DxSelectBoxModule,
-    DxLoadIndicatorModule
+    DxLoadIndicatorModule,
+    DxPopupModule,
+    DxCheckBoxModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

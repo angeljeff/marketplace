@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-loading',
@@ -7,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoadingComponent implements OnInit {
 
+  @Input() messagge: string = "";
+  popupVisible:boolean = true;
+  mensajeLoading : string = "";
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.mensajeLoading = this.messagge;
   }
+
 
 }

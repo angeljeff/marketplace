@@ -1,0 +1,39 @@
+.color-principal{
+    background-color: #1db61d;
+    color: white;
+    border-color: transparent;
+}
+
+.controles{
+    height: 4rem;
+}
+
+
+.centrar{
+  text-align: center;
+}
+
+.btnCreate{
+  font-size: 12pt;
+  
+}
+
+.negrita span{
+  font-weight: bold;
+}
+.negrita p{
+  color: black;
+}
+
+.datosTienda{
+  text-align: left;
+}
+
+.textCheck{
+    font-size: 15pt;
+}
+
+
+:ng-deep .dx-checkbox-text{
+font-size: 15pt;
+}
