@@ -14,59 +14,14 @@ export class UsuarioVendedorComponent implements OnInit {
   seccionTienda = false;
   seccionPago = false;
 
-  seeccionNewProducto = false;
-  seccionListProducto = true;
-
-  usuarioNuevo: Usuario = new Usuario();
-
-
-
-  productos: Producto[] = [{
-  ID: 1,
-  Nombre: 'Producto1',
-  Cantidad: 10,
-  Estado: 'Activo',
-  Descripcion: 'CEO',
-  Picture: 'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
- 
-}, {
-  ID: 10,
-  Nombre: 'Producto2',
-  Cantidad: 20,
-  Estado: 'Activo',
-  Descripcion: 'CEO',
-  Picture: 'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
-},
-{
-  ID: 10,
-  Nombre: 'Producto3',
-  Cantidad: 20,
-  Estado: 'Activo',
-  Descripcion: 'CEO',
-  Picture: 'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
-},
-{
-  ID: 10,
-  Nombre: 'Producto4',
-  Cantidad: 20,
-  Estado: 'Activo',
-  Descripcion: 'CEO',
-  Picture: 'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
-},
-{
-  ID: 10,
-  Nombre: 'Producto5',
-  Cantidad: 20,
-  Estado: 'Activo',
-  Descripcion: 'CEO',
-  Picture: 'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
-}];
-
+  
 
 
   constructor(private router: Router) { }
 
   ngOnInit(): void {
+
+    // Crear un metodo para traer la tienda asociada al usuario si no tiene tienda setear la variable idNewTienda en true, sino en false
   }
 
 
@@ -82,20 +37,7 @@ export class UsuarioVendedorComponent implements OnInit {
     this.router.navigate(['/register'], { queryParams: { id: "0995553816" } });
   }
 
-  mostrarSecProducto(numero : number){
-    if(numero == 1) {
-      this.seeccionNewProducto = false;
-      this.seccionListProducto = true;
-    }
-      
-    else if(numero = 2){
-      this.seeccionNewProducto = true;
-      this.seccionListProducto = false;
-    }
-
-
-  }
-
+ 
 
   mostrarSeccion(numero : number){
     switch (numero) {

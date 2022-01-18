@@ -1,0 +1,129 @@
+<div class="ps-page__content text-center row">
+
+    <div class="container" *ngIf="IsNewTienda">
+
+        <div class="ps-section__header">
+            <h1>Nuevo en MarketPlace?</h1>
+            <h4>Ya es hora de dar a conocer tus articulos <br> ...Empecemos</h4>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-12"></div>
+            <div class="col-lg-4 col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <img src="../../../assets/img/shop-2.jpg" class="img-fluid">
+                    </div>
+
+                    <div class="card-footer text-center" style="height: 5em;">
+                        <button class="btn color-principal btnCreate" (click)="crearTienda()">Crear Tienda</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-12"> </div>
+        </div>
+
+    </div>
+
+    <div class="container" *ngIf="mostrarFormularioRegistro">
+            <div class="ps-my-account">
+
+        <div class="container">
+
+            <div class="ps-form--account ps-tab-root">
+
+                <ul class="ps-tab-list" *ngIf="!isedicion">
+                    <li class="active"><a href="#sign-in">Registrar</a></li>
+                </ul>
+
+                 <ul class="ps-tab-list" *ngIf="isedicion">
+                    <li class="active"><a href="#sign-in">Editar Datos Tienda</a></li>
+                </ul>
+
+                <div class="ps-tabs">
+                    <div class="ps-tab active">
+
+                        <div class="ps-form__content">
+
+                            <h5>Registra una Nueva Tienda</h5>
+
+                            <div class="form-group">
+                                <dx-text-box [(value)]="newTienda.nombre" class="controles" placeholder="Nombre Tienda"></dx-text-box>
+                            </div>
+
+                            <div class="form-group">
+                                <dx-text-box [(value)]="newTienda.direccion" class="controles" placeholder="Dirección"></dx-text-box>
+                            </div>
+
+                            <div class="form-group">
+                                <dx-text-box [(value)]="newTienda.telefono" class="controles" placeholder="Telefono"></dx-text-box>
+                            </div>
+
+                            <div class="form-group">
+                                <dx-date-box [value]="nowApertura" type="time"> </dx-date-box>
+                            </div>
+
+                             <div class="form-group">
+                                <dx-date-box [value]="nowCierre" type="time"> </dx-date-box>
+                            </div>
+
+                            <div class="form-group">
+                                <dx-select-box [items]="cantones"  displayExpr="nombre" placeholder="Seleccionar Canton" (onValueChanged)="setearValorCanton($event)" ></dx-select-box>
+                            </div>
+
+                           
+
+                             <div class="form-group">
+                                <dx-text-area [height]="90" [maxLength]="500" [(value)]="newTienda.descripcion" placeholder="Descripcion"></dx-text-area>
+                            </div>
+
+
+
+                            <div class="form-group">
+                                <button class="ps-btn ps-btn--fullwidth color-principal" (click)="registrar()">Registrar</button>
+                            </div>
+
+                            <br>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    </div>
+
+    <div class="container " *ngIf="existeTienda">
+        <br><br>
+        <div class="row datosTienda ">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-6"> 
+                        <img src="../../../assets/img/shop-2.jpg" class="img-fluid">
+                        <h2>{{tiendaEncontrada.nombre}}</h2>
+                         <div class="br-wrapper">
+                            <button class="btn btn-warning btn-lg color-principal" (click)="editartienda()">Editar Datos Tienda</button>
+                        </div>
+                    </div>
+                    <div class="col-md-6 negrita">
+                        <p><span>Dirección: </span>{{tiendaEncontrada.direccion}}</p>
+                        <p><span>Descripción: </span></p>
+                        <p>{{tiendaEncontrada.descripcion}}</p>
+                        <p><span>Hora apertura: </span>{{tiendaEncontrada.hora_apertura}}</p>
+                        <p><span>Hora Cierre: </span>{{tiendaEncontrada.hora_cierre}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+        
+
+    </div>
+
+</div>

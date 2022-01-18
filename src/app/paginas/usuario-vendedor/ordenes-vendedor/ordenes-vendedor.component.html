@@ -1,0 +1,75 @@
+
+<ul class="ps-section__links">
+                      
+        <li><a (click)="mostrarSecProducto(1)">Activas</a></li>
+        <li><a (click)="mostrarSecProducto(2)">Todas</a></li>
+        <!-- button>Nuevo</button> -->
+    </ul>
+    <div class="ps-section__content" *ngIf="seccionListActivas">
+            <div class="row">
+                <div class="col-md-12 centrar"><h2> Mis Ordenes</h2></div>
+            </div>
+        
+        <dx-data-grid
+            id="gridContainer"
+            [dataSource]="productos"
+            keyExpr="ID"
+            [showBorders]="true">
+            <dxi-column
+                dataField="Picture"
+                [width]="100"
+                [allowFiltering]="false"
+                [allowSorting]="false"
+                cellTemplate="cellTemplate"
+            ></dxi-column>
+            <dxi-column dataField="Nombre" caption="Producto"></dxi-column>
+            <dxi-column dataField="Cantidad" caption="Cantidad"></dxi-column>
+            <dxi-column dataField="Estado" caption="Estado"></dxi-column>
+            <dxi-column dataField="Descripcion" caption="Descripcion"></dxi-column>
+            <div *dxTemplate="let data of 'cellTemplate'">
+                <img [src]="data.value" />
+            </div>
+
+            <dxo-export [enabled]="true" fileName="Productos"></dxo-export>
+                <dxo-paging [pageSize]="4"></dxo-paging>
+                <dxo-pager
+                    [showPageSizeSelector]="true"
+                    [allowedPageSizes]="[5,8,10]"
+                ></dxo-pager>
+        </dx-data-grid>
+    </div>
+    <div class="ps-section__content" *ngIf="seccionTodasordenes">
+          <div class="row">
+                <div class="col-md-12 centrar"><h2>Todas las òrdenes</h2></div>
+            </div>
+        
+        <dx-data-grid
+            id="gridContainer"
+            [dataSource]="productos"
+            keyExpr="ID"
+            [showBorders]="true">
+            <dxi-column
+                dataField="Picture"
+                [width]="100"
+                [allowFiltering]="false"
+                [allowSorting]="false"
+                cellTemplate="cellTemplate"
+            ></dxi-column>
+            <dxi-column dataField="Nombre" caption="Producto"></dxi-column>
+            <dxi-column dataField="Cantidad" caption="Cantidad"></dxi-column>
+            <dxi-column dataField="Estado" caption="Estado"></dxi-column>
+            <dxi-column dataField="Descripcion" caption="Descripcion"></dxi-column>
+            <div *dxTemplate="let data of 'cellTemplate'">
+                <img [src]="data.value" />
+            </div>
+
+            <dxo-export [enabled]="true" fileName="Productos"></dxo-export>
+                <dxo-paging [pageSize]="4"></dxo-paging>
+                <dxo-pager
+                    [showPageSizeSelector]="true"
+                    [allowedPageSizes]="[5,8,10]"
+                ></dxo-pager>
+        </dx-data-grid>
+    </div>
+
+ 

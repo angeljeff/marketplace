@@ -1,0 +1,99 @@
+
+<ul class="ps-section__links">
+                      
+        <li><a (click)="mostrarSecProducto(1)">Mis Productos</a></li>
+        <li><a (click)="mostrarSecProducto(2)">Nuevo Producto</a></li>
+        <!-- button>Nuevo</button> -->
+    </ul>
+
+        <div class="ps-section__content" *ngIf="seccionListProducto">
+            <div class="row">
+                <div class="col-md-12 centrar"><h2>Lista de productos</h2></div>
+            </div>
+        
+        <dx-data-grid
+            id="gridContainer"
+            [dataSource]="productos"
+            keyExpr="ID"
+            [showBorders]="true">
+            <dxi-column
+                dataField="Picture"
+                [width]="100"
+                [allowFiltering]="false"
+                [allowSorting]="false"
+                cellTemplate="cellTemplate"
+            ></dxi-column>
+            <dxi-column dataField="Nombre" caption="Producto"></dxi-column>
+            <dxi-column dataField="Cantidad" caption="Cantidad"></dxi-column>
+            <dxi-column dataField="Estado" caption="Estado"></dxi-column>
+            <dxi-column dataField="Descripcion" caption="Descripcion"></dxi-column>
+            <div *dxTemplate="let data of 'cellTemplate'">
+                <img [src]="data.value" />
+            </div>
+
+            <dxo-export [enabled]="true" fileName="Productos"></dxo-export>
+                <dxo-paging [pageSize]="4"></dxo-paging>
+                <dxo-pager
+                    [showPageSizeSelector]="true"
+                    [allowedPageSizes]="[5,8,10]"
+                ></dxo-pager>
+        </dx-data-grid>
+    </div>
+
+    <div class="ps-section__content" *ngIf="seeccionNewProducto">
+
+        <div class="row">
+        <div class="col-md-12" style="text-align: center;"><h2>Nuevo Producto</h2></div>
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-4">Imagen</div>
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">
+                            <div class="ps-tabs">
+                                <div class="ps-tab active">
+                                    <div class="ps-form__content">
+                                        <div class="form-group">
+                                            <dx-text-box [(value)]="usuarioNuevo.nombres" class="controles" placeholder="Nombres"></dx-text-box>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <dx-text-box [(value)]="usuarioNuevo.apellidos" class="controles" placeholder="Apellidos"></dx-text-box>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <dx-number-box [(value)]="usuarioNuevo.cedula" class="controles" placeholder="Cedula"></dx-number-box>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <dx-text-box [(value)]="usuarioNuevo.correo" class="controles" placeholder="Correo"></dx-text-box>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <dx-text-box [(value)]="usuarioNuevo.contrasenia" class="controles" placeholder="Contraseña"></dx-text-box>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <button class="ps-btn ps-btn--fullwidth color-principal" (click)="registrar()">Registrar</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+                        
+</div>
+
+
+
+                        
