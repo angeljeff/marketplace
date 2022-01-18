@@ -1,11 +1,11 @@
 
 export class Canton{
-    id : number
-    nombre: string
+    id_cantones : number
+    descripcion: string
 
     constructor(){
-       this.id = 0
-       this.nombre = ""
+       this.id_cantones = 0
+       this.descripcion = ""
       
     }
 }

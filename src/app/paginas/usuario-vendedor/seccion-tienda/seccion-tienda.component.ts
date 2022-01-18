@@ -18,7 +18,7 @@ export class SeccionTiendaComponent implements OnInit {
   cc = ""
   existeTienda = true;
 
-  cantones : Canton[]=[{id:1,nombre:"Guayaquil"},{id:2,nombre:"Manta"}]
+  //cantones : Canton[]=[{id:1,nombre:"Guayaquil"},{id:2,nombre:"Manta"}]
 
   tiendaEncontrada = new Tienda();
 

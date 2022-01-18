@@ -207,7 +207,9 @@
     </header>
 
 
-
+    <div *ngIf="mostrarLoading">
+        <app-loading></app-loading>
+    </div>
 
     <div class="ps-my-account">
 
@@ -244,8 +246,32 @@
 
                             <div class="form-group">
 
-                                <dx-number-box [(value)]="usuarioNuevo.cedula" class="controles" [disabled]="isedicion" placeholder="Cedula"></dx-number-box>
+                                <dx-text-box [(value)]="usuarioNuevo.cedula" class="controles" placeholder="Cedula" [disabled]="isedicion" placeholder="Cedula"></dx-text-box>
 
+                            </div>
+                            <div class="form-group">
+
+                                <dx-text-box [(value)]="usuarioNuevo.direccion" class="controles"  placeholder="Dirección"></dx-text-box>
+
+                            </div>
+                            <div class="form-group">
+                                <dx-select-box [items]="generos"   placeholder="Selecciona tu genero" (onValueChanged)="setearValorGenero($event)" ></dx-select-box>
+                            </div>
+
+                            <!-- <div class="form-group">
+                                <dx-date-box [(value)]="fecha" type="datetime"> </dx-date-box>
+                            </div> -->
+
+                            <div class="form-group">
+                                <dx-select-box [items]="listaCantones" displayExpr="descripcion" placeholder="Seleccionar canton" (onValueChanged)="setearValorCanton($event)" ></dx-select-box>
+                            </div>
+
+                            <div class="form-group">
+                                <dx-select-box [items]="tiposUsuarios" displayExpr="descripcion" placeholder="Seleccionar Tipo Usuario" (onValueChanged)="setearValorTipoUsuario($event)" ></dx-select-box>
+                            </div>
+
+                            <div class="form-group">
+                                <dx-number-box [(value)]="usuarioNuevo.celular" class="controles"  placeholder="Genero"></dx-number-box>
                             </div>
 
                             <div class="form-group">

@@ -7,7 +7,7 @@ import { Usuario } from "../clases/usuario";
   providedIn: "root",
 })
 export class AuthenService{
-  userEmail = 0;
+  userEmail = "";
   userLogin: any;
   usuario: Usuario = new Usuario();
   usuarios: Usuario[] = [];
@@ -24,7 +24,7 @@ export class AuthenService{
   }
 
   signIn(usuario : Usuario) {
-    this.userEmail = usuario.cedula ?? 0;
+    this.userEmail = usuario.cedula ?? "";
     localStorage.setItem("maily", (this.userEmail.toString()));
     return this.http.post<any>(this.URL + "/login", Usuario);
   }

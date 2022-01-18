@@ -13,7 +13,7 @@ export class UsuarioService{
   constructor(private http: HttpClient, private router: Router) {}
 
   registrar(usuario : Usuario) {
-    return this.http.post<any>(this.URL + "/register", usuario);
+    return this.http.post<any>(this.URL + "/create", usuario);
   }
 
   

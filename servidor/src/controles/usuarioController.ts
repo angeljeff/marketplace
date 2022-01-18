@@ -5,7 +5,7 @@ class UsuarioControl {
     public async crear(req: Request, res: Response): Promise<void> {
         //const agregar =  await pool.query(`INSERT INTO usuarios (cedula, id_tipo_usuario, id_cantones, nombres, apelllidos, direccion, fecha_nacimiento, genero, correo, contraseña) VALUES ('${numero}', '${id1}', '${id2}', '${nombre}', '${nombre}', '${nombre}', '${fecha}', '${nombre}', '${nombre}','${nombre}')`);
         const agrega_usuario = await pool.query('INSERT INTO usuarios set  ? ', [req.body]);
-        res.json({ message: 'Game Sabbbbbb' });
+        res.json({ message: 'Usuario registrado' });
     }
 
     public async listar(req: Request, res: Response): Promise<void> {
@@ -25,8 +25,8 @@ class UsuarioControl {
     }
 
     public async actualizar(req: Request, res: Response): Promise<void> {
-        const agrega_usuario = await pool.query("UPDATE usuarios SET  nombres= ?, apelllidos = ? WHERE cedula = ?",
-        [req.body.nombres, req.body.apelllidos,  req.params.cedula]);
+        const agrega_usuario = await pool.query("UPDATE usuarios SET  correo= ?, contrasenia = ?, celular = ?, direccion = ? WHERE cedula = ?",
+        [req.body.correo, req.body.contraseña, req.body.celular, req.body.direccion, req.params.cedula]);
         res.json({ message: 'Usuario ACTUALIZADO' });
     }
 

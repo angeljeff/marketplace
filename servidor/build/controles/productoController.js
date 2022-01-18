@@ -18,6 +18,7 @@ class ProductoController {
         return __awaiter(this, void 0, void 0, function* () {
             //const agregar =  await pool.query(`INSERT INTO usuarios (cedula, id_tipo_usuario, id_cantones, nombres, apelllidos, direccion, fecha_nacimiento, genero, correo, contraseña) VALUES ('${numero}', '${id1}', '${id2}', '${nombre}', '${nombre}', '${nombre}', '${fecha}', '${nombre}', '${nombre}','${nombre}')`);
             const agrega_producto = yield base_datos_1.default.query('INSERT INTO productos set  ? ', [req.body]);
+            console.log(agrega_producto);
             res.json({ message: 'producto agregado' });
         });
     }
@@ -29,7 +30,7 @@ class ProductoController {
     }
     listarProductosActivos(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const lista = yield base_datos_1.default.query('SELECT * FROM productos where id_estado_pro = 1');
+            const lista = yield base_datos_1.default.query('SELECT * FROM productos where id_estado_pro = 2');
             res.send(lista);
         });
     }
@@ -42,35 +43,50 @@ class ProductoController {
     }
     actualizar(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const agrega_usuario = yield base_datos_1.default.query("UPDATE productos SET  nombre= ?, precio = ? , descripcion = ? WHERE id_producto = ?", [req.body.nombre, req.body.precio, req.params.descripcion, req.params.id_producto]);
-            res.json({ message: 'Producto actualizado 2' });
+            const agrega_producto = yield base_datos_1.default.query("UPDATE productos SET  nombre= ?, precio = ? , descripcion = ? , stock = ? , imagen = ? WHERE id_producto = ?", [req.body.nombre, req.body.precio, req.body.descripcion, req.body.stock, req.body.imagen, req.params.id_producto]);
+            res.json({ message: 'Producto actualizado ' });
+        });
+    }
+    actualizar_contador(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const agrega_producto = yield base_datos_1.default.query("UPDATE productos SET  contador= ? WHERE id_producto = ?", [req.body.contador, req.params.id_producto]);
+            res.json({ message: 'Producto actualizado ' });
         });
     }
     desactivar(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const usuario = yield base_datos_1.default.query("UPDATE productos SET  id_estado_pro = 2 WHERE id_producto = ?", [req.params.id_producto]);
-            res.json({ message: 'Usuario ELIMINADO' });
+            const desactiva_producto = yield base_datos_1.default.query("UPDATE productos SET  id_estado_pro = 2 WHERE id_producto = ?", [req.params.id_producto]);
+            res.json({ message: 'Producto desactivado' });
         });
     }
     activar(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const usuario = yield base_datos_1.default.query("UPDATE productos SET  id_estado_pro = 2 WHERE id_producto = ?", [req.params.id_producto]);
-            res.json({ message: 'Usuario ELIMINADO' });
+            const activa_producto = yield base_datos_1.default.query("UPDATE productos SET  id_estado_pro = 1 WHERE id_producto = ?", [req.params.id_producto]);
+            res.json({ message: 'Producto publicado' });
+        });
+    }
+    consultar_contador(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const actualiza_conta = yield base_datos_1.default.query(`SELECT contador FROM productos where id_producto ='${req.params.id_producto}'`);
+            res.send(actualiza_conta);
         });
     }
 }
 const productoController = new ProductoController;
 exports.default = productoController;
 /*
+
 {
-    "cedula":"1111111",
-    "id_tipo_usuario":11,
-    "id_cantones":2,
-    "nombres":"heffferso",
-    "apelllidos":"vv vvv",
-    "direccion":"guasmo norte",
-    "fecha_nacimiento":"10/12/12",
-    "genero":"maculon",
-    "correo":"112222",
-    "contraseña":"fdfdgddd"
+     
+    "nombre":"ddd",
+    "precio":4,
+    "imagen":"jjjjjfff",
+    "stock":3,
+    "descripcion":"guasmo norte",
+    "contador":1,
+    "id_sub_categoria":2,
+    "id_tienda":1,
+    "id_estado_pro":1
+    
+
 }*/ 

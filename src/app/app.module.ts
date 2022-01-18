@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { PrincipalComponent } from './paginas/principal/principal.component';
 import { Pagina2Component } from './paginas/pagina2/pagina2.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { DxAutocompleteModule, DxButtonModule, DxDataGridModule, DxDateBoxModule, DxGalleryModule, DxMenuModule, DxNumberBoxModule, DxSelectBoxModule, DxTextAreaModule, DxTextBoxModule, DxValidationSummaryModule, DxValidatorModule } from 'devextreme-angular';
+import { DxAutocompleteModule, DxButtonModule, DxDataGridModule, DxDateBoxModule, DxGalleryModule, DxLoadIndicatorModule, DxMenuModule, DxNumberBoxModule, DxSelectBoxModule, DxTextAreaModule, DxTextBoxModule, DxValidationSummaryModule, DxValidatorModule } from 'devextreme-angular';
 import { UsuarioVendedorComponent } from './paginas/usuario-vendedor/usuario-vendedor.component';
 import { LoginComponent } from './paginas/login/login.component';
 import { RegisterComponent } from './paginas/register/register.component';
@@ -16,6 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SeccionTiendaComponent } from './paginas/usuario-vendedor/seccion-tienda/seccion-tienda.component';
 import { SeccionProductoComponent } from './paginas/usuario-vendedor/seccion-producto/seccion-producto.component';
 import { OrdenesVendedorComponent } from './paginas/usuario-vendedor/ordenes-vendedor/ordenes-vendedor.component';
+import { LoadingComponent } from './paginas/shared/loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { OrdenesVendedorComponent } from './paginas/usuario-vendedor/ordenes-ven
     MenuComponent,
     SeccionTiendaComponent,
     SeccionProductoComponent,
-    OrdenesVendedorComponent
+    OrdenesVendedorComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +48,8 @@ import { OrdenesVendedorComponent } from './paginas/usuario-vendedor/ordenes-ven
     DxDataGridModule,
     DxDateBoxModule,
     DxTextAreaModule,
-    DxSelectBoxModule
+    DxSelectBoxModule,
+    DxLoadIndicatorModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

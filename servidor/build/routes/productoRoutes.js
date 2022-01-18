@@ -17,6 +17,7 @@ class ProductoRoutes {
         this.router.post('/Agregar', productoController_1.default.agregar);
         this.router.put('/actualizar/:id_producto', productoController_1.default.actualizar);
         this.router.put('/eliminar/:id_producto', productoController_1.default.desactivar);
+        this.router.put('/contador/:id_producto', productoController_1.default.actualizar_contador);
     }
 }
 const producto = new ProductoRoutes();

@@ -19,7 +19,7 @@ export class AuthService {
 
   async logIn(cedula: number, password: string) {
     var user2 = new Usuario();
-    user2.cedula = cedula
+   // user2.cedula = cedula
     user2.contrasenia = password
     try{
         localStorage.setItem('tokenMarketplace', "11111");
@@ -71,8 +71,9 @@ export class AuthService {
 export class AuthGuardService implements CanActivate {
     constructor(private router: Router , private authService: AuthService, public authenService:AuthenService) {}
     canActivate(route: ActivatedRouteSnapshot): boolean {
-        const isLoggedIn = this.authService.isLoggedIn;
-        console.log(isLoggedIn)
+        //const isLoggedIn = this.authService.isLoggedIn;
+        const isLoggedIn = true;
+        //console.log(isLoggedIn)
         //const isLoginForm = route.routeConfig.path === 'login-form';
         const isLoginForm = false;
         if (isLoggedIn && isLoginForm) {

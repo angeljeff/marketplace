@@ -5,6 +5,7 @@ class ProductoController {
     public async agregar(req: Request, res: Response): Promise<void> {
         //const agregar =  await pool.query(`INSERT INTO usuarios (cedula, id_tipo_usuario, id_cantones, nombres, apelllidos, direccion, fecha_nacimiento, genero, correo, contraseña) VALUES ('${numero}', '${id1}', '${id2}', '${nombre}', '${nombre}', '${nombre}', '${fecha}', '${nombre}', '${nombre}','${nombre}')`);
         const agrega_producto = await pool.query('INSERT INTO productos set  ? ', [req.body]);
+        console.log(agrega_producto)
         res.json({ message: 'producto agregado' });
     }
 
@@ -14,31 +15,46 @@ class ProductoController {
     }
 
     public async listarProductosActivos(req: Request, res: Response): Promise<void> {
-        const lista = await pool.query('SELECT * FROM productos where id_estado_pro = 1');
+        const lista = await pool.query('SELECT * FROM productos where id_estado_pro = 2');
         res.send(lista);
     }
 
     public async obtenerPorid(req: Request, res: Response): Promise<void> {
         const producto = req.params.id_producto
         const pro = await pool.query(`SELECT * FROM productos where id_producto ='${producto}'`);
+        
         res.send(pro);
     }
 
     public async actualizar(req: Request, res: Response): Promise<void> {
-        const agrega_usuario = await pool.query("UPDATE productos SET  nombre= ?, precio = ? , descripcion = ? WHERE id_producto = ?",
-        [req.body.nombre, req.body.precio,  req.params.descripcion,  req.params.id_producto]);
-        res.json({ message: 'Producto actualizado 2' });
+        const agrega_producto = await pool.query("UPDATE productos SET  nombre= ?, precio = ? , descripcion = ? , stock = ? , imagen = ? WHERE id_producto = ?",
+        [req.body.nombre, req.body.precio,  req.body.descripcion,  req.body.stock ,  req.body.imagen,  req.params.id_producto]);
+        res.json({ message: 'Producto actualizado ' });
+    }
+
+    public async actualizar_contador(req: Request, res: Response): Promise<void> {
+        const agrega_producto = await pool.query("UPDATE productos SET  contador= ? WHERE id_producto = ?",
+        [req.body.contador ,   req.params.id_producto]);
+        res.json({ message: 'Producto actualizado ' });
     }
 
     public async desactivar(req: Request, res: Response): Promise<void> {
-        const usuario = await pool.query("UPDATE productos SET  id_estado_pro = 2 WHERE id_producto = ?",[ req.params.id_producto]);
-        res.json({ message: 'Usuario ELIMINADO' });
+        const desactiva_producto = await pool.query("UPDATE productos SET  id_estado_pro = 2 WHERE id_producto = ?",[ req.params.id_producto]);
+        res.json({ message: 'Producto desactivado' });
     }
 
     public async activar(req: Request, res: Response): Promise<void> {
-        const usuario = await pool.query("UPDATE productos SET  id_estado_pro = 2 WHERE id_producto = ?",[ req.params.id_producto]);
-        res.json({ message: 'Usuario ELIMINADO' });
+        const activa_producto = await pool.query("UPDATE productos SET  id_estado_pro = 1 WHERE id_producto = ?",[ req.params.id_producto]);
+        res.json({ message: 'Producto publicado' });
     }
+
+
+    public async consultar_contador(req: Request, res: Response): Promise<void> {
+        const actualiza_conta = await pool.query(`SELECT contador FROM productos where id_producto ='${req.params.id_producto}'`);
+
+        res.send(actualiza_conta);
+    }
+
    
 }
 
@@ -47,15 +63,18 @@ export default productoController;
 
 
 /*
+
 {
-    "cedula":"1111111", 
-    "id_tipo_usuario":11, 
-    "id_cantones":2,
-    "nombres":"heffferso",
-    "apelllidos":"vv vvv",
-    "direccion":"guasmo norte",
-    "fecha_nacimiento":"10/12/12",
-    "genero":"maculon",
-    "correo":"112222",
-    "contraseña":"fdfdgddd" 
+     
+    "nombre":"ddd", 
+    "precio":4,
+    "imagen":"jjjjjfff",
+    "stock":3,
+    "descripcion":"guasmo norte",
+    "contador":1,
+    "id_sub_categoria":2,
+    "id_tienda":1,
+    "id_estado_pro":1
+    
+
 }*/

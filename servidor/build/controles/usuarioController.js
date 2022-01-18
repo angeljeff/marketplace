@@ -18,7 +18,7 @@ class UsuarioControl {
         return __awaiter(this, void 0, void 0, function* () {
             //const agregar =  await pool.query(`INSERT INTO usuarios (cedula, id_tipo_usuario, id_cantones, nombres, apelllidos, direccion, fecha_nacimiento, genero, correo, contraseña) VALUES ('${numero}', '${id1}', '${id2}', '${nombre}', '${nombre}', '${nombre}', '${fecha}', '${nombre}', '${nombre}','${nombre}')`);
             const agrega_usuario = yield base_datos_1.default.query('INSERT INTO usuarios set  ? ', [req.body]);
-            res.json({ message: 'Game Sabbbbbb' });
+            res.json({ message: 'Usuario registrado' });
         });
     }
     listar(req, res) {
@@ -42,7 +42,7 @@ class UsuarioControl {
     }
     actualizar(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const agrega_usuario = yield base_datos_1.default.query("UPDATE usuarios SET  nombres= ?, apelllidos = ? WHERE cedula = ?", [req.body.nombres, req.body.apelllidos, req.params.cedula]);
+            const agrega_usuario = yield base_datos_1.default.query("UPDATE usuarios SET  correo= ?, contrasenia = ?, celular = ?, direccion = ? WHERE cedula = ?", [req.body.correo, req.body.contraseña, req.body.celular, req.body.direccion, req.params.cedula]);
             res.json({ message: 'Usuario ACTUALIZADO' });
         });
     }
