@@ -26,6 +26,13 @@ class ProductoController {
         res.send(pro);
     }
 
+    public async obtenerPoridtienda(req: Request, res: Response): Promise<void> {
+        const producto1 = req.params.id_tienda
+        const pro1 = await pool.query(`SELECT * FROM productos where id_tienda ='${producto1}'`);
+        
+        res.send(pro1);
+    }
+
     public async actualizar(req: Request, res: Response): Promise<void> {
         const agrega_producto = await pool.query("UPDATE productos SET  nombre= ?, precio = ? , descripcion = ? , stock = ? , imagen = ? WHERE id_producto = ?",
         [req.body.nombre, req.body.precio,  req.body.descripcion,  req.body.stock ,  req.body.imagen,  req.params.id_producto]);

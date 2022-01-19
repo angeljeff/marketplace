@@ -6,7 +6,7 @@ export class Usuario{
     direccion:string;
     fecha_nacimiento: Date;
     id_cantones: number
-    celular: number;
+    celular: string;
     genero:string;
     correo: string 
     contrasenia: string
@@ -21,7 +21,7 @@ export class Usuario{
        this.contrasenia = ""
        this.direccion=""
        this.fecha_nacimiento= new Date()
-       this.celular= 0
+       this.celular= ""
        this.genero= ""
        
        this.id_tipo_usuario=1

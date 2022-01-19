@@ -14,6 +14,7 @@ class ProductoRoutes {
         this.router.get('/listar', productoController_1.default.listar);
         this.router.get('/listarProActivos', productoController_1.default.listarProductosActivos);
         this.router.get('/obtener/:id_producto', productoController_1.default.obtenerPorid);
+        this.router.post('/obtenerpro/:id_tienda', productoController_1.default.obtenerPoridtienda);
         this.router.post('/Agregar', productoController_1.default.agregar);
         this.router.put('/actualizar/:id_producto', productoController_1.default.actualizar);
         this.router.put('/eliminar/:id_producto', productoController_1.default.desactivar);

@@ -41,6 +41,13 @@ class ProductoController {
             res.send(pro);
         });
     }
+    obtenerPoridtienda(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const producto1 = req.params.id_tienda;
+            const pro1 = yield base_datos_1.default.query(`SELECT * FROM productos where id_tienda ='${producto1}'`);
+            res.send(pro1);
+        });
+    }
     actualizar(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const agrega_producto = yield base_datos_1.default.query("UPDATE productos SET  nombre= ?, precio = ? , descripcion = ? , stock = ? , imagen = ? WHERE id_producto = ?", [req.body.nombre, req.body.precio, req.body.descripcion, req.body.stock, req.body.imagen, req.params.id_producto]);

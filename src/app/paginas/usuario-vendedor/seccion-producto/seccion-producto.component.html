@@ -13,20 +13,21 @@
         
         <dx-data-grid
             id="gridContainer"
-            [dataSource]="productos"
-            keyExpr="ID"
+            [dataSource]="listaproductos"
+            keyExpr="id_producto"
             [showBorders]="true">
             <dxi-column
-                dataField="Picture"
+                dataField="imagen"
                 [width]="100"
                 [allowFiltering]="false"
                 [allowSorting]="false"
                 cellTemplate="cellTemplate"
             ></dxi-column>
-            <dxi-column dataField="Nombre" caption="Producto"></dxi-column>
-            <dxi-column dataField="Cantidad" caption="Cantidad"></dxi-column>
-            <dxi-column dataField="Estado" caption="Estado"></dxi-column>
-            <dxi-column dataField="Descripcion" caption="Descripcion"></dxi-column>
+            <dxi-column dataField="nombre" caption="Nombre Productos"></dxi-column>
+            <dxi-column dataField="descripcion" caption="Descripcion"></dxi-column>
+            <dxi-column dataField="precio" caption="Precio"></dxi-column>
+            <dxi-column dataField="stock" caption="stock"></dxi-column>
+            <dxi-column dataField="nombre_estado" caption="Estado"></dxi-column>
             <div *dxTemplate="let data of 'cellTemplate'">
                 <img [src]="data.value" />
             </div>
@@ -56,23 +57,24 @@
                                 <div class="ps-tab active">
                                     <div class="ps-form__content">
                                         <div class="form-group">
-                                            <dx-text-box [(value)]="usuarioNuevo.nombres" class="controles" placeholder="Nombres"></dx-text-box>
+                                            <dx-text-box [(value)]="productonuevo.nombre" class="controles" placeholder="Nombre del producto"></dx-text-box>
                                         </div>
 
                                         <div class="form-group">
-                                            <dx-text-box [(value)]="usuarioNuevo.apellidos" class="controles" placeholder="Apellidos"></dx-text-box>
+                                            <dx-number-box [(value)]="productonuevo.precio" class="controles" placeholder="Precio"></dx-number-box>
                                         </div>
 
                                        <!--  <div class="form-group">
                                             <dx-number-box [(value)]="usuarioNuevo.cedula" class="controles" placeholder="Cedula"></dx-number-box>
                                         </div> -->
+                            
 
                                         <div class="form-group">
-                                            <dx-text-box [(value)]="usuarioNuevo.correo" class="controles" placeholder="Correo"></dx-text-box>
+                                            <dx-number-box [(value)]="productonuevo.stock" class="controles" placeholder="Stock"></dx-number-box>
                                         </div>
 
                                         <div class="form-group">
-                                            <dx-text-box [(value)]="usuarioNuevo.contrasenia" class="controles" placeholder="Contraseña"></dx-text-box>
+                                            <dx-text-box [(value)]="productonuevo.descripcion" class="controles" placeholder="Descripción"></dx-text-box>
                                         </div>
 
                                         <div class="form-group">

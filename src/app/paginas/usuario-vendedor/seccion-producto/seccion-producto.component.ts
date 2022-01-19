@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Usuario } from 'src/app/clases/usuario';
-import { Producto } from '../usuario-vendedor.component';
+import Swal from 'sweetalert2';
+import { Producto, Productodto } from 'src/app/clases/producto';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ProductoService } from 'src/app/services/productos.services';
+import { SubCategoriaService } from 'src/app/services/sub_categoria.service';
 
 @Component({
   selector: 'app-seccion-producto',
@@ -8,64 +11,50 @@ import { Producto } from '../usuario-vendedor.component';
   styleUrls: ['./seccion-producto.component.css']
 })
 export class SeccionProductoComponent implements OnInit {
-    usuarioNuevo: Usuario = new Usuario();
+    productonuevo: Producto = new Producto();
+    consultaproducto: Producto = new Producto();
+    mostrarLoading=false
+    mensajeLoading=""
 
     seeccionNewProducto = false;
-  seccionListProducto = true;
+    seccionListProducto = true;
+
+    listaproductos : Producto []=[]
   
-
-
-
-
-  productos: Producto[] = [{
-  ID: 1,
-  Nombre: 'Producto1',
-  Cantidad: 10,
-  Estado: 'Activo',
-  Descripcion: 'CEO',
-  Picture: 'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
  
-}, {
-  ID: 10,
-  Nombre: 'Producto2',
-  Cantidad: 20,
-  Estado: 'Activo',
-  Descripcion: 'CEO',
-  Picture: 'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
-},
-{
-  ID: 10,
-  Nombre: 'Producto3',
-  Cantidad: 20,
-  Estado: 'Activo',
-  Descripcion: 'CEO',
-  Picture: 'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
-},
-{
-  ID: 10,
-  Nombre: 'Producto4',
-  Cantidad: 20,
-  Estado: 'Activo',
-  Descripcion: 'CEO',
-  Picture: 'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
-},
-{
-  ID: 10,
-  Nombre: 'Producto5',
-  Cantidad: 20,
-  Estado: 'Activo',
-  Descripcion: 'CEO',
-  Picture: 'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
-}];
 
 
+  constructor( public _productoService : ProductoService,
+    public router : Router,
+    public _subcategoriaService: SubCategoriaService
+    ) { }
 
-  constructor() { }
-
-  ngOnInit(): void {
+  ngOnInit( ): void {
+    this.traerListadoProductosporTienda()
   }
 
   registrar(){
+    this.mensajeLoading = "Guardando Usuario";
+    this.mostrarLoading = true;
+    console.log(this.productonuevo)
+     this._productoService.registrar(this.productonuevo).subscribe(
+      (res) => {
+        this.mostrarLoading = false;
+        Swal.fire({
+          title: 'Producto creado',
+          text: "'''''",
+          icon: 'success',
+          showCancelButton: false,
+          confirmButtonText: 'OK'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.router.navigate(["/login"]);
+          }
+        }) 
+      
+      },
+      (err) => {  this.mostrarLoading = false; Swal.fire('error')}
+    ) 
 
   }
 
@@ -73,15 +62,45 @@ export class SeccionProductoComponent implements OnInit {
     if(numero == 1) {
       this.seeccionNewProducto = false;
       this.seccionListProducto = true;
-    }
-      
+    }  
     else if(numero = 2){
       this.seeccionNewProducto = true;
       this.seccionListProducto = false;
     }
+  }
 
+  traerListadoProductosporTienda(){
+    this.consultaproducto.id_tienda=1
+    this._productoService.obtener_productos(this.consultaproducto).subscribe(
+      (res) => { var lista = res as Productodto[];
+        this.nuevoarregloproductos(lista)
+        console.log(lista)
+                  //this.llenarArregloTiposUsuario(lista)
+                },
+      (err) => { }
+    )
+  }
+
+  nuevoarregloproductos(lista: Productodto[]){
+
+    lista.forEach(element=>{
+      if(element.id_estado_pro==1)
+      element.nombre_estado= "Pendiente"
+      else if(element.id_estado_pro==2)
+      element.nombre_estado= "Publicado"
+      else if(element.id_estado_pro==1)
+      element.nombre_estado= "No publicado"
+      this.listaproductos.push(element)
+
+    })
 
   }
 
+  /* traerListadoSubcategorias(){
+    this._subcategoriaService.traerListaSubcategorias().subscribe(
+      (res) => { this.listaCantones = res as Canton[];},
+      (err) => { }
+    )
+  } */
 
 }

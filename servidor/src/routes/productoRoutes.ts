@@ -13,10 +13,12 @@ class ProductoRoutes {
         this.router.get('/listar', productoController.listar);
         this.router.get('/listarProActivos', productoController.listarProductosActivos);
         this.router.get('/obtener/:id_producto', productoController.obtenerPorid);
+        this.router.post('/obtenerpro/:id_tienda', productoController.obtenerPoridtienda);
         this.router.post('/Agregar', productoController.agregar);
         this.router.put('/actualizar/:id_producto', productoController.actualizar);
         this.router.put('/eliminar/:id_producto', productoController.desactivar);
         this.router.put('/contador/:id_producto', productoController.actualizar_contador);
+        
         
     }
 
