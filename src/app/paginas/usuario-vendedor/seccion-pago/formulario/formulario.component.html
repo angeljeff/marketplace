@@ -1,0 +1,77 @@
+<div style="color: black;text-align: center;padding: 1em;" class="card">
+    <div style="color: black;font-weight: bold;"> <p>Configure sus datos personales</p></div>
+    <div>
+        <dx-radio-group
+        [items]="menu"
+        [(value)]="menuDefault"
+        layout="horizontal"
+        (onValueChanged)="opcionRadioTipos($event)">
+        </dx-radio-group>
+    </div>
+    <br>
+    <div class="row" *ngIf="newCuenta">
+        <div class="col-md-4">
+            <div class="form-group">
+                <dx-text-box [(value)]="newDatosPago.nombres" class="controles" placeholder="Nombres"></dx-text-box>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <dx-text-box [(value)]="newDatosPago.cedula" class="controles" placeholder="Cedula"></dx-text-box>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <dx-text-box [(value)]="newDatosPago.banco" class="controles" placeholder="Banco"></dx-text-box>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <dx-text-box [(value)]="newDatosPago.numeroCuenta" class="controles" placeholder="Numero Cuenta"></dx-text-box>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <dx-text-box [(value)]="newDatosPago.tipoCuenta" class="controles" placeholder="Tipo Cuenta"></dx-text-box>
+            </div>
+        </div>
+        <div class="col-md-4">
+          
+        </div>
+
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <button class="ps-btn ps-btn--fullwidth color-principal" (click)="guardar()">Registrar</button>
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+
+    <div class="row" *ngIf="!newCuenta">
+        <div class="col-md-12" class="tabla">
+            <dx-data-grid #datag2
+                id="gridContainer"
+                [dataSource]="listadoDatosPago"
+                [showBorders]="true">
+                <!-- <dxo-filter-row [visible]="true" ></dxo-filter-row>
+                <dxo-export [enabled]="true" fileName="Comprobante_Pago" [allowExportSelectedData]="true"></dxo-export> -->
+                <dxi-column dataField="banco" caption="Banco"></dxi-column>
+                <dxi-column dataField="cedula" caption="Cedula" ></dxi-column>
+                <dxi-column dataField="nombres" caption="Documento" dataType="string"></dxi-column>
+                
+
+            <!--  <dxi-column type="buttons" dataField="bt1" caption="Descargar" width="6%">
+                    <dxi-button icon="fa fa-download" [onClick]="downloadFile"></dxi-button>   
+                </dxi-column> -->
+                
+                <dxo-paging [pageSize]="12"></dxo-paging>
+                <dxo-pager
+                    [showPageSizeSelector]="true"
+                    [allowedPageSizes]="[8, 12, 20]"
+                ></dxo-pager>
+            </dx-data-grid>
+        </div>
+        
+    </div>
+</div>

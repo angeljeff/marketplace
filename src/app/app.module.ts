@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { PrincipalComponent } from './paginas/principal/principal.component';
 import { Pagina2Component } from './paginas/pagina2/pagina2.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { DxAutocompleteModule, DxButtonModule, DxCheckBoxModule, DxDataGridModule, DxDateBoxModule, DxGalleryModule, DxLoadIndicatorModule, DxMenuModule, DxNumberBoxModule, DxPopupModule, DxSelectBoxModule, DxTextAreaModule, DxTextBoxModule, DxValidationSummaryModule, DxValidatorModule } from 'devextreme-angular';
+import { DxAutocompleteModule, DxButtonModule, DxCheckBoxModule, DxDataGridModule, DxDateBoxModule, DxGalleryModule, DxLoadIndicatorModule, DxMenuModule, DxNumberBoxModule, DxPopupModule, DxRadioGroupModule, DxSelectBoxModule, DxTextAreaModule, DxTextBoxModule, DxValidationSummaryModule, DxValidatorModule } from 'devextreme-angular';
 import { UsuarioVendedorComponent } from './paginas/usuario-vendedor/usuario-vendedor.component';
 import { LoginComponent } from './paginas/login/login.component';
 import { RegisterComponent } from './paginas/register/register.component';
@@ -19,6 +19,7 @@ import { OrdenesVendedorComponent } from './paginas/usuario-vendedor/ordenes-ven
 import { LoadingComponent } from './paginas/shared/loading/loading.component';
 import { FormsModule } from '@angular/forms';
 import { SeccionPagoComponent } from './paginas/usuario-vendedor/seccion-pago/seccion-pago.component';
+import { FormularioComponent } from './paginas/usuario-vendedor/seccion-pago/formulario/formulario.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { SeccionPagoComponent } from './paginas/usuario-vendedor/seccion-pago/se
     SeccionProductoComponent,
     OrdenesVendedorComponent,
     LoadingComponent,
-    SeccionPagoComponent
+    SeccionPagoComponent,
+    FormularioComponent
   ],
   imports: [
     FormsModule,
@@ -55,7 +57,8 @@ import { SeccionPagoComponent } from './paginas/usuario-vendedor/seccion-pago/se
     DxSelectBoxModule,
     DxLoadIndicatorModule,
     DxPopupModule,
-    DxCheckBoxModule
+    DxCheckBoxModule,
+    DxRadioGroupModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

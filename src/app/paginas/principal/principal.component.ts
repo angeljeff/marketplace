@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Producto } from '../usuario-vendedor/usuario-vendedor.component';
 import { ArrayMenu} from './menu';
 
 @Component({
@@ -42,6 +43,57 @@ export class PrincipalComponent implements OnInit {
       'James', 'John', 'Robert', 'Michael', 'William', 'David', 'Richard', 'Charles', 'Joseph', 'Thomas', 'Christopher', 'Daniel', 'Paul', 'Mark', 'Donald', 'George', 'Kenneth', 'Steven', 'Edward', 'Brian', 'Ronald', 'Anthony', 'Kevin', 'Jason', 'Jeff', 'Mary', 'Patricia', 'Linda', 'Barbara', 'Elizabeth', 'Jennifer', 'Maria', 'Susan', 'Margaret', 'Dorothy', 'Lisa', 'Nancy', 'Karen', 'Betty', 'Helen', 'Sandra', 'Donna', 'Carol', 'Ruth', 'Sharon', 'Michelle', 'Laura', 'Sarah', 'Kimberly', 'Deborah',
     ];
 
+
+  productos: Producto[] = [{
+  ID: 1,
+  Nombre: 'Producto1',
+  Cantidad: 10,
+  Estado: 'Activo',
+  Descripcion: 'CEO',
+  Picture: 'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
+ 
+}, {
+  ID: 10,
+  Nombre: 'Producto2',
+  Cantidad: 20,
+  Estado: 'Activo',
+  Descripcion: 'CEO',
+  Picture: 'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
+},
+{
+  ID: 10,
+  Nombre: 'Producto3',
+  Cantidad: 20,
+  Estado: 'Activo',
+  Descripcion: 'CEO',
+  Picture: 'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
+},
+{
+  ID: 10,
+  Nombre: 'Producto4',
+  Cantidad: 20,
+  Estado: 'Activo',
+  Descripcion: 'CEO',
+  Picture: 'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
+},
+{
+  ID: 10,
+  Nombre: 'Producto5',
+  Cantidad: 20,
+  Estado: 'Activo',
+  Descripcion: 'Producto para los maices',
+  Picture: 'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
+},
+{
+  ID: 10,
+  Nombre: 'Producto Nuevo',
+  Cantidad: 120,
+  Estado: 'Activo',
+  Descripcion: 'CEO',
+  Picture: 'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
+}];
+
+
   constructor(public router: Router) { }
 
   ngOnInit(): void {
@@ -70,6 +122,10 @@ export class PrincipalComponent implements OnInit {
     if (item.price) {
       //this.currentProduct = item;
     }
+  }
+
+  comprar(){
+
   }
  
 }

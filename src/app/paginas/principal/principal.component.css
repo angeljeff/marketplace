@@ -10,3 +10,27 @@
 .icon-user{
   color: white;
 }
+
+.cardProductos{
+  text-align: center;
+}
+
+.cardProductos p{
+  margin-right: 1em;
+  margin-left: 1em;
+  text-align: left;
+}
+
+.buttonP{
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.btn{
+  font-size: 12pt;
+}
+
+.color-principal{
+    background-color: #1db61d;
+    color: white;
+}
