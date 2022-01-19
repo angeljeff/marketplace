@@ -9,6 +9,7 @@ export class SeccionPagoComponent implements OnInit {
   IsNewTienda = true;
   mostrarConfiguracion = false;
   isedicion = false;
+  mostrarDatosPago = false;
 
   tipoPago1: Boolean = false;
   tipoPago2: Boolean = false;
@@ -24,6 +25,13 @@ export class SeccionPagoComponent implements OnInit {
     this.mostrarConfiguracion = true;
     this.IsNewTienda = false;
 
+  }
+
+  cambiar(e:any){
+    if(e.value)
+      this.mostrarDatosPago = true;
+    else
+      this.mostrarDatosPago = false;
   }
 
 }

@@ -47,10 +47,21 @@
                         <div style="margin-right: 4em;margin-left: 4em;">
                             <p style="color: black;">Metodo de pago ......</p>
                         </div>
-                    <dx-check-box (value)="tipoPago3" class="textCheck" text="Transferencia"></dx-check-box><br>
+                    <dx-check-box (value)="tipoPago3"  (onValueChanged)="cambiar($event)" class="textCheck" text="Transferencia"></dx-check-box><br>
                         <div style="margin-right: 4em;margin-left: 4em;">
                             <p style="color: black;">Metodo de pago ......</p>
                         </div>
+
+                        <div class="row" *ngIf="mostrarDatosPago">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10">
+                                <app-formulario></app-formulario>
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
+
+                        
+                        
                 </div>
                 <div class="col-md-2"></div>
             </div>

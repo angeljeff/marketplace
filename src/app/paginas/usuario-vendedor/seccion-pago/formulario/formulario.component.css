@@ -1,0 +1,15 @@
+
+p{
+    color: black;
+}
+
+.color-principal{
+    background-color: #1db61d;
+    color: white;
+    border-color: transparent;
+}
+
+.tabla{
+    margin-right: 1em;
+    margin-left: 1em;
+}

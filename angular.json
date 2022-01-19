@@ -65,7 +65,9 @@
               "src/app/paginas/shared/js/plugins/jquery-ui.min.js",
               "src/app/paginas/shared/js/plugins/sticky-sidebar.min.js",
               "src/app/paginas/shared/js/plugins/jquery.slimscroll.min.js",
-              "src/app/paginas/shared/js/plugins/scrollUP.js"
+              "src/app/paginas/shared/js/plugins/scrollUP.js",
+              "src/app/paginas/shared/js/main.js"
+              
             ]
           },
 
