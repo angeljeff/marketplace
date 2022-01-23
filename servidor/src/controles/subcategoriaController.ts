@@ -25,7 +25,7 @@ class SubCategoriasController {
     }
 
     public async actualizar(req: Request, res: Response): Promise<void> {
-        const agrega_producto = await pool.query("UPDATE sub_categorias SET  descripcion= ?,   WHERE id_sub_categoria = ?",
+        const agrega_producto = await pool.query("UPDATE sub_categorias SET  descripcion_sub= ?,   WHERE id_sub_categoria = ?",
         [req.body.descripcion,   req.params.id_sub_categoria]);
         res.json({ message: 'subCategoria actualizada ' });
     }

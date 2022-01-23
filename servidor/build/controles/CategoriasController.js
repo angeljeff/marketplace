@@ -35,7 +35,7 @@ class CategoriasController {
     }
     actualizar(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const agrega_producto = yield base_datos_1.default.query("UPDATE productos SET  descripcion= ?  WHERE id_categoria = ?", [req.body.descripcion, req.params.id_categoria]);
+            const agrega_producto = yield base_datos_1.default.query("UPDATE categorias SET  descripcion_cat= ?  WHERE id_categoria = ?", [req.body.descripcion, req.params.id_categoria]);
             res.json({ message: 'Categoria actualizada ' });
         });
     }

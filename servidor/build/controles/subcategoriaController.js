@@ -42,7 +42,7 @@ class SubCategoriasController {
     }
     actualizar(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const agrega_producto = yield base_datos_1.default.query("UPDATE sub_categorias SET  descripcion= ?,   WHERE id_sub_categoria = ?", [req.body.descripcion, req.params.id_sub_categoria]);
+            const agrega_producto = yield base_datos_1.default.query("UPDATE sub_categorias SET  descripcion_sub= ?,   WHERE id_sub_categoria = ?", [req.body.descripcion, req.params.id_sub_categoria]);
             res.json({ message: 'subCategoria actualizada ' });
         });
     }

@@ -9,6 +9,10 @@ import { ArrayMenu} from './menu';
 import { AuthenService } from 'src/app/services/authen.service';
 import { Usuario } from 'src/app/clases/usuario';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { Categorias } from 'src/app/clases/categorias';
+import { CategoriaService } from 'src/app/services/categorias.service';
+import { ProductocompletoService } from 'src/app/services/productoscompletos';
+import { Productocompleto } from 'src/app/clases/Productocompleto';
 
 @Component({
   selector: 'app-principal',
@@ -21,6 +25,12 @@ export class PrincipalComponent implements OnInit {
   listapro : Producto []=[]
   listaprocategoria : Producto []=[]
   nombreUsuario = ""
+  listacategorias : Categorias []=[]
+  listapresentacioncategorias : Categorias []=[]
+  listaprocompleto : Productocompleto []=[]
+  listacompletaproductos : Productocompleto []=[]
+  nomb=""
+  
   
   productotemproral: Producto = new Producto();
   cedula = ""
@@ -57,67 +67,20 @@ export class PrincipalComponent implements OnInit {
     ];
 
 
-  productos: Productos[] = [{
-  ID: 1,
-  Nombre: 'Producto1',
-  Cantidad: 10,
-  Estado: 'Activo',
-  Descripcion: 'CEO',
-  Picture: 'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
- 
-}, {
-  ID: 10,
-  Nombre: 'Producto2',
-  Cantidad: 20,
-  Estado: 'Activo',
-  Descripcion: 'CEO',
-  Picture: 'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
-},
-{
-  ID: 10,
-  Nombre: 'Producto3',
-  Cantidad: 20,
-  Estado: 'Activo',
-  Descripcion: 'CEO',
-  Picture: 'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
-},
-{
-  ID: 10,
-  Nombre: 'Producto4',
-  Cantidad: 20,
-  Estado: 'Activo',
-  Descripcion: 'CEO',
-  Picture: 'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
-},
-{
-  ID: 10,
-  Nombre: 'Producto5',
-  Cantidad: 20,
-  Estado: 'Activo',
-  Descripcion: 'Producto para los maices',
-  Picture: 'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
-},
-{
-  ID: 10,
-  Nombre: 'Producto Nuevo',
-  Cantidad: 120,
-  Estado: 'Activo',
-  Descripcion: 'CEO',
-  Picture: 'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
-}]; 
-
-
 
   isLoged = false;
   usuarioLogueado : Usuario = new Usuario();
   constructor(public router: Router,
     public _productoService: ProductoService,
     public authenService : AuthenService,
-    public userService: UsuarioService) { }
+    public userService: UsuarioService,
+    public _categoriaService: CategoriaService,
+    public _productocomletoService: ProductocompletoService) { }
 
   ngOnInit(): void {
     this.cargarUsuarioLogueado();
     this.mandarMensaje();
+    this.mostrarproductos()
 
   }
 
@@ -151,23 +114,63 @@ export class PrincipalComponent implements OnInit {
 
   }
 
+  buscarproducto(){
+    console.log(this.listacompletaproductos)
+    console.log("nombre" + this.nomb)
+    this.listaprocompleto=[]
+    console.log(this.listacompletaproductos)
+    for (let i in this.listacompletaproductos){
+      console.log("entre cc" + this.listacompletaproductos[i])
+      if(this.nomb == this.listacompletaproductos[i].nombre){
+        console.log("entre" + i)
+     
+        this.listaprocompleto.push(this.listacompletaproductos[i])
+
+      }
+    }
+  }
+  traerListadocategorias(){
+    this._categoriaService.traerListaCtegorias().subscribe(
+      (res) => { this.listacategorias = res as Categorias[];},
+      (err) => { }
+    )
+  }
+
   llamarsubcategorias(opcion:number){
-    
+    this.listaprocompleto.splice(0, this.listaprocompleto.length)
     this.productotemproral.id_sub_categoria = opcion
-    this._productoService.obtener_porid_subcategorias(this.productotemproral).subscribe(
+    this._productocomletoService.obtener_productosporidsub(this.productotemproral).subscribe(
+      (res) => { this.listaprocompleto = res as Productocompleto[]},
+      (err) => { }
+    )
+   /*  this._productoService.obtener_porid_subcategorias(this.productotemproral).subscribe(
       (res) => { var lista = res as Producto[];
          this.arreglodeproductosactivos(lista)
                 },
       (err) => { }
-    )    
+    )     */
   }
   llamarporcategorias(lista1:number[]){
     var cuenta = 0
     var limite = lista1.length
-    this.listaprocategoria.splice(0, this.listaprocategoria.length)
+    this.listaprocompleto.splice(0, this.listaprocompleto.length)
     for (let i in lista1){
       this.productotemproral.id_sub_categoria = lista1[i],
-      this._productoService.obtener_porid_subcategorias(this.productotemproral).subscribe(
+      this._productocomletoService.obtener_productosporidsub(this.productotemproral).subscribe(
+        (res) => { var lista = res as Productocompleto[]
+          cuenta++
+          for( let j in lista){
+            this.listaprocompleto.push(lista[j])
+            this.iniciodepagina()
+           /* if(cuenta === lista1.length){
+              /* this.arreglodeproductosactivos(this.listaprocategoria) */
+           /* }*/
+          }},
+        (err) => { }
+      )
+
+      
+     /*  this._productoService.obtener_porid_subcategorias(this.productotemproral).subscribe(
         (res) => {  var lista = res as Producto[];
           console.log(lista.length+ "esta es la longitud")
           cuenta++
@@ -179,12 +182,10 @@ export class PrincipalComponent implements OnInit {
           }
                 },
         (err) => { }
-    ) 
+    )  */
     }     
     
   }
-
-  
   
   arreglodeproductosactivos(listaproductos:Producto[]){
     this.listapro.splice(0, this.listapro.length)
@@ -196,6 +197,35 @@ export class PrincipalComponent implements OnInit {
     }
     console.log("esta es el arreglo final", this.listapro)
   }
+
+iniciodepagina(){
+  window.scrollTo(0,0)
+}
+  mostrarproductos(){
+    this.listaprocompleto.splice(0, this.listaprocompleto.length)
+    this.listacompletaproductos.splice(0, this.listacompletaproductos.length)
+    this._productocomletoService.traerpro_completos().subscribe(
+      (res) => {  this.listaprocompleto = res as Productocompleto[];
+        this.listacompletaproductos= this.listaprocompleto
+        console.log(this.listacompletaproductos)
+       
+              },
+      (err) => { }
+  )
+
+  }
+
+ /*  traerproductoscompletos(){
+    this.listaprocompleto.splice(0, this.listaprocompleto.length)
+    this._productocomletoService.traerpro_completos().subscribe(
+      (res) => {  this.listaprocompleto = res as Productocompleto[];
+        console.log(this.listaprocompleto)
+       
+              },
+      (err) => { }
+  )
+
+  } */
 
 
   itemClick(data:any) {

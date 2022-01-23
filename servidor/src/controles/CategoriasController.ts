@@ -20,7 +20,7 @@ class CategoriasController {
     }
 
     public async actualizar(req: Request, res: Response): Promise<void> {
-        const agrega_producto = await pool.query("UPDATE productos SET  descripcion= ?  WHERE id_categoria = ?",
+        const agrega_producto = await pool.query("UPDATE categorias SET  descripcion_cat= ?  WHERE id_categoria = ?",
         [req.body.descripcion,   req.params.id_categoria]);
         res.json({ message: 'Categoria actualizada ' });
     }

@@ -13,6 +13,14 @@ class ProductoController {
         const lista_productos = await pool.query('SELECT * FROM productos');
         res.send(lista_productos);
     }
+    public async listarprocompleto(req: Request, res: Response): Promise<void> {
+        const lista_productos_com = await pool.query('SELECT pro.nombre, pro.id_producto, pro.precio, pro.imagen, pro.stock, pro.id_sub_categoria, pro.id_tienda,pro.descripcion, sub.descripcion_sub, cat.descripcion_cat, cat.id_categoria FROM productos AS pro INNER JOIN sub_categorias AS sub ON pro.id_sub_categoria = sub.id_sub_categoria INNER JOIN categorias AS cat ON sub.id_categoria = cat.id_categoria where pro.id_estado_pro = 2');
+        res.send(lista_productos_com);
+    }
+    public async listarporsubcategorias(req: Request, res: Response): Promise<void> {
+        const lista_productos_com = await pool.query(`SELECT pro.nombre, pro.id_producto, pro.precio, pro.imagen, pro.stock, pro.id_sub_categoria, pro.id_tienda,pro.descripcion, sub.descripcion_sub, cat.descripcion_cat, cat.id_categoria FROM productos AS pro INNER JOIN sub_categorias AS sub ON pro.id_sub_categoria = sub.id_sub_categoria INNER JOIN categorias AS cat ON sub.id_categoria = cat.id_categoria where pro.id_estado_pro = 2 and pro.id_sub_categoria='${req.params.id_sub_categoria}'`);
+        res.send(lista_productos_com);
+    }
 
     public async listarProductosActivos(req: Request, res: Response): Promise<void> {
         const lista = await pool.query('SELECT * FROM productos where id_estado_pro = 2');

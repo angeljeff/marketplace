@@ -62,11 +62,11 @@
                                                       
                                         </div>
                                         <div class="form-group">
-                                            <dx-select-box [items]="listacategorias" [(value)]="categorias.id_categoria"  valueExpr="id_categoria" displayExpr="descripcion" placeholder="Selecciona la categoria"  (onValueChanged)="traersub($event)" ></dx-select-box>
+                                            <dx-select-box [items]="listacategorias" [(value)]="categorias.id_categoria"  valueExpr="id_categoria" displayExpr="descripcion_cat" placeholder="Selecciona la categoria"  (onValueChanged)="traersub($event)" ></dx-select-box>
                                         </div>
 
                                         <div class="form-group">
-                                            <dx-select-box [items]="listasubcategorias" [(value)]="productonuevo.id_sub_categoria" *ngIf="edicionsubcategoria" valueExpr="id_sub_categoria" displayExpr="descripcion" placeholder="Selecciona la subcategoria"></dx-select-box>
+                                            <dx-select-box [items]="listasubcategorias" [(value)]="productonuevo.id_sub_categoria" *ngIf="edicionsubcategoria" valueExpr="id_sub_categoria" displayExpr="descripcion_sub" placeholder="Selecciona la subcategoria"></dx-select-box>
                                         </div>
                                         <div class="form-group">
                                            <!--  mask="99.99" [maskRules]="rules" -->
