@@ -28,6 +28,18 @@ class ProductoController {
             res.send(lista_productos);
         });
     }
+    listarprocompleto(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const lista_productos_com = yield base_datos_1.default.query('SELECT pro.nombre, pro.id_producto, pro.precio, pro.imagen, pro.stock, pro.id_sub_categoria, pro.id_tienda,pro.descripcion, sub.descripcion_sub, cat.descripcion_cat, cat.id_categoria FROM productos AS pro INNER JOIN sub_categorias AS sub ON pro.id_sub_categoria = sub.id_sub_categoria INNER JOIN categorias AS cat ON sub.id_categoria = cat.id_categoria where pro.id_estado_pro = 2');
+            res.send(lista_productos_com);
+        });
+    }
+    listarporsubcategorias(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const lista_productos_com = yield base_datos_1.default.query(`SELECT pro.nombre, pro.id_producto, pro.precio, pro.imagen, pro.stock, pro.id_sub_categoria, pro.id_tienda,pro.descripcion, sub.descripcion_sub, cat.descripcion_cat, cat.id_categoria FROM productos AS pro INNER JOIN sub_categorias AS sub ON pro.id_sub_categoria = sub.id_sub_categoria INNER JOIN categorias AS cat ON sub.id_categoria = cat.id_categoria where pro.id_estado_pro = 2 and pro.id_sub_categoria='${req.params.id_sub_categoria}'`);
+            res.send(lista_productos_com);
+        });
+    }
     listarProductosActivos(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const lista = yield base_datos_1.default.query('SELECT * FROM productos where id_estado_pro = 2');
