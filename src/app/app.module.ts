@@ -20,6 +20,8 @@ import { LoadingComponent } from './paginas/shared/loading/loading.component';
 import { FormsModule } from '@angular/forms';
 import { SeccionPagoComponent } from './paginas/usuario-vendedor/seccion-pago/seccion-pago.component';
 import { FormularioComponent } from './paginas/usuario-vendedor/seccion-pago/formulario/formulario.component';
+import { SeccionPedidoComponent } from './paginas/usuario-vendedor/seccion-pedido/seccion-pedido.component';
+import { CarritoComprasComponent } from './paginas/carrito-compras/carrito-compras.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { FormularioComponent } from './paginas/usuario-vendedor/seccion-pago/for
     OrdenesVendedorComponent,
     LoadingComponent,
     SeccionPagoComponent,
-    FormularioComponent
+    FormularioComponent,
+    SeccionPedidoComponent,
+    CarritoComprasComponent
   ],
   imports: [
     FormsModule,

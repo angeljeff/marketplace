@@ -2,3 +2,11 @@
     background-color: #1db61d;
     color: white;
 }
+
+.centrar{
+    text-align: center;
+}
+
+ ::ng-deep .datagrid-table .datagrid-column {
+    justify-content: center;
+  }

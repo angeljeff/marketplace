@@ -1,14 +1,12 @@
 
-<ul class="ps-section__links">
-                      
-        <li><a (click)="mostrarSecProducto(1)">Mis Productos</a></li>
-        <li><a (click)="mostrarSecProducto(2)">Nuevo Producto</a></li>
-        <!-- button>Nuevo</button> -->
-    </ul>
+<ul class="ps-section__links">      
+    <li><a (click)="mostrarSecProducto(1)">Mis Productos</a></li>
+    <li><a (click)="mostrarSecProducto(2)">Nuevo Producto</a></li>
+</ul>
 
         <div class="ps-section__content" *ngIf="seccionListProducto">
-            <div class="row">
-                <div class="col-md-12 centrar"><h2>Lista de productos</h2></div>
+            <div class="row centrar">
+                <div class="col-md-12"><h2>Lista de productos</h2></div>
             </div>
         
         <dx-data-grid
@@ -23,15 +21,21 @@
                 [allowSorting]="false"
                 cellTemplate="cellTemplate"
             ></dxi-column>
-            <dxi-column dataField="nombre" caption="Nombre Productos"></dxi-column>
-            <dxi-column dataField="descripcion" caption="Descripcion"></dxi-column>
-            <dxi-column dataField="precio" caption="Precio"></dxi-column>
-            <dxi-column dataField="stock" caption="stock"></dxi-column>
-            <dxi-column dataField="nombre_estado" caption="Estado"></dxi-column>
+            <dxi-column dataField="nombre" alignment="center" caption="Nombre Productos"></dxi-column>
+            <dxi-column dataField="descripcion"  alignment="center"  caption="Descripcion"></dxi-column>
+            <dxi-column dataField="precio"  alignment="center"  caption="Precio"></dxi-column>
+            <dxi-column dataField="stock"  alignment="center"  caption="stock"></dxi-column>
+            <dxi-column dataField="nombre_estado"  alignment="center"  caption="Estado"></dxi-column>
             <div *dxTemplate="let data of 'cellTemplate'">
                 <img [src]="data.value" />
             </div>
 
+            <dxi-column type="buttons"  caption="Editar">
+                <dxi-button icon="fas fa-edit" [onClick]="editProduct"></dxi-button>    
+            </dxi-column>
+            <dxi-column type="buttons"  caption="Eliminar">
+                <dxi-button icon="fas fa-trash-alt" [onClick]="deleteProduct"></dxi-button>    
+            </dxi-column>
             <dxo-export [enabled]="true" fileName="Productos"></dxo-export>
                 <dxo-paging [pageSize]="4"></dxo-paging>
                 <dxo-pager
@@ -41,8 +45,8 @@
         </dx-data-grid>
     </div>
 
-    <div class="ps-section__content" *ngIf="seeccionNewProducto">
-
+    <div class="ps-section__content" *ngIf="seccionNewProducto">
+        <br>
         <div class="row">
         <div class="col-md-12" *ngIf="!isedicionpro;" style="text-align: center;"><h2>Nuevo Producto</h2></div>
         <div class="col-md-12" *ngIf="isedicionpro;" style="text-align: center;"><h2>Editar producto</h2></div>
@@ -58,8 +62,7 @@
                                 <div class="ps-tab active">
                                     <div class="ps-form__content">
                                         <div class="form-group">
-                                            <dx-text-box  [(value)]="productonuevo.nombre"  class="controles" placeholder="Nombre del producto"> </dx-text-box>  
-                                                      
+                                            <dx-text-box  [(value)]="productonuevo.nombre"  class="controles" placeholder="Nombre del producto"> </dx-text-box>       
                                         </div>
                                         <div class="form-group">
                                             <dx-select-box [items]="listacategorias" [(value)]="categorias.id_categoria"  valueExpr="id_categoria" displayExpr="descripcion" placeholder="Selecciona la categoria"  (onValueChanged)="traersub($event)" ></dx-select-box>
@@ -69,7 +72,6 @@
                                             <dx-select-box [items]="listasubcategorias" [(value)]="productonuevo.id_sub_categoria" *ngIf="edicionsubcategoria" valueExpr="id_sub_categoria" displayExpr="descripcion" placeholder="Selecciona la subcategoria"></dx-select-box>
                                         </div>
                                         <div class="form-group">
-                                           <!--  mask="99.99" [maskRules]="rules" -->
                                             <dx-number-box [(value)]="productonuevo.precio" type="number" class="controles" placeholder="Precio"></dx-number-box>
                                         </div>
 
@@ -78,7 +80,6 @@
                                         </div>
 
                                         <div class="form-group" >
-                                    
                                             <dx-text-area [height]="90" [maxLength]="500" [(value)]="productonuevo.descripcion" placeholder="Descripcion"></dx-text-area>
                                         </div>
                                         

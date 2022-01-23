@@ -16,6 +16,7 @@ export class UsuarioVendedorComponent implements OnInit {
   seccionProducto = false;
   seccionTienda = false;
   seccionPago = false;
+  seccionPedido = false;
   isLoged = false;
   nombreUsuario = ""
   usuarioLogueado : Usuario = new Usuario();
@@ -81,30 +82,43 @@ export class UsuarioVendedorComponent implements OnInit {
         this.seccionProducto = false;
         this.seccionTienda = false;
         this.seccionPago = false;
+        this.seccionPedido = false;
        break;
       case 2:
         this.seccionOrdenes = false;
         this.seccionProducto = true;
         this.seccionTienda = false;
         this.seccionPago = false;
+        this.seccionPedido = false;
         break;
       case 3:
         this.seccionOrdenes = false;
         this.seccionProducto = false;
         this.seccionTienda = true;
         this.seccionPago = false;
+        this.seccionPedido = false;
         break;
       case 4:
         this.seccionOrdenes = false;
         this.seccionProducto = false;
         this.seccionTienda = false;
         this.seccionPago = true;
+        this.seccionPedido = false;
+        break;
+      case 5:
+        this.seccionOrdenes = false;
+        this.seccionProducto = false;
+        this.seccionTienda = false;
+        this.seccionPago = false;
+        this.seccionPedido = true;
         break;
       default:    
     }  
     
 
   }
+
+  
   llamarsubcategorias(opcion:number){
     
     this.productotemproral.id_sub_categoria = opcion

@@ -1,0 +1,21 @@
+
+.centrar{
+    text-align: center;
+}
+
+.btn-table{
+    color: red;
+    font-weight: bold;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.color-principal{
+    background-color: #1db61d;
+    color: white;
+    border-color: transparent;
+}
+
+::ng-deep .dx-radio-value-container {
+    margin-top: 1em;
+}

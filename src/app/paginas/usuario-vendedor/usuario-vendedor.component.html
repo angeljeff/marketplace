@@ -2,29 +2,23 @@
 <body>
 
 
-  <header class="header header--standard header--market-place-4" data-sticky="true" >
+    <header class="header header--standard header--market-place-4" data-sticky="true" >
       	<!--=====================================
 		Header Content
 		======================================-->
 
         <div class="header__content">
-
             <div class="container">
-
                 <div class="header__content-left">
-
                 	<!--=====================================
 					Logo
 					======================================-->
-
                 	<a class="ps-logo" href="index.html">
                     <img src="../../../assets/icono.png" class="pt-3" alt="">
                 	</a>
-
                 	<!--=====================================
 					Menú
 					======================================-->
-
                     <div class="menu--product-categories">
                         
                         <div class="menu__toggle">
@@ -34,9 +28,6 @@
 
                         <div class="menu__content" >
                             <ul class="menu--dropdown" >
-                                <!-- <li>
-                                	<a href="#"><i class="icon-star"></i> Plaguicidas</a>
-                                </li> -->
                                 <li class="menu-item-has-children has-mega-menu">
                                 	<a href="#"><i class="icon-laundry"></i>Plaguicidas</a>
                                     <div class="mega-menu">
@@ -47,7 +38,6 @@
                                                 </li>
                                                 <li><a (click)="llamarsubcategorias(2)">Sistémico</a>
                                                 </li>
-                                                
                                             </ul>
                                         </div>
                                         <div class="mega-menu__column">
@@ -109,16 +99,11 @@
                                                
                                             </ul>
                                         </div>
-                                       
                                     </div>
                                 </li>
-                               
                             </ul>
-
                         </div>
-
                     </div><!-- End menu-->
-
                 </div><!-- End Header Content Left-->
 
                 <!--=====================================
@@ -155,11 +140,8 @@
                         	</a>
 
                             <div class="ps-cart__content">
-
                                 <div class="ps-cart__items">
-
                                     <div class="ps-product--cart-mobile">
-
                                         <div class="ps-product__thumbnail">
                                         	<a href="#">
                                         		<img src="../shared/../shared/img/products/clothing/7.jpg" alt="">
@@ -174,11 +156,9 @@
                                             <p><strong>Sold by:</strong> YOUNG SHOP</p>
                                             <small>1 x $59.99</small>
                                         </div>
-
                                     </div>
 
                                     <div class="ps-product--cart-mobile">
-
                                         <div class="ps-product__thumbnail">
                                         	<a href="#">
                                         		<img src="../shared/img/products/clothing/5.jpg" alt="">
@@ -193,9 +173,7 @@
                                             <p><strong>Sold by:</strong> YOUNG SHOP</p>
                                             <small>1 x $59.99</small>
                                         </div>
-
                                     </div>
-
                                 </div>
 
                                 <div class="ps-cart__footer">
@@ -205,11 +183,8 @@
                                     	<a class="ps-btn" href="shopping-cart.html">View Cart</a>
                                     	<a class="ps-btn" href="checkout.html">Checkout</a>
                                     </figure>
-
                                 </div>
-
                             </div>
-
                         </div>
 
 						<!--=====================================
@@ -229,15 +204,10 @@
                                 <a (click)="logout()">Salir</a>
                             </div>
                         </div>
-
                     </div><!-- End Header Actions-->
-
                 </div><!-- End Header Content Right-->
-
             </div><!-- End Container-->
-
         </div><!-- End Header Content-->
-
     </header>
 
 	
@@ -249,7 +219,7 @@
     <div class="ps-vendor-dashboard pro">
 
         <div class="container">
-
+            <br><br><br>
             <div class="ps-section__header">
 
                 <!--=====================================
@@ -296,9 +266,11 @@
 
                         </div>
 
-                        <div class="row ml-lg-auto pt-5">
+                        <div class="row ml-lg-auto pt-5 margen">
 
-                            <div class="col-lg-3 col-6" (click)="mostrarSeccion(1)">
+                            <div class="col-lg-2 col-6"> </div><!-- box /-->
+
+                            <div class="col-lg-2 col-6" (click)="mostrarSeccion(1)">
                                 <div class="text-center">
                                     <a>
                                         <h1><i class="fas fa-shopping-cart text-white"></i></h1>
@@ -306,17 +278,8 @@
                                     </a>
                                 </div>
                             </div><!-- box /-->
-                
-                            <div class="col-lg-3 col-6" (click)="mostrarSeccion(2)">
-                                <div class="text-center">
-                                    <a>
-                                        <h1><i class="fas fa-shopping-bag text-white"></i></h1>
-                                        <h4 class="text-white">Productos <!-- <span class="badge badge-secondary rounded-circle">51</span> --></h4>
-                                    </a>
-                                </div>
-                            </div><!-- box /-->
-                
-                            <div class="col-lg-3 col-6" (click)="mostrarSeccion(3)">
+
+                            <div class="col-lg-2 col-6" (click)="mostrarSeccion(3)">
                                 <div class="text-center">
                                     <a>
                                         <h1><i class="fas fa-store text-white"></i></h1>
@@ -324,16 +287,35 @@
                                     </a>
                                 </div>
                             </div><!-- box /-->
-                
-                            <div class="col-lg-3 col-6" (click)="mostrarSeccion(4)">
+
+                            <div class="col-lg-2 col-6" (click)="mostrarSeccion(2)">
                                 <div class="text-center">
                                     <a>
-                                      
+                                        <h1><i class="fas fa-shopping-bag text-white"></i></h1>
+                                        <h4 class="text-white" style="margin-left: -0.4em;">Productos</h4>
+                                    </a>
+                                </div>
+                            </div><!-- box /-->
+
+                            <div class="col-lg-2 col-6" (click)="mostrarSeccion(4)">
+                                <div class="text-center">
+                                    <a>
                                         <h1><i class="fas fa-comment-dollar text-white"></i></h1>
                                         <h4 class="text-white">Pago </h4>
                                     </a>
                                 </div>
                             </div><!-- box /-->
+                
+
+                            <div class="col-lg-2 col-6" (click)="mostrarSeccion(5)">
+                                <div class="text-center">
+                                    <a>
+                                        <h1><i class="fas fa-clipboard-list text-white"></i></h1>
+                                        <h4 class="text-white">Pedidos </h4>
+                                    </a>
+                                </div>
+                            </div><!-- box /-->
+
                         </div>
 
                     </div>
@@ -360,7 +342,9 @@
                     <app-seccion-pago></app-seccion-pago>
                 </div>
 
-
+                <div class="ps-section__content" *ngIf="seccionPedido">
+                   <app-seccion-pedido></app-seccion-pedido>
+                </div>
                 
 
  

@@ -7,6 +7,7 @@ import { UsuarioVendedorComponent } from './paginas/usuario-vendedor/usuario-ven
 import { PrincipalComponent } from './paginas/principal/principal.component';
 import { RegisterComponent } from './paginas/register/register.component';
 import { AuthGuardService } from './services/auth.service';
+import { CarritoComprasComponent } from './paginas/carrito-compras/carrito-compras.component';
 
 const routes: Routes = [
         { 
@@ -37,6 +38,11 @@ const routes: Routes = [
         { 
           path:'register', 
           component: RegisterComponent,
+          canActivate: [AuthGuardService],
+        },
+         {
+          path:'carrito-compras', 
+          component: CarritoComprasComponent,
           canActivate: [AuthGuardService],
         },
         {

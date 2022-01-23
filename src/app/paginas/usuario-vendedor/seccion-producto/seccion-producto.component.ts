@@ -28,7 +28,7 @@ export class SeccionProductoComponent implements OnInit {
     isedicionpro = false;
     productobuscado: Producto = new Producto();
 
-    seeccionNewProducto = false;
+    seccionNewProducto = false;
     seccionListProducto = true;
 
     listaproductos : Producto []=[]
@@ -38,6 +38,32 @@ export class SeccionProductoComponent implements OnInit {
     rules = { X: /[02-9]/ };
 
 
+productos: Producto[] = [{
+  nombre: 'Producto1',
+  contador : 10,
+  descripcion : "jjj",
+  id_estado_pro : 1,
+  id_producto : "1",
+  id_sub_categoria : 2,
+  id_tienda: 1,
+  precio : 10,
+  stock: 10,
+  imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
+}, {
+  nombre: 'Producto2',
+  contador : 10,
+  descripcion : "jjj",
+  id_estado_pro : 1,
+  id_producto : "1",
+  id_sub_categoria : 2,
+  id_tienda: 1,
+  precio : 10,
+  stock: 10,
+  imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
+}]; 
+
+
+
   constructor( public _productoService : ProductoService,
     public router : Router,
     public _subcategoriaService: SubCategoriaService,
@@ -45,6 +71,8 @@ export class SeccionProductoComponent implements OnInit {
     ) { }
 
   ngOnInit( ): void {
+     this.listaproductos = this.productos
+
     this.traerListadoProductosporTienda()
     /* this.traerListadoSubcategorias() */
     this.traerListadocategorias()
@@ -79,10 +107,38 @@ export class SeccionProductoComponent implements OnInit {
  
   }
 
+
+  
+  editProduct = (e:any) => {  
+    this.editarProducto(e.row.data)  
+  }
+
+  deleteProduct = (e:any) => {  
+    this.eliminarProducto(e.row.data)  
+  }
+
+  editarProducto(product: Producto){
+    this.mostrarSecProducto(2);
+    this.isedicionpro = true;
+    this.productonuevo = product;
+  }
+
+  eliminarProducto(product: Producto){
+     Swal.fire({
+        title: 'Eliminar Producto',
+        text: "Está seguro de eliminar el Producto "+product.nombre,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'OK'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          //agregar metodo para eliminar producto
+        }
+      }) 
+  }
  
 
   actualizar(){
-   
     this.mensajeLoading = "Actualizando producto";
     this.mostrarLoading = true;
     console.log(this.productonuevo)
@@ -107,13 +163,13 @@ export class SeccionProductoComponent implements OnInit {
  
   }
 
-   mostrarSecProducto(numero : number){
+  mostrarSecProducto(numero : number){
     if(numero == 1) {
-      this.seeccionNewProducto = false;
+      this.seccionNewProducto = false;
       this.seccionListProducto = true;
     }  
     else if(numero = 2){
-      this.seeccionNewProducto = true;
+      this.seccionNewProducto = true;
       this.seccionListProducto = false;
     }
   }
@@ -134,13 +190,14 @@ export class SeccionProductoComponent implements OnInit {
 
     lista.forEach(element=>{
       if(element.id_estado_pro==1)
-      element.nombre_estado= "Pendiente"
+        element.nombre_estado= "Pendiente"
       else if(element.id_estado_pro==2)
-      element.nombre_estado= "Publicado"
+        element.nombre_estado= "Publicado"
       else if(element.id_estado_pro==1)
-      element.nombre_estado= "No publicado"
-      this.listaproductos.push(element)
+        element.nombre_estado= "No publicado"
 
+     this.listaproductos.push(element)
+    
     })
 
   }
@@ -185,32 +242,12 @@ verificarcampos(){
               }else{
                 this.actualizar()
               }
-              
-
-            }else{
-          this.mostrarmensajes('Por favor establezca una breve descripción del producto')
-        }
-
-          }else{
-        this.mostrarmensajes('Por favor indique la disponibilidad del producto')
-      }
-
-        }else{
-      this.mostrarmensajes('Por favor establezca un precio al producto')
-    }
-
-      }else{
-      this.mostrarmensajes('Debe seleccionar una subcategoría')
-    }
-
-    }else{
-      this.mostrarmensajes('Debe seleccionar una categoría')
-    }
-    
-  }
-  else {
-    this.mostrarmensajes('Debe llenar el campo nombre de producto')
-  }
+            }else{this.mostrarmensajes('Por favor establezca una breve descripción del producto')}
+          }else{this.mostrarmensajes('Por favor indique la disponibilidad del producto')}
+        }else{this.mostrarmensajes('Por favor establezca un precio al producto')}
+      }else{this.mostrarmensajes('Debe seleccionar una subcategoría')}
+    }else{this.mostrarmensajes('Debe seleccionar una categoría')}
+  }else{this.mostrarmensajes('Debe llenar el campo nombre de producto')}
 }
 
 

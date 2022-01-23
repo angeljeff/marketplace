@@ -28,7 +28,7 @@ export class SeccionTiendaComponent implements OnInit {
 
   nowCierre: Date = new Date();
   cc = ""
-  existeTienda = true;
+  existeTienda = false;
   listaCantones : Canton []=[]
   mensajeLoading=""
   mostrarLoading=false
