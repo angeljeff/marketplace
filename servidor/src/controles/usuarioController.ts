@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import pool from '../base_datos';
+const jwt = require('jsonwebtoken');
 
 class UsuarioControl {
     public async crear(req: Request, res: Response): Promise<void> {
@@ -33,6 +34,16 @@ class UsuarioControl {
     public async eliminar(req: Request, res: Response): Promise<void> {
         const usuario = await pool.query("UPDATE usuarios SET  Activo = 0 WHERE cedula = ?",[ req.params.cedula]);
         res.json({ message: 'Usuario ELIMINADO' });
+    }
+
+    public async login(req: Request, res: Response):Promise<any>{
+        const usuario = await pool.query("SELECT * from usuarios WHERE cedula = ? AND contrasenia = ?",[ req.body.cedula, req.body.contrasenia]);
+        if (usuario.length == 0) 
+            return res.status(401).send('Usuario o Contraseña Incorrecta');
+
+        const token = jwt.sign({ cedula: usuario.cedula }, 'secretkey');
+        return res.status(200).json({ token });
+       
     }
    
 }

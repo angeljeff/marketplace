@@ -15,6 +15,7 @@ class SubCategoriaRoutes {
         this.router.get('/obtener/:id_sub_categoria', subcategoriaController_1.default.obtenerPorid);
         this.router.post('/Agregar', subcategoriaController_1.default.agregar_subcategoria);
         this.router.put('/actualizar/:id_sub_categoria', subcategoriaController_1.default.actualizar);
+        this.router.post('/obtenerporcat/:id_categoria', subcategoriaController_1.default.obtenerPoridcat);
     }
 }
 const subcategoria = new SubCategoriaRoutes();

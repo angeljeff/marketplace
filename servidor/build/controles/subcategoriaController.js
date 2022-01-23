@@ -33,6 +33,13 @@ class SubCategoriasController {
             res.send(subcat);
         });
     }
+    obtenerPoridcat(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const subcategoria1 = req.params.id_categoria;
+            const subcat1 = yield base_datos_1.default.query(`SELECT * FROM sub_categorias where id_categoria ='${subcategoria1}'`);
+            res.send(subcat1);
+        });
+    }
     actualizar(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const agrega_producto = yield base_datos_1.default.query("UPDATE sub_categorias SET  descripcion= ?,   WHERE id_sub_categoria = ?", [req.body.descripcion, req.params.id_sub_categoria]);

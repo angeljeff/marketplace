@@ -34,44 +34,82 @@
 
                         <div class="menu__content" >
                             <ul class="menu--dropdown" >
-                                <li>
-                                	<a href="#"><i class="icon-star"></i> Hot Promotions</a>
-                                </li>
+                                <!-- <li>
+                                	<a href="#"><i class="icon-star"></i> Plaguicidas</a>
+                                </li> -->
                                 <li class="menu-item-has-children has-mega-menu">
-                                	<a href="#"><i class="icon-laundry"></i> Consumer Electronic</a>
+                                	<a href="#"><i class="icon-laundry"></i>Plaguicidas</a>
                                     <div class="mega-menu">
                                         <div class="mega-menu__column">
-                                            <h4>Electronic<span class="sub-toggle"></span></h4>
+                                            <h4 (click)="llamarporcategorias([1,2])">Fungicidas<span class="sub-toggle"></span></h4>
                                             <ul class="mega-menu__list">
-                                                <li><a href="#">Home Audio &amp; Theathers</a>
+                                                <li><a (click)="llamarsubcategorias(1)">De contacto</a>
                                                 </li>
-                                                <li><a href="#">TV &amp; Videos</a>
+                                                <li><a (click)="llamarsubcategorias(2)">Sistémico</a>
                                                 </li>
-                                                <li><a href="#">Camera, Photos &amp; Videos</a>
-                                                </li>
-                                                <li><a href="#">Cellphones &amp; Accessories</a>
-                                                </li>
-                                                <li><a href="#">Headphones</a>
-                                                </li>
-                                                <li><a href="#">Videosgames</a>
-                                                </li>
-                                                <li><a href="#">Wireless Speakers</a>
-                                                </li>
-                                                <li><a href="#">Office Electronic</a>
-                                                </li>
+                                                
                                             </ul>
                                         </div>
                                         <div class="mega-menu__column">
-                                            <h4>Accessories &amp; Parts<span class="sub-toggle"></span></h4>
+                                            <h4 (click)="llamarporcategorias([5,6])">Insecticidas<span class="sub-toggle"></span></h4>
                                             <ul class="mega-menu__list">
-                                                <li><a href="#">Digital Cables</a>
+                                                <li><a (click)="llamarsubcategorias(5)">Orgánicos</a>
                                                 </li>
-                                                <li><a href="#">Audio &amp; Video Cables</a>
+                                                <li><a (click)="llamarsubcategorias(6)">Inorgánicos</a>
                                                 </li>
-                                                <li><a href="#">Batteries</a>
+                                                
+                                            </ul>
+                                        </div>
+                                        <div class="mega-menu__column">
+                                            <h4 (click)="llamarporcategorias([7,8])">Acaricidas<span class="sub-toggle"></span></h4>
+                                            <ul class="mega-menu__list">
+                                                <li><a (click)="llamarsubcategorias(7)">Doméstico</a>
+                                                </li>
+                                                <li><a (click)="llamarsubcategorias(8)">Ganadero</a>
+                                                </li>
+                                                
+                                            </ul>
+                                        </div>
+                                        <div class="mega-menu__column">
+                                            <h4 (click)="llamarporcategorias([9,10])">Rodenticidas<span class="sub-toggle"></span></h4>
+                                            <ul class="mega-menu__list">
+                                                <li><a (click)="llamarsubcategorias(9)">De acción acelerada</a>
+                                                </li>
+                                                <li><a (click)="llamarsubcategorias(10)">De acción lenta</a>
+                                                </li>
+                                                
+                                            </ul>
+                                        </div>
+                                        <div class="mega-menu__column">
+                                            <h4 (click)="llamarporcategorias([11,12,13,14])">Herbicidas<span class="sub-toggle"></span></h4>
+                                            <ul class="mega-menu__list">
+                                                <li><a (click)="llamarsubcategorias(11)">Residuales</a>
+                                                </li>
+                                                <li><a (click)="llamarsubcategorias(12)">Foliares</a>
+                                                </li>
+                                                <li><a (click)="llamarsubcategorias(13)">Presiembra</a>
+                                                </li>
+                                                <li><a (click)="llamarsubcategorias(14)">Postsiembra</a>
                                                 </li>
                                             </ul>
                                         </div>
+                                    </div>
+                                </li>
+                                <li class="menu-item-has-children has-mega-menu">
+                                	<a href="" (click)="llamarporcategorias([15,16,17])"><i class="icon-laundry"></i> Fertilizantes</a>
+                                    <div class="mega-menu">
+                                        <div class="mega-menu__column">                             
+                                            <ul class="mega-menu__list">
+                                                <li><a (click)="llamarsubcategorias(15)">De origen natural</a>
+                                                </li>
+                                                <li><a (click)="llamarsubcategorias(16)">Fabricados</a>
+                                                </li>
+                                                <li><a (click)="llamarsubcategorias(17)">Biofertilizantes</a>
+                                                </li>
+                                               
+                                            </ul>
+                                        </div>
+                                       
                                     </div>
                                 </li>
                                
@@ -89,17 +127,8 @@
 
                 <div class="header__content-center">
                     <form class="ps-form--quick-search" action="index.html" method="get">
-                        <div class="form-group--icon">
-                        	<i class="icon-chevron-down"></i>
-                            <select class="form-control">
-                                <option value="1">All</option>
-                                <option value="1">Smartphone</option>
-                                <option value="1">Sounds</option>
-                                <option value="1">Technology toys</option>
-                            </select>
-                        </div>
-                        <input class="form-control" type="text" placeholder="I'm shopping for...">
-                        <button>Search</button>
+                        <input class="form-control" type="text" placeholder="Nombre del producto">
+                        <button>Buscar</button>
                     </form>
                 </div>
 
@@ -191,9 +220,13 @@
                             <div class="ps-block__left">
                             	<i class="icon-user"></i>
                             </div>
-                            <div class="ps-block__right">
+                            <div class="ps-block__right" *ngIf="!isLoged">
                             	<a routerLink="/login">Ingresar</a>
                             	<a routerLink="/register">Registrar</a>
+                            </div>
+                            <div class="ps-block__right" *ngIf="isLoged">
+                                <a >{{nombreUsuario}}</a>
+                                <a (click)="logout()">Salir</a>
                             </div>
                         </div>
 
@@ -253,11 +286,11 @@
 
                         <div class="ps-block__user-content text-center text-lg-left">
 
-                            <h2 class="text-white">Gilbert Maxiliun</h2>
+                            <h2 class="text-white">{{usuarioLogueado.nombres}}</h2>
 
-                            <p><i class="fas fa-user"></i> maximiluin</p>
+                            <p><i class="fas fa-user"></i> {{usuarioLogueado.cedula}}</p>
 
-                            <p><i class="fas fa-envelope"></i> gopro@gmail.com</p>
+                            <p><i class="fas fa-envelope"></i> {{usuarioLogueado.correo}}</p>
 
                            
 
@@ -312,7 +345,7 @@
                 ======================================--> 
    
                 <div class="ps-section__content" *ngIf="seccionOrdenes">
-                   <app-ordenes-vendedor></app-ordenes-vendedor>
+                   <app-ordenes-vendedor ></app-ordenes-vendedor>
                 </div>
 
                 <div class="ps-section__content" *ngIf="seccionProducto">
@@ -320,7 +353,7 @@
                 </div>
 
                 <div class="ps-section__content" *ngIf="seccionTienda">
-                    <app-seccion-tienda></app-seccion-tienda>
+                    <app-seccion-tienda [objetoUsuario]="usuarioLogueado"></app-seccion-tienda>
                 </div>
 
                 <div class="ps-section__content" *ngIf="seccionPago">

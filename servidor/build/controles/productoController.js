@@ -48,9 +48,16 @@ class ProductoController {
             res.send(pro1);
         });
     }
+    obtenerPoridsubcategoria(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const producto2 = req.params.id_sub_categoria;
+            const pro2 = yield base_datos_1.default.query(`SELECT * FROM productos where id_sub_categoria ='${producto2}'`);
+            res.send(pro2);
+        });
+    }
     actualizar(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const agrega_producto = yield base_datos_1.default.query("UPDATE productos SET  nombre= ?, precio = ? , descripcion = ? , stock = ? , imagen = ? WHERE id_producto = ?", [req.body.nombre, req.body.precio, req.body.descripcion, req.body.stock, req.body.imagen, req.params.id_producto]);
+            const agrega_producto = yield base_datos_1.default.query("UPDATE productos SET  nombre= ?, precio = ? , descripcion = ? , stock = ? , imagen = ? , id_sub_categoria = ? WHERE id_producto = ?", [req.body.nombre, req.body.precio, req.body.descripcion, req.body.stock, req.body.imagen, req.body.id_sub_categoria, req.params.id_producto]);
             res.json({ message: 'Producto actualizado ' });
         });
     }

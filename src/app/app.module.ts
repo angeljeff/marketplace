@@ -58,7 +58,8 @@ import { FormularioComponent } from './paginas/usuario-vendedor/seccion-pago/for
     DxLoadIndicatorModule,
     DxPopupModule,
     DxCheckBoxModule,
-    DxRadioGroupModule
+    DxRadioGroupModule,
+   
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router, ActivatedRouteSnapshot } from '@angular/router';
-import { Usuario } from '../clases/usuario';
+import Swal from 'sweetalert2';
+import { UserLogin, Usuario } from '../clases/usuario';
 import { AuthenService } from './authen.service';
 
 @Injectable()
@@ -18,27 +19,27 @@ export class AuthService {
   }
 
   async logIn(cedula: number, password: string) {
-    var user2 = new Usuario();
-   // user2.cedula = cedula
-    user2.contrasenia = password
+    var login = new UserLogin();
+    login.cedula = cedula
+    login.contrasenia = password
     try{
-        localStorage.setItem('tokenMarketplace', "11111");
-        this.loggedIn = true;
-        localStorage.setItem("loggedMarketplace", this.loggedIn.toString())
-        
-        this.router.navigate(['/usuarioVendedor']);
-
-      /* this.authenService.signIn(user2).subscribe(
+      this.authenService.signIn(login).subscribe(
           res => {
-            localStorage.setItem('token', res.token);
             this.loggedIn = true;
+            localStorage.setItem('token', res.token);
             localStorage.setItem("logged", this.loggedIn.toString())
-            
+            localStorage.setItem("cedulaUser", cedula.toString())
             this.router.navigate(['/principal']);
 
           },
-          error => { alert("Credenciales incorrectas") }
-        ); */
+          error => { 
+            Swal.fire({
+              title: "Usuario o contraseña Incorrecto",
+              showClass: {popup: 'animate__animated animate__fadeInDown'},
+              hideClass: {popup: 'animate__animated animate__fadeOutUp'}
+            })
+           }
+        ); 
      
     }catch(e){
       

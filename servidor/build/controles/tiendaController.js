@@ -40,9 +40,16 @@ class TiendaController {
             res.send(tiend);
         });
     }
+    obtenerPorcedula(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const tiendas = req.params.cedula;
+            const tiendaa = yield base_datos_1.default.query(`SELECT * FROM tiendas where cedula ='${tiendas}'`);
+            res.send(tiendaa);
+        });
+    }
     actualizar_datos_tienda(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const actualiza_tienda = yield base_datos_1.default.query("UPDATE tiendas SET  nombre_tienda= ?, direccion = ? , correo_electronico = ? , hora_apertura = ?, hora_cierre = ?, portada = ?, telefono = ? WHERE id_tienda = ?", [req.body.nombre_tienda, req.body.direccion, req.body.correo_electronico, req.body.hora_apertura, req.body.hora_cierre, req.body.portada, req.body.telefono, req.params.id_tienda]);
+            const actualiza_tienda = yield base_datos_1.default.query("UPDATE tiendas SET  nombre= ?, direccion = ? , correo_electronico = ? , hora_apertura = ?, hora_cierre = ?, descripcion = ?, telefono = ? , id_cantones = ? WHERE id_tienda = ?", [req.body.nombre, req.body.direccion, req.body.correo_electronico, req.body.hora_apertura, req.body.hora_cierre, req.body.descripcion, req.body.telefono, req.body.id_cantones, req.params.id_tienda]);
             res.json({ message: 'tienda actualizada' });
         });
     }

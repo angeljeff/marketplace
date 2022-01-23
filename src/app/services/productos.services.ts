@@ -20,5 +20,14 @@ export class ProductoService{
     return this.http.post<any>(this.URL + `/obtenerpro/${producto.id_tienda}`, producto);
   }
 
+  obtener_productosporid(producto : Producto) {
+    return this.http.post<any>(this.URL + `/obtener/${Number(producto.id_producto)}`, producto);
+  }
+  obtener_porid_subcategorias(producto : Producto) {
+    return this.http.post<any>(this.URL + `/obtenerporidsub/${producto.id_sub_categoria}`, producto);
+  }
+  actualizar(producto : Producto) {
+    return this.http.put<any>(this.URL + `/actualizar/${Number(producto.id_producto)}`, producto);
+  }
   
 }

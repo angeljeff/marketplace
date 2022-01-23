@@ -13,8 +13,9 @@ class ControlUsuario {
     config() {
         this.router.get('/listar', usuarioController_1.default.listar);
         this.router.get('/listarActivos', usuarioController_1.default.listarUsuariosActivos);
-        this.router.get('/obtener/:cedula', usuarioController_1.default.obtenerPorCedula);
+        this.router.post('/obtener/:cedula', usuarioController_1.default.obtenerPorCedula);
         this.router.post('/create', usuarioController_1.default.crear);
+        this.router.post('/login', usuarioController_1.default.login);
         this.router.put('/update/:cedula', usuarioController_1.default.actualizar);
         this.router.put('/eliminar/:cedula', usuarioController_1.default.eliminar);
     }

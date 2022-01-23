@@ -3,8 +3,8 @@
     <div class="container" *ngIf="IsNewTienda">
 
         <div class="ps-section__header">
-            <h1>Nuevo en MarketPlace?</h1>
-            <h4>Congigura tus metodos Pago <br> ...Empecemos</h4>
+            <h1>Nuevo en e-MarketPlace?</h1>
+            <h4>Configura tus métodos Pago <br> ...Empecemos</h4>
         </div>
 
         <div class="row">
@@ -31,7 +31,7 @@
         <div class="container">
 
             <div class="ps-form--account ps-tab-root">
-                <div><h4>Escoga los metodos de Pago para su tienda</h4></div>
+                <div><h4>Escoja los métodos de Pago para su tienda</h4></div>
             </div>
 
              <div class="row">
@@ -39,17 +39,20 @@
                  
                 <div class="col-md-8" style="text-align: left;">
                     <br><br>
-                    <dx-check-box (value)="tipoPago1" class="textCheck" text="Pago 1"></dx-check-box><br>
+                    <dx-check-box (value)="tipoPago1" class="textCheck" text="Contacto Directo"></dx-check-box><br>
                         <div style="margin-right: 4em;margin-left: 4em;">
-                            <p style="color: black;">Metodo de pago ......</p>
+                            <p style="color: black;">Los clientes podrán realizar una orden aquí y procederán a contactarte
+                            inmediatamente para concordar el pago contigo, se mostrará la información de contacto de tu tienda.</p>
                         </div>
-                    <dx-check-box (value)="tipoPago2" class="textCheck" text="Pago 2"></dx-check-box><br>
+                    <dx-check-box (value)="tipoPago2" class="textCheck" text="Pago contra entrega"></dx-check-box><br>
                         <div style="margin-right: 4em;margin-left: 4em;">
-                            <p style="color: black;">Metodo de pago ......</p>
+                            <p style="color: black;">Los clientes podrán realizar el pedido de sus productos por este medio,
+                            y el valor total de la orden se lo cancelará una vez el cliente tenga los productos en sus manos.</p>
                         </div>
-                    <dx-check-box (value)="tipoPago3"  (onValueChanged)="cambiar($event)" class="textCheck" text="Transferencia"></dx-check-box><br>
+                    <dx-check-box (value)="tipoPago3"  (onValueChanged)="cambiar($event)" class="textCheck" text="Transferencia/Depósito Bancario"></dx-check-box><br>
                         <div style="margin-right: 4em;margin-left: 4em;">
-                            <p style="color: black;">Metodo de pago ......</p>
+                            <p style="color: black;">Los clientes una vez hayan seleccionado todos los productos que desea adquirir de tu tienda,
+                            tendrá que subir el comprobante de pago al número de cuenta que configure para este proceso.</p>
                         </div>
 
                         <div class="row" *ngIf="mostrarDatosPago">

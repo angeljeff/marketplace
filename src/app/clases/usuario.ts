@@ -16,7 +16,7 @@ export class Usuario{
        this.nombres = ""
        this.apellidos = ""
        this.cedula = ""
-       this.id_cantones=2
+       this.id_cantones= 0
        this.correo = ""
        this.contrasenia = ""
        this.direccion=""
@@ -24,7 +24,16 @@ export class Usuario{
        this.celular= ""
        this.genero= ""
        
-       this.id_tipo_usuario=1
+       this.id_tipo_usuario=0
 
+    }
+}
+
+export class UserLogin{
+    cedula:number;
+    contrasenia: string
+    constructor(){
+       this.cedula = 0
+       this.contrasenia = ""
     }
 }

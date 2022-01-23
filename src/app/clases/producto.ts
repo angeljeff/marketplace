@@ -20,7 +20,7 @@ export class Producto{
        this.contador = 0
        this.descripcion = ""
        this.id_sub_categoria=1
-       this.id_tienda= 1
+       this.id_tienda= 2
        this.id_estado_pro= 1
        this.imagen= "https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png"
 
@@ -44,7 +44,7 @@ export class Productodto{
     constructor(){
        this.id_producto = ""
        this.nombre = ""
-       this.precio = 0.0
+       this.precio = 0
        this.stock= 0
        this.contador = 0
        this.descripcion = ""
@@ -53,6 +53,18 @@ export class Productodto{
        this.id_estado_pro= 1
        this.nombre_estado=""
        this.imagen= "https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png"
+
+    }
+}
+
+   
+
+
+export class Productoreserva{
+    precio: string;
+    constructor(){ 
+       this.precio = ""
+      
 
     }
 }

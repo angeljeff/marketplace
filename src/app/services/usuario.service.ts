@@ -16,5 +16,23 @@ export class UsuarioService{
     return this.http.post<any>(this.URL + "/create", usuario);
   }
 
+  actualizar(usuario : Usuario) {
+    return this.http.put<any>(this.URL + `/update/${usuario.cedula}`, usuario);
+  }
+
+  obtenerDatoCedula(usuario : Usuario) {
+    return this.http.post<any>(this.URL + `/obtener/${usuario.cedula}`, usuario);
+  }
+
+  setearObjetoUsuario(usuario : Usuario){
+    //console.log(usuario);
+    //this.usuario = usuario;
+  }
+
+  obtenerObjetoUsuario(){
+    //console.log("voy a devolver",this.usuario)
+   //return this.usuario;
+  }
+
   
 }

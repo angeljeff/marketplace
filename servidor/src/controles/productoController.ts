@@ -33,9 +33,16 @@ class ProductoController {
         res.send(pro1);
     }
 
+    public async obtenerPoridsubcategoria(req: Request, res: Response): Promise<void> {
+        const producto2 = req.params.id_sub_categoria
+        const pro2 = await pool.query(`SELECT * FROM productos where id_sub_categoria ='${producto2}'`);
+        
+        res.send(pro2);
+    }
+
     public async actualizar(req: Request, res: Response): Promise<void> {
-        const agrega_producto = await pool.query("UPDATE productos SET  nombre= ?, precio = ? , descripcion = ? , stock = ? , imagen = ? WHERE id_producto = ?",
-        [req.body.nombre, req.body.precio,  req.body.descripcion,  req.body.stock ,  req.body.imagen,  req.params.id_producto]);
+        const agrega_producto = await pool.query("UPDATE productos SET  nombre= ?, precio = ? , descripcion = ? , stock = ? , imagen = ? , id_sub_categoria = ? WHERE id_producto = ?",
+        [req.body.nombre, req.body.precio,  req.body.descripcion,  req.body.stock ,  req.body.imagen, req.body.id_sub_categoria ,  req.params.id_producto]);
         res.json({ message: 'Producto actualizado ' });
     }
 

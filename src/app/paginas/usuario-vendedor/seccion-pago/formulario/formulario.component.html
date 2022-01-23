@@ -1,5 +1,5 @@
 <div style="color: black;text-align: center;padding: 1em;" class="card">
-    <div style="color: black;font-weight: bold;"> <p>Configure sus datos personales</p></div>
+    <div style="color: black;font-weight: bold;"> <p>Configure los datos de su cuenta</p></div>
     <div>
         <dx-radio-group
         [items]="menu"
@@ -12,17 +12,17 @@
     <div class="row" *ngIf="newCuenta">
         <div class="col-md-4">
             <div class="form-group">
-                <dx-text-box [(value)]="newDatosPago.nombres" class="controles" placeholder="Nombres"></dx-text-box>
+                <dx-text-box [(value)]="newDatosPago.titular_cuenta" class="controles" placeholder="Titular de la cuenta"></dx-text-box>
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
-                <dx-text-box [(value)]="newDatosPago.cedula" class="controles" placeholder="Cedula"></dx-text-box>
+                <dx-text-box [(value)]="newDatosPago.cedula_titular" class="controles" placeholder="Cédula"></dx-text-box>
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
-                <dx-text-box [(value)]="newDatosPago.banco" class="controles" placeholder="Banco"></dx-text-box>
+                <dx-select-box [items]="lista_bancos" [(value)]="newDatosPago.id_banco"  valueExpr="id_banco" displayExpr="descripcion" placeholder="Banco"></dx-select-box>
             </div>
         </div>
         <div class="col-md-4">
@@ -32,7 +32,7 @@
         </div>
         <div class="col-md-4">
             <div class="form-group">
-                <dx-text-box [(value)]="newDatosPago.tipoCuenta" class="controles" placeholder="Tipo Cuenta"></dx-text-box>
+                <dx-select-box [items]="tipocuenta" [(value)]="newDatosPago.tipoCuenta"  placeholder="Tipo de cuenta"></dx-select-box>
             </div>
         </div>
         <div class="col-md-4">
@@ -42,7 +42,7 @@
         <div class="col-md-4"></div>
         <div class="col-md-4">
             <div class="form-group">
-                <button class="ps-btn ps-btn--fullwidth color-principal" (click)="guardar()">Registrar</button>
+                <button class="ps-btn ps-btn--fullwidth color-principal" (click)="verificarcampos()">Registrar</button>
             </div>
         </div>
         <div class="col-md-4"></div>

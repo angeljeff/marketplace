@@ -1,13 +1,13 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
-import { Usuario } from "../clases/usuario";
+import { UserLogin, Usuario } from "../clases/usuario";
 
 @Injectable({
   providedIn: "root",
 })
 export class AuthenService{
-  userEmail = "";
+  cedula = "";
   userLogin: any;
   usuario: Usuario = new Usuario();
   usuarios: Usuario[] = [];
@@ -23,10 +23,10 @@ export class AuthenService{
     return this.http.post<any>(this.URL + "/register", usuario);
   }
 
-  signIn(usuario : Usuario) {
-    this.userEmail = usuario.cedula ?? "";
-    localStorage.setItem("maily", (this.userEmail.toString()));
-    return this.http.post<any>(this.URL + "/login", Usuario);
+  signIn(usuario : UserLogin) {
+    this.cedula = usuario.cedula.toString() ?? "";
+    //localStorage.setItem("cedulaUser", (this.cedula.toString()));
+    return this.http.post<any>(this.URL + "/login", usuario);
   }
 
   loggedIn() {
@@ -53,7 +53,9 @@ export class AuthenService{
     return this.http.get(this.URL + "/getUsers");
   }
 
-  getUserLogueado(correo: string) {
-    return this.http.get(this.URL + `/getUsers1/${correo}`);
+  getUserLogueado(cedula: string) {
+    var user = new Usuario()
+    user.cedula = cedula
+    return this.http.post(this.URL + `/obtener/${cedula}`,user);
   }
 }

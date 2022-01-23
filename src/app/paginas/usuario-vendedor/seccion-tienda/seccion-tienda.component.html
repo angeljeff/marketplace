@@ -45,7 +45,8 @@
 
                         <div class="ps-form__content">
 
-                            <h5>Registra una Nueva Tienda</h5>
+                            <h5 *ngIf="!isedicion">Registre su Tienda</h5>
+                            <h5 *ngIf="isedicion">Actualice los datos de su tienda</h5>
 
                             <div class="form-group">
                                 <dx-text-box [(value)]="newTienda.nombre" class="controles" placeholder="Nombre Tienda"></dx-text-box>
@@ -54,33 +55,42 @@
                             <div class="form-group">
                                 <dx-text-box [(value)]="newTienda.direccion" class="controles" placeholder="Dirección"></dx-text-box>
                             </div>
+                            <div class="form-group">
+                                <dx-text-box [(value)]="newTienda.correo_electronico" class="controles" placeholder="Correo electronico">
+                                    <dx-validator> <dxi-validation-rule type="required"  message="Correo es requerido" ></dxi-validation-rule>
+                                        <dxi-validation-rule   type="email"  message="Correo es invalido"  ></dxi-validation-rule>  </dx-validator>  </dx-text-box>
+                            </div>
+                            <div class="form-group">
+                                <dx-select-box [items]="listaCantones" [(value)]="newTienda.id_cantones"  valueExpr="id_cantones" displayExpr="descripcion" placeholder="Seleccionar canton"></dx-select-box>
+                            </div>
+            
 
                             <div class="form-group">
                                 <dx-text-box [(value)]="newTienda.telefono" class="controles" placeholder="Telefono"></dx-text-box>
                             </div>
 
                             <div class="form-group">
-                                <dx-date-box [value]="nowApertura" type="time"> </dx-date-box>
+                                <dx-date-box   [(value)]="hora" type="time" placeholder="Hora apertura"> </dx-date-box>
                             </div>
 
                              <div class="form-group">
-                                <dx-date-box [value]="nowCierre" type="time"> </dx-date-box>
+                                <dx-date-box [(value)]="hora2" type="time" placeholder="Hora cierre"> </dx-date-box>
                             </div>
 
                             <!-- <div class="form-group">
                                 <dx-select-box [items]="cantones"  displayExpr="nombre" placeholder="Seleccionar Canton" (onValueChanged)="setearValorCanton($event)" ></dx-select-box>
                             </div> -->
 
-                           
-
                              <div class="form-group">
                                 <dx-text-area [height]="90" [maxLength]="500" [(value)]="newTienda.descripcion" placeholder="Descripcion"></dx-text-area>
                             </div>
 
-
+                            <div class="form-group">
+                                <button class="ps-btn ps-btn--fullwidth color-principal"  *ngIf="isedicion" (click)=" verificarcampos()">Actualizar </button>
+                            </div>
 
                             <div class="form-group">
-                                <button class="ps-btn ps-btn--fullwidth color-principal" (click)="registrar()">Registrar</button>
+                                <button class="ps-btn ps-btn--fullwidth color-principal" *ngIf="!isedicion" (click)=" verificarcampos()">Registrar</button>
                             </div>
 
                             <br>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Producto } from '../usuario-vendedor.component';
+import { Productos } from '../usuario-vendedor.component';
 
 @Component({
   selector: 'app-ordenes-vendedor',
@@ -8,7 +8,7 @@ import { Producto } from '../usuario-vendedor.component';
 })
 export class OrdenesVendedorComponent implements OnInit {
 
-  productos: Producto[] = [{
+  productos: Productos[] = [{
   ID: 1,
   Nombre: 'Producto1',
   Cantidad: 10,

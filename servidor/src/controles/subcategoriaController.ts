@@ -18,6 +18,11 @@ class SubCategoriasController {
         const subcat = await pool.query(`SELECT * FROM sub_categorias where id_sub_categoria ='${subcategoria}'`);
         res.send(subcat);
     }
+    public async obtenerPoridcat(req: Request, res: Response): Promise<void> {
+        const subcategoria1 = req.params.id_categoria
+        const subcat1 = await pool.query(`SELECT * FROM sub_categorias where id_categoria ='${subcategoria1}'`);
+        res.send(subcat1);
+    }
 
     public async actualizar(req: Request, res: Response): Promise<void> {
         const agrega_producto = await pool.query("UPDATE sub_categorias SET  descripcion= ?,   WHERE id_sub_categoria = ?",

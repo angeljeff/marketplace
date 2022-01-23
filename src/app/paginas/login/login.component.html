@@ -1,211 +1,216 @@
 
 <body>
+    <header class="header header--standard header--market-place-4" data-sticky="true">
+        <!--=====================================
+      Header Content
+      ======================================-->
 
-     <header class="header header--standard header--market-place-4" data-sticky="true">
-      	<!--=====================================
-		Header Content
-		======================================-->
+      <div class="header__content">
 
-        <div class="header__content">
+          <div class="container">
+              <div class="header__content-left">
+                  <!--=====================================
+                  Logo
+                  ======================================-->
+                  <a class="ps-logo" href="index.html">
+                  <img src="../../../assets/icono.png" class="pt-3" alt="">
+                  </a>
+                  <!--=====================================
+                  Menú
+                  ======================================-->
+                  <div class="menu--product-categories">
+                      
+                      <div class="menu__toggle">
+                          <i class="icon-menu"></i>
+                          <span> Shop by Department</span>
+                      </div>
 
-            <div class="container">
+                      <div class="menu__content" >
+                          <ul class="menu--dropdown" >
+                              <li class="menu-item-has-children has-mega-menu">
+                                  <a href="#"><i class="icon-laundry"></i>Plaguicidas</a>
+                                  <div class="mega-menu">
+                                      <div class="mega-menu__column">
+                                          <h4 (click)="llamarporcategorias([1,2])">Fungicidas<span class="sub-toggle"></span></h4>
+                                          <ul class="mega-menu__list">
+                                              <li><a (click)="llamarsubcategorias(1)">De contacto</a>
+                                              </li>
+                                              <li><a (click)="llamarsubcategorias(2)">Sistémico</a>
+                                              </li>
+                                              
+                                          </ul>
+                                      </div>
+                                      <div class="mega-menu__column">
+                                          <h4 (click)="llamarporcategorias([5,6])">Insecticidas<span class="sub-toggle"></span></h4>
+                                          <ul class="mega-menu__list">
+                                              <li><a (click)="llamarsubcategorias(5)">Orgánicos</a>
+                                              </li>
+                                              <li><a (click)="llamarsubcategorias(6)">Inorgánicos</a>
+                                              </li>
+                                              
+                                          </ul>
+                                      </div>
+                                      <div class="mega-menu__column">
+                                          <h4 (click)="llamarporcategorias([7,8])">Acaricidas<span class="sub-toggle"></span></h4>
+                                          <ul class="mega-menu__list">
+                                              <li><a (click)="llamarsubcategorias(7)">Doméstico</a>
+                                              </li>
+                                              <li><a (click)="llamarsubcategorias(8)">Ganadero</a>
+                                              </li>
+                                              
+                                          </ul>
+                                      </div>
+                                      <div class="mega-menu__column">
+                                          <h4 (click)="llamarporcategorias([9,10])">Rodenticidas<span class="sub-toggle"></span></h4>
+                                          <ul class="mega-menu__list">
+                                              <li><a (click)="llamarsubcategorias(9)">De acción acelerada</a>
+                                              </li>
+                                              <li><a (click)="llamarsubcategorias(10)">De acción lenta</a>
+                                              </li>
+                                              
+                                          </ul>
+                                      </div>
+                                      <div class="mega-menu__column">
+                                          <h4 (click)="llamarporcategorias([11,12,13,14])">Herbicidas<span class="sub-toggle"></span></h4>
+                                          <ul class="mega-menu__list">
+                                              <li><a (click)="llamarsubcategorias(11)">Residuales</a>
+                                              </li>
+                                              <li><a (click)="llamarsubcategorias(12)">Foliares</a>
+                                              </li>
+                                              <li><a (click)="llamarsubcategorias(13)">Presiembra</a>
+                                              </li>
+                                              <li><a (click)="llamarsubcategorias(14)">Postsiembra</a>
+                                              </li>
+                                          </ul>
+                                      </div>
+                                  </div>
+                              </li>
+                              <li class="menu-item-has-children has-mega-menu">
+                                  <a href="" (click)="llamarporcategorias([15,16,17])"><i class="icon-laundry"></i> Fertilizantes</a>
+                                  <div class="mega-menu">
+                                      <div class="mega-menu__column">                             
+                                          <ul class="mega-menu__list">
+                                              <li><a (click)="llamarsubcategorias(15)">De origen natural</a>
+                                              </li>
+                                              <li><a (click)="llamarsubcategorias(16)">Fabricados</a>
+                                              </li>
+                                              <li><a (click)="llamarsubcategorias(17)">Biofertilizantes</a>
+                                              </li>
+                                             
+                                          </ul>
+                                      </div>                                    
+                                  </div>
+                              </li>                          
+                          </ul>
+                      </div>
+                  </div><!-- End menu-->
+              </div><!-- End Header Content Left-->
 
-                <div class="header__content-left">
+              <!--=====================================
+              Search
+              ======================================-->
 
-                	<!--=====================================
-					Logo
-					======================================-->
+              <div class="header__content-center">
+                  <form class="ps-form--quick-search" action="index.html" method="get">
+                      
+                      <input class="form-control" type="text" placeholder="Nombre del producto">
+                      <button>Buscar</button>
+                  </form>
+              </div>
 
-                	<a class="ps-logo" href="index.html">
-                    <img src="../../../assets/icono.png" class="pt-3" alt="">
-                	</a>
+              <div class="header__content-right">
+                  <div class="header__actions">
 
-                	<!--=====================================
-					Menú
-					======================================-->
+                      <!--=====================================
+                      Wishlist
+                      ======================================-->
 
-                    <div class="menu--product-categories">
-                        
-                        <div class="menu__toggle">
-                        	<i class="icon-menu"></i>
-                        	<span> Shop by Department</span>
-                        </div>
+                      <a class="header__extra" href="#">
+                          <i class="icon-heart"></i><span><i>0</i></span>
+                      </a>
 
-                        <div class="menu__content" >
-                            <ul class="menu--dropdown" >
-                                <li>
-                                	<a href="#"><i class="icon-star"></i> Hot Promotions</a>
-                                </li>
-                                <li class="menu-item-has-children has-mega-menu">
-                                	<a href="#"><i class="icon-laundry"></i> Consumer Electronic</a>
-                                    <div class="mega-menu">
-                                        <div class="mega-menu__column">
-                                            <h4>Electronic<span class="sub-toggle"></span></h4>
-                                            <ul class="mega-menu__list">
-                                                <li><a href="#">Home Audio &amp; Theathers</a>
-                                                </li>
-                                                <li><a href="#">TV &amp; Videos</a>
-                                                </li>
-                                                <li><a href="#">Camera, Photos &amp; Videos</a>
-                                                </li>
-                                                <li><a href="#">Cellphones &amp; Accessories</a>
-                                                </li>
-                                                <li><a href="#">Headphones</a>
-                                                </li>
-                                                <li><a href="#">Videosgames</a>
-                                                </li>
-                                                <li><a href="#">Wireless Speakers</a>
-                                                </li>
-                                                <li><a href="#">Office Electronic</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="mega-menu__column">
-                                            <h4>Accessories &amp; Parts<span class="sub-toggle"></span></h4>
-                                            <ul class="mega-menu__list">
-                                                <li><a href="#">Digital Cables</a>
-                                                </li>
-                                                <li><a href="#">Audio &amp; Video Cables</a>
-                                                </li>
-                                                <li><a href="#">Batteries</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </li>
-                               
-                            </ul>
+                      <!--=====================================
+                      Cart
+                      ======================================-->
 
-                        </div>
+                      <div class="ps-cart--mini">
 
-                    </div><!-- End menu-->
+                          <a class="header__extra" href="#">
+                              <i class="icon-bag2"></i><span><i>0</i></span>
+                          </a>
+                          <div class="ps-cart__content">
+                              <div class="ps-cart__items">
+                                  <div class="ps-product--cart-mobile">
+                                      <div class="ps-product__thumbnail">
+                                          <a href="#">
+                                              <img src="../shared/../shared/img/products/clothing/7.jpg" alt="">
+                                          </a>
+                                      </div>
 
-                </div><!-- End Header Content Left-->
+                                      <div class="ps-product__content">
+                                          <a class="ps-product__remove" href="#">
+                                              <i class="icon-cross"></i>
+                                          </a>
+                                          <a href="product-default.html">MVMTH Classical Leather Watch In Black</a>
+                                          <p><strong>Sold by:</strong> YOUNG SHOP</p>
+                                          <small>1 x $59.99</small>
+                                      </div>
+                                  </div>
 
-                <!--=====================================
-				Search
-				======================================-->
+                                  <div class="ps-product--cart-mobile">
+                                      <div class="ps-product__thumbnail">
+                                          <a href="#">
+                                              <img src="../shared/img/products/clothing/5.jpg" alt="">
+                                          </a>
+                                      </div>
 
-                <div class="header__content-center">
-                    <form class="ps-form--quick-search" action="index.html" method="get">
-                        <div class="form-group--icon">
-                        	<i class="icon-chevron-down"></i>
-                            <select class="form-control">
-                                <option value="1">All</option>
-                                <option value="1">Smartphone</option>
-                                <option value="1">Sounds</option>
-                                <option value="1">Technology toys</option>
-                            </select>
-                        </div>
-                        <input class="form-control" type="text" placeholder="I'm shopping for...">
-                        <button>Search</button>
-                    </form>
-                </div>
+                                      <div class="ps-product__content">
+                                          <a class="ps-product__remove" href="#">
+                                              <i class="icon-cross"></i>
+                                          </a>
+                                          <a href="product-default.html">Sleeve Linen Blend Caro Pane Shirt</a>
+                                          <p><strong>Sold by:</strong> YOUNG SHOP</p>
+                                          <small>1 x $59.99</small>
+                                      </div>
 
-                <div class="header__content-right">
+                                  </div>
 
-                    <div class="header__actions">
+                              </div>
 
-                    	<!--=====================================
-						Wishlist
-						======================================-->
+                              <div class="ps-cart__footer">
 
-                    	<a class="header__extra" href="#">
-                    		<i class="icon-heart"></i><span><i>0</i></span>
-                    	</a>
+                                  <h3>Sub Total:<strong>$59.99</strong></h3>
+                                  <figure>
+                                      <a class="ps-btn" href="shopping-cart.html">View Cart</a>
+                                      <a class="ps-btn" href="checkout.html">Checkout</a>
+                                  </figure>
 
-                    	<!--=====================================
-						Cart
-						======================================-->
+                              </div>
 
-                        <div class="ps-cart--mini">
+                          </div>
 
-                        	<a class="header__extra" href="#">
-                        		<i class="icon-bag2"></i><span><i>0</i></span>
-                        	</a>
+                      </div>
 
-                            <div class="ps-cart__content">
+                      <!--=====================================
+                      Login and Register
+                      ======================================-->
 
-                                <div class="ps-cart__items">
+                      <div class="ps-block--user-header">
+                          <div class="ps-block__left">
+                              <i class="icon-user"></i>
+                          </div>
+                          <div class="ps-block__right">
+                              <a routerLink="/login">Ingresar</a>
+                              <a routerLink="/register">Registrar</a>
+                          </div>
+                         
+                      </div>
+                  </div><!-- End Header Actions-->
+              </div><!-- End Header Content Right-->
+          </div><!-- End Container-->
+      </div><!-- End Header Content-->
 
-                                    <div class="ps-product--cart-mobile">
-
-                                        <div class="ps-product__thumbnail">
-                                        	<a href="#">
-                                        		<img src="../shared/../shared/img/products/clothing/7.jpg" alt="">
-                                        	</a>
-                                        </div>
-
-                                        <div class="ps-product__content">
-                                        	<a class="ps-product__remove" href="#">
-                                        		<i class="icon-cross"></i>
-                                        	</a>
-                                        	<a href="product-default.html">MVMTH Classical Leather Watch In Black</a>
-                                            <p><strong>Sold by:</strong> YOUNG SHOP</p>
-                                            <small>1 x $59.99</small>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="ps-product--cart-mobile">
-
-                                        <div class="ps-product__thumbnail">
-                                        	<a href="#">
-                                        		<img src="../shared/img/products/clothing/5.jpg" alt="">
-                                        	</a>
-                                        </div>
-
-                                        <div class="ps-product__content">
-                                        	<a class="ps-product__remove" href="#">
-                                        		<i class="icon-cross"></i>
-                                        	</a>
-                                        	<a href="product-default.html">Sleeve Linen Blend Caro Pane Shirt</a>
-                                            <p><strong>Sold by:</strong> YOUNG SHOP</p>
-                                            <small>1 x $59.99</small>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                                <div class="ps-cart__footer">
-
-                                    <h3>Sub Total:<strong>$59.99</strong></h3>
-                                    <figure>
-                                    	<a class="ps-btn" href="shopping-cart.html">View Cart</a>
-                                    	<a class="ps-btn" href="checkout.html">Checkout</a>
-                                    </figure>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-						<!--=====================================
-						Login and Register
-						======================================-->
-
-                        <div class="ps-block--user-header">
-                            <div class="ps-block__left">
-                            	<i class="icon-user"></i>
-                            </div>
-                            <div class="ps-block__right">
-                            	<a routerLink="/login">Ingresar</a>
-                            	<a routerLink="/register">Registrar</a>
-                            </div>
-                        </div>
-
-                    </div><!-- End Header Actions-->
-
-                </div><!-- End Header Content Right-->
-
-            </div><!-- End Container-->
-
-        </div><!-- End Header Content-->
-
-    </header>
-
+  </header>
 
 	
  
@@ -216,17 +221,12 @@
     ======================================--> 
 
     <div class="ps-my-account">
-
         <div class="container">
-
             <div class="ps-form--account ps-tab-root">
-
                 <ul class="ps-tab-list">
                     <li class="active"><a>Login</a></li>
                 </ul>
-
                 <div class="ps-tabs">
-
                     <!--=====================================
                     Login Form
                     ======================================--> 
@@ -234,44 +234,24 @@
                     <div class="ps-tab active" >
 
                         <div class="ps-form__content">
-
                             <h5>Ingresa en tu cuenta</h5>
-
                             <div class="form-group">
-                                <dx-text-box [(value)]="user" class="controles" placeholder="Correo" [disabled]="false"></dx-text-box>
-
-
-                               <!--  <input class="form-control" formControlName="user" type="text" placeholder="Correo"> -->
-
+                                <dx-text-box [(value)]="user" class="controles" placeholder="Cédula" [disabled]="false"></dx-text-box>
                             </div>
-
                             <div class="form-group form-forgot">
-
-                                <dx-text-box [(value)]="password" class="controles" placeholder="Contraseña" [disabled]="false"></dx-text-box>
-                                <!-- <input class="form-control" formControlName="password" type="text" placeholder="Contraseña"> -->
-
-
+                               <!--  <dx-text-box [(value)]="password" class="controles" placeholder="Contraseña" [disabled]="false"></dx-text-box> -->
+                                <dx-text-box [(value)]="password" class="controles" placeholder="Contraseña" stylingMode="filled" [(mode)]="passwordMode"  > <dxi-button
+                                    name="today" location="after" [options]="passwordButton" ></dxi-button></dx-text-box>
                             </div>
-
                             <div>
-
                                 <button class="ps-btn ps-btn--fullwidth color-principal" (click)="signIn()">Ingresar</button>
-
                             </div>
                             <br>
-
                         </div>
 
                     </div><!-- End Login Form -->
-
-              
                 </div>
-
             </div>
-
         </div>
-
     </div>
-
-	
 </body>

@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const base_datos_1 = __importDefault(require("../base_datos"));
+const jwt = require('jsonwebtoken');
 class UsuarioControl {
     crear(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -50,6 +51,15 @@ class UsuarioControl {
         return __awaiter(this, void 0, void 0, function* () {
             const usuario = yield base_datos_1.default.query("UPDATE usuarios SET  Activo = 0 WHERE cedula = ?", [req.params.cedula]);
             res.json({ message: 'Usuario ELIMINADO' });
+        });
+    }
+    login(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const usuario = yield base_datos_1.default.query("SELECT * from usuarios WHERE cedula = ? AND contrasenia = ?", [req.body.cedula, req.body.contrasenia]);
+            if (usuario.length == 0)
+                return res.status(401).send('Usuario o Contraseña Incorrecta');
+            const token = jwt.sign({ cedula: usuario.cedula }, 'secretkey');
+            return res.status(200).json({ token });
         });
     }
 }

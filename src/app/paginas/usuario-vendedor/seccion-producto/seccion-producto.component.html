@@ -44,7 +44,8 @@
     <div class="ps-section__content" *ngIf="seeccionNewProducto">
 
         <div class="row">
-        <div class="col-md-12" style="text-align: center;"><h2>Nuevo Producto</h2></div>
+        <div class="col-md-12" *ngIf="!isedicionpro;" style="text-align: center;"><h2>Nuevo Producto</h2></div>
+        <div class="col-md-12" *ngIf="isedicionpro;" style="text-align: center;"><h2>Editar producto</h2></div>
         <div class="col-md-2"></div>
         <div class="col-md-8">
             <div class="row">
@@ -57,28 +58,37 @@
                                 <div class="ps-tab active">
                                     <div class="ps-form__content">
                                         <div class="form-group">
-                                            <dx-text-box [(value)]="productonuevo.nombre" class="controles" placeholder="Nombre del producto"></dx-text-box>
+                                            <dx-text-box  [(value)]="productonuevo.nombre"  class="controles" placeholder="Nombre del producto"> </dx-text-box>  
+                                                      
+                                        </div>
+                                        <div class="form-group">
+                                            <dx-select-box [items]="listacategorias" [(value)]="categorias.id_categoria"  valueExpr="id_categoria" displayExpr="descripcion" placeholder="Selecciona la categoria"  (onValueChanged)="traersub($event)" ></dx-select-box>
                                         </div>
 
                                         <div class="form-group">
-                                            <dx-number-box [(value)]="productonuevo.precio" class="controles" placeholder="Precio"></dx-number-box>
+                                            <dx-select-box [items]="listasubcategorias" [(value)]="productonuevo.id_sub_categoria" *ngIf="edicionsubcategoria" valueExpr="id_sub_categoria" displayExpr="descripcion" placeholder="Selecciona la subcategoria"></dx-select-box>
                                         </div>
-
-                                       <!--  <div class="form-group">
-                                            <dx-number-box [(value)]="usuarioNuevo.cedula" class="controles" placeholder="Cedula"></dx-number-box>
-                                        </div> -->
-                            
-
                                         <div class="form-group">
-                                            <dx-number-box [(value)]="productonuevo.stock" class="controles" placeholder="Stock"></dx-number-box>
+                                           <!--  mask="99.99" [maskRules]="rules" -->
+                                            <dx-number-box [(value)]="productonuevo.precio" type="number" class="controles" placeholder="Precio"></dx-number-box>
                                         </div>
 
                                         <div class="form-group">
-                                            <dx-text-box [(value)]="productonuevo.descripcion" class="controles" placeholder="Descripción"></dx-text-box>
+                                            <dx-number-box  [(value)]="productonuevo.stock" class="controles" placeholder="Stock"></dx-number-box>
                                         </div>
 
-                                        <div class="form-group">
-                                            <button class="ps-btn ps-btn--fullwidth color-principal" (click)="registrar()">Registrar</button>
+                                        <div class="form-group" >
+                                    
+                                            <dx-text-area [height]="90" [maxLength]="500" [(value)]="productonuevo.descripcion" placeholder="Descripcion"></dx-text-area>
+                                        </div>
+                                        
+
+
+                                        <div class="form-group" >
+                                            <button class="ps-btn ps-btn--fullwidth color-principal" *ngIf="!isedicionpro;" (click)="verificarcampos()">Registrar</button>
+                                        </div>
+                                        <div class="form-group" >
+                                            <button class="ps-btn ps-btn--fullwidth color-principal" *ngIf="isedicionpro;" (click)="verificarcampos()">Actualizar</button>
                                         </div>
                                     </div>
 

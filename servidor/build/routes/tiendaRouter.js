@@ -18,6 +18,7 @@ class TiendaRoutes {
         this.router.put('/actualizar/:id_tienda', tiendaController_1.default.actualizar_datos_tienda);
         this.router.put('/eliminar/:id_tienda', tiendaController_1.default.desactivar_tienda);
         this.router.put('/activar/:id_tienda', tiendaController_1.default.activar_teinda);
+        this.router.post('/obtenertienda/:cedula', tiendaController_1.default.obtenerPorcedula);
     }
 }
 const tienda = new TiendaRoutes();
