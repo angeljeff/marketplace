@@ -114,6 +114,14 @@ export class PrincipalComponent implements OnInit {
 
   }
 
+  irPerfilUsuario(){
+    this.usuarioLogueado.id_tipo_usuario =2;
+    if(this.usuarioLogueado.id_tipo_usuario == 1)
+      this.router.navigate(['/usuarioComprador']);
+    else if(this.usuarioLogueado.id_tipo_usuario == 2)
+      this.router.navigate(['/usuarioVendedor']);
+  }
+
   buscarproducto(){
     console.log(this.listacompletaproductos)
     console.log("nombre" + this.nomb)
