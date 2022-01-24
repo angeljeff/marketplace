@@ -23,6 +23,7 @@ export class UsuarioVendedorComponent implements OnInit {
   listapro : Producto []=[]
   listaprocategoria : Producto []=[] 
   productotemproral: Producto = new Producto();
+  primerdigito= ""
 
   
 
@@ -48,6 +49,11 @@ export class UsuarioVendedorComponent implements OnInit {
             this.usuarioLogueado = arreglo[0];
             var array = this.usuarioLogueado.nombres.split(" ");
             this.nombreUsuario = array[0];
+            var cedul= this.usuarioLogueado.cedula.toString()
+            if(cedul.length ===9){
+              console.log(cedul.length + "esta es la longitud del cedula")
+              this.primerdigito="0"
+            }
           },
           err => {})
     });

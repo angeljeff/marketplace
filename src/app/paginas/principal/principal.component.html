@@ -268,18 +268,16 @@
                         <div class="card cardProductos">
                             <br>
                             <h4>{{element.nombre}}</h4>
-                            <img src="{{element.imagen}}" alt="Imagen del producto" style="width:150pt; height: 175pt; display:bloc; margin:auto"> <!-- style="width:150pt; height: 175pt;" --> 
-                            <p>Categoría: {{element.descripcion_cat}}</p>
-                            <!-- <p>{{element.descripcion}}</p> -->
-                            
-                            <p>Subcategoria: <span>{{element.descripcion_sub}}</span></p>
-                            <p>Precio: <span>{{element.stock}}</span></p>
+                            <img src="{{element.imagen}}" alt="Imagen del producto" style="width:125pt; height: 150pt; margin:auto" (click)="mostrarPopup(element)">
+                            <p><span>Categoría:</span>  {{element.descripcion_cat}}</p>
+                            <p><span>Subcategoria:</span> {{element.descripcion_sub}}</p>
+                            <p><span>Precio:</span> {{element.stock}}</p>
                              <div class="row buttonP">
                                  <div class="col-md-6">
                                       <button class="color-principal btn" (click)="comprar()">Comprar</button>
                                  </div>
                                  <div class="col-md-6">
-                                     <button class="color-principal btn" (click)="comprar()">Visitar Tienda</button>
+                                     <button class="color-principal btn" (click)="mostrarPopupTienda(element.id_tienda)">Ver Tienda</button>
                                  </div>
                              </div>
                              <br>
@@ -295,7 +293,7 @@
         <!--=====================================
 		Top Categoríes
 		======================================-->  
-
+        <br><br><br>
         <div class="ps-top-categories">
 
             <div class="container">
@@ -363,3 +361,102 @@
     
 	
 </body>
+
+
+
+<dx-popup
+    [width]="'60%'"
+    [height]="'70%'"
+    [closeOnOutsideClick]="true"
+    [(visible)]="popupVisible">
+    <div *dxTemplate="let data of 'content'">
+        <div class="row">
+            <div class="col-md-4"><img src="{{productoMostrado.imagen}}" alt=""></div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-12"><h2>{{productoMostrado.nombre}}</h2></div>
+                    <div class="col-md-12">
+                        <h4>Descripcion:</h4>
+                        <p>{{productoMostrado.descripcion}}</p>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-4"><h5>Cantidad Disponible:</h5></div>
+                            <div class="col-md-8">{{productoMostrado.stock}}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-4"><h5>Categoria:</h5></div>
+                            <div class="col-md-8">{{productoMostrado.descripcion_cat}}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-4"><h5>Sub-Categoria:</h5></div>
+                            <div class="col-md-8">{{productoMostrado.descripcion_sub}}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-4"><h5>Precio:</h5></div>
+                            <div class="col-md-8">${{productoMostrado.precio}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</dx-popup>
+
+
+<dx-popup
+    [width]="'50%'"
+    [height]="'50%'"
+    [title]="datosTienda.nombre.toUpperCase()"
+    [closeOnOutsideClick]="true"
+    [(visible)]="popupTienda">
+    <div *dxTemplate="let data of 'content'">
+        <div class="row">
+            <div class="col-md-4"><img src="{{productoMostrado.imagen}}" alt=""></div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-12"><h2>{{productoMostrado.nombre}}</h2></div>
+                    <div class="col-md-12">
+                        <h4>Descripcion:</h4>
+                        <p>{{productoMostrado.descripcion}}</p>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-4"><h5>Cantidad Disponible:</h5></div>
+                            <div class="col-md-8">{{productoMostrado.stock}}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-4"><h5>Categoria:</h5></div>
+                            <div class="col-md-8">{{productoMostrado.descripcion_cat}}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-4"><h5>Sub-Categoria:</h5></div>
+                            <div class="col-md-8">{{productoMostrado.descripcion_sub}}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-4"><h5>Precio:</h5></div>
+                            <div class="col-md-8">${{productoMostrado.precio}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row centrar">
+            <div class="col-md-12"><button class="color-principal btn2"  (click)="verProductosTienda(datosTienda.id_tienda)">Ver Productos Tienda</button></div>
+            
+        </div>
+    </div>
+   
+</dx-popup>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { Producto, Productodto, Productoreserva } from 'src/app/clases/producto';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,6 +7,7 @@ import { SubCategoriaService } from 'src/app/services/sub_categoria.service';
 import { Subcategorias } from 'src/app/clases/subcategorias';
 import { CategoriaService } from 'src/app/services/categorias.service';
 import { Categorias } from 'src/app/clases/categorias';
+import { Usuario } from 'src/app/clases/usuario';
 
 @Component({
   selector: 'app-seccion-producto',
@@ -14,6 +15,7 @@ import { Categorias } from 'src/app/clases/categorias';
   styleUrls: ['./seccion-producto.component.css']
 })
 export class SeccionProductoComponent implements OnInit {
+    @Input() objetoUsuario: Usuario = new Usuario();
     productonuevo: Producto = new Producto();
     categorias: Categorias= new Categorias();
     subcategorias: Subcategorias= new Subcategorias();
@@ -48,6 +50,7 @@ productos: Producto[] = [{
   id_tienda: 1,
   precio : 10,
   stock: 10,
+  estado:1,
   imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
 }, {
   nombre: 'Producto2',
@@ -59,6 +62,7 @@ productos: Producto[] = [{
   id_tienda: 1,
   precio : 10,
   stock: 10,
+  estado:1,
   imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
 }]; 
 
@@ -72,7 +76,7 @@ productos: Producto[] = [{
 
   ngOnInit( ): void {
      this.listaproductos = this.productos
-
+     console.log(this.objetoUsuario.cedula + "este es usuario producto");
     this.traerListadoProductosporTienda()
     /* this.traerListadoSubcategorias() */
     this.traerListadocategorias()

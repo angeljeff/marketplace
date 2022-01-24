@@ -6,6 +6,13 @@
   z-index: 2;
 }
 
+.cardProductos span{
+  font-weight: bold;
+}
+
+.cardProductos p{
+  margin-bottom: -1em;
+}
 
 .ps-logo{
   margin-top: -1em;
@@ -39,15 +46,28 @@
 }
 
 .buttonP{
+  margin-top: 1.6em;
   margin-left: 1em;
   margin-right: 1em;
 }
 
 .btn{
   font-size: 12pt;
+  width: 100%;
+}
+
+.btn2{
+  font-size: 12pt;
+  width: 40%;
+  height: 2.5em;
+  border-color: transparent;
 }
 
 .color-principal{
     background-color: #1db61d;
     color: white;
+}
+
+::ng-deep .dx-toolbar-label {
+  font-weight: bold;
 }
