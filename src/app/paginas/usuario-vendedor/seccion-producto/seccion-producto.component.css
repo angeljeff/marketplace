@@ -10,3 +10,8 @@
  ::ng-deep .datagrid-table .datagrid-column {
     justify-content: center;
   }
+
+
+  .form-group p{
+      color: black;
+  }

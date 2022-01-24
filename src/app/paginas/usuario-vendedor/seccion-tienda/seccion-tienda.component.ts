@@ -43,7 +43,8 @@ export class SeccionTiendaComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.objetoUsuario)
-    // Crear un metodo para traer la tienda asociada al usuario si no tiene tienda setear la variable idNewTienda en true, sino en false
+    // Crear un metodo para traer la tienda asociada al usuario *(objetousuario.cedula) si no tiene tienda setear la variable idNewTienda en true, sino en false
+     
     this.traerDatosTienda();
     this.traerListaCantones();
   }
@@ -54,18 +55,19 @@ export class SeccionTiendaComponent implements OnInit {
     //this.tiendaEncontrada.hora_apertura = "10:00";
     //this.tiendaEncontrada.hora_cierre = "17:00";
     this.tiendaEncontrada.descripcion = "Tenemos la visión de consolidar al Grupo Corporativo en todo el territorio ecuatoriano, enfocando nuestro futuro en el cliente como base del éxito del negocio. Con esta premisa, cumplimos con la misión de ofrecer soluciones integrales a través de la provisión de insumos de alta calidad gracias a nuestra filosofía de servicio permanente."
-   /*  this._tiendaService.traerDatosTienda(usuarioId).subscribe(
+   /* this._tiendaService.traerTienda(usuarioId).subscribe(
       (res) => { 
         var tienda = res as Tienda[];
         if(tienda.length != 0){
           this.existeTienda = true;
           this.tiendaEncontrada =tienda[0]
+          this.IsNewTienda = false;
         }else
           this.existeTienda = false;
+          this.IsNewTienda = true;
       },
       (err) => { 
-      }
-    ) */
+      } */
     
   }
 

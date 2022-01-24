@@ -62,21 +62,47 @@
                                 <div class="ps-tab active">
                                     <div class="ps-form__content">
                                         <div class="form-group">
-                                            <dx-text-box  [(value)]="productonuevo.nombre"  class="controles" placeholder="Nombre del producto"> </dx-text-box>       
+                                           <div class="row">
+                                                <div class="col-md-3" style="margin-top: -1em;"><p>Nombre *</p></div>
+                                                <div class="col-md-9">
+                                                    <dx-text-box  [(value)]="productonuevo.nombre"  class="controles" placeholder="Nombre del producto"> </dx-text-box>       
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="form-group">
-                                            <dx-select-box [items]="listacategorias" [(value)]="categorias.id_categoria"  valueExpr="id_categoria" displayExpr="descripcion_cat" placeholder="Selecciona la categoria"  (onValueChanged)="traersub($event)" ></dx-select-box>
+                                            <div class="row">
+                                                <div class="col-md-3" style="margin-top: -1em;"><p>Categoria *</p></div>
+                                                <div class="col-md-9">
+                                                    <dx-select-box [items]="listacategorias" [(value)]="categorias.id_categoria"  valueExpr="id_categoria" displayExpr="descripcion_cat" placeholder="Selecciona la categoria"  (onValueChanged)="traersub($event)" ></dx-select-box>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+
+                                        <div class="form-group"  *ngIf="edicionsubcategoria" >
+                                            <div class="row">
+                                                <div class="col-md-3" style="margin-top: -1em;"><p>Subcategoria *</p></div>
+                                                <div class="col-md-9">
+                                                    <dx-select-box [items]="listasubcategorias" [(value)]="productonuevo.id_sub_categoria" valueExpr="id_sub_categoria" displayExpr="descripcion_sub" placeholder="Selecciona la subcategoria"></dx-select-box>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-3" style="margin-top: -1em;"><p>Precio *</p></div>
+                                                <div class="col-md-9">
+                                                    <dx-number-box [(value)]="productonuevo.precio" type="number" class="controles" placeholder="Precio"></dx-number-box>
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <div class="form-group">
-                                            <dx-select-box [items]="listasubcategorias" [(value)]="productonuevo.id_sub_categoria" *ngIf="edicionsubcategoria" valueExpr="id_sub_categoria" displayExpr="descripcion_sub" placeholder="Selecciona la subcategoria"></dx-select-box>
-                                        </div>
-                                        <div class="form-group">
-                                            <dx-number-box [(value)]="productonuevo.precio" type="number" class="controles" placeholder="Precio"></dx-number-box>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <dx-number-box  [(value)]="productonuevo.stock" class="controles" placeholder="Stock"></dx-number-box>
+                                            <div class="row">
+                                                <div class="col-md-3" style="margin-top: -1em;"><p>Stock *</p></div>
+                                                <div class="col-md-9">
+                                                    <dx-number-box  [(value)]="productonuevo.stock" class="controles" placeholder="Stock"></dx-number-box>
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <div class="form-group" >
