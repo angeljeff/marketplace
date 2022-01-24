@@ -8,6 +8,7 @@ import { PrincipalComponent } from './paginas/principal/principal.component';
 import { RegisterComponent } from './paginas/register/register.component';
 import { AuthGuardService } from './services/auth.service';
 import { CarritoComprasComponent } from './paginas/carrito-compras/carrito-compras.component';
+import { ProductosTiendaComponent } from './paginas/productos-tienda/productos-tienda.component';
 
 const routes: Routes = [
         { 
@@ -43,6 +44,10 @@ const routes: Routes = [
          {
           path:'carrito-compras', 
           component: CarritoComprasComponent,
+          canActivate: [AuthGuardService],
+        },{
+          path:'productos-tienda', 
+          component: ProductosTiendaComponent,
           canActivate: [AuthGuardService],
         },
         {

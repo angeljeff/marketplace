@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { DatosEnvio } from 'src/app/clases/datosEnvio';
 import { OrdenTemporal } from 'src/app/clases/ordenTemporal';
 import { Producto } from 'src/app/clases/producto';
@@ -17,6 +18,8 @@ export class SeccionPedidoComponent implements OnInit {
   titulo= "";
   productoMostrado: Producto = new Producto();
   newDatosEnvio : DatosEnvio = new DatosEnvio();
+  dataContactoDirecto = false;
+  dataTransferencia = false;
 
   ordenes: OrdenTemporal[] = [{
     nombre_producto: 'Producto1',
@@ -64,7 +67,7 @@ pago2 = false;
 disablePago2 = true;
 
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
     this.calcularTotal();
@@ -110,12 +113,23 @@ disablePago2 = true;
 
 
   asignarValor(num : number){
-    console.log(num)
+    if(num == 1){
+      this.dataContactoDirecto = true;
+      this.dataTransferencia = false;
+    }else if(num == 3){
+      this.dataContactoDirecto = false;
+      this.dataTransferencia = true;
+    }
   }
 
   realizarPedido(){
     //aqui mandar a guardar la orden con estado solicitada
     console.log(this.pago2)
+  }
+
+  seguirComprando(){
+    var tiendaId = 1; // setear el Id de ña tienda perteneciente a un producto de la orden
+    this.router.navigate(['/productos-tienda'], { queryParams: { id: tiendaId } });
   }
 
 

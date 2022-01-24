@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Producto } from 'src/app/clases/producto';
 import { ProductoService } from 'src/app/services/productos.services';
-import { ArrayMenu} from './menu';
 import { AuthenService } from 'src/app/services/authen.service';
 import { Usuario } from 'src/app/clases/usuario';
 import { UsuarioService } from 'src/app/services/usuario.service';
@@ -10,14 +9,14 @@ import { Categorias } from 'src/app/clases/categorias';
 import { CategoriaService } from 'src/app/services/categorias.service';
 import { ProductocompletoService } from 'src/app/services/productoscompletos';
 import { Productocompleto } from 'src/app/clases/Productocompleto';
-import { OrdenTemporal } from 'src/app/clases/ordenTemporal';
+import { ArrayMenu } from '../principal/menu';
 
 @Component({
-  selector: 'app-principal',
-  templateUrl: './principal.component.html',
-  styleUrls: ['./principal.component.css']
+  selector: 'app-productos-tienda',
+  templateUrl: './productos-tienda.component.html',
+  styleUrls: ['./productos-tienda.component.css']
 })
-export class PrincipalComponent implements OnInit {
+export class ProductosTiendaComponent implements OnInit {
 
   listaproductos : Producto []=[]
   listapro : Producto []=[]
@@ -28,39 +27,10 @@ export class PrincipalComponent implements OnInit {
   listaprocompleto : Productocompleto []=[]
   listacompletaproductos : Productocompleto []=[]
   nomb=""
-  
-  totalCompra = 0;
   productotemproral: Producto = new Producto();
   cedula = ""
-
-  ordenes: OrdenTemporal[] = [{
-    nombre_producto: 'Producto1',
-    cantidad : 3,
-    id_orden : 1,
-    precio : 8.50,
-    id_producto : 10,
-    total : 50,
-    imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
-  }, {
-    nombre_producto: 'Producto2',
-    cantidad : 5,
-    id_orden : 1,
-    precio : 18.50,
-    id_producto : 11,
-    total : 25,
-    imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
-  }, {
-    nombre_producto: 'Producto3',
-    cantidad : 1,
-    id_orden : 1,
-    precio : 12.50,
-    id_producto : 11,
-    total : 25,
-    imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
-  }];
    
-
-   menus: ArrayMenu[] = [{
+  menus: ArrayMenu[] = [{
     id: '1',
     name: 'Plaguicidas',
     items: [{
@@ -77,35 +47,31 @@ export class PrincipalComponent implements OnInit {
     items: [{
       id: '2_1',
       name: 'Item3',
-     
     }, {
       id: '2_2',
-      name: 'Item4',
-     
+      name: 'Item4',    
     }],
   }];
 
-  data2: string [] = [ 
-
-      'James', 'John', 'Robert', 'Michael', 'William', 'David', 'Richard', 'Charles', 'Joseph', 'Thomas', 'Christopher', 'Daniel', 'Paul', 'Mark', 'Donald', 'George', 'Kenneth', 'Steven', 'Edward', 'Brian', 'Ronald', 'Anthony', 'Kevin', 'Jason', 'Jeff', 'Mary', 'Patricia', 'Linda', 'Barbara', 'Elizabeth', 'Jennifer', 'Maria', 'Susan', 'Margaret', 'Dorothy', 'Lisa', 'Nancy', 'Karen', 'Betty', 'Helen', 'Sandra', 'Donna', 'Carol', 'Ruth', 'Sharon', 'Michelle', 'Laura', 'Sarah', 'Kimberly', 'Deborah',
-    ];
-
-
-
   isLoged = false;
+  idTienda = 0;
   usuarioLogueado : Usuario = new Usuario();
   constructor(public router: Router,
     public _productoService: ProductoService,
     public authenService : AuthenService,
     public userService: UsuarioService,
     public _categoriaService: CategoriaService,
+    private route: ActivatedRoute,
     public _productocomletoService: ProductocompletoService) { }
 
   ngOnInit(): void {
     this.cargarUsuarioLogueado();
-    this.mandarMensaje();
-    this.mostrarproductos();
-    this.calcularTotal();
+
+    this.route.queryParams.subscribe(params => {this.idTienda = params['id'] || 0 });
+
+    if(this.idTienda != 0){
+      //obtener los productos por la tienda especificada
+    }
 
   }
 
@@ -133,27 +99,6 @@ export class PrincipalComponent implements OnInit {
     this.router.navigate(["/login"]);
   }
 
-  verCarrito(){
-    this.router.navigate(['/carrito-compras']);
-  }
-
-  eliminarRegistro(i: number) {
-    this.ordenes.splice(i, 1);
-    this.calcularTotal();
-  }
-
-  calcularTotal(){
-    this.totalCompra = 0;
-    this.ordenes.forEach(element=>{
-      element.total = element.cantidad * element.precio
-      this.totalCompra = this.totalCompra + element.total 
-    })
-  }
-
-
-  mandarMensaje(){
-
-  }
 
   irPerfilUsuario(){
     this.usuarioLogueado.id_tipo_usuario =2;
@@ -164,17 +109,10 @@ export class PrincipalComponent implements OnInit {
   }
 
   buscarproducto(){
-    console.log(this.listacompletaproductos)
-    console.log("nombre" + this.nomb)
     this.listaprocompleto=[]
-    console.log(this.listacompletaproductos)
     for (let i in this.listacompletaproductos){
-      console.log("entre cc" + this.listacompletaproductos[i])
       if(this.nomb == this.listacompletaproductos[i].nombre){
-        console.log("entre" + i)
-     
         this.listaprocompleto.push(this.listacompletaproductos[i])
-
       }
     }
   }
@@ -192,12 +130,7 @@ export class PrincipalComponent implements OnInit {
       (res) => { this.listaprocompleto = res as Productocompleto[]},
       (err) => { }
     )
-   /*  this._productoService.obtener_porid_subcategorias(this.productotemproral).subscribe(
-      (res) => { var lista = res as Producto[];
-         this.arreglodeproductosactivos(lista)
-                },
-      (err) => { }
-    )     */
+
   }
   llamarporcategorias(lista1:number[]){
     var cuenta = 0
@@ -211,27 +144,11 @@ export class PrincipalComponent implements OnInit {
           for( let j in lista){
             this.listaprocompleto.push(lista[j])
             this.iniciodepagina()
-           /* if(cuenta === lista1.length){
-              /* this.arreglodeproductosactivos(this.listaprocategoria) */
-           /* }*/
           }},
         (err) => { }
       )
 
-      
-     /*  this._productoService.obtener_porid_subcategorias(this.productotemproral).subscribe(
-        (res) => {  var lista = res as Producto[];
-          console.log(lista.length+ "esta es la longitud")
-          cuenta++
-          for( let j in lista){
-            this.listaprocategoria.push(lista[j])
-            if(cuenta === lista1.length){
-              this.arreglodeproductosactivos(this.listaprocategoria)
-            }
-          }
-                },
-        (err) => { }
-    )  */
+
     }     
     
   }
@@ -264,17 +181,6 @@ iniciodepagina(){
 
   }
 
- /*  traerproductoscompletos(){
-    this.listaprocompleto.splice(0, this.listaprocompleto.length)
-    this._productocomletoService.traerpro_completos().subscribe(
-      (res) => {  this.listaprocompleto = res as Productocompleto[];
-        console.log(this.listaprocompleto)
-       
-              },
-      (err) => { }
-  )
-
-  } */
 
 
   itemClick(data:any) {
@@ -299,5 +205,7 @@ iniciodepagina(){
   comprar(){
 
   }
+
+  
  
 }

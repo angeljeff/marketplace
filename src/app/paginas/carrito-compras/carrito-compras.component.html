@@ -258,15 +258,14 @@
             <div class="d-flex flex-row-reverse">
                 <div class="p-2"><h3>Total <span>${{totalCompra}}</span></h3></div>             
             </div>
-            <div class="row">
-                <div class="col-md-9"></div>
-                <div class="col-md-3" style="float: right;">
-                    <div class="ps-section__cart-actions">
-                        <a class="ps-btn" (click)="cambiarPantalla(2)" >
-                            Continuar <i class="icon-arrow-right"></i> 
-                        </a>
-                    </div>
-                </div>
+            <div class="ps-section__cart-actions">
+                <a class="ps-btn color-principal" (click)="seguirComprando()">
+                    <i class="icon-arrow-left"></i> Seguir comprando
+                </a>
+
+                <a class="ps-btn color-principal" (click)="cambiarPantalla(2)">
+                    Continuar <i class="icon-arrow-right"></i> 
+                </a>
             </div>
  
         </div> 

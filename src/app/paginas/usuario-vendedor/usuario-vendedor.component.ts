@@ -29,7 +29,7 @@ export class UsuarioVendedorComponent implements OnInit {
 
   constructor(private router: Router,
         public authenService : AuthenService,
-        public _productoService: ProductoService,) { }
+        public _productoService: ProductoService) { }
 
   ngOnInit(): void {
     this.cargarUsuarioLogueado()
@@ -118,7 +118,7 @@ export class UsuarioVendedorComponent implements OnInit {
 
   }
 
-  
+
   llamarsubcategorias(opcion:number){
     
     this.productotemproral.id_sub_categoria = opcion

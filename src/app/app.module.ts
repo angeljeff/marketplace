@@ -22,6 +22,8 @@ import { SeccionPagoComponent } from './paginas/usuario-vendedor/seccion-pago/se
 import { FormularioComponent } from './paginas/usuario-vendedor/seccion-pago/formulario/formulario.component';
 import { SeccionPedidoComponent } from './paginas/usuario-vendedor/seccion-pedido/seccion-pedido.component';
 import { CarritoComprasComponent } from './paginas/carrito-compras/carrito-compras.component';
+import { ProductosTiendaComponent } from './paginas/productos-tienda/productos-tienda.component';
+import { FooterComponent } from './paginas/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import { CarritoComprasComponent } from './paginas/carrito-compras/carrito-compr
     SeccionPagoComponent,
     FormularioComponent,
     SeccionPedidoComponent,
-    CarritoComprasComponent
+    CarritoComprasComponent,
+    ProductosTiendaComponent,
+    FooterComponent
   ],
   imports: [
     FormsModule,

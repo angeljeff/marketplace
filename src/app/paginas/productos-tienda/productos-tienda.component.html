@@ -63,6 +63,7 @@
                                                 </li>
                                                 <li><a (click)="llamarsubcategorias(10)">De acción lenta</a>
                                                 </li>
+                                                
                                             </ul>
                                         </div>
                                         <div class="mega-menu__column">
@@ -105,7 +106,7 @@
                 ======================================-->
                 <div class="header__content-center">
                     <form class="ps-form--quick-search" action="index.html" method="get" >
-                        <dx-autocomplete #data2
+                        <dx-autocomplete 
                                             [dataSource]="listacompletaproductos"
                                             [(value)]="nomb"
                                             valueExpr="nombre"
@@ -128,34 +129,56 @@
                             </a>
 
                             <div class="ps-cart__content">
+
                                 <div class="ps-cart__items">
-                                    <div class="ps-product--cart-mobile" *ngFor="let element of ordenes;let i = index">
+
+                                    <div class="ps-product--cart-mobile">
+
                                         <div class="ps-product__thumbnail">
                                             <a href="#">
-                                                <img src="{{element.imagen}}" alt="">
+                                                <img src="../shared/../shared/img/products/clothing/7.jpg" alt="">
                                             </a>
                                         </div>
 
                                         <div class="ps-product__content">
-                                            <a class="ps-product__remove"  (click)="eliminarRegistro(i)">
+                                            <a class="ps-product__remove" href="#">
                                                 <i class="icon-cross"></i>
                                             </a>
-                                            <a>{{element.nombre_producto}}</a><br>
-                                           <!--  <p><strong>Sold by:</strong> YOUNG SHOP</p> -->
-                                            <small>{{element.cantidad}} x ${{element.precio}}</small>
+                                            <a href="product-default.html">MVMTH Classical Leather Watch In Black</a>
+                                            <p><strong>Sold by:</strong> YOUNG SHOP</p>
+                                            <small>1 x $59.99</small>
                                         </div>
+
                                     </div>
+
+                                    <div class="ps-product--cart-mobile">
+
+                                        <div class="ps-product__thumbnail">
+                                            <a href="#">
+                                                <img src="../shared/img/products/clothing/5.jpg" alt="">
+                                            </a>
+                                        </div>
+
+                                        <div class="ps-product__content">
+                                            <a class="ps-product__remove" href="#">
+                                                <i class="icon-cross"></i>
+                                            </a>
+                                            <a href="product-default.html">Sleeve Linen Blend Caro Pane Shirt</a>
+                                            <p><strong>Sold by:</strong> YOUNG SHOP</p>
+                                            <small>1 x $59.99</small>
+                                        </div>
+
+                                    </div>
+
                                 </div>
 
                                 <div class="ps-cart__footer">
-                                    <h3>Total:<strong>${{totalCompra}}</strong></h3>
-                                    <div class="row">
-                                        <div class="col-md-1"></div>
-                                        <div class="col-md-10" style="text-align: center;">
-                                                <a class="ps-btn color-principal" (click)="verCarrito()">Ver Carrito</a>
-                                        </div>
-                                        <div class="col-md-1"></div>
-                                    </div>
+
+                                    <h3>Sub Total:<strong>$59.99</strong></h3>
+                                    <figure>
+                                        <a class="ps-btn" href="shopping-cart.html">View Cart</a>
+                                        <a class="ps-btn" href="checkout.html">Checkout</a>
+                                    </figure>
                                 </div>
                             </div>
                         </div>
@@ -184,182 +207,43 @@
     </header>
 
 
-    <br><br><br><br>
-    <div id="homepage-6">
-    	<div class="ps-home-banner">
-            <div class="ps-carousel--nav-inside owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="0" data-owl-nav="true" data-owl-dots="true" data-owl-item="1" data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="1" data-owl-item-lg="1" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-animate-in="fadeIn" data-owl-animate-out="fadeOut">
+    <br><br><br><br><br><br>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div style="text-align: center;"><h4>Productos Disponibles</h4></div>
 
-                <div class="ps-banner--market-4" data-background="../../../assets/img/slider/horizontal/1.jpg">
-                	<img src="../../../assets/img/slider/horizontal/1.jpg" alt="">
-                    <div class="ps-banner__content">
-                        <h4>Limit Edition</h4>
-                        <h3>HAPPY SUMMER <br/> 
-                        	COMBO SUPER COOL <br/> 
-                        	<p>UP TO <strong> 40%</strong></p>
-                        </h3>
-                        <a class="ps-btn" href="#">Shop Now</a>
-                    </div>
-                </div>
-
+            <div class="row centrar" *ngIf="listaprocompleto.length == 0">
+                <div class="col-md-12"><h2>No hay productos disponibles</h2></div>
             </div>
-
-        </div><!-- End Home Banner-->
-
-        <!--=====================================
-    	Home Features
-    	======================================-->  
-
-        <div class="ps-site-features">
-
-            <div class="container">
-
-                <div class="ps-block--site-features ps-block--site-features-2">
-
-                    <div class="ps-block__item">
-                        <div class="ps-block__left" ><i class="icon-bug" style="color: green;"></i></div>
-                        <div class="ps-block__right">
-                            <h4>Productos agroquímicos</h4>
-                            <p>Encuentra el producto que estás buscando</p>
-                        </div>
-                    </div>
-
-                    <div class="ps-block__item">
-                        <div class="ps-block__left"><i class="icon-rocket" style="color: green;"></i></div>
-                        <div class="ps-block__right">
-                            <h4>Entregas Seguras</h4>
-                            <p>Entregas a domicilio garantizadas</p>
-                        </div>
-                    </div>
-
-                    <div class="ps-block__item">
-                        <div class="ps-block__left"><i class="icon-credit-card " style="color: green;"></i></div>
-                        <div class="ps-block__right">
-                            <h4>Paga seguro</h4>
-                            <p>Realiza tu pedido de forma segura</p>
-                        </div>
-                    </div>
-
-                    <div class="ps-block__item">
-                        <div class="ps-block__left"><i class="icon-bubbles" style="color: green;"></i></div>
-                        <div class="ps-block__right">
-                            <h4>24/7 Soporte</h4>
-                            <p>Contacta con nosotros ante cualquier duda</p>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div><!-- End Home Features-->
-
-        <div class="row">
-            <div class="col-md-2"></div>
-            <div class="col-md-8">
-                <div style="text-align: center;"><h4>Productos Disponibles</h4></div>
-
-                <div class="row centrar" *ngIf="listaprocompleto.length == 0">
-                    <div class="col-md-12"><h2>No hay productos disponibles</h2></div>
-                </div>
-                
-                <div class="row">
-                     <div class="col-md-4" *ngFor="let element of listaprocompleto">
+            
+            <div class="row">
+                    <div class="col-md-4" *ngFor="let element of listaprocompleto">
+                    <br>
+                    <div class="card cardProductos">
                         <br>
-                        <div class="card cardProductos">
+                        <h4>{{element.nombre}}</h4>
+                        <img src="{{element.imagen}}" alt="Imagen del producto" style="width:150pt; height: 175pt; display:bloc; margin:auto"> <!-- style="width:150pt; height: 175pt;" --> 
+                        <p>Categoría: {{element.descripcion_cat}}</p>
+                        <!-- <p>{{element.descripcion}}</p> -->
+                        
+                        <p>Subcategoria: <span>{{element.descripcion_sub}}</span></p>
+                        <p>Precio: <span>{{element.stock}}</span></p>
+                            <div class="row buttonP">
+                                <div class="col-md-6">
+                                    <button class="color-principal btn" (click)="comprar()">Comprar</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <button class="color-principal btn" (click)="comprar()">Visitar Tienda</button>
+                                </div>
+                            </div>
                             <br>
-                            <h4>{{element.nombre}}</h4>
-                            <img src="{{element.imagen}}" alt="Imagen del producto" style="width:150pt; height: 175pt; display:bloc; margin:auto"> <!-- style="width:150pt; height: 175pt;" --> 
-                            <p>Categoría: {{element.descripcion_cat}}</p>
-                            <!-- <p>{{element.descripcion}}</p> -->
-                            
-                            <p>Subcategoria: <span>{{element.descripcion_sub}}</span></p>
-                            <p>Precio: <span>{{element.stock}}</span></p>
-                             <div class="row buttonP">
-                                 <div class="col-md-6">
-                                      <button class="color-principal btn" (click)="comprar()">Comprar</button>
-                                 </div>
-                                 <div class="col-md-6">
-                                     <button class="color-principal btn" (click)="comprar()">Visitar Tienda</button>
-                                 </div>
-                             </div>
-                             <br>
-                        </div>
-                    </div> 
-                </div>
+                    </div>
+                </div> 
             </div>
-            <div class="col-md-2"></div>
         </div>
-        
-        
+        <div class="col-md-2"></div>
+    </div>
 
-        <!--=====================================
-		Top Categoríes
-		======================================-->  
-
-        <div class="ps-top-categories">
-
-            <div class="container">
-
-                <h3>Todas las categorías</h3>
-
-                <div class="row">
-
-                    <div class="col-xl-2 col-lg-3 col-sm-4 col-6 ">
-                        <div class="ps-block--category" (click)="llamarporcategorias([1,2])">
-                        	<a class="ps-block__overlay" ></a>
-                        	<img src="../../../assets/imagcate/fungicidas.jpg" alt="">
-                            <p>Fungicidas</p>
-                        </div>
-                    </div>
-
-                    <div class="col-xl-2 col-lg-3 col-sm-4 col-6 ">
-                        <div class="ps-block--category" (click)="llamarporcategorias([5,6])">
-                        	<a class="ps-block__overlay" ></a>
-                        	<img src="../../../assets/imagcate/insecticidas.jpg" alt="">
-                            <p>Insecticidas</p>
-                        </div>
-                    </div>
-
-                    <div class="col-xl-2 col-lg-3 col-sm-4 col-6 ">
-                        <div class="ps-block--category" (click)="llamarporcategorias([15,16,17])">
-                        	<a class="ps-block__overlay" ></a>
-                        	<img src="../../../assets/imagcate/fertilizantes.png" alt="">
-                            <p>Fertilizantes</p>
-                        </div>
-                    </div>
-
-                    <div class="col-xl-2 col-lg-3 col-sm-4 col-6 ">
-                        <div class="ps-block--category" (click)="llamarporcategorias([7,8])">
-                        	<a class="ps-block__overlay" ></a>
-                        	<img src="../../../assets/imagcate/acaricidas.jpg" alt="">
-                            <p>Acaricidas</p>
-                        </div>
-                    </div>
-
-                    <div class="col-xl-2 col-lg-3 col-sm-4 col-6 ">
-                        <div class="ps-block--category" (click)="llamarporcategorias([9,10])" >
-                        	<a class="ps-block__overlay" ></a>
-                        	<img src="../../../assets/imagcate/rodenticidas.jpg"  alt="">
-                            <p>Rodenticidas</p>
-                        </div>
-                    </div>
-
-                    <div class="col-xl-2 col-lg-3 col-sm-4 col-6 ">
-                        <div class="ps-block--category" (click)="llamarporcategorias([11,12,13,14])">
-                        	<a class="ps-block__overlay" ></a>
-                        	<img src="../../../assets/imagcate/herbicidas.jpg" alt="">
-                            <p>Herbicidas</p>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-        </div><!-- End Top Categories -->
-
-	</div><!-- End Homepage 6-->
-
-    
-    
 	
 </body>

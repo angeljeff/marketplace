@@ -103,6 +103,11 @@ export class CarritoComprasComponent implements OnInit {
     this.router.navigate(["/login"]);
   }
 
+  seguirComprando(){
+    var tiendaId = 1; // setear el Id de ña tienda perteneciente a un producto de la orden
+    this.router.navigate(['/productos-tienda'], { queryParams: { id: tiendaId } });
+  }
+
   mostrarPopupProducto(productoOrden : OrdenTemporal){
     // LLamar al metodo obtener producto y traer los datos 
     //asignarle a la variable productoEncontrado
