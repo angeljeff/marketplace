@@ -11,6 +11,7 @@ import { CategoriaService } from 'src/app/services/categorias.service';
 import { ProductocompletoService } from 'src/app/services/productoscompletos';
 import { Productocompleto } from 'src/app/clases/Productocompleto';
 import { OrdenTemporal } from 'src/app/clases/ordenTemporal';
+import { Tienda } from 'src/app/clases/tienda';
 
 @Component({
   selector: 'app-principal',
@@ -27,7 +28,11 @@ export class PrincipalComponent implements OnInit {
   listapresentacioncategorias : Categorias []=[]
   listaprocompleto : Productocompleto []=[]
   listacompletaproductos : Productocompleto []=[]
+  datosTienda : Tienda = new Tienda()
   nomb=""
+  popupVisible = false
+  popupTienda = false
+  productoMostrado : Productocompleto = new Productocompleto()
   
   totalCompra = 0;
   productotemproral: Producto = new Producto();
@@ -148,6 +153,24 @@ export class PrincipalComponent implements OnInit {
       element.total = element.cantidad * element.precio
       this.totalCompra = this.totalCompra + element.total 
     })
+  }
+
+  mostrarPopup(producto : Productocompleto){
+    this.productoMostrado = producto
+    this.popupVisible = true;
+  }
+
+  mostrarPopupTienda(idTienda : number){
+    // metodo para traer datos tienda
+    // tienda tarida se asiga a la variable de a tienda en ep popup
+    //this.datosTienda = tiendaEncontrada
+    this.popupTienda = true;
+    this.datosTienda.nombre = "AGRIPAC nombre mas largo"
+  }
+
+  verProductosTienda(idTienda : string){
+    var tiendaId= Number(idTienda)
+    this.router.navigate(['/productos-tienda'], { queryParams: { id: tiendaId } });
   }
 
 

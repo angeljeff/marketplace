@@ -131,7 +131,6 @@ export class SeccionTiendaComponent implements OnInit {
 
   }
   actualizar(){
-    this.mostrarFormularioRegistro= true
     var horasuma = new Date(this.hora);
     horasuma.setHours(horasuma.getHours()-5);
     this.newTienda.hora_apertura = horasuma
@@ -151,6 +150,9 @@ export class SeccionTiendaComponent implements OnInit {
           confirmButtonText: 'OK'
         }).then((result) => {
           if (result.isConfirmed) {
+            this.mostrarFormularioRegistro= false
+            this.existeTienda = true;
+            this.traerDatosTienda()
             /* this.router.navigate(["/login"]); */
           }
         }) 
@@ -170,8 +172,6 @@ export class SeccionTiendaComponent implements OnInit {
     this.existeTienda = false;
     this.isedicion=true;
     this.mostrarFormularioRegistro = true;
-    
-     this.buscartienda.cedula = "930";
       this._tiendaService.obtener_datos_tienda(this.buscartienda).subscribe(
         (res) => {
           this.newTienda = res[0];
@@ -210,7 +210,7 @@ export class SeccionTiendaComponent implements OnInit {
                   this.mostrarmensajes('Por favor registre una hora de apertura')
                 }
               }else{
-            this.mostrarmensajes('Por favor establezca una breve descripción del producto')
+            this.mostrarmensajes('Por favor establezca una breve descripción de la tienda')
           }
   
             }else{
