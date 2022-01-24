@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DatosEnvio } from 'src/app/clases/datosEnvio';
 import { OrdenTemporal } from 'src/app/clases/ordenTemporal';
+import { Pedido } from 'src/app/clases/pedido';
 import { Producto } from 'src/app/clases/producto';
 
 @Component({
@@ -11,15 +12,34 @@ import { Producto } from 'src/app/clases/producto';
 })
 export class SeccionPedidoComponent implements OnInit {
   mostrarPaso1 = true;
-  seccionLista = true;
+  seccionLista = false;
   totalCompra = 0;
   popupVisible = false;
   mostrarPaso2 = false;
   titulo= "";
+  nombrePedido = "";
+  nombreTienda = "";
   productoMostrado: Producto = new Producto();
   newDatosEnvio : DatosEnvio = new DatosEnvio();
+  popupListaProductos = false;
   dataContactoDirecto = false;
   dataTransferencia = false;
+  listaPedidos : Pedido [] = [{
+    id_pedido : 1,
+    nombre: "Pedido 1",
+    cantidadProductos : 10,
+    total : 150,
+    nombreTienda: "Agripac",
+    nombre_estado : "Realizada"
+  },
+{
+    id_pedido : 2,
+    nombre: "Pedido 2",
+    cantidadProductos : 5,
+    total : 60,
+    nombreTienda: "Agripac2",
+    nombre_estado : "Realizada"
+  }]
 
   ordenes: OrdenTemporal[] = [{
     nombre_producto: 'Producto1',
@@ -37,12 +57,156 @@ export class SeccionPedidoComponent implements OnInit {
     id_producto : 11,
     total : 25,
     imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
+  }, {
+    nombre_producto: 'Producto2',
+    cantidad : 2,
+    id_orden : 1,
+    precio : 18.50,
+    id_producto : 11,
+    total : 25,
+    imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
+  }, {
+    nombre_producto: 'Producto2',
+    cantidad : 2,
+    id_orden : 1,
+    precio : 18.50,
+    id_producto : 11,
+    total : 25,
+    imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
+  }, {
+    nombre_producto: 'Producto2',
+    cantidad : 2,
+    id_orden : 1,
+    precio : 18.50,
+    id_producto : 11,
+    total : 25,
+    imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
+  }, {
+    nombre_producto: 'Producto2',
+    cantidad : 2,
+    id_orden : 1,
+    precio : 18.50,
+    id_producto : 11,
+    total : 25,
+    imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
+  }, {
+    nombre_producto: 'Producto2',
+    cantidad : 2,
+    id_orden : 1,
+    precio : 18.50,
+    id_producto : 11,
+    total : 25,
+    imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
+  }, {
+    nombre_producto: 'Producto2',
+    cantidad : 2,
+    id_orden : 1,
+    precio : 18.50,
+    id_producto : 11,
+    total : 25,
+    imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
+  }, {
+    nombre_producto: 'Producto2',
+    cantidad : 2,
+    id_orden : 1,
+    precio : 18.50,
+    id_producto : 11,
+    total : 25,
+    imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
   }]; 
 
   productos: Producto[] = [{
   nombre: 'Producto1',
   contador : 10,
   descripcion : "Aqui va la descripcion",
+  id_estado_pro : 1,
+  id_producto : "1",
+  id_sub_categoria : 2,
+  id_tienda: 1,
+  precio : 10,
+  stock: 10,
+  imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
+}, {
+  nombre: 'Producto2',
+  contador : 10,
+  descripcion : "jjj",
+  id_estado_pro : 1,
+  id_producto : "1",
+  id_sub_categoria : 2,
+  id_tienda: 1,
+  precio : 10,
+  stock: 10,
+  imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
+}, {
+  nombre: 'Producto2',
+  contador : 10,
+  descripcion : "jjj",
+  id_estado_pro : 1,
+  id_producto : "1",
+  id_sub_categoria : 2,
+  id_tienda: 1,
+  precio : 10,
+  stock: 10,
+  imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
+}, {
+  nombre: 'Producto2',
+  contador : 10,
+  descripcion : "jjj",
+  id_estado_pro : 1,
+  id_producto : "1",
+  id_sub_categoria : 2,
+  id_tienda: 1,
+  precio : 10,
+  stock: 10,
+  imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
+}, {
+  nombre: 'Producto2',
+  contador : 10,
+  descripcion : "jjj",
+  id_estado_pro : 1,
+  id_producto : "1",
+  id_sub_categoria : 2,
+  id_tienda: 1,
+  precio : 10,
+  stock: 10,
+  imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
+}, {
+  nombre: 'Producto2',
+  contador : 10,
+  descripcion : "jjj",
+  id_estado_pro : 1,
+  id_producto : "1",
+  id_sub_categoria : 2,
+  id_tienda: 1,
+  precio : 10,
+  stock: 10,
+  imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
+}, {
+  nombre: 'Producto2',
+  contador : 10,
+  descripcion : "jjj",
+  id_estado_pro : 1,
+  id_producto : "1",
+  id_sub_categoria : 2,
+  id_tienda: 1,
+  precio : 10,
+  stock: 10,
+  imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
+}, {
+  nombre: 'Producto2',
+  contador : 10,
+  descripcion : "jjj",
+  id_estado_pro : 1,
+  id_producto : "1",
+  id_sub_categoria : 2,
+  id_tienda: 1,
+  precio : 10,
+  stock: 10,
+  imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
+}, {
+  nombre: 'Producto2',
+  contador : 10,
+  descripcion : "jjj",
   id_estado_pro : 1,
   id_producto : "1",
   id_sub_categoria : 2,
@@ -110,6 +274,16 @@ disablePago2 = true;
     }
   }
   
+
+  mostrarListaProductos = (e:any) => {  
+    console.log(e.row.data)  
+    this.popupListaProductos = true;
+    this.nombrePedido = (e.row.data.nombre).toUpperCase();
+    this.nombreTienda = (e.row.data.nombreTienda).toUpperCase();
+    //traer lista de productos asociadas al pedido
+    //asignar la lista al arreglo de pedidos
+  }
+
 
 
   asignarValor(num : number){

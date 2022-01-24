@@ -136,6 +136,27 @@ productos: Producto[] = [{
         }
       }) 
   }
+
+  handleFileSelect(evt: any){
+    var files = evt.target.files;
+    var file = files[0];
+    if (files && file) {
+      if(files[0].size > 1048576)
+        alert("El archivo excede el tamaño permitido");
+      
+      var reader = new FileReader();
+      reader.onload =this._handleReaderLoaded.bind(this);
+      reader.readAsBinaryString(file);
+    }
+  }
+
+  _handleReaderLoaded(readerEvt:any) {
+    var binaryString = readerEvt.target.result;
+    var base64textString= btoa(binaryString);
+    this.productonuevo.imagen ="data:image/png;base64,"+ base64textString
+    console.log(this.productonuevo.imagen);
+  }
+
  
 
   actualizar(){

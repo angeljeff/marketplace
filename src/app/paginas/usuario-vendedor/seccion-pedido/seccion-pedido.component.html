@@ -183,6 +183,52 @@
     </div>
 
 </div>
+
+
+<div class="row" *ngIf="seccionLista">
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <dx-data-grid
+                id="gridContainer"
+                [dataSource]="listaPedidos"
+                [showBorders]="true">
+               <!--  <dxi-column
+                    dataField="imagen"
+                    [width]="100"
+                    [allowFiltering]="false"
+                    [allowSorting]="false"
+                    cellTemplate="cellTemplate"
+                ></dxi-column> -->
+                <dxi-column dataField="id_pedido" alignment="center" caption="ID"></dxi-column>
+                <dxi-column dataField="nombre" alignment="center" caption="Pedido"></dxi-column>
+                <dxi-column dataField="nombreTienda"  alignment="center"  caption="Nombre Tienda"></dxi-column>
+                <dxi-column dataField="cantidadProductos"  alignment="center"  caption="Cantidad Productos"></dxi-column>
+                <dxi-column dataField="total"  alignment="center"  caption="Total"></dxi-column>
+                <dxi-column dataField="nombre_estado"  alignment="center"  caption="Estado"></dxi-column>
+                <!-- <div *dxTemplate="let data of 'cellTemplate'">
+                    <img [src]="data.value" />
+                </div> -->
+
+                <dxi-column type="buttons"  caption="Ver Lista">
+                    <dxi-button icon="far fa-list-alt" [onClick]="mostrarListaProductos"></dxi-button>    
+                </dxi-column>
+            <!--   <dxi-column type="buttons"  caption="Eliminar">
+                    <dxi-button icon="fas fa-trash-alt" [onClick]="deleteProduct"></dxi-button>    
+                </dxi-column> -->
+                <dxo-export [enabled]="true" fileName="Pedidos"></dxo-export>
+                    <dxo-paging [pageSize]="4"></dxo-paging>
+                    <dxo-pager
+                        [showPageSizeSelector]="true"
+                        [allowedPageSizes]="[5,8,10]"
+                    ></dxo-pager>
+            </dx-data-grid>
+            </div>
+        <div class="col-md-1"></div>
+    </div>
+      
+
+</div>
   
 
 
@@ -208,6 +254,51 @@
                 </div>
             </div>
         </div>
+    </div>
+   
+</dx-popup>
+
+<dx-popup
+    [width]="'60%'"
+    [height]="'70%'"
+    [closeOnOutsideClick]="true"
+    [(visible)]="popupListaProductos">
+    <div *dxTemplate="let data of 'content'">
+         <dx-scroll-view width="100%" height="100%">
+             <div class="centrar">
+                <h4>{{nombrePedido}}</h4>
+                <h4>TIENDA : {{nombreTienda}}</h4>
+             </div>
+             
+            <div class="ps-section__content centrar">
+                <div class="table-responsive">
+                    <table class="table ps-table--shopping-cart centrar">
+                        <thead>
+                            <tr class="centrar">
+                                <th style="text-align: center;">Producto</th>
+                                <th>Precio</th>
+                                <th>Cantidad</th>
+                                <th>Total</th> 
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let element of ordenes;let i = index">
+                                <td  class="centrar">{{element.nombre_producto}}</td>
+                                <td class="price">${{element.precio}}</td>
+                                <td>${{element.cantidad}}</td>   
+                                <td style="text-align: center;">${{element.total}}</td>                             
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr>
+
+                <div class="d-flex flex-row-reverse" style="margin-right: 2em;">
+                    <div class="p-2"><h3>Total <span>${{totalCompra}}</span></h3></div>             
+                </div>
+            </div> 
+         </dx-scroll-view>
+        
     </div>
    
 </dx-popup>

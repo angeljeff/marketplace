@@ -24,6 +24,9 @@
     height: 4rem;
 }
 
+.buscador{
+  width: 100%;
+}
 
 .centrar{
   text-align: center;
@@ -39,7 +42,3 @@
   align-content: center;
 }
 
-/* .margen div{
-  margin-right: 0.1em;
-
-} */

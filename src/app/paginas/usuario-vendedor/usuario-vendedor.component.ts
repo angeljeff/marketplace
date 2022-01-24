@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { OrdenTemporal } from 'src/app/clases/ordenTemporal';
 import { Producto } from 'src/app/clases/producto';
+import { Productocompleto } from 'src/app/clases/Productocompleto';
 import { Usuario } from 'src/app/clases/usuario';
 import { AuthenService } from 'src/app/services/authen.service';
 import { ProductoService } from 'src/app/services/productos.services';
@@ -23,7 +25,35 @@ export class UsuarioVendedorComponent implements OnInit {
   listapro : Producto []=[]
   listaprocategoria : Producto []=[] 
   productotemproral: Producto = new Producto();
+  totalCompra = 0;
+  listacompletaproductos : Productocompleto []=[]
 
+
+  ordenes: OrdenTemporal[] = [{
+    nombre_producto: 'Producto1',
+    cantidad : 3,
+    id_orden : 1,
+    precio : 8.50,
+    id_producto : 10,
+    total : 50,
+    imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
+  }, {
+    nombre_producto: 'Producto2',
+    cantidad : 5,
+    id_orden : 1,
+    precio : 18.50,
+    id_producto : 11,
+    total : 25,
+    imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
+  }, {
+    nombre_producto: 'Producto3',
+    cantidad : 1,
+    id_orden : 1,
+    precio : 12.50,
+    id_producto : 11,
+    total : 25,
+    imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
+  }];
   
 
 
@@ -67,6 +97,35 @@ export class UsuarioVendedorComponent implements OnInit {
 
   registrar(){
 
+  }
+
+  redirigir(){
+    this.router.navigate(["/principal"]);
+  }
+
+  irPerfilUsuario(){
+    this.usuarioLogueado.id_tipo_usuario =2;
+    if(this.usuarioLogueado.id_tipo_usuario == 1)
+      this.router.navigate(['/usuarioComprador']);
+    else if(this.usuarioLogueado.id_tipo_usuario == 2)
+      this.router.navigate(['/usuarioVendedor']);
+  }
+
+  verCarrito(){
+    this.router.navigate(['/carrito-compras']);
+  }
+
+  eliminarRegistro(i: number) {
+    this.ordenes.splice(i, 1);
+    this.calcularTotal();
+  }
+
+  calcularTotal(){
+    this.totalCompra = 0;
+    this.ordenes.forEach(element=>{
+      element.total = element.cantidad * element.precio
+      this.totalCompra = this.totalCompra + element.total 
+    })
   }
 
   editarPerfil(){

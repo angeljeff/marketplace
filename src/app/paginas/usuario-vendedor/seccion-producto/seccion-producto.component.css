@@ -15,3 +15,7 @@
   .form-group p{
       color: black;
   }
+
+  input[type="file"] {
+    height: 3em;
+}
