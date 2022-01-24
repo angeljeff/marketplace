@@ -1,5 +1,6 @@
 import { Time } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { event } from 'devextreme/events';
 import { Canton } from 'src/app/clases/canton';
 import { Tienda } from 'src/app/clases/tienda';
@@ -17,7 +18,7 @@ import Swal from 'sweetalert2';
 })
 export class SeccionTiendaComponent implements OnInit {
   @Input() objetoUsuario: Usuario = new Usuario();
-  IsNewTienda = true;
+  isNewTienda = true;
   mostrarFormularioRegistro = false;
   isedicion = false;
   newTienda: Tienda = new Tienda();
@@ -39,6 +40,7 @@ export class SeccionTiendaComponent implements OnInit {
   constructor(
    public _cantonesService: CantonService,
    public _tiendaService: TiendaService,
+   public router: Router
   ) { }
 
   ngOnInit(): void {
@@ -50,25 +52,30 @@ export class SeccionTiendaComponent implements OnInit {
   }
 
   traerDatosTienda(){
-    this.tiendaEncontrada.nombre = "AGRIPAC";
-    this.tiendaEncontrada.direccion = "Av. 25 de Julio"
-    //this.tiendaEncontrada.hora_apertura = "10:00";
-    //this.tiendaEncontrada.hora_cierre = "17:00";
-    this.tiendaEncontrada.descripcion = "Tenemos la visión de consolidar al Grupo Corporativo en todo el territorio ecuatoriano, enfocando nuestro futuro en el cliente como base del éxito del negocio. Con esta premisa, cumplimos con la misión de ofrecer soluciones integrales a través de la provisión de insumos de alta calidad gracias a nuestra filosofía de servicio permanente."
-   /* this._tiendaService.traerTienda(usuarioId).subscribe(
-      (res) => { 
+    //this.isNewTienda = false;
+   this.buscartienda.cedula= this.objetoUsuario.cedula
+   this._tiendaService.obtener_datos_tienda(this.buscartienda).subscribe(
+      (res) => {
         var tienda = res as Tienda[];
+        console.log(tienda.length)
         if(tienda.length != 0){
+          console.log("entre")
+          this.ll()
+          this.isNewTienda = false;
           this.existeTienda = true;
-          this.tiendaEncontrada =tienda[0]
-          this.IsNewTienda = false;
-        }else
+          this.tiendaEncontrada = tienda[0]
+        }else{
           this.existeTienda = false;
-          this.IsNewTienda = true;
+          this.isNewTienda = true;
+        }
+          
       },
-      (err) => { 
-      } */
+      (err) => { } )
     
+  }
+
+  ll(){
+    this.isNewTienda = false;
   }
 
   traerListaCantones(){
@@ -89,6 +96,7 @@ export class SeccionTiendaComponent implements OnInit {
   }
 
   registrar(){
+    this.newTienda.cedula = this.buscartienda.cedula
     var horasuma = new Date(this.hora);
     horasuma.setHours(horasuma.getHours()-5);
     this.newTienda.hora_apertura = horasuma
@@ -108,8 +116,12 @@ export class SeccionTiendaComponent implements OnInit {
           confirmButtonText: 'OK'
         }).then((result) => {
           if (result.isConfirmed) {
-            //this.router.navigate(["/login"]);
-          }
+            this.mostrarFormularioRegistro= false
+            this.existeTienda = true;
+            this.traerDatosTienda()
+            
+            /* this.router.navigate(['./seccion-tienda.component.html']);*/
+          } 
         }) 
       
       },
@@ -119,6 +131,7 @@ export class SeccionTiendaComponent implements OnInit {
 
   }
   actualizar(){
+    this.mostrarFormularioRegistro= true
     var horasuma = new Date(this.hora);
     horasuma.setHours(horasuma.getHours()-5);
     this.newTienda.hora_apertura = horasuma
@@ -149,7 +162,7 @@ export class SeccionTiendaComponent implements OnInit {
   }
 
   crearTienda(){
-    this.IsNewTienda = false;
+    this.isNewTienda = false;
     this.mostrarFormularioRegistro = true;
   }
 
@@ -158,7 +171,7 @@ export class SeccionTiendaComponent implements OnInit {
     this.isedicion=true;
     this.mostrarFormularioRegistro = true;
     
-     this.buscartienda.cedula = "24245";
+     this.buscartienda.cedula = "930";
       this._tiendaService.obtener_datos_tienda(this.buscartienda).subscribe(
         (res) => {
           this.newTienda = res[0];

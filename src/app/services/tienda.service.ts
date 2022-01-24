@@ -17,6 +17,7 @@ export class TiendaService{
   }
 
    obtener_datos_tienda(tienda : Tienda) {
+     console.log(tienda.cedula)
     return this.http.post<any>(this.URL + `/obtenertienda/${tienda.cedula}`, tienda);
   }
  

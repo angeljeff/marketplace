@@ -1,6 +1,6 @@
 <div class="ps-page__content text-center row">
 
-    <div class="container" *ngIf="IsNewTienda">
+    <div class="container" *ngIf="isNewTienda">
 
         <div class="ps-section__header">
             <h1>Nuevo en MarketPlace?</h1>
@@ -114,9 +114,9 @@
             <div class="col-md-2"></div>
             <div class="col-md-8">
                 <div class="row">
-                    <div class="col-md-6"> 
-                        <img src="../../../assets/img/shop-2.jpg" class="img-fluid">
+                    <div class="col-md-6 centrar"> 
                         <h2>{{tiendaEncontrada.nombre}}</h2>
+                        <img src="../../../assets/img/shop-2.jpg" class="img-fluid">
                          <div class="br-wrapper">
                             <button class="btn btn-warning btn-lg color-principal" (click)="editartienda()">Editar Datos Tienda</button>
                         </div>
