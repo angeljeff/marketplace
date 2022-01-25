@@ -10,7 +10,9 @@
 .icon-user{
   color: white;
 }
-
+.buscador{
+  width: 100%;
+}
 .color-principal{
     background-color: #1db61d;
     color: white;

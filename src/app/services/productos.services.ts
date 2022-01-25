@@ -17,6 +17,7 @@ export class ProductoService{
   }
 
   obtener_productos(producto : Producto) {
+    console.log(producto.id_tienda + "este es id")
     return this.http.post<any>(this.URL + `/obtenerpro/${producto.id_tienda}`, producto);
   }
   obtener_todos_productos_activos() {
@@ -33,4 +34,7 @@ export class ProductoService{
     return this.http.put<any>(this.URL + `/actualizar/${Number(producto.id_producto)}`, producto);
   }
   
+  eliminarproduct(producto : Producto) {
+    return this.http.put<any>(this.URL + `/eliminar/${Number(producto.id_producto)}`, producto);
+  }
 }

@@ -20,6 +20,9 @@ export class TiendaService{
      console.log(tienda.cedula)
     return this.http.post<any>(this.URL + `/obtenertienda/${tienda.cedula}`, tienda);
   }
+  obtener_datos_tienda_porid(tienda : Tienda) {
+   return this.http.post<any>(this.URL + `/obtener/${Number(tienda.id_tienda)}`, tienda);
+ }
  
   actualizar(tienda : Tienda) {
     return this.http.put<any>(this.URL + `/actualizar/${Number(tienda.id_tienda)}`, tienda);

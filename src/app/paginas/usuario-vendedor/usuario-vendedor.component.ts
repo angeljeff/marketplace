@@ -135,7 +135,7 @@ export class UsuarioVendedorComponent implements OnInit {
   }
 
   editarPerfil(){
-    this.router.navigate(['/register'], { queryParams: { id: "0995553816" } });
+    this.router.navigate(['/register'], { queryParams: { id: this.usuarioLogueado.cedula } });
   }
 
  

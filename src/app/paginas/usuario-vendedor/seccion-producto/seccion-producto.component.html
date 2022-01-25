@@ -1,10 +1,32 @@
 
-<ul class="ps-section__links">      
+<ul class="ps-section__links" >      
     <li><a (click)="mostrarSecProducto(1)">Mis Productos</a></li>
     <li><a (click)="mostrarSecProducto(2)">Nuevo Producto</a></li>
 </ul>
+<div class="ps-page__content text-center row" *ngIf="poseetienda">
+    <div class="container">
+        <div class="ps-section__header">
+            <h1>Te acabas de registrar?</h1>
+            <h4>Para agregar productos primero registra una tienda <br> ...ve a sección tienda</h4>
+        </div>
 
-        <div class="ps-section__content" *ngIf="seccionListProducto">
+        <div class="row">
+            <div class="col-lg-4 col-12"></div>
+            <div class="col-lg-4 col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <img src="../../../assets/img/shop-2.jpg" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-12"> </div>
+        </div>
+    </div>
+</div>
+
+
+
+        <div class="ps-section__content" *ngIf="seccionListProducto" >
             <div class="row centrar">
                 <div class="col-md-12"><h2>Lista de productos</h2></div>
             </div>

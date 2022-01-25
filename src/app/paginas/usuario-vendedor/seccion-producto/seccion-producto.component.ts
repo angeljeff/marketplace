@@ -8,6 +8,8 @@ import { Subcategorias } from 'src/app/clases/subcategorias';
 import { CategoriaService } from 'src/app/services/categorias.service';
 import { Categorias } from 'src/app/clases/categorias';
 import { Usuario } from 'src/app/clases/usuario';
+import { Tienda } from 'src/app/clases/tienda';
+import { TiendaService } from 'src/app/services/tienda.service';
 
 @Component({
   selector: 'app-seccion-producto',
@@ -29,6 +31,9 @@ export class SeccionProductoComponent implements OnInit {
     edicionsubcategoria=false
     isedicionpro = false;
     productobuscado: Producto = new Producto();
+    consultatienda: Tienda = new Tienda();
+    tiendaobtenida: Tienda = new Tienda();
+    poseetienda=false
 
     seccionNewProducto = false;
     seccionListProducto = true;
@@ -37,57 +42,44 @@ export class SeccionProductoComponent implements OnInit {
     listasubcategorias : Subcategorias []=[]
     listacategorias : Categorias []=[]
   
-    rules = { X: /[02-9]/ };
 
-
-productos: Producto[] = [{
-  nombre: 'Producto1',
-  contador : 10,
-  descripcion : "jjj",
-  id_estado_pro : 1,
-  id_producto : "1",
-  id_sub_categoria : 2,
-  id_tienda: 1,
-  precio : 10,
-  stock: 10,
-  estado:1,
-  imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
-}, {
-  nombre: 'Producto2',
-  contador : 10,
-  descripcion : "jjj",
-  id_estado_pro : 1,
-  id_producto : "1",
-  id_sub_categoria : 2,
-  id_tienda: 1,
-  precio : 10,
-  stock: 10,
-  estado:1,
-  imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
-}]; 
 
 
 
   constructor( public _productoService : ProductoService,
     public router : Router,
     public _subcategoriaService: SubCategoriaService,
-    public _categoriaService: CategoriaService
+    public _categoriaService: CategoriaService,
+    public _tiendaService: TiendaService
     ) { }
 
   ngOnInit( ): void {
-     this.listaproductos = this.productos
-     console.log(this.objetoUsuario.cedula + "este es usuario producto");
-    this.traerListadoProductosporTienda()
-    /* this.traerListadoSubcategorias() */
+    this.consultartienda()
     this.traerListadocategorias()
-    /* this.obtenerDatosPoridproducto() */ 
+    
     
   }
 
+  consultartienda(){
+    this.consultatienda.cedula= this.objetoUsuario.cedula
+    this._tiendaService.obtener_datos_tienda(this.consultatienda).subscribe(
+      (res) => { var tienda = res as Tienda[];
+        if(tienda.length != 0){
+          console.log("entre")
+          this.tiendaobtenida = tienda[0]
+          this.traerListadoProductosporTienda()
+          console.log( this.tiendaobtenida.id_tienda + "esta es la tienda obtenida")
+        }else{
+        }
+                },
+      (err) => { }
+    )
+  }
+
   registrar(){
-    /* this.productonuevo.precio= Number(this.productonuevo2.precio) */
     console.log(this.productonuevo.precio + "este es el precio")
-    this.mensajeLoading = "Guardando Usuario";
+    this.productonuevo.id_tienda = Number(this.tiendaobtenida.id_tienda)
+    this.mensajeLoading = "Guardando Producto";
     this.mostrarLoading = true;
     console.log(this.productonuevo)
      this._productoService.registrar(this.productonuevo).subscribe(
@@ -101,7 +93,7 @@ productos: Producto[] = [{
           confirmButtonText: 'OK'
         }).then((result) => {
           if (result.isConfirmed) {
-            /* this.router.navigate(["/login"]); */
+            this.productonuevo= new Producto()
           }
         }) 
       
@@ -136,7 +128,23 @@ productos: Producto[] = [{
         confirmButtonText: 'OK'
       }).then((result) => {
         if (result.isConfirmed) {
-          //agregar metodo para eliminar producto
+          this._productoService.eliminarproduct(product).subscribe(
+            (res) => {
+              this.mostrarLoading = false;
+              Swal.fire({
+                title: 'El producto se ha eliminado',
+                text: "----------",
+                icon: 'success',
+                showCancelButton: false,
+                confirmButtonText: 'OK'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  this.traerListadoProductosporTienda()
+                }
+              }) 
+            },
+            (err) => {  this.mostrarLoading = false; Swal.fire('error')}
+          ) 
         }
       }) 
   }
@@ -178,6 +186,8 @@ productos: Producto[] = [{
           confirmButtonText: 'OK'
         }).then((result) => {
           if (result.isConfirmed) {
+            this.productonuevo= new Producto()
+            this.isedicionpro = false
             /* this.router.navigate(["/login"]); */
           }
         }) 
@@ -189,29 +199,46 @@ productos: Producto[] = [{
   }
 
   mostrarSecProducto(numero : number){
-    if(numero == 1) {
+    if(this.tiendaobtenida.id_tienda==""){
+      this.poseetienda=true
       this.seccionNewProducto = false;
-      this.seccionListProducto = true;
-    }  
-    else if(numero = 2){
-      this.seccionNewProducto = true;
       this.seccionListProducto = false;
     }
+    else{
+      this.poseetienda=false
+      if(numero == 1) {
+        this.seccionNewProducto = false;
+        this.seccionListProducto = true;
+        this.traerListadoProductosporTienda()
+      }  
+      else if(numero = 2){
+        
+        this.seccionNewProducto = true;
+        this.seccionListProducto = false;
+        this.productonuevo= new Producto()
+      }
+
+    }
+    
   }
 
   traerListadoProductosporTienda(){
-    this.consultaproducto.id_tienda=2
+    console.log("este es el id que llega   "+this.tiendaobtenida.id_tienda )
+    this.consultaproducto.id_tienda= Number(this.tiendaobtenida.id_tienda)
+    console.log(this.consultaproducto.id_tienda +"ES EL ID TIENDA")
     this._productoService.obtener_productos(this.consultaproducto).subscribe(
       (res) => { var lista = res as Productodto[];
         this.nuevoarregloproductos(lista)
-        console.log(lista)
-                  //this.llenarArregloTiposUsuario(lista)
+      
+        
                 },
       (err) => { }
     )
   }
 
+
   nuevoarregloproductos(lista: Productodto[]){
+    this.listaproductos= []
 
     lista.forEach(element=>{
       if(element.id_estado_pro==1)
@@ -220,7 +247,6 @@ productos: Producto[] = [{
         element.nombre_estado= "Publicado"
       else if(element.id_estado_pro==1)
         element.nombre_estado= "No publicado"
-
      this.listaproductos.push(element)
     
     })

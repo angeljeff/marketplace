@@ -4,6 +4,7 @@ import { Canton } from 'src/app/clases/canton';
 import { Producto } from 'src/app/clases/producto';
 import { TipoUsuario } from 'src/app/clases/tipoUsuario';
 import { Usuario } from 'src/app/clases/usuario';
+import { AuthenService } from 'src/app/services/authen.service';
 import { CantonService } from 'src/app/services/cantones.service';
 import { TipoUsuarioService } from 'src/app/services/tipoUsuario.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
@@ -31,8 +32,10 @@ export class RegisterComponent implements OnInit {
   passwordMode: string;
   comprobarcedula: any;
   comprobarfecha:Date = new Date();
-
   passwordButton: any;
+  isLoged = false;
+  nombreUsuario = ""
+  usuarioLogueado : Usuario = new Usuario();
 
   
   generos:string[]= ["Maculino", "Femenino"]
@@ -41,7 +44,8 @@ export class RegisterComponent implements OnInit {
     public _cantonesService : CantonService,
     public router : Router,
     public _tipoUsuarioService : TipoUsuarioService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private authenService: AuthenService) {
     this.passwordMode = 'password';
     this.passwordButton = {
       icon: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAB7klEQVRYw+2YP0tcQRTFz65xFVJZpBBS2O2qVSrRUkwqYfUDpBbWQu3ELt/HLRQ/Q8RCGxVJrRDEwj9sTATxZ/Hugo4zL/NmV1xhD9xi59177pl9986fVwLUSyi/tYC+oL6gbuNDYtyUpLqkaUmfJY3a+G9JZ5J2JW1J2ivMDBSxeWCfeBxYTHSOWMcRYLOAEBebxtEVQWPASQdi2jgxro4E1YDTQIJjYM18hszGbew4EHNq/kmCvgDnHtI7YBko58SWgSXg1hN/btyFBM0AlwExczG1YDZrMS4uLUeUoDmgFfjLGwXEtG05wNXyTc4NXgzMCOAIGHD8q0ATuDZrempkwGJ9+AfUQ4K+A/eEseqZ/UbgdUw4fqs5vPeW+5mgBvBAPkLd8cPju+341P7D/WAaJGCdOFQI14kr6o/zvBKZYz11L5Okv5KGA89Kzu9K0b0s5ZXt5PjuOL6TRV5ZalFP4F+rrnhZ1Cs5vN6ijmn7Q162/ThZq9+YNW3MbfvDAOed5cxdGL+RFaUPKQtjI8DVAr66/u9i6+jJzTXm+HFEVqxVYBD4SNZNKzk109HxoycPaG0bIeugVDTp4hH2qdXJDu6xOAAWiuQoQdLHhvY1aEZSVdInG7+Q9EvSz9RrUKqgV0PP3Vz7gvqCOsUj+CxC9LB1Dc8AAAASdEVYdEVYSUY6T3JpZW50YXRpb24AMYRY7O8AAAAASUVORK5CYII=',
@@ -54,6 +58,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this.traerListadoCantones();
     this.traerListadoTiposUsuarios();
+    this.cargarUsuarioLogueado()
      /* this.obtenerDatosPorCedula("0930492731") */
     
 
@@ -166,6 +171,12 @@ export class RegisterComponent implements OnInit {
           confirmButtonText: 'OK'
         }).then((result) => {
           if (result.isConfirmed) {
+            if(this.usuarioNuevo.id_tipo_usuario== 1){
+              this.router.navigate(["/usuarioVendedor"])
+            }else{
+              this.router.navigate(["/login"])
+            }
+            
             //this.router.navigate(["/login"]);
           }
         }) 
@@ -175,7 +186,40 @@ export class RegisterComponent implements OnInit {
     ) 
 
   }
+  cargarUsuarioLogueado() {
+    new Promise((res, err) => {
+      var cedula = localStorage.getItem("cedulaUser") ?? "";
+      this.authenService.getUserLogueado(cedula)
+        .subscribe(
+          res => {
+            var arreglo = res as Usuario[];
+            this.isLoged = true;
+            this.usuarioLogueado = arreglo[0];
+            var array = this.usuarioLogueado.nombres.split(" ");
+            this.nombreUsuario = array[0];
+            
+          },
+          err => {})
+    });
+  }
 
+  irPerfilUsuario(){
+    this.usuarioLogueado.id_tipo_usuario =2;
+    if(this.usuarioLogueado.id_tipo_usuario == 1)
+      this.router.navigate(['/usuarioComprador']);
+    else if(this.usuarioLogueado.id_tipo_usuario == 2)
+      this.router.navigate(['/usuarioVendedor']);
+  }
+  logout() {
+    localStorage.removeItem("cedulaUser");
+    localStorage.removeItem("token");
+    localStorage.removeItem("logged");
+    this.router.navigate(["/login"]);
+  }
+
+  redirigir(){
+    this.router.navigate(["/principal"]);
+  }
   setearValorCanton(e:any){ 
     console.log(e.value)
     //this.usuarioNuevo.id_cantones = e.value.id_cantones
