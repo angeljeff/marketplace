@@ -149,6 +149,7 @@ export class SeccionPedidoComponent implements OnInit {
   id_tienda: 1,
   precio : 10,
   stock: 10,
+  estado:1,
   imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
 }, {
   nombre: 'Producto2',
@@ -160,6 +161,7 @@ export class SeccionPedidoComponent implements OnInit {
   id_tienda: 1,
   precio : 10,
   stock: 10,
+  estado:1,
   imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
 }, {
   nombre: 'Producto2',
@@ -171,6 +173,7 @@ export class SeccionPedidoComponent implements OnInit {
   id_tienda: 1,
   precio : 10,
   stock: 10,
+  estado:1,
   imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
 }, {
   nombre: 'Producto2',
@@ -182,6 +185,7 @@ export class SeccionPedidoComponent implements OnInit {
   id_tienda: 1,
   precio : 10,
   stock: 10,
+  estado:1,
   imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
 }, {
   nombre: 'Producto2',
@@ -193,6 +197,7 @@ export class SeccionPedidoComponent implements OnInit {
   id_tienda: 1,
   precio : 10,
   stock: 10,
+  estado:1,
   imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
 }, {
   nombre: 'Producto2',
@@ -204,6 +209,7 @@ export class SeccionPedidoComponent implements OnInit {
   id_tienda: 1,
   precio : 10,
   stock: 10,
+  estado:1,
   imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
 }, {
   nombre: 'Producto2',
@@ -215,6 +221,7 @@ export class SeccionPedidoComponent implements OnInit {
   id_tienda: 1,
   precio : 10,
   stock: 10,
+  estado:1,
   imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
 }, {
   nombre: 'Producto2',
@@ -226,6 +233,7 @@ export class SeccionPedidoComponent implements OnInit {
   id_tienda: 1,
   precio : 10,
   stock: 10,
+  estado:1,
   imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
 }]; 
 

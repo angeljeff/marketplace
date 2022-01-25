@@ -24,6 +24,11 @@ import { SeccionPedidoComponent } from './paginas/usuario-vendedor/seccion-pedid
 import { CarritoComprasComponent } from './paginas/carrito-compras/carrito-compras.component';
 import { ProductosTiendaComponent } from './paginas/productos-tienda/productos-tienda.component';
 import { FooterComponent } from './paginas/footer/footer.component';
+import { UsuarioAdministradorComponent } from './paginas/usuario-administrador/usuario-administrador.component';
+import { SeccionProductoAdministradorComponent } from './paginas/usuario-administrador/seccion-producto-administrador/seccion-producto-administrador.component';
+import { SeccionTiendaAdministradorComponent } from './paginas/usuario-administrador/seccion-tienda-administrador/seccion-tienda-administrador.component';
+import { SeccionEstadisticaAdministradorComponent } from './paginas/usuario-administrador/seccion-estadistica-administrador/seccion-estadistica-administrador.component';
+import { SeccionUsuarioAdministradorComponent } from './paginas/usuario-administrador/seccion-usuario-administrador/seccion-usuario-administrador.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +48,12 @@ import { FooterComponent } from './paginas/footer/footer.component';
     SeccionPedidoComponent,
     CarritoComprasComponent,
     ProductosTiendaComponent,
-    FooterComponent
+    FooterComponent,
+    UsuarioAdministradorComponent,
+    SeccionProductoAdministradorComponent,
+    SeccionTiendaAdministradorComponent,
+    SeccionEstadisticaAdministradorComponent,
+    SeccionUsuarioAdministradorComponent
   ],
   imports: [
     FormsModule,

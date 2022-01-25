@@ -12,6 +12,7 @@ import { ProductocompletoService } from 'src/app/services/productoscompletos';
 import { Productocompleto } from 'src/app/clases/Productocompleto';
 import { OrdenTemporal } from 'src/app/clases/ordenTemporal';
 import { Tienda } from 'src/app/clases/tienda';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-principal',
@@ -27,12 +28,47 @@ export class PrincipalComponent implements OnInit {
   listacategorias : Categorias []=[]
   listapresentacioncategorias : Categorias []=[]
   listaprocompleto : Productocompleto []=[]
+  listaprocompleto2 : Productocompleto []=[
+    {
+       id_producto : 1,
+    nombre : "PP1",
+    precio : 10.5,
+    imagen: 'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
+    stock: 10,
+    descripcion: "No hay",
+    contador: 2,
+    id_sub_categoria: 1,
+    descripcion_sub: "Fertilizantes",
+    id_categoria: 1,
+    descripcion_cat: "Sub-fertilizantes",
+    id_tienda: 1,
+    id_estado_pro:1
+    },
+    {
+       id_producto : 1,
+    nombre : "PP1",
+    precio : 10.5,
+    imagen: 'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
+    stock: 10,
+    descripcion: "No hay",
+    contador: 2,
+    id_sub_categoria: 1,
+    descripcion_sub: "Fertilizantes",
+    id_categoria: 1,
+    descripcion_cat: "Sub-fertilizantes",
+    id_tienda: 1,
+    id_estado_pro:1
+    }
+  ]
   listacompletaproductos : Productocompleto []=[]
   datosTienda : Tienda = new Tienda()
   nomb=""
   popupVisible = false
   popupTienda = false
+  popupCompra = false
   productoMostrado : Productocompleto = new Productocompleto()
+  productoAComprar : Productocompleto = new Productocompleto()
+  nuevoProductoOrden : OrdenTemporal = new OrdenTemporal();
   
   totalCompra = 0;
   productotemproral: Producto = new Producto();
@@ -98,6 +134,7 @@ export class PrincipalComponent implements OnInit {
 
 
   isLoged = false;
+  mensajeError = ""
   usuarioLogueado : Usuario = new Usuario();
   constructor(public router: Router,
     public _productoService: ProductoService,
@@ -155,6 +192,39 @@ export class PrincipalComponent implements OnInit {
     })
   }
 
+  validarCantidad(){
+    if(this.productoAComprar.stock < this.nuevoProductoOrden.cantidad){
+      this.mensajeError = "La cantidad solicitada excede el stock disponible del producto, se asignó por defecto el stock disponible"
+      this.nuevoProductoOrden.cantidad = this.productoAComprar.stock;
+      this.calcularTotalOrden()
+    }else{
+      this.mensajeError = ""
+      this.calcularTotalOrden()
+    } 
+  }
+
+  solicitarProducto(){
+    console.log(this.nuevoProductoOrden)
+    //mandar a guardar los datos de la orden
+    this.popupCompra = false;
+    Swal.fire({
+      title: 'Producto Agregado',
+      text: "El producto se agregó a su carrito de compras",
+      icon: 'success',
+      showCancelButton: true,
+      confirmButtonText: 'Seguir comprando',
+      cancelButtonText :'OK',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.seguirComprando();
+      }
+    }) 
+  }
+
+  calcularTotalOrden(){
+    this.nuevoProductoOrden.total = this.nuevoProductoOrden.cantidad * this.nuevoProductoOrden.precio 
+  }
+
   mostrarPopup(producto : Productocompleto){
     this.productoMostrado = producto
     this.popupVisible = true;
@@ -166,6 +236,39 @@ export class PrincipalComponent implements OnInit {
     //this.datosTienda = tiendaEncontrada
     this.popupTienda = true;
     this.datosTienda.nombre = "AGRIPAC nombre mas largo"
+  }
+
+  mostrarPopupCompra(producto : Productocompleto){
+    if(this.isLoged){
+      // metodo para traer datos tienda
+      // tienda tarida se asiga a la variable de a tienda en ep popup
+      //this.datosTienda = tiendaEncontrada
+      this.popupCompra = true;
+      this.productoAComprar = producto;
+      this.nuevoProductoOrden.nombre_producto = producto.nombre;
+      this.nuevoProductoOrden.total = 0;
+      this.nuevoProductoOrden.precio = producto.precio;
+      this.nuevoProductoOrden.id_producto = producto.id_producto;
+    }else{
+      Swal.fire({
+        title: 'Alerta',
+        text: "Necesita estar logeado para realizar esta acción",
+        icon: 'warning',
+        showCancelButton: false,
+        confirmButtonText: 'Ir a Login',
+        cancelButtonText :'Cerrar',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.router.navigate(['/login']);
+        }
+      }) 
+    }
+    
+  }
+
+  seguirComprando(){
+    var tiendaId = 1; // setear el Id de ña tienda perteneciente a un producto de la orden
+    this.router.navigate(['/productos-tienda'], { queryParams: { id: tiendaId } });
   }
 
   verProductosTienda(idTienda : string){

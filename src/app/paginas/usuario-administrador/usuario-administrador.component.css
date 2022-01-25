@@ -1,0 +1,48 @@
+.header__content {
+  background-color: #1db61d;
+  color: white;
+  width: 100%;
+  position: fixed;
+  z-index: 2;
+}
+
+.ps-logo{
+  margin-top: -1em;
+}
+
+.icon-user{
+  color: white;
+}
+
+.color-principal{
+    background-color: #1db61d;
+    color: white;
+    border-color: transparent;
+}
+
+.controles{
+    height: 4rem;
+}
+
+.buscador{
+  width: 100%;
+}
+
+.centrar{
+  text-align: center;
+}
+
+.btnCreate{
+  font-size: 12pt;
+  
+}
+
+.text-center{
+  text-align: center;
+  align-content: center;
+}
+
+
+.margen{
+    margin-right: 1em;
+}

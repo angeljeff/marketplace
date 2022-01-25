@@ -20,7 +20,6 @@
                     <div class="menu--product-categories">
                         <div class="menu__toggle">
                             <i class="icon-menu"></i>
-                            <span> Shop by Department</span>
                         </div>
 
                         <div class="menu__content" >
@@ -164,19 +163,26 @@
                         Login and Register
                         ======================================-->
 
-                        <div class="ps-block--user-header">
+                        <div class="ps-block--user-header" *ngIf="!isLoged">
                             <div class="ps-block__left">
-                                <i class="icon-user" (click)="irPerfilUsuario()"></i>
+                                <i class="icon-user"></i>
                             </div>
-                            <div class="ps-block__right" *ngIf="!isLoged">
+                            <div class="ps-block__right">
                                 <a routerLink="/login">Ingresar</a>
                                 <a routerLink="/register">Registrar</a>
+                            </div>
+                        </div>
+
+                        <div class="ps-block--user-header" *ngIf="isLoged">
+                            <div class="ps-block__left">
+                                <i class="icon-user" (click)="irPerfilUsuario()"></i>
                             </div>
                             <div class="ps-block__right" *ngIf="isLoged">
                                 <a (click)="irPerfilUsuario()">{{nombreUsuario}}</a>
                                 <a (click)="logout()">Salir</a>
                             </div>
                         </div>
+
                     </div><!-- End Header Actions-->
                 </div><!-- End Header Content Right-->
             </div><!-- End Container-->
@@ -189,15 +195,14 @@
     	<div class="ps-home-banner">
             <div class="ps-carousel--nav-inside owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="0" data-owl-nav="true" data-owl-dots="true" data-owl-item="1" data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="1" data-owl-item-lg="1" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-animate-in="fadeIn" data-owl-animate-out="fadeOut">
 
-                <div class="ps-banner--market-4" data-background="../../../assets/img/slider/horizontal/1.jpg">
-                	<img src="../../../assets/img/slider/horizontal/1.jpg" alt="">
+                <div class="ps-banner--market-4" data-background="../../../assets/img/slider/horizontal/fondo.png">
+                	<img src="../../../assets/img/slider/horizontal/fondo.png" alt="">
                     <div class="ps-banner__content">
-                        <h4>Limit Edition</h4>
-                        <h3>HAPPY SUMMER <br/> 
-                        	COMBO SUPER COOL <br/> 
-                        	<p>UP TO <strong> 40%</strong></p>
+                        <h4>Productos Agrícolas</h4>
+                        <h3>ENCUENTRA TODO <br/> 
+                        	LO QUE NECESITAS <br/> 
                         </h3>
-                        <a class="ps-btn" href="#">Shop Now</a>
+                      <!--   <a class="ps-btn" href="#">Shop Now</a> -->
                     </div>
                 </div>
 
@@ -274,7 +279,7 @@
                             <p><span>Precio:</span> {{element.stock}}</p>
                              <div class="row buttonP">
                                  <div class="col-md-6">
-                                      <button class="color-principal btn" (click)="comprar()">Comprar</button>
+                                      <button class="color-principal btn" (click)="mostrarPopupCompra(element)">Comprar</button>
                                  </div>
                                  <div class="col-md-6">
                                      <button class="color-principal btn" (click)="mostrarPopupTienda(element.id_tienda)">Ver Tienda</button>
@@ -305,7 +310,7 @@
                     <div class="col-xl-2 col-lg-3 col-sm-4 col-6 ">
                         <div class="ps-block--category" (click)="llamarporcategorias([1,2])">
                         	<a class="ps-block__overlay" ></a>
-                        	<img src="../../../assets/imagcate/fungicidas.jpg" alt="">
+                        	<img src="../../../assets/imagcate/fungicidas1.jpg" alt="">
                             <p>Fungicidas</p>
                         </div>
                     </div>
@@ -313,7 +318,7 @@
                     <div class="col-xl-2 col-lg-3 col-sm-4 col-6 ">
                         <div class="ps-block--category" (click)="llamarporcategorias([5,6])">
                         	<a class="ps-block__overlay" ></a>
-                        	<img src="../../../assets/imagcate/insecticidas.jpg" alt="">
+                        	<img src="../../../assets/imagcate/insecticidas1.jpg" alt="">
                             <p>Insecticidas</p>
                         </div>
                     </div>
@@ -321,7 +326,7 @@
                     <div class="col-xl-2 col-lg-3 col-sm-4 col-6 ">
                         <div class="ps-block--category" (click)="llamarporcategorias([15,16,17])">
                         	<a class="ps-block__overlay" ></a>
-                        	<img src="../../../assets/imagcate/fertilizantes.png" alt="">
+                        	<img src="../../../assets/imagcate/fertilizantes1.jpg" alt="">
                             <p>Fertilizantes</p>
                         </div>
                     </div>
@@ -329,7 +334,7 @@
                     <div class="col-xl-2 col-lg-3 col-sm-4 col-6 ">
                         <div class="ps-block--category" (click)="llamarporcategorias([7,8])">
                         	<a class="ps-block__overlay" ></a>
-                        	<img src="../../../assets/imagcate/acaricidas.jpg" alt="">
+                        	<img src="../../../assets/imagcate/acaricidas1.jpg" alt="">
                             <p>Acaricidas</p>
                         </div>
                     </div>
@@ -337,7 +342,7 @@
                     <div class="col-xl-2 col-lg-3 col-sm-4 col-6 ">
                         <div class="ps-block--category" (click)="llamarporcategorias([9,10])" >
                         	<a class="ps-block__overlay" ></a>
-                        	<img src="../../../assets/imagcate/rodenticidas.jpg"  alt="">
+                        	<img src="../../../assets/imagcate/raticidas1.jpg"  alt="">
                             <p>Rodenticidas</p>
                         </div>
                     </div>
@@ -345,7 +350,7 @@
                     <div class="col-xl-2 col-lg-3 col-sm-4 col-6 ">
                         <div class="ps-block--category" (click)="llamarporcategorias([11,12,13,14])">
                         	<a class="ps-block__overlay" ></a>
-                        	<img src="../../../assets/imagcate/herbicidas.jpg" alt="">
+                        	<img src="../../../assets/imagcate/herbicidas1.jpg" alt="">
                             <p>Herbicidas</p>
                         </div>
                     </div>
@@ -457,6 +462,78 @@
             <div class="col-md-12"><button class="color-principal btn2"  (click)="verProductosTienda(datosTienda.id_tienda)">Ver Productos Tienda</button></div>
             
         </div>
+    </div>
+   
+</dx-popup>
+
+
+<dx-popup
+    [width]="'50%'"
+    [height]="'70%'"
+    [(visible)]="popupCompra">
+    <div *dxTemplate="let data of 'content'">
+        <div class="ps-section__content centrar">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-10">
+                    <div class="table-responsive">
+                    <div class="row">
+                        <div class="col-md-6"><img src="{{productoAComprar.imagen}}" alt="" style="width: 250px;height: auto;"></div>
+                        <div class="col-md-4">
+                            <br><br>
+                            <h4>{{productoAComprar.nombre}}</h4><br>
+                            <h4>Cantidad disponible: {{productoAComprar.stock}}</h4>
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">
+                            <p style="color: red;font-weight: bold;">{{mensajeError}}</p>
+                            <table class="table ps-table--shopping-cart centrar">
+                                <thead>
+                                    <tr>
+                                        <th>Precio</th>
+                                        <th>Cantidad</th>
+                                        <th>Total</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="price">${{productoAComprar.precio}}</td>
+                                        <td>
+                                            <div class="form-group--number">
+                                                <dx-number-box [(value)]="nuevoProductoOrden.cantidad" (onChange)="validarCantidad()" ></dx-number-box>
+                                                </div>
+                                        </td>
+                                        <td>${{nuevoProductoOrden.total}}</td>                             
+                                        
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="row">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4"><button class="btn color-principal" (click)="solicitarProducto()">Añadir al Carrito</button></div>
+                                <div class="col-md-4"></div>
+                            </div>
+                            
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+                    
+                </div>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+
+           <!--  <div class="row">
+                <div class="col-md-8"></div>
+                <div class="col-md-4"><button class="btn color-principal" (click)="seguirComprando()">Seguir Comprando</button></div>
+
+            </div> -->
+        </div> 
+
     </div>
    
 </dx-popup>

@@ -1,0 +1,237 @@
+
+<body>
+
+
+    <header class="header header--standard header--market-place-4" data-sticky="true">
+        <!--=====================================
+        Header Content
+        ======================================-->
+
+        <div class="header__content">
+            <div class="container">
+                <div class="header__content-left">
+                    <!--=====================================
+                    Logo
+                    ======================================-->
+                    <a class="ps-logo" href="index.html">
+                    <img src="../../../assets/icono.png" class="pt-3" alt="">
+                    </a>
+                    <!--=====================================
+                    Menú
+                    ======================================-->
+                    <div class="menu--product-categories">
+                        <div class="menu__toggle" (click)="redirigir()">
+                            <i class="icon-menu"></i>
+                        </div>
+                    </div><!-- End menu-->
+                </div><!-- End Header Content Left-->
+                <!--=====================================
+                Search
+                ======================================-->
+                <div class="header__content-center">
+                    <form class="ps-form--quick-search" action="index.html" method="get" >
+                        <dx-autocomplete #data2
+                                            [dataSource]="listacompletaproductos"
+                                            valueExpr="nombre"
+                                            placeholder="Nombre del producto" class="buscador">
+                                        </dx-autocomplete>
+                        <button>Buscar</button>
+                    </form>
+                </div>
+
+                <div class="header__content-right">
+                    <div class="header__actions">
+                       
+                        <!--=====================================
+                        Cart
+                        ======================================-->
+                        <div class="ps-cart--mini">
+
+                            <a class="header__extra" href="#">
+                                <i class="icon-bag2"></i><span><i>0</i></span>
+                            </a>
+
+                            <div class="ps-cart__content">
+                                <div class="ps-cart__items">
+                                    <div class="ps-product--cart-mobile" *ngFor="let element of ordenes;let i = index">
+                                        <div class="ps-product__thumbnail">
+                                            <a href="#">
+                                                <img src="{{element.imagen}}" alt="">
+                                            </a>
+                                        </div>
+
+                                        <div class="ps-product__content">
+                                            <a class="ps-product__remove"  (click)="eliminarRegistro(i)">
+                                                <i class="icon-cross"></i>
+                                            </a>
+                                            <a>{{element.nombre_producto}}</a><br>
+                                           <!--  <p><strong>Sold by:</strong> YOUNG SHOP</p> -->
+                                            <small>{{element.cantidad}} x ${{element.precio}}</small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="ps-cart__footer">
+                                    <h3>Total:<strong>${{totalCompra}}</strong></h3>
+                                    <div class="row">
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-10" style="text-align: center;">
+                                                <a class="ps-btn color-principal" (click)="verCarrito()">Ver Carrito</a>
+                                        </div>
+                                        <div class="col-md-1"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--=====================================
+                        Login and Register
+                        ======================================-->
+
+                        <div class="ps-block--user-header">
+                            <div class="ps-block__left">
+                                <i class="icon-user" (click)="irPerfilUsuario()"></i>
+                            </div>
+                            <div class="ps-block__right" *ngIf="!isLoged">
+                                <a routerLink="/login">Ingresar</a>
+                                <a routerLink="/register">Registrar</a>
+                            </div>
+                            <div class="ps-block__right" *ngIf="isLoged">
+                                <a (click)="irPerfilUsuario()">{{nombreUsuario}}</a>
+                                <a (click)="logout()">Salir</a>
+                            </div>
+                        </div>
+                    </div><!-- End Header Actions-->
+                </div><!-- End Header Content Right-->
+            </div><!-- End Container-->
+        </div><!-- End Header Content-->
+    </header>
+
+	
+
+    <!--=====================================
+    My Account Content
+    ======================================--> 
+
+    <div class="ps-vendor-dashboard pro">
+
+        <div class="container">
+            <br><br><br>
+            <div class="ps-section__header">
+
+                <!--=====================================
+                Profile
+                ======================================--> 
+
+                <aside class="ps-block--store-banner">
+
+                    <div class="ps-block__user">
+
+                        <div class="ps-block__user-avatar">
+
+                            <img src="../../../assets/user.png" alt="">
+
+                            <div class="br-wrapper">
+                                  <button class="btn btn-warning btn-lg color-principal" (click)="editarPerfil()">Editar Perfil</button>
+                              <!--  <button class="btn btn-primary btn-lg rounded-circle"><i class="fas fa-pencil-alt"></i></button> -->
+
+                            </div>
+
+                            <div class="br-wrapper br-theme-fontawesome-stars mt-3">
+
+                                <select class="ps-rating" data-read-only="true" style="display: none;">
+                                    <option value="1">1</option>
+                                    <option value="1">2</option>
+                                    <option value="1">3</option>
+                                    <option value="1">4</option>
+                                    <option value="2">5</option>
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                        <div class="ps-block__user-content text-center text-lg-left">
+
+                            <h2 class="text-white">{{usuarioLogueado.nombres}}</h2>
+
+                            <p><i class="fas fa-user"></i> {{primerdigito}}{{usuarioLogueado.cedula}}</p>
+
+                            <p><i class="fas fa-envelope"></i> {{usuarioLogueado.correo}}</p>
+
+                           
+
+                        </div>
+
+                        <div class="row ml-lg-auto pt-5 ">
+
+                            <div class="col-lg-2 col-6"> </div><!-- box /-->
+
+                            <div class="col-lg-2 col-6 margen" (click)="mostrarSeccion(1)" >
+                                <div class="text-center">
+                                    <a>
+                                        <h1><i class="fas fa-store text-white"></i></h1>
+                                        <h4 class="text-white">Tiendas</h4>
+                                    </a>
+                                </div>
+                            </div><!-- box /-->
+
+                            <div class="col-lg-2 col-6 margen" (click)="mostrarSeccion(2)">
+                                <div class="text-center">
+                                    <a>
+                                        <h1><i class="fas fa-shopping-bag text-white"></i></h1>
+                                        <h4 class="text-white" style="margin-left: -0.4em;">Productos</h4>
+                                    </a>
+                                </div>
+                            </div><!-- box /-->
+
+                            <div class="col-lg-2 col-6 margen" (click)="mostrarSeccion(3)">
+                                <div class="text-center">
+                                    <a>
+                                        <h1><i class="fas fa-user text-white"></i></h1>
+                                        <h4 class="text-white">Usuarios </h4>
+                                    </a>
+                                </div>
+                            </div><!-- box /-->
+                
+
+                            <div class="col-lg-2 col-6 margen" (click)="mostrarSeccion(4)">
+                                <div class="text-center">
+                                    <a>
+                                        <h1><i class="fas fa-clipboard-list text-white"></i></h1>
+                                        <h4 class="text-white" style="margin-left: -0.4em;">Estadísticas </h4>
+                                    </a>
+                                </div>
+                            </div><!-- box /-->
+
+                        </div>
+
+                    </div>
+
+                </aside><!-- s -->
+   
+                <div class="ps-section__content" *ngIf="seccionTienda">
+                    <app-seccion-tienda [objetoUsuario]="usuarioLogueado"></app-seccion-tienda>
+                </div>
+
+                <div class="ps-section__content" *ngIf="seccionProducto">
+                    <app-seccion-producto-administrador [objetoUsuario]="usuarioLogueado"></app-seccion-producto-administrador>
+                </div>
+
+                <div class="ps-section__content" *ngIf="seccionUsuarios">
+                   <app-ordenes-vendedor ></app-ordenes-vendedor>
+                </div>
+
+                <div class="ps-section__content" *ngIf="seccionEstadisticas">
+                    <app-seccion-pago></app-seccion-pago>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    
+   
+	
+</body>

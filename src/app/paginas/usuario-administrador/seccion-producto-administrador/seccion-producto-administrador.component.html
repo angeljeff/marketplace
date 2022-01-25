@@ -1,0 +1,140 @@
+
+<ul class="ps-section__links">      
+    <li><a (click)="mostrarSecProducto(1)">Pendientes</a></li>
+    <li><a (click)="mostrarSecProducto(2)">Aprobados</a></li>
+    <li><a (click)="mostrarSecProducto(3)">Rechazados</a></li>
+</ul>
+
+<div class="ps-section__content" *ngIf="seccionProPendientes">
+    <div class="row centrar">
+        <div class="col-md-12"><h2>Productos Pendientes</h2></div>
+    </div>
+    
+    <dx-data-grid
+        id="gridContainer"
+        [dataSource]="listaproductosPendientes"
+        keyExpr="id_producto"
+        [showBorders]="true">
+        <dxi-column
+            dataField="imagen"
+            [width]="100"
+            alignment="center"
+            [allowFiltering]="false"
+            [allowSorting]="false"
+            cellTemplate="cellTemplate"
+        ></dxi-column>
+        <dxi-column dataField="nombre" alignment="center" caption="Nombre Productos"></dxi-column>
+        <dxi-column dataField="nombre_tienda"  alignment="center"  caption="Tienda"></dxi-column>
+        <dxi-column dataField="descripcion"  alignment="center"  caption="Descripcion"></dxi-column>
+        <dxi-column dataField="precio"  alignment="center"  caption="Precio"></dxi-column>
+        <dxi-column dataField="stock"  alignment="center"  caption="stock"></dxi-column>
+        <div *dxTemplate="let data of 'cellTemplate'">
+            <img [src]="data.value" />
+        </div>
+
+        <dxi-column type="buttons"  caption="Aprobar">
+            <i class="far fa-check-square"></i>
+            <dxi-button text="Aprobar" cssClass="btn" [onClick]="APProduct"></dxi-button>    
+        </dxi-column>
+        <dxi-column type="buttons"  caption="Rechazar">
+            <dxi-button text="Rechazar" cssClass="btn" [onClick]="RCProduct"></dxi-button>    
+        </dxi-column>
+        <dxo-export [enabled]="true" fileName="Productos Pendientes"></dxo-export>
+            <dxo-paging [pageSize]="4"></dxo-paging>
+            <dxo-pager
+                [showPageSizeSelector]="true"
+                [allowedPageSizes]="[5,8,10]"
+            ></dxo-pager>
+    </dx-data-grid>
+</div>
+
+<div class="ps-section__content" *ngIf="seccionProAprobados">
+    <div class="row centrar">
+        <div class="col-md-12"><h2>Productos Aprobados</h2></div>
+    </div>
+    
+    <dx-data-grid
+        id="gridContainer"
+        [dataSource]="listaproductosAprobados"
+        keyExpr="id_producto"
+        [showBorders]="true">
+        <dxi-column
+            dataField="imagen"
+            [width]="100"
+            alignment="center"
+            [allowFiltering]="false"
+            [allowSorting]="false"
+            cellTemplate="cellTemplate"
+        ></dxi-column>
+        <dxi-column dataField="nombre" alignment="center" caption="Nombre Productos"></dxi-column>
+        <dxi-column dataField="nombre_tienda"  alignment="center"  caption="Tienda"></dxi-column>
+        <dxi-column dataField="descripcion"  alignment="center"  caption="Descripcion"></dxi-column>
+        <dxi-column dataField="precio"  alignment="center"  caption="Precio"></dxi-column>
+        <dxi-column dataField="stock"  alignment="center"  caption="stock"></dxi-column>
+        <div *dxTemplate="let data of 'cellTemplate'">
+            <img [src]="data.value" />
+        </div>
+
+        <dxi-column type="buttons"  caption="Aprobar">
+            <i class="far fa-check-square"></i>
+            <dxi-button text="Pendiente" cssClass="btn" [onClick]="PTProduct"></dxi-button>    
+        </dxi-column>
+        <dxi-column type="buttons"  caption="Rechazar">
+            <dxi-button text="Rechazar" cssClass="btn" [onClick]="RCProduct"></dxi-button>    
+        </dxi-column>
+        <dxo-export [enabled]="true" fileName="Productos Pendientes"></dxo-export>
+            <dxo-paging [pageSize]="4"></dxo-paging>
+            <dxo-pager
+                [showPageSizeSelector]="true"
+                [allowedPageSizes]="[5,8,10]"
+            ></dxo-pager>
+    </dx-data-grid>
+</div>
+
+<div class="ps-section__content" *ngIf="seccionProRechazados">
+    <div class="row centrar">
+        <div class="col-md-12"><h2>Productos Rechazados</h2></div>
+    </div>
+    
+    <dx-data-grid
+        id="gridContainer"
+        [dataSource]="listaproductosRechazados"
+        keyExpr="id_producto"
+        [showBorders]="true">
+        <dxi-column
+            dataField="imagen"
+            [width]="100"
+            alignment="center"
+            [allowFiltering]="false"
+            [allowSorting]="false"
+            cellTemplate="cellTemplate"
+        ></dxi-column>
+        <dxi-column dataField="nombre" alignment="center" caption="Nombre Productos"></dxi-column>
+        <dxi-column dataField="nombre_tienda"  alignment="center"  caption="Tienda"></dxi-column>
+        <dxi-column dataField="descripcion"  alignment="center"  caption="Descripcion"></dxi-column>
+        <dxi-column dataField="precio"  alignment="center"  caption="Precio"></dxi-column>
+        <dxi-column dataField="stock"  alignment="center"  caption="stock"></dxi-column>
+        <div *dxTemplate="let data of 'cellTemplate'">
+            <img [src]="data.value" />
+        </div>
+
+        <dxi-column type="buttons"  caption="Aprobar">
+            <i class="far fa-check-square"></i>
+            <dxi-button text="Pendiente" cssClass="btn" [onClick]="PTProduct"></dxi-button>    
+        </dxi-column>
+        <dxi-column type="buttons"  caption="Aprobar">
+            <i class="far fa-check-square"></i>
+            <dxi-button text="Aprobar" cssClass="btn" [onClick]="APProduct"></dxi-button>    
+        </dxi-column>
+        <dxo-export [enabled]="true" fileName="Productos Pendientes"></dxo-export>
+            <dxo-paging [pageSize]="4"></dxo-paging>
+            <dxo-pager
+                [showPageSizeSelector]="true"
+                [allowedPageSizes]="[5,8,10]"
+            ></dxo-pager>
+    </dx-data-grid>
+</div>
+
+
+
+                        
