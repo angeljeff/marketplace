@@ -18,7 +18,8 @@ class ProductoRoutes {
         this.router.post('/obtenerpro/:id_tienda', productoController.obtenerPoridtienda);
         this.router.post('/Agregar', productoController.agregar);
         this.router.put('/actualizar/:id_producto', productoController.actualizar);
-        this.router.put('/eliminar/:id_producto', productoController.desactivar);
+        this.router.put('/eliminar/:id_producto', productoController.eliminarproducto);
+        this.router.put('/rechazar/:id_producto', productoController.desactivar);
         this.router.put('/contador/:id_producto', productoController.actualizar_contador);
         this.router.post('/obtenerporidsub/:id_sub_categoria', productoController.obtenerPoridsubcategoria);
         

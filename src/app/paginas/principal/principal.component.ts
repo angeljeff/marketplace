@@ -13,6 +13,7 @@ import { Productocompleto } from 'src/app/clases/Productocompleto';
 import { OrdenTemporal } from 'src/app/clases/ordenTemporal';
 import { Tienda } from 'src/app/clases/tienda';
 import Swal from 'sweetalert2';
+import { TiendaService } from 'src/app/services/tienda.service';
 
 @Component({
   selector: 'app-principal',
@@ -61,7 +62,6 @@ export class PrincipalComponent implements OnInit {
     }
   ]
   listacompletaproductos : Productocompleto []=[]
-  datosTienda : Tienda = new Tienda()
   nomb=""
   popupVisible = false
   popupTienda = false
@@ -73,6 +73,9 @@ export class PrincipalComponent implements OnInit {
   totalCompra = 0;
   productotemproral: Producto = new Producto();
   cedula = ""
+  tiendapoput: Tienda = new Tienda();
+  datosTienda: Tienda = new Tienda();
+  
 
   ordenes: OrdenTemporal[] = [{
     nombre_producto: 'Producto1',
@@ -141,7 +144,8 @@ export class PrincipalComponent implements OnInit {
     public authenService : AuthenService,
     public userService: UsuarioService,
     public _categoriaService: CategoriaService,
-    public _productocomletoService: ProductocompletoService) { }
+    public _productocomletoService: ProductocompletoService,
+    public _tiendaService: TiendaService) { }
 
   ngOnInit(): void {
     this.cargarUsuarioLogueado();
@@ -231,11 +235,16 @@ export class PrincipalComponent implements OnInit {
   }
 
   mostrarPopupTienda(idTienda : number){
-    // metodo para traer datos tienda
-    // tienda tarida se asiga a la variable de a tienda en ep popup
-    //this.datosTienda = tiendaEncontrada
     this.popupTienda = true;
-    this.datosTienda.nombre = "AGRIPAC nombre mas largo"
+    this.tiendapoput.id_tienda = idTienda.toString()
+    this._tiendaService.obtener_datos_tienda_porid(this.tiendapoput).subscribe(
+      (res) => {
+        var tienda = res as Tienda[];
+        this.datosTienda = tienda[0]     
+      },
+      (err) => { } )
+
+   
   }
 
   mostrarPopupCompra(producto : Productocompleto){
@@ -376,6 +385,21 @@ export class PrincipalComponent implements OnInit {
 iniciodepagina(){
   window.scrollTo(0,0)
 }
+mostrardatostienda(){
+  this.listaprocompleto.splice(0, this.listaprocompleto.length)
+  this.listacompletaproductos.splice(0, this.listacompletaproductos.length)
+  this._productocomletoService.traerpro_completos().subscribe(
+    (res) => {  this.listaprocompleto = res as Productocompleto[];
+      this.listacompletaproductos= this.listaprocompleto
+      console.log(this.listacompletaproductos)
+     
+            },
+    (err) => { }
+)
+
+}
+
+
   mostrarproductos(){
     this.listaprocompleto.splice(0, this.listaprocompleto.length)
     this.listacompletaproductos.splice(0, this.listacompletaproductos.length)
@@ -414,8 +438,7 @@ iniciodepagina(){
       case "Item2":
       this.router.navigate(["/pagina3"]);
       break;
-    }
-      
+    }    
 
     if (item.price) {
       //this.currentProduct = item;

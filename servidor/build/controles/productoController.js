@@ -30,13 +30,13 @@ class ProductoController {
     }
     listarprocompleto(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const lista_productos_com = yield base_datos_1.default.query('SELECT pro.nombre, pro.id_producto, pro.precio, pro.imagen, pro.stock, pro.id_sub_categoria, pro.id_tienda,pro.descripcion, sub.descripcion_sub, cat.descripcion_cat, cat.id_categoria FROM productos AS pro INNER JOIN sub_categorias AS sub ON pro.id_sub_categoria = sub.id_sub_categoria INNER JOIN categorias AS cat ON sub.id_categoria = cat.id_categoria where pro.id_estado_pro = 2');
+            const lista_productos_com = yield base_datos_1.default.query('SELECT pro.nombre, pro.id_producto, pro.precio, pro.imagen, pro.stock, pro.id_sub_categoria, pro.id_tienda, pro.descripcion, sub.descripcion_sub, cat.descripcion_cat, cat.id_categoria FROM productos AS pro INNER JOIN sub_categorias AS sub ON pro.id_sub_categoria = sub.id_sub_categoria INNER JOIN categorias AS cat ON sub.id_categoria = cat.id_categoria INNER JOIN tiendas AS ti ON pro.id_tienda = ti.id_tienda where ti.id_estado_tienda=1 and pro.id_estado_pro = 2 and pro.estado=1');
             res.send(lista_productos_com);
         });
     }
     listarporsubcategorias(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const lista_productos_com = yield base_datos_1.default.query(`SELECT pro.nombre, pro.id_producto, pro.precio, pro.imagen, pro.stock, pro.id_sub_categoria, pro.id_tienda,pro.descripcion, sub.descripcion_sub, cat.descripcion_cat, cat.id_categoria FROM productos AS pro INNER JOIN sub_categorias AS sub ON pro.id_sub_categoria = sub.id_sub_categoria INNER JOIN categorias AS cat ON sub.id_categoria = cat.id_categoria where pro.id_estado_pro = 2 and pro.id_sub_categoria='${req.params.id_sub_categoria}'`);
+            const lista_productos_com = yield base_datos_1.default.query(`SELECT pro.nombre, pro.id_producto, pro.precio, pro.imagen, pro.stock, pro.id_sub_categoria, pro.id_tienda,pro.descripcion, sub.descripcion_sub, cat.descripcion_cat, cat.id_categoria FROM productos AS pro INNER JOIN sub_categorias AS sub ON pro.id_sub_categoria = sub.id_sub_categoria INNER JOIN categorias AS cat ON sub.id_categoria = cat.id_categoria INNER JOIN tiendas AS ti ON pro.id_tienda = ti.id_tienda where ti.id_estado_tienda=1 and pro.id_estado_pro = 2 and pro.estado=1 and pro.id_sub_categoria='${req.params.id_sub_categoria}'`);
             res.send(lista_productos_com);
         });
     }
@@ -56,7 +56,7 @@ class ProductoController {
     obtenerPoridtienda(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const producto1 = req.params.id_tienda;
-            const pro1 = yield base_datos_1.default.query(`SELECT * FROM productos where id_tienda ='${producto1}'`);
+            const pro1 = yield base_datos_1.default.query(`SELECT * FROM productos where estado=1 and id_tienda ='${producto1}'`);
             res.send(pro1);
         });
     }
@@ -76,6 +76,12 @@ class ProductoController {
     actualizar_contador(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const agrega_producto = yield base_datos_1.default.query("UPDATE productos SET  contador= ? WHERE id_producto = ?", [req.body.contador, req.params.id_producto]);
+            res.json({ message: 'Producto actualizado ' });
+        });
+    }
+    eliminarproducto(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const agrega_producto = yield base_datos_1.default.query("UPDATE productos SET  estado=0 WHERE id_producto = ?", [req.params.id_producto]);
             res.json({ message: 'Producto actualizado ' });
         });
     }
