@@ -1,1 +1,64 @@
-<p>seccion-tienda-administrador works!</p>
+
+<ul class="ps-section__links">      
+    <li><a (click)="mostrarSecProducto(1)">Activas</a></li>
+    <li><a (click)="mostrarSecProducto(2)">Inactivas</a></li>
+</ul>
+
+<div class="ps-section__content" *ngIf="seccionTiendasActivas">
+    <div class="row centrar">
+        <div class="col-md-12"><h2>Tiendas Activas</h2></div>
+    </div>
+    
+    <dx-data-grid
+        id="gridContainer"
+        [dataSource]="listaTiendasActivas"
+        [showBorders]="true">
+        <dxi-column dataField="nombre" alignment="center" caption="Nombre"></dxi-column>
+        <dxi-column dataField="direccion"  alignment="center"  caption="Direccion"></dxi-column>
+        <dxi-column dataField="descripcion"  alignment="center"  caption="Descripcion"></dxi-column>
+        <dxi-column dataField="hora_apertura"  alignment="center"  caption="Hora apertura"></dxi-column>
+        <dxi-column dataField="hora_cierre"  alignment="center"  caption="Hora cierre" dataType="date" format="shortDate"></dxi-column>
+
+        <dxi-column type="buttons"  caption="Inactivar">
+            <dxi-button text="Inactivar" cssClass="btn" [onClick]="INTienda"></dxi-button>    
+        </dxi-column>
+        <dxo-export [enabled]="true" fileName="Tiendas Activas"></dxo-export>
+            <dxo-paging [pageSize]="10"></dxo-paging>
+            <dxo-pager
+                [showPageSizeSelector]="true"
+                [allowedPageSizes]="[5,20,50]"
+            ></dxo-pager>
+    </dx-data-grid>
+</div>
+
+<div class="ps-section__content" *ngIf="seccionTiendasInactivas">
+    <div class="row centrar">
+        <div class="col-md-12"><h2>Tiendas Inactivas</h2></div>
+    </div>
+    
+    <dx-data-grid
+        id="gridContainer"
+        [dataSource]="listaTiendasInactivas"
+        [showBorders]="true">
+        <dxi-column dataField="nombre" alignment="center" caption="Nombre"></dxi-column>
+        <dxi-column dataField="direccion"  alignment="center"  caption="Direccion"></dxi-column>
+        <dxi-column dataField="descripcion"  alignment="center"  caption="Descripcion"></dxi-column>
+        <dxi-column dataField="hora_apertura"  alignment="center"  caption="Hora apertura"></dxi-column>
+        <dxi-column dataField="hora_cierre"  alignment="center"  caption="Hora cierre"></dxi-column>
+
+        <dxi-column type="buttons"  caption="Activar">
+            <dxi-button text="Activar" cssClass="btn" [onClick]="ACTienda"></dxi-button>    
+        </dxi-column>
+        
+        <dxo-export [enabled]="true" fileName="Tiendas Activas"></dxo-export>
+            <dxo-paging [pageSize]="10"></dxo-paging>
+            <dxo-pager
+                [showPageSizeSelector]="true"
+                [allowedPageSizes]="[5,20,50]"
+            ></dxo-pager>
+    </dx-data-grid>
+</div>
+
+
+
+                        

@@ -79,13 +79,10 @@ export class SeccionTiendaComponent implements OnInit {
   }
 
   traerListaCantones(){
-    
     this._cantonesService.traerListaCantones().subscribe(
-      (res) => { this.listaCantones = res as Canton[];},
+      (res) => { this.listaCantones = res as Canton[] },
       (err) => { }
     )
-    
-   // var cantones = [{id:1,}]
   }
 
   setearValorCanton(e:any){ 

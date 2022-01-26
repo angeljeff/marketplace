@@ -156,6 +156,18 @@
                                             <div class="col-md-2"></div>
                                             <div class="col-md-10"><p>Aqui se mostrara los datos</p></div>
                                         </div>
+                                        <div class="row">
+                                            <div class="col-md-2"></div>
+                                            <div class="col-md-10">
+                                                 <div class="col-md-12">
+                                                    <img src="{{imagenPago}}" alt="">
+                                                    <br><br><br>
+                                                    <label>Escoge una imagen:</label><br>
+                                                    <input type="file" class="btn color-principal" (change)="handleFileSelect($event)" height="5em">
+                                                    <br>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 

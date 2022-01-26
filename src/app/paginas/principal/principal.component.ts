@@ -166,7 +166,6 @@ export class PrincipalComponent implements OnInit {
             this.usuarioLogueado = arreglo[0];
             var array = this.usuarioLogueado.nombres.split(" ");
             this.nombreUsuario = array[0];
-            this.userService.setearObjetoUsuario(this.usuarioLogueado);
           },
           err => {})
     });
@@ -291,11 +290,17 @@ export class PrincipalComponent implements OnInit {
   }
 
   irPerfilUsuario(){
-    this.usuarioLogueado.id_tipo_usuario =2;
+    //1 Vendedor
+    //2 Comprador
+    //3 Administrador
+    this.usuarioLogueado.id_tipo_usuario = 3;
     if(this.usuarioLogueado.id_tipo_usuario == 1)
-      this.router.navigate(['/usuarioComprador']);
-    else if(this.usuarioLogueado.id_tipo_usuario == 2)
       this.router.navigate(['/usuarioVendedor']);
+    else if(this.usuarioLogueado.id_tipo_usuario == 2)
+      this.router.navigate(['/usuarioComprador']);
+    else if(this.usuarioLogueado.id_tipo_usuario == 3)
+      this.router.navigate(['/usuarioAdministrador']);
+      
   }
 
   buscarproducto(){

@@ -37,17 +37,9 @@ export class FormularioComponent implements OnInit {
       ) { }
 
   ngOnInit(): void {
-    this.obtenerDatosUsuario();
     this.menuDefault = this.menu[0];
     this.traerListadobancos()
   }
-
-
-  obtenerDatosUsuario(){
-    console.log(this.userService.obtenerObjetoUsuario())
-  }
-
-
 
 
   opcionRadioTipos(e:any){

@@ -1,1 +1,87 @@
-<p>seccion-usuario-administrador works!</p>
+
+<ul class="ps-section__links">      
+    <li><a (click)="mostrarSecProducto(1)">Usuarios Administradores</a></li>
+    <li><a (click)="mostrarSecProducto(2)">Nuevo Administrador</a></li>
+</ul>
+
+<div class="ps-section__content" *ngIf="seccionListaUsuarios">
+    <div class="row centrar">
+        <div class="col-md-12"><h2>Lista de Administradores</h2></div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <dx-data-grid
+                id="gridContainer"
+                [dataSource]="listaUsuariosAdministradores"
+                [showBorders]="true">
+                <dxi-column dataField="nombres" alignment="center" caption="Nombre"></dxi-column>
+                <dxi-column dataField="cedula"  alignment="center"  caption="Cedula"></dxi-column>
+                <dxo-export [enabled]="true" fileName="Usuarios Administradores"></dxo-export>
+                    <dxo-paging [pageSize]="4"></dxo-paging>
+                    <dxo-pager
+                        [showPageSizeSelector]="true"
+                        [allowedPageSizes]="[5,8,10]"
+                    ></dxo-pager>
+            </dx-data-grid>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+    
+    
+    
+</div>
+
+<div class="ps-section__content" *ngIf="seccionNuevoUsuario">
+
+    <div class="container">
+
+            <div class="ps-form--account ps-tab-root">
+
+                <ul class="ps-tab-list">
+                    <li class="active"><a>Registrar</a></li>
+                </ul>
+
+                <div class="ps-tabs">
+                    <div class="ps-tab active">
+                        <div class="ps-form__content">
+                            <h5>Registra una Cuenta</h5>
+
+                            <div class="form-group">
+                                <dx-text-box [(value)]="usuarioNuevo.nombres" class="controles" placeholder="Nombres" ></dx-text-box>
+                            </div>
+
+                            <div class="form-group">
+                                <dx-text-box [(value)]="usuarioNuevo.apellidos" class="controles" placeholder="Apellidos"></dx-text-box>
+                            </div>
+
+                            <div class="form-group">
+                                <dx-text-box [(value)]="usuarioNuevo.cedula" class="controles" placeholder="Cedula" placeholder="Cedula"></dx-text-box>
+                            </div>
+   
+                            <div class="form-group">
+                                <dx-text-box [(value)]="usuarioNuevo.contrasenia" class="controles" placeholder="Contraseña" ></dx-text-box>
+                            </div>     
+
+                            <div class="form-group" >
+                                <button class="ps-btn ps-btn--fullwidth color-principal" (click)="registrar()">Registrar</button>
+                            </div>
+                     
+                            <br>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    
+   
+</div>
+
+
+
+                        

@@ -45,7 +45,7 @@ export class CarritoComprasComponent implements OnInit {
     imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
   }]; 
 
-  productos: Producto[] = [{
+  productos: Producto[] = [/* {
   nombre: 'Producto1',
   contador : 10,
   descripcion : "Aqui va la descripcion",
@@ -69,7 +69,7 @@ export class CarritoComprasComponent implements OnInit {
   stock: 10,
   estado:1,
   imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
-}]; 
+} */]; 
 
   constructor(private router: Router,
         public authenService : AuthenService,

@@ -211,7 +211,7 @@
                 </aside><!-- s -->
    
                 <div class="ps-section__content" *ngIf="seccionTienda">
-                    <app-seccion-tienda [objetoUsuario]="usuarioLogueado"></app-seccion-tienda>
+                    <app-seccion-tienda-administrador [objetoUsuario]="usuarioLogueado"></app-seccion-tienda-administrador>
                 </div>
 
                 <div class="ps-section__content" *ngIf="seccionProducto">
@@ -219,11 +219,11 @@
                 </div>
 
                 <div class="ps-section__content" *ngIf="seccionUsuarios">
-                   <app-ordenes-vendedor ></app-ordenes-vendedor>
+                   <app-seccion-usuario-administrador [objetoUsuario]="usuarioLogueado"></app-seccion-usuario-administrador>
                 </div>
 
                 <div class="ps-section__content" *ngIf="seccionEstadisticas">
-                    <app-seccion-pago></app-seccion-pago>
+                    <app-seccion-estadistica-administrador [objetoUsuario]="usuarioLogueado"></app-seccion-estadistica-administrador>
                 </div>
             </div>
 

@@ -2,6 +2,7 @@
 <ul class="ps-section__links" >      
     <li><a (click)="mostrarSecProducto(1)">Mis Productos</a></li>
     <li><a (click)="mostrarSecProducto(2)">Nuevo Producto</a></li>
+    <li><a (click)="mostrarSecProducto(3)">Estadísticas</a></li>
 </ul>
 <div class="ps-page__content text-center row" *ngIf="poseetienda">
     <div class="container">
@@ -26,10 +27,10 @@
 
 
 
-        <div class="ps-section__content" *ngIf="seccionListProducto" >
-            <div class="row centrar">
-                <div class="col-md-12"><h2>Lista de productos</h2></div>
-            </div>
+    <div class="ps-section__content" *ngIf="seccionListProducto" >
+        <div class="row centrar">
+            <div class="col-md-12"><h2>Lista de productos</h2></div>
+        </div>
         
         <dx-data-grid
             id="gridContainer"
@@ -162,6 +163,29 @@
         <div class="col-md-1"></div>
     </div>
                         
+
+
+<div class="ps-section__content" *ngIf="seccionEstadistica">
+    <dx-pie-chart
+        type="doughnut"
+        title="Listado de Productos más visitados"
+        palette="Soft Pastel"
+        [dataSource]="arregloEstadisticaProductos">
+        <dxi-series argumentField="nombre">
+            <dxo-label [visible]="true"  position="columns" [customizeText]="customizeLabel" >
+                <dxo-connector [visible]="true"></dxo-connector>
+            </dxo-label>
+        </dxi-series>
+        <dxo-export [enabled]="true"></dxo-export>     
+        <dxo-tooltip [enabled]="true" [customizeTooltip]="customizeTooltip">
+        </dxo-tooltip>
+    </dx-pie-chart>
+
+</div>
+
+
+
+
 </div>
 
 

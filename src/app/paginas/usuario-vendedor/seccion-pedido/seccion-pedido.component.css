@@ -19,3 +19,7 @@
 ::ng-deep .dx-radio-value-container {
     margin-top: 1em;
 }
+
+ input[type="file"] {
+    height: 3em;
+}

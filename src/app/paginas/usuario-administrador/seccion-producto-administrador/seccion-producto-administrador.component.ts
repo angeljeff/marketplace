@@ -12,51 +12,23 @@ import { Usuario } from 'src/app/clases/usuario';
   styleUrls: ['./seccion-producto-administrador.component.css']
 })
 export class SeccionProductoAdministradorComponent implements OnInit {
-    @Input() objetoUsuario: Usuario = new Usuario();
-    consultaproducto: Producto = new Producto();
-    mostrarLoading=false
-    mensajeLoading=""
+  @Input() objetoUsuario: Usuario = new Usuario();
+  consultaproducto: Producto = new Producto();
+  mostrarLoading=false
+  mensajeLoading=""
 
-    seccionProPendientes = true;
-    seccionProAprobados = false;
-    seccionProRechazados = false;
+  seccionProPendientes = true;
+  seccionProAprobados = false;
+  seccionProRechazados = false;
 
-    listaproductosPendientes : Producto []=[]
-    listaproductosAprobados : Producto []=[]
-    listaproductosRechazados : Producto []=[]
+  listaproductosPendientes : Producto []=[]
+  listaproductosAprobados : Producto []=[]
+  listaproductosRechazados : Producto []=[]
+  productos: Producto[] = []; 
 
-
-productos: Producto[] = [{
-  nombre: 'Producto1',
-  contador : 10,
-  descripcion : "jjj",
-  id_estado_pro : 1,
-  id_producto : "1",
-  id_sub_categoria : 2,
-  id_tienda: 1,
-  precio : 10,
-  stock: 10,
-  estado:1,
-  imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
-}, {
-  nombre: 'Producto2',
-  contador : 10,
-  descripcion : "jjj",
-  id_estado_pro : 1,
-  id_producto : "1",
-  id_sub_categoria : 2,
-  id_tienda: 1,
-  precio : 10,
-  stock: 10,
-  estado:1,
-  imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
-}]; 
-
-idEstadoProducto = 0;
-tituloPopup = ""
-textoPopup = ""
-
-
+  idEstadoProducto = 0;
+  tituloPopup = ""
+  textoPopup = ""
 
   constructor( public _productoService : ProductoService,
     public router : Router,
@@ -64,10 +36,7 @@ textoPopup = ""
     ) { }
 
   ngOnInit( ): void {
-    this.listaproductosPendientes = this.productos
-    console.log(this.objetoUsuario.cedula + "este es usuario producto");
     this.traerListadoProductosporTienda()
-
   }
 
   PTProduct = (e:any) => { 
@@ -106,10 +75,10 @@ textoPopup = ""
     }).then((result) => {
       if (result.isConfirmed) {
         product.id_estado_pro = this.idEstadoProducto;
-        /* this._productoService.actualizar(product).subscribe(
+        this._productoService.actualizarEstado(product).subscribe(
           (res) => { Swal.fire("Ok","Producto Actualizado","success")},
           (err) => { Swal.fire('error')}
-        )  */
+        ) 
       }
     }) 
   }
@@ -137,16 +106,15 @@ textoPopup = ""
     this.consultaproducto.id_tienda=2
     this._productoService.obtener_productos(this.consultaproducto).subscribe(
       (res) => { var lista = res as Productodto[];
-        this.nuevoarregloproductos(lista)
-        console.log(lista)
-                  //this.llenarArregloTiposUsuario(lista)
-                },
+                 this.nuevoarregloproductos(lista)},
       (err) => { }
     )
   }
 
   nuevoarregloproductos(lista: Productodto[]){
-
+    this.listaproductosPendientes = []
+    this.listaproductosAprobados = []
+    this.listaproductosRechazados = []
     lista.forEach(element=>{
       if(element.id_estado_pro==1)
         this.listaproductosPendientes.push(element)
@@ -154,9 +122,6 @@ textoPopup = ""
         this.listaproductosAprobados.push(element)
       else if(element.id_estado_pro==1)
         this.listaproductosRechazados.push(element)
-
-     this.listaproductosPendientes.push(element)
-    
     })
 
   }

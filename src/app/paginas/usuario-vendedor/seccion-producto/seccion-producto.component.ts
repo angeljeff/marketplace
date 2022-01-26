@@ -10,6 +10,8 @@ import { Categorias } from 'src/app/clases/categorias';
 import { Usuario } from 'src/app/clases/usuario';
 import { Tienda } from 'src/app/clases/tienda';
 import { TiendaService } from 'src/app/services/tienda.service';
+import { PercentPipe } from '@angular/common';
+import { Estadistica } from '../../usuario-administrador/seccion-estadistica-administrador/seccion-estadistica-administrador.component';
 
 @Component({
   selector: 'app-seccion-producto',
@@ -37,10 +39,13 @@ export class SeccionProductoComponent implements OnInit {
 
     seccionNewProducto = false;
     seccionListProducto = true;
+    seccionEstadistica = false;
 
     listaproductos : Producto []=[]
     listasubcategorias : Subcategorias []=[]
+    arregloEstadisticaProductos : Estadistica [] = []
     listacategorias : Categorias []=[]
+    pipe: any = new PercentPipe('en-US');
   
 
 
@@ -203,18 +208,26 @@ export class SeccionProductoComponent implements OnInit {
       this.poseetienda=true
       this.seccionNewProducto = false;
       this.seccionListProducto = false;
+      this.seccionEstadistica = false;
     }
     else{
       this.poseetienda=false
       if(numero == 1) {
         this.seccionNewProducto = false;
         this.seccionListProducto = true;
+        this.seccionEstadistica = false;
         this.traerListadoProductosporTienda()
       }  
       else if(numero = 2){
-        
         this.seccionNewProducto = true;
         this.seccionListProducto = false;
+        this.seccionEstadistica = false;
+        this.productonuevo= new Producto()
+      }
+      else if(numero = 3){
+        this.seccionNewProducto = false;
+        this.seccionListProducto = false;
+        this.seccionEstadistica = true;
         this.productonuevo= new Producto()
       }
 
@@ -228,12 +241,17 @@ export class SeccionProductoComponent implements OnInit {
     console.log(this.consultaproducto.id_tienda +"ES EL ID TIENDA")
     this._productoService.obtener_productos(this.consultaproducto).subscribe(
       (res) => { var lista = res as Productodto[];
-        this.nuevoarregloproductos(lista)
-      
-        
-                },
+        this.nuevoarregloproductos(lista)},
       (err) => { }
     )
+  }
+
+  customizeTooltip = (arg: any) => ({
+    text: `${arg.valueText} - ${this.pipe.transform(arg.percent, '1.2-2')}`,
+  });
+
+  customizeLabel(arg:any) {
+    return `${arg.argumentText} - ${arg.valueText} (${arg.percentText})`;
   }
 
 
@@ -245,12 +263,21 @@ export class SeccionProductoComponent implements OnInit {
         element.nombre_estado= "Pendiente"
       else if(element.id_estado_pro==2)
         element.nombre_estado= "Publicado"
-      else if(element.id_estado_pro==1)
+      else if(element.id_estado_pro==3)
         element.nombre_estado= "No publicado"
      this.listaproductos.push(element)
-    
     })
+    this.crearObjetoEstadistica()
 
+  }
+
+  crearObjetoEstadistica(){
+    this.listaproductos.forEach(element=>{
+      var nuevaEstadistica = new Estadistica();
+      nuevaEstadistica.nombre = element.nombre
+      nuevaEstadistica.val = element.contador
+      this.arregloEstadisticaProductos.push(nuevaEstadistica)
+    })
   }
 
   traerListadoSubcategorias(){

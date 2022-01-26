@@ -86,7 +86,6 @@ export class ProductosTiendaComponent implements OnInit {
             this.usuarioLogueado = arreglo[0];
             var array = this.usuarioLogueado.nombres.split(" ");
             this.nombreUsuario = array[0];
-            this.userService.setearObjetoUsuario(this.usuarioLogueado);
           },
           err => {})
     });

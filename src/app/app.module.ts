@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { PrincipalComponent } from './paginas/principal/principal.component';
 import { Pagina2Component } from './paginas/pagina2/pagina2.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { DxAutocompleteModule, DxButtonModule, DxCheckBoxModule, DxDataGridModule, DxDateBoxModule, DxGalleryModule, DxLoadIndicatorModule, DxMenuModule, DxNumberBoxModule, DxPopupModule, DxRadioGroupModule, DxScrollViewModule, DxSelectBoxModule, DxTextAreaModule, DxTextBoxModule, DxValidationSummaryModule, DxValidatorModule } from 'devextreme-angular';
+import { DxAutocompleteModule, DxButtonModule, DxChartModule, DxCheckBoxModule, DxDataGridModule, DxDateBoxModule, DxGalleryModule, DxLoadIndicatorModule, DxMenuModule, DxNumberBoxModule, DxPieChartModule, DxPopupModule, DxRadioGroupModule, DxScrollViewModule, DxSelectBoxModule, DxTextAreaModule, DxTextBoxModule, DxValidationSummaryModule, DxValidatorModule } from 'devextreme-angular';
 import { UsuarioVendedorComponent } from './paginas/usuario-vendedor/usuario-vendedor.component';
 import { LoginComponent } from './paginas/login/login.component';
 import { RegisterComponent } from './paginas/register/register.component';
@@ -77,7 +77,9 @@ import { SeccionUsuarioAdministradorComponent } from './paginas/usuario-administ
     DxPopupModule,
     DxCheckBoxModule,
     DxRadioGroupModule,
-    DxScrollViewModule
+    DxScrollViewModule,
+    DxPieChartModule,
+    DxChartModule
    
   ],
   providers: [AuthService],

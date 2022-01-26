@@ -115,7 +115,7 @@ export class SeccionPedidoComponent implements OnInit {
     imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
   }]; 
 
-  productos: Producto[] = [{
+  productos: Producto[] = [/* {
   nombre: 'Producto1',
   contador : 10,
   descripcion : "Aqui va la descripcion",
@@ -235,10 +235,11 @@ export class SeccionPedidoComponent implements OnInit {
   stock: 10,
   estado:1,
   imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
-}]; 
+} */]; 
 
 pago2 = false;
 disablePago2 = true;
+imagenPago = ""
 
 
   constructor(private router: Router) { }
@@ -314,6 +315,26 @@ disablePago2 = true;
   seguirComprando(){
     var tiendaId = 1; // setear el Id de ña tienda perteneciente a un producto de la orden
     this.router.navigate(['/productos-tienda'], { queryParams: { id: tiendaId } });
+  }
+
+  handleFileSelect(evt: any){
+    var files = evt.target.files;
+    var file = files[0];
+    if (files && file) {
+      if(files[0].size > 1048576)
+        alert("El archivo excede el tamaño permitido");
+      
+      var reader = new FileReader();
+      reader.onload =this._handleReaderLoaded.bind(this);
+      reader.readAsBinaryString(file);
+    }
+  }
+
+  _handleReaderLoaded(readerEvt:any) {
+    var binaryString = readerEvt.target.result;
+    var base64textString= btoa(binaryString);
+    this.imagenPago ="data:image/png;base64,"+ base64textString
+    console.log(this.imagenPago);
   }
 
 

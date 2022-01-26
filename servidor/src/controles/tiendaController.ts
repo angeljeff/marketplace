@@ -41,7 +41,7 @@ class TiendaController {
     }
 
     public async activar_teinda(req: Request, res: Response): Promise<void> {
-        const activa_tienda = await pool.query("UPDATE tiendas SET   id_estado_tienda=1 WHERE id_tienda = ?",[ req.params.id_tienda]);
+        const activa_tienda = await pool.query("UPDATE tiendas SET id_estado_tienda=1 WHERE id_tienda = ?",[ req.params.id_tienda]);
         res.json({ message: 'tienda activada' });
     }
    
