@@ -20,10 +20,23 @@ class MetodopagoTiendaController {
             res.send(lista_meto);
         });
     }
+    actualizar(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const acualiza = yield base_datos_1.default.query("UPDATE metodo_pago_tienda SET  estado_metodo = ? WHERE id_metodo_pago_tienda = ?", [req.body.estado_metodo, req.params.id_metodo_pago_tienda]);
+            res.json({ message: 'Producto actualizado ' });
+        });
+    }
     obtenerPorid(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const metodo = req.params.id_cuenta_banco;
             const mpt = yield base_datos_1.default.query(`SELECT * FROM metodo_pago_tienda where id_metodo_pago_tienda ='${metodo}'`);
+            res.send(mpt);
+        });
+    }
+    obtenerPoridtienda(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const metodo2 = req.params.id_tienda;
+            const mpt = yield base_datos_1.default.query(`SELECT * FROM metodo_pago_tienda where id_tienda ='${metodo2}'`);
             res.send(mpt);
         });
     }

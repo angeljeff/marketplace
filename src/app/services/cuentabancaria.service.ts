@@ -16,12 +16,5 @@ export class DatoscuentabancoService{
     return this.http.post<any>(this.URL + "/Agregarcuentabanco", cuentabanco);
   }
 
-/*    obtener_datos_tienda(tienda : Tienda) {
-    return this.http.post<any>(this.URL + `/obtenertienda/${tienda.cedula}`, tienda);
-  }
- 
-  actualizar(tienda : Tienda) {
-    return this.http.put<any>(this.URL + `/actualizar/${Number(tienda.id_tienda)}`, tienda);
-  } */
   
 }

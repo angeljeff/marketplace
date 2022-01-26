@@ -16,7 +16,7 @@ export class TiendaService{
     return this.http.post<any>(this.URL + "/Agregar", tienda);
   }
 
-  obtener_datos_tienda(tienda : Tienda) {
+   obtener_datos_tienda(tienda : Tienda) {
     return this.http.post<any>(this.URL + `/obtenertienda/${tienda.cedula}`, tienda);
   }
 

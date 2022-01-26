@@ -61,7 +61,7 @@ class TiendaController {
     }
     activar_teinda(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const activa_tienda = yield base_datos_1.default.query("UPDATE tiendas SET   id_estado_tienda=1 WHERE id_tienda = ?", [req.params.id_tienda]);
+            const activa_tienda = yield base_datos_1.default.query("UPDATE tiendas SET id_estado_tienda=1 WHERE id_tienda = ?", [req.params.id_tienda]);
             res.json({ message: 'tienda activada' });
         });
     }
