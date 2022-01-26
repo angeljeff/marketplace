@@ -24,6 +24,26 @@
         </div>
 
     </div>
+    <div class="ps-page__content text-center row" *ngIf="poseetienda">
+        <div class="container">
+            <div class="ps-section__header">
+                <h1>Te acabas de registrar?</h1>
+                <h4>Para configurar tus métodos de pago primero registra una tienda <br> ...ve a sección tienda</h4>
+            </div>
+    
+            <div class="row">
+                <div class="col-lg-4 col-12"></div>
+                <div class="col-lg-4 col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <img src="../../../assets/img/shop-2.jpg" class="img-fluid">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-12"> </div>
+            </div>
+        </div>
+    </div>
 
     <div class="container" *ngIf="mostrarConfiguracion">
             <div class="ps-my-account">
@@ -39,17 +59,19 @@
                  
                 <div class="col-md-8" style="text-align: left;">
                     <br><br>
-                    <dx-check-box (value)="tipoPago1" class="textCheck" text="Contacto Directo"></dx-check-box><br>
+                    <dx-check-box [value]="tipoPago1" class="textCheck" (onValueChanged)="cambiarboolean(1)" text="Contacto Directo"></dx-check-box><br>
                         <div style="margin-right: 4em;margin-left: 4em;">
                             <p style="color: black;">Los clientes podrán realizar una orden aquí y procederán a contactarte
                             inmediatamente para concordar el pago contigo, se mostrará la información de contacto de tu tienda.</p>
                         </div>
-                    <dx-check-box (value)="tipoPago2" class="textCheck" text="Pago contra entrega"></dx-check-box><br>
+                    <dx-check-box [value]="tipoPago2" class="textCheck" (onValueChanged)="cambiarboolean(2)" text="Pago contra entrega"></dx-check-box><br>
                         <div style="margin-right: 4em;margin-left: 4em;">
                             <p style="color: black;">Los clientes podrán realizar el pedido de sus productos por este medio,
                             y el valor total de la orden se lo cancelará una vez el cliente tenga los productos en sus manos.</p>
                         </div>
-                    <dx-check-box (value)="tipoPago3"  (onValueChanged)="cambiar($event)" class="textCheck" text="Transferencia/Depósito Bancario"></dx-check-box><br>
+                    <dx-check-box [value]="tipoPago3"  class="textCheck"(onValueChanged)="cambiarboolean(3)"  text="Transferencia/Depósito Bancario"></dx-check-box>
+                    <button class="btn color-principal" style="margin-left: 1em;" (click)="cambiar()">Cuentas</button>
+                    <br>
                         <div style="margin-right: 4em;margin-left: 4em;">
                             <p style="color: black;">Los clientes una vez hayan seleccionado todos los productos que desea adquirir de tu tienda,
                             tendrá que subir el comprobante de pago al número de cuenta que configure para este proceso.</p>
@@ -58,13 +80,13 @@
                         <div class="row" *ngIf="mostrarDatosPago">
                             <div class="col-md-1"></div>
                             <div class="col-md-10">
-                                <app-formulario></app-formulario>
+                                <app-formulario [idPago]="idMetodoPagoTransferencia"></app-formulario>
                             </div>
                             <div class="col-md-1"></div>
                         </div>
                         <br><br><br>
                         <div class="form-group centrar" >
-                            <button class="ps-btn ps-btn--fullwidth color-principal"  style="width: 40%;">Guardar</button>
+                            <button class="ps-btn ps-btn--fullwidth color-principal" (click)="guardarpagosdetienda()"  style="width: 40%;">Guardar</button>
                         </div>
 
                         

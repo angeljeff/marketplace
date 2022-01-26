@@ -4,8 +4,8 @@ export class DatosPago{
     cedula_titular:string;
     titular_cuenta: string;
     id_banco: number;
-    numeroCuenta:string;
-    tipoCuenta: string;
+    numero_cuenta:string;
+    tipo_cuenta: string;
     id_metodo_pago_tienda:number
 
    
@@ -13,8 +13,8 @@ export class DatosPago{
        this.titular_cuenta = ""
        this.id_banco = 0
        this.cedula_titular = ""
-       this.numeroCuenta = ""
-       this.tipoCuenta = ""
+       this.numero_cuenta = ""
+       this.tipo_cuenta = ""
        this.id_metodo_pago_tienda=0
        this.id_cuenta_banco=""
 

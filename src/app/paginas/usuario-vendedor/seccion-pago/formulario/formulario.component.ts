@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Banco } from 'src/app/clases/Banco';
 import { DatosPago } from 'src/app/clases/datosPago';
 import { Usuario } from 'src/app/clases/usuario';
 import { AuthenService } from 'src/app/services/authen.service';
 import { BancoService } from 'src/app/services/banco.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { DatoscuentabancoService } from 'src/app/services/cuentabancaria.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -13,12 +14,13 @@ import Swal from 'sweetalert2';
   styleUrls: ['./formulario.component.css']
 })
 export class FormularioComponent implements OnInit {
-
+  @Input() idPago:number = 0;
   newDatosPago : DatosPago = new DatosPago();
   listadoDatosPago : DatosPago [] = []
   lista_bancos: Banco [] = [];
   tipocuenta:string[]= ["Ahorros", "Corriente"]
   comprobarcedula: any;
+  nuevacuentabancaria: DatosPago = new DatosPago()
 
 
   menu: string[] = [
@@ -33,22 +35,17 @@ export class FormularioComponent implements OnInit {
   constructor(
     public _bancoservice : BancoService,
     public authenService : AuthenService,
-    public userService : UsuarioService
+    public userService : UsuarioService,
+    public cuentabancaria : DatoscuentabancoService,
       ) { }
 
   ngOnInit(): void {
-    this.obtenerDatosUsuario();
+    console.log(this.idPago)
     this.menuDefault = this.menu[0];
     this.traerListadobancos()
   }
 
-
-  obtenerDatosUsuario(){
-    console.log(this.userService.obtenerObjetoUsuario())
-  }
-
-
-
+  
 
   opcionRadioTipos(e:any){
     this.menuDefault = e.value;
@@ -71,6 +68,22 @@ export class FormularioComponent implements OnInit {
   }
 
   guardar(){
+    this.newDatosPago.id_metodo_pago_tienda = this.idPago
+    this.cuentabancaria.registrarcuentaB(this.newDatosPago).subscribe(
+    (res)=> { Swal.fire({
+      title: 'cuenta guardada  manera correcta',
+      text: "********",
+      icon: 'success',
+      showCancelButton: false,
+      confirmButtonText: 'OK'
+    }).then((result) => {
+      if (result.isConfirmed) {}
+        this.newDatosPago = new DatosPago()
+    })},
+    (err)=>{}
+    )
+
+
     
   }
 
@@ -78,11 +91,11 @@ export class FormularioComponent implements OnInit {
     if(this.newDatosPago.titular_cuenta!=="" && this.newDatosPago.titular_cuenta.length > 10){
       if(this.newDatosPago.cedula_titular!=="" && this.newDatosPago.cedula_titular.length === 10){
         if(this.newDatosPago.id_banco!==0){
-          if(this.newDatosPago.numeroCuenta!=="" && this.newDatosPago.numeroCuenta.length > 5){
-            if(this.newDatosPago.tipoCuenta!=="" ){
+          if(this.newDatosPago.numero_cuenta!=="" && this.newDatosPago.numero_cuenta.length > 5){
+            if(this.newDatosPago.tipo_cuenta!=="" ){
               this.comprobarcedula = this.validarCedula(this.newDatosPago.cedula_titular);
               if(this.comprobarcedula=== true){
-                console.log("todos los datos son correctos")
+                this.guardar()
               }else{
             this.mostrarmensajes('Por favor ingrese un número de cédula válida')
           }

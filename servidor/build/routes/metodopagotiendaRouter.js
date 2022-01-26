@@ -14,6 +14,8 @@ class MetpagoTiRoutes {
         this.router.get('/listar', metodopagotiendaController_1.default.listar_meto_tienda);
         this.router.get('/obtener/:id_metodo_pago_tienda', metodopagotiendaController_1.default.obtenerPorid);
         this.router.post('/Agregar', metodopagotiendaController_1.default.agregar_meto_tienda);
+        this.router.post('/consultar/:id_tienda', metodopagotiendaController_1.default.obtenerPoridtienda);
+        this.router.put('/actualizar/:id_metodo_pago_tienda', metodopagotiendaController_1.default.actualizar);
     }
 }
 const metodo_pag_tienda = new MetpagoTiRoutes();

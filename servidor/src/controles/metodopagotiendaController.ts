@@ -8,11 +8,21 @@ class MetodopagoTiendaController {
         const lista_meto = await pool.query('SELECT * FROM metodo_pago_tienda');
         res.send(lista_meto);
     }
+    public async actualizar(req: Request, res: Response): Promise<void> {
+        const acualiza = await pool.query("UPDATE metodo_pago_tienda SET  estado_metodo = ? WHERE id_metodo_pago_tienda = ?",
+        [req.body.estado_metodo, req.params.id_metodo_pago_tienda]);
+        res.json({ message: 'Producto actualizado ' });
+    }
 
 
     public async obtenerPorid(req: Request, res: Response): Promise<void> {
         const metodo = req.params.id_cuenta_banco
         const mpt = await pool.query(`SELECT * FROM metodo_pago_tienda where id_metodo_pago_tienda ='${metodo}'`);
+        res.send(mpt);
+    }
+    public async obtenerPoridtienda(req: Request, res: Response): Promise<void> {
+        const metodo2 = req.params.id_tienda
+        const mpt = await pool.query(`SELECT * FROM metodo_pago_tienda where id_tienda ='${metodo2}'`);
         res.send(mpt);
     }
 

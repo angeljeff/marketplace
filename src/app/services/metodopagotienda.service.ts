@@ -15,6 +15,12 @@ export class MetodopagotiendaService{
   agregarmetodopagotienda(metpagtienda : Met_pag_tienda) {
     return this.http.post<any>(this.URL + `/Agregar`, metpagtienda);
   }
+  consultarmetodopagotienda(metpagtienda : Met_pag_tienda) {
+    return this.http.post<any>(this.URL + `/consultar/${metpagtienda.id_tienda}`, metpagtienda);
+  }
+  actualizarmetodopagotienda(metpagtienda : Met_pag_tienda) {
+    return this.http.put<any>(this.URL + `/actualizar/${metpagtienda.id_metodo_pago_tienda}`, metpagtienda);
+  }
 
   
 
