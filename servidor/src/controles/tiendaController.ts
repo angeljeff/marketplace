@@ -23,10 +23,16 @@ class TiendaController {
         const tiend = await pool.query(`SELECT * FROM tiendas where id_tienda ='${tienda}'`);
         res.send(tiend);
     }
+
     public async obtenerPorcedula(req: Request, res: Response): Promise<void> {
         const tiendas = req.params.cedula
         const tiendaa = await pool.query(`SELECT * FROM tiendas where cedula ='${tiendas}'`);
         res.send(tiendaa);
+    }
+
+    public async actualizar_contador(req: Request, res: Response): Promise<void> {
+        await pool.query("UPDATE tiendas SET contador= ? WHERE id_tienda = ?", [req.body.contador ,   req.params.id_producto]);
+        res.json({ message: 'Tienda actualizada' });
     }
 
     public async actualizar_datos_tienda(req: Request, res: Response): Promise<void> {
@@ -50,17 +56,3 @@ class TiendaController {
 const tiendaController = new TiendaController;
 export default tiendaController;
 
-
-/*
-{
-    "cedula":"1111111", 
-    "id_tipo_usuario":11, 
-    "id_cantones":2,
-    "nombres":"heffferso",
-    "apelllidos":"vv vvv",
-    "direccion":"guasmo norte",
-    "fecha_nacimiento":"10/12/12",
-    "genero":"maculon",
-    "correo":"112222",
-    "contraseña":"fdfdgddd" 
-}*/

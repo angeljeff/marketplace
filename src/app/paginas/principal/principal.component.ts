@@ -242,7 +242,8 @@ export class PrincipalComponent implements OnInit {
         this.datosTienda = tienda[0]     
       },
       (err) => { } )
-
+    
+    this.actualizarContadorTienda(this.datosTienda)
    
   }
 
@@ -257,6 +258,9 @@ export class PrincipalComponent implements OnInit {
       this.nuevoProductoOrden.total = 0;
       this.nuevoProductoOrden.precio = producto.precio;
       this.nuevoProductoOrden.id_producto = producto.id_producto;
+      var nuevoProducto = new Producto()
+      nuevoProducto.id_producto = producto.id_producto.toString()
+      this.actualizarContadorProducto(nuevoProducto)
     }else{
       Swal.fire({
         title: 'Alerta',
@@ -272,6 +276,28 @@ export class PrincipalComponent implements OnInit {
       }) 
     }
     
+  }
+
+  actualizarContadorProducto(producto: Producto){
+    this._productoService.obtener_productosporid(producto).subscribe(
+      (res) => { 
+          var lista = res as Producto[];
+          lista[0].contador = lista[0].contador+1
+          this._productoService.actualizarContador(lista[0]).subscribe(
+            (res) => { console.log("actualice contador",lista[0])},
+            (err) => { }
+          ) 
+        },
+      (err) => { }
+    )     
+  }
+
+  actualizarContadorTienda(tienda: Tienda){
+    tienda.contador = tienda.contador+1
+    this._tiendaService.actualizarContador(tienda).subscribe(
+      (res) => { console.log("actualice contador",tienda)},
+      (err) => { }
+    )      
   }
 
   seguirComprando(){

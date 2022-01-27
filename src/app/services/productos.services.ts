@@ -40,6 +40,10 @@ export class ProductoService{
     return this.http.put<any>(this.URL + `/actualizar/${Number(producto.id_producto)}`, producto);
   }
 
+  actualizarContador(producto : Producto) {
+    return this.http.put<any>(this.URL + `/contador/${Number(producto.id_producto)}`, producto);
+  }
+
   actualizarEstado(producto : Producto) {
     return this.http.put<any>(this.URL + `/actualizarEstado/${Number(producto.id_producto)}`, producto);
   }

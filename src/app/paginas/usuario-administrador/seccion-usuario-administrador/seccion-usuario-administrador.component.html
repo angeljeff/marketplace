@@ -33,9 +33,7 @@
 </div>
 
 <div class="ps-section__content" *ngIf="seccionNuevoUsuario">
-
     <div class="container">
-
             <div class="ps-form--account ps-tab-root">
 
                 <ul class="ps-tab-list">
@@ -45,7 +43,6 @@
                 <div class="ps-tabs">
                     <div class="ps-tab active">
                         <div class="ps-form__content">
-                            <h5>Registra una Cuenta</h5>
 
                             <div class="form-group">
                                 <dx-text-box [(value)]="usuarioNuevo.nombres" class="controles" placeholder="Nombres" ></dx-text-box>
@@ -68,20 +65,17 @@
                             </div>
                      
                             <br>
-
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
-
         </div>
-    
    
 </div>
 
 
+<div *ngIf="mostrarLoading">
+    <app-loading [messagge]="mensajeLoading"></app-loading>
+</div>
 
                         

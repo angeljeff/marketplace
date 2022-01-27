@@ -14,6 +14,11 @@ class UsuarioControl {
         res.send(lista);
     }
 
+    public async listarAdministradores(req: Request, res: Response): Promise<void> {
+        const lista = await pool.query('SELECT * FROM usuarios where id_tipo_usuario = 3');
+        res.send(lista);
+    }
+
     public async listarUsuariosActivos(req: Request, res: Response): Promise<void> {
         const lista = await pool.query('SELECT * FROM usuarios where Activo = 1');
         res.send(lista);

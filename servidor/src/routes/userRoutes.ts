@@ -1,5 +1,4 @@
 import { Router } from 'express';
-
 import control_usu from '../controles/usuarioController';
 class ControlUsuario {
 
@@ -11,6 +10,7 @@ class ControlUsuario {
 
     config() {
         this.router.get('/listar', control_usu.listar);
+        this.router.get('/listarAdministradores', control_usu.listarAdministradores);
         this.router.get('/listarActivos', control_usu.listarUsuariosActivos);
         this.router.post('/obtener/:cedula', control_usu.obtenerPorCedula);
         this.router.post('/create', control_usu.crear);

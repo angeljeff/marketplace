@@ -1,15 +1,19 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Router } from "@angular/router";
 import { Usuario } from "../clases/usuario";
 
 @Injectable({
   providedIn: "root",
 })
 export class UsuarioService{
-  private URL = 'http://localhost:3000/usuario';
+  private URL = 'http://192.168.100.251:3000/usuario';
+  //private URL = 'http://localhost:3000/usuario';
 
   constructor(private http: HttpClient) {}
+
+  listarUsuariosAdministradores() {
+    return this.http.get<any>(this.URL + "/listarAdministradores");
+  }
 
   registrar(usuario : Usuario) {
     return this.http.post<any>(this.URL + "/create", usuario);

@@ -76,7 +76,8 @@ export class SeccionProductoAdministradorComponent implements OnInit {
       if (result.isConfirmed) {
         product.id_estado_pro = this.idEstadoProducto;
         this._productoService.actualizarEstado(product).subscribe(
-          (res) => { Swal.fire("Ok","Producto Actualizado","success")},
+          (res) => { Swal.fire("Ok","Producto Actualizado","success");
+                    this.traerListadoProductosporTienda()},
           (err) => { Swal.fire('error')}
         ) 
       }
@@ -120,7 +121,7 @@ export class SeccionProductoAdministradorComponent implements OnInit {
         this.listaproductosPendientes.push(element)
       else if(element.id_estado_pro==2)
         this.listaproductosAprobados.push(element)
-      else if(element.id_estado_pro==1)
+      else if(element.id_estado_pro==3)
         this.listaproductosRechazados.push(element)
     })
 

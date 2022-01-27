@@ -16,7 +16,7 @@ export class TiendaService{
     return this.http.post<any>(this.URL + "/Agregar", tienda);
   }
 
-   obtener_datos_tienda(tienda : Tienda) {
+  obtener_datos_tienda(tienda : Tienda) {
     return this.http.post<any>(this.URL + `/obtenertienda/${tienda.cedula}`, tienda);
   }
 
@@ -34,6 +34,10 @@ export class TiendaService{
  
   actualizar(tienda : Tienda) {
     return this.http.put<any>(this.URL + `/actualizar/${Number(tienda.id_tienda)}`, tienda);
+  }
+
+  actualizarContador(tienda : Tienda) {
+    return this.http.put<any>(this.URL + `/contador/${Number(tienda.id_tienda)}`, tienda);
   }
 
   traerListaTiendas() {

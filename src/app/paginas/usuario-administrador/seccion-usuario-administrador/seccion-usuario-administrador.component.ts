@@ -10,46 +10,20 @@ import Swal from 'sweetalert2';
   styleUrls: ['./seccion-usuario-administrador.component.css']
 })
 export class SeccionUsuarioAdministradorComponent implements OnInit {
-    @Input() objetoUsuario: Usuario = new Usuario();
-    mostrarLoading=false
-    mensajeLoading=""
-    usuarioNuevo : Usuario = new Usuario()
+  @Input() objetoUsuario: Usuario = new Usuario();
+  mostrarLoading=false
+  mensajeLoading=""
+  usuarioNuevo : Usuario = new Usuario()
 
-    seccionListaUsuarios = true;
-    seccionNuevoUsuario = false;
+  seccionListaUsuarios = true;
+  seccionNuevoUsuario = false;
 
-    listaUsuariosAdministradores : Usuario []=[]
+  listaUsuariosAdministradores : Usuario []=[]
+  usuarios: Usuario[] = []; 
 
- 
-usuarios: Usuario[] = [{
-    cedula:"224242",
-    nombres: "Yander",
-    apellidos: "Santana",
-    direccion:"string",
-    fecha_nacimiento: new Date(),
-    id_cantones: 1,
-    celular: "string",
-    genero:"string",
-    correo: "string", 
-    contrasenia: "string",
-    id_tipo_usuario: 1
-}, {
-  cedula:"224242",
-    nombres: "Yander",
-    apellidos: "Santana",
-    direccion:"string",
-    fecha_nacimiento: new Date(),
-    id_cantones: 1,
-    celular: "string",
-    genero:"string",
-    correo: "string", 
-    contrasenia: "string",
-    id_tipo_usuario: 1
-}]; 
-
-idEstadoTienda = 0;
-tituloPopup = ""
-textoPopup = ""
+  idEstadoTienda = 0;
+  tituloPopup = ""
+  textoPopup = ""
 
 
 
@@ -61,8 +35,6 @@ textoPopup = ""
     this.traerListadoUsuarios()
 
   }
-
-
 
   mostrarSecProducto(numero : number){
     if(numero == 1) {
@@ -76,17 +48,23 @@ textoPopup = ""
   }
 
   traerListadoUsuarios(){
-    this.listaUsuariosAdministradores = this.usuarios
+    this._usuarioService.listarUsuariosAdministradores().subscribe(
+      (res) => { this.listaUsuariosAdministradores = res as Usuario[]},
+      (err) => {  this.mostrarLoading = false; Swal.fire('error')}
+    ) 
   }
 
   registrar(){
     this.mensajeLoading = "Guardando Usuario";
     this.mostrarLoading = true;
-    this.usuarioNuevo.id_tipo_usuario = 1;//Defecto usuario administrador
-    console.log(this.usuarioNuevo)
+    this.usuarioNuevo.id_tipo_usuario = 3 ;//Defecto usuario administrador
+    this.usuarioNuevo.id_cantones = 1;
      this._usuarioService.registrar(this.usuarioNuevo).subscribe(
       (res) => {
         this.mostrarLoading = false;
+        this.mostrarSecProducto(1);
+        this.traerListadoUsuarios();
+        this.usuarioNuevo = new Usuario();
         Swal.fire("Usuario creado","Su nuevo usuario Administrador ha sido creado","success")
       },
       (err) => {  this.mostrarLoading = false; Swal.fire('error')}
