@@ -104,8 +104,7 @@ export class SeccionProductoAdministradorComponent implements OnInit {
   }
 
   traerListadoProductosporTienda(){
-    this.consultaproducto.id_tienda=2
-    this._productoService.obtener_productos(this.consultaproducto).subscribe(
+    this._productoService.listarProductos().subscribe(
       (res) => { var lista = res as Productodto[];
                  this.nuevoarregloproductos(lista)},
       (err) => { }
