@@ -15,6 +15,9 @@ export class DatoscuentabancoService{
   registrarcuentaB(cuentabanco : DatosPago) {
     return this.http.post<any>(this.URL + "/Agregarcuentabanco", cuentabanco);
   }
+  consultardatosbancarios(cuentabanco : DatosPago) {
+    return this.http.post<any>(this.URL + `/obtenermetodos/${cuentabanco.id_metodo_pago_tienda}`, cuentabanco);
+  }
 
   
 }

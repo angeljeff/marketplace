@@ -11,8 +11,12 @@ class ProductosporordenRoutes {
 
     config() {
         this.router.get('/listar', prodporordenController.listar_pro_orden);
-        this.router.get('/obtener/:id_producto_orden', prodporordenController.obtenerPorid);
-        this.router.post('/Agregar', prodporordenController.agregar_pro_orden);
+        this.router.post('/obtener/:id_producto_orden', prodporordenController.obtenerPorid);
+        this.router.post('/obtenerPorIdOrden/:id_orden_compra', prodporordenController.obtenerPorIdOrdenCompra);
+        this.router.post('/obtenerPorIdOrdenDTO/:id_orden_compra', prodporordenController.obtenerPorIdOrdenCompraDTO);
+        this.router.post('/agregar', prodporordenController.agregar_pro_orden);
+        this.router.put('/actualizar/:id_producto_orden', prodporordenController.actualizar_pro_orden);
+        this.router.delete('/eliminar/:id_producto_orden', prodporordenController.eliminar);
     }
 
 }

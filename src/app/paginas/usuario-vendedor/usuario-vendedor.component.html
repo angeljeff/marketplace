@@ -53,7 +53,7 @@
 
                             <div class="ps-cart__content">
                                 <div class="ps-cart__items">
-                                    <div class="ps-product--cart-mobile" *ngFor="let element of ordenes;let i = index">
+                                    <div class="ps-product--cart-mobile" *ngFor="let element of productosPorOrdenDTO;let i = index">
                                         <div class="ps-product__thumbnail">
                                             <a href="#">
                                                 <img src="{{element.imagen}}" alt="">
@@ -64,9 +64,9 @@
                                             <a class="ps-product__remove"  (click)="eliminarRegistro(i)">
                                                 <i class="icon-cross"></i>
                                             </a>
-                                            <a>{{element.nombre_producto}}</a><br>
+                                            <a>{{element.nombre}}</a><br>
                                            <!--  <p><strong>Sold by:</strong> YOUNG SHOP</p> -->
-                                            <small>{{element.cantidad}} x ${{element.precio}}</small>
+                                            <small>{{element.cantidad}} x ${{element.precio_producto}}</small>
                                         </div>
                                     </div>
                                 </div>
@@ -240,7 +240,7 @@
                 </div>
 
                 <div class="ps-section__content" *ngIf="seccionPedido">
-                   <app-seccion-pedido></app-seccion-pedido>
+                    <app-carrito-compras></app-carrito-compras>
                 </div>
                 
 

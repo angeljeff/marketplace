@@ -13,33 +13,26 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const base_datos_1 = __importDefault(require("../base_datos"));
-class CuentabancoController {
-    listar_cuentabanco(req, res) {
+class PagoporordenController {
+    listar_pago_orden(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const lista_cuentas = yield base_datos_1.default.query('SELECT * FROM datos_cuentas_bancaria');
-            res.send(lista_cuentas);
+            const pago = yield base_datos_1.default.query('SELECT * FROM pago_por_orden');
+            res.send(pago);
         });
     }
     obtenerPorid(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const cuenta = req.params.id_cuenta_banco;
-            const cuen = yield base_datos_1.default.query(`SELECT * FROM datos_cuentas_bancaria where id_cuenta_banco ='${cuenta}'`);
-            res.send(cuen);
+            const orden = req.params.id_pago_por_orden;
+            const ord = yield base_datos_1.default.query(`SELECT * FROM pago_por_orden where id_pago_por_orden ='${orden}'`);
+            res.send(ord);
         });
     }
-    obtenerPoridmetodopago(req, res) {
+    agregar_pago_orden(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const cuenta = req.params.id_metodo_pago_tienda;
-            const cuen = yield base_datos_1.default.query(`SELECT * FROM datos_cuentas_bancaria where id_metodo_pago_tienda ='${cuenta}'`);
-            res.send(cuen);
-        });
-    }
-    agregar_cuenta_banco(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const agrega_cuenta = yield base_datos_1.default.query('INSERT INTO datos_cuentas_bancaria set  ? ', [req.body]);
-            res.json({ message: 'cuenta bancaria agregada ' });
+            const agrega_orden_tempor = yield base_datos_1.default.query('INSERT INTO pago_por_orden set  ? ', [req.body]);
+            res.json({ message: 'pago agregado ' });
         });
     }
 }
-const cuentabancoController = new CuentabancoController;
-exports.default = cuentabancoController;
+const pagoordenController = new PagoporordenController;
+exports.default = pagoordenController;

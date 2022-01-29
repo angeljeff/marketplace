@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { OrdenTemporal } from 'src/app/clases/ordenTemporal';
+import { OrdenCompra } from 'src/app/clases/ordenCompra';
 import { Producto } from 'src/app/clases/producto';
 import { Productocompleto } from 'src/app/clases/Productocompleto';
+import { ProductosPorOrdenDTO } from 'src/app/clases/productosOrdenCompra';
 import { Usuario } from 'src/app/clases/usuario';
 import { AuthenService } from 'src/app/services/authen.service';
 import { ProductoService } from 'src/app/services/productos.services';
@@ -28,7 +29,8 @@ export class UsuarioAdministradorComponent implements OnInit {
   primerdigito= ""
   totalCompra = 0;
   listacompletaproductos : Productocompleto []=[]
-  ordenes: OrdenTemporal[] = [];
+  ordenes: OrdenCompra[] = [];
+  productosPorordenDTO: ProductosPorOrdenDTO[] = [];
   
   constructor(private router: Router,
         public authenService : AuthenService,
@@ -98,9 +100,9 @@ export class UsuarioAdministradorComponent implements OnInit {
 
   calcularTotal(){
     this.totalCompra = 0;
-    this.ordenes.forEach(element=>{
-      element.total = element.cantidad * element.precio
-      this.totalCompra = this.totalCompra + element.total 
+    this.productosPorordenDTO.forEach(element=>{
+      element.total_producto = element.cantidad * element.precio_producto
+      this.totalCompra = this.totalCompra + element.total_producto 
     })
   }
 

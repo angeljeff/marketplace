@@ -52,13 +52,14 @@
         <div class="col-md-12" class="tabla">
             <dx-data-grid #datag2
                 id="gridContainer"
-                [dataSource]="listadoDatosPago"
+                [dataSource]="listafinal"
                 [showBorders]="true">
                 <!-- <dxo-filter-row [visible]="true" ></dxo-filter-row>
                 <dxo-export [enabled]="true" fileName="Comprobante_Pago" [allowExportSelectedData]="true"></dxo-export> -->
-                <dxi-column dataField="banco" caption="Banco"></dxi-column>
-                <dxi-column dataField="cedula" caption="Cedula" ></dxi-column>
-                <dxi-column dataField="nombres" caption="Documento" dataType="string"></dxi-column>
+                <dxi-column dataField="nombre_banco" caption="Banco"></dxi-column>
+                <dxi-column dataField="numero_cuenta" caption="Numero cuenta" ></dxi-column>
+                <dxi-column dataField="cedula_titular" caption="Cedula" ></dxi-column>
+                <dxi-column dataField="tipo_cuenta" caption="tipo" dataType="string"></dxi-column>
                 
 
             <!--  <dxi-column type="buttons" dataField="bt1" caption="Descargar" width="6%">

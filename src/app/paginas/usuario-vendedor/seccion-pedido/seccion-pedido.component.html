@@ -22,26 +22,26 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let element of ordenes;let i = index">
+                        <tr *ngFor="let element of productosPorOrdenDTO;let i = index">
                             <td>
                                 <div class="ps-product--cart">
                                     <div class="ps-product__thumbnail">
                                         <a href="product-default.html"><img src="{{element.imagen}}" alt=""></a>
                                     </div>
                                     <div class="ps-product__content">
-                                        <a (click)="mostrarPopupProducto(element)">{{element.nombre_producto}}</a>
+                                        <a (click)="mostrarPopupProducto(element)">{{element.nombre}}</a>
                                        <!--  <p>Sold By:<strong> YOUNG SHOP</strong></p> -->
                                     </div>
                                 </div>
                             </td>
 
-                            <td class="price">${{element.precio}}</td>
+                            <td class="price">${{element.precio_producto}}</td>
                             <td>
                                 <div class="form-group--number">
                                     <dx-number-box [(value)]="element.cantidad" (onChange)="calcularTotal()" ></dx-number-box>
                                 </div>
                             </td>
-                            <td>${{element.total}}</td>                             
+                            <td>${{element.total_producto}}</td>                             
                             <td>
                                 <button class="btn-table" (click)="eliminarRegistro(i)">X</button>
                             </td>
@@ -112,11 +112,11 @@
                                     <div class="ps-block__content">
                                         <table class="table ps-block__products">
                                             <tbody>
-                                                <tr *ngFor="let element of ordenes;let i = index">
+                                                <tr *ngFor="let element of productosPorOrdenDTO;let i = index">
                                                     <td>
-                                                        <a> {{element.nombre_producto}}</a>
+                                                        <a> {{element.nombre}}</a>
                                                     </td>
-                                                    <td class="text-right">${{element.total}}</td>
+                                                    <td class="text-right">${{element.total_producto}}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -294,11 +294,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let element of ordenes;let i = index">
-                                <td  class="centrar">{{element.nombre_producto}}</td>
-                                <td class="price">${{element.precio}}</td>
+                            <tr *ngFor="let element of productosPorOrdenDTO;let i = index">
+                                <td  class="centrar">{{element.nombre}}</td>
+                                <td class="price">${{element.precio_producto}}</td>
                                 <td>${{element.cantidad}}</td>   
-                                <td style="text-align: center;">${{element.total}}</td>                             
+                                <td style="text-align: center;">${{element.total_producto}}</td>                             
                             </tr>
                         </tbody>
                     </table>

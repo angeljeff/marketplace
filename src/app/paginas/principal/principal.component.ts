@@ -10,10 +10,14 @@ import { Categorias } from 'src/app/clases/categorias';
 import { CategoriaService } from 'src/app/services/categorias.service';
 import { ProductocompletoService } from 'src/app/services/productoscompletos';
 import { Productocompleto } from 'src/app/clases/Productocompleto';
-import { OrdenTemporal } from 'src/app/clases/ordenTemporal';
+import { OrdenCompra } from 'src/app/clases/ordenCompra';
 import { Tienda } from 'src/app/clases/tienda';
 import Swal from 'sweetalert2';
 import { TiendaService } from 'src/app/services/tienda.service';
+import { ProductosPorOrden, ProductosPorOrdenDTO } from 'src/app/clases/productosOrdenCompra';
+import { ProductoPorOrdenService } from 'src/app/services/productoPorOrden.service';
+import { OrdenCompraService } from 'src/app/services/ordenCompra.service';
+import { elementAt } from 'rxjs';
 
 @Component({
   selector: 'app-principal',
@@ -29,38 +33,7 @@ export class PrincipalComponent implements OnInit {
   listacategorias : Categorias []=[]
   listapresentacioncategorias : Categorias []=[]
   listaprocompleto : Productocompleto []=[]
-  listaprocompleto2 : Productocompleto []=[
-    {
-       id_producto : 1,
-    nombre : "PP1",
-    precio : 10.5,
-    imagen: 'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
-    stock: 10,
-    descripcion: "No hay",
-    contador: 2,
-    id_sub_categoria: 1,
-    descripcion_sub: "Fertilizantes",
-    id_categoria: 1,
-    descripcion_cat: "Sub-fertilizantes",
-    id_tienda: 1,
-    id_estado_pro:1
-    },
-    {
-       id_producto : 1,
-    nombre : "PP1",
-    precio : 10.5,
-    imagen: 'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
-    stock: 10,
-    descripcion: "No hay",
-    contador: 2,
-    id_sub_categoria: 1,
-    descripcion_sub: "Fertilizantes",
-    id_categoria: 1,
-    descripcion_cat: "Sub-fertilizantes",
-    id_tienda: 1,
-    id_estado_pro:1
-    }
-  ]
+  listaprocompleto2 : Productocompleto []=[]
   listacompletaproductos : Productocompleto []=[]
   nomb=""
   popupVisible = false
@@ -68,73 +41,17 @@ export class PrincipalComponent implements OnInit {
   popupCompra = false
   productoMostrado : Productocompleto = new Productocompleto()
   productoAComprar : Productocompleto = new Productocompleto()
-  nuevoProductoOrden : OrdenTemporal = new OrdenTemporal();
+  nuevaOrden : OrdenCompra = new OrdenCompra();
+  nuevoProductoOrden : ProductosPorOrden = new ProductosPorOrden();
   
   totalCompra = 0;
   productotemproral: Producto = new Producto();
   cedula = ""
   tiendapoput: Tienda = new Tienda();
   datosTienda: Tienda = new Tienda();
-  
-
-  ordenes: OrdenTemporal[] = [{
-    nombre_producto: 'Producto1',
-    cantidad : 3,
-    id_orden : 1,
-    precio : 8.50,
-    id_producto : 10,
-    total : 50,
-    imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
-  }, {
-    nombre_producto: 'Producto2',
-    cantidad : 5,
-    id_orden : 1,
-    precio : 18.50,
-    id_producto : 11,
-    total : 25,
-    imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
-  }, {
-    nombre_producto: 'Producto3',
-    cantidad : 1,
-    id_orden : 1,
-    precio : 12.50,
-    id_producto : 11,
-    total : 25,
-    imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
-  }];
-   
-
-   menus: ArrayMenu[] = [{
-    id: '1',
-    name: 'Plaguicidas',
-    items: [{
-      id: '1_1',
-      name: 'Item1',
-    }, {
-      id: '1_2',
-      name: 'Item2',
-     
-    }],
-  }, {
-    id: '2',
-    name: 'Fertilizantes',
-    items: [{
-      id: '2_1',
-      name: 'Item3',
-     
-    }, {
-      id: '2_2',
-      name: 'Item4',
-     
-    }],
-  }];
-
-  data2: string [] = [ 
-
-      'James', 'John', 'Robert', 'Michael', 'William', 'David', 'Richard', 'Charles', 'Joseph', 'Thomas', 'Christopher', 'Daniel', 'Paul', 'Mark', 'Donald', 'George', 'Kenneth', 'Steven', 'Edward', 'Brian', 'Ronald', 'Anthony', 'Kevin', 'Jason', 'Jeff', 'Mary', 'Patricia', 'Linda', 'Barbara', 'Elizabeth', 'Jennifer', 'Maria', 'Susan', 'Margaret', 'Dorothy', 'Lisa', 'Nancy', 'Karen', 'Betty', 'Helen', 'Sandra', 'Donna', 'Carol', 'Ruth', 'Sharon', 'Michelle', 'Laura', 'Sarah', 'Kimberly', 'Deborah',
-    ];
-
-
+  productosOrden: ProductosPorOrden[] = [];
+  productosOrdenDTO: ProductosPorOrdenDTO[] = [];
+  isCorrecto = false
 
   isLoged = false;
   mensajeError = ""
@@ -145,13 +62,14 @@ export class PrincipalComponent implements OnInit {
     public userService: UsuarioService,
     public _categoriaService: CategoriaService,
     public _productocomletoService: ProductocompletoService,
+    public _productoPorOrdenService: ProductoPorOrdenService,
+    public _ordenCompraService: OrdenCompraService,
     public _tiendaService: TiendaService) { }
 
   ngOnInit(): void {
     this.cargarUsuarioLogueado();
     this.mandarMensaje();
     this.mostrarproductos();
-    this.calcularTotal();
 
   }
 
@@ -166,9 +84,36 @@ export class PrincipalComponent implements OnInit {
             this.usuarioLogueado = arreglo[0];
             var array = this.usuarioLogueado.nombres.split(" ");
             this.nombreUsuario = array[0];
+            this.nuevaOrden.cedula = this.usuarioLogueado.cedula
+            this.traerOrdenCompraUsuario()
           },
           err => {})
     });
+  }
+
+  traerOrdenCompraUsuario(){
+    this._ordenCompraService.traerOrdenPorUsuario(this.nuevaOrden).subscribe(
+      (res) => { 
+        var lista = res as OrdenCompra[];
+        if(lista.length != 0){
+          this.nuevaOrden = lista[0]
+          this.traerProductosPorOrden()
+          console.log(this.nuevaOrden)
+        }
+          
+      },
+      (err) => {  Swal.fire("Error al guardar","Su producto no pudo ser agregado","error")} 
+    )
+  }
+
+  traerProductosPorOrden(){
+    this._productoPorOrdenService.traerListadoPorOrden(this.nuevaOrden).subscribe(
+      (res) => { 
+        this.productosOrdenDTO = res as ProductosPorOrdenDTO[];
+        this.calcularTotal();
+      },
+      (err) => {  Swal.fire("Error al guardar","Su producto no pudo ser agregado","error")} 
+    )
   }
 
   logout() {
@@ -182,20 +127,46 @@ export class PrincipalComponent implements OnInit {
     this.router.navigate(['/carrito-compras']);
   }
 
-  eliminarRegistro(i: number) {
-    this.ordenes.splice(i, 1);
-    this.calcularTotal();
+  eliminarRegistro(i: number,  producto : ProductosPorOrdenDTO) {
+    Swal.fire({
+      title: 'Eliminar Producto',
+      text: "Está seguro de eliminar de su carrito el producto "+producto.nombre,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Eliminar',
+      cancelButtonText :'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.eliminarProducto(producto);
+      }
+    })    
+  }
+
+  eliminarProducto(producto : ProductosPorOrdenDTO){
+    this._productoPorOrdenService.eliminarProducto(producto).subscribe(
+      (res) => { 
+        Swal.fire("Correcto","Su producto fue eliminado con éxito","success")
+        this.traerProductosPorOrden()
+      },
+      (err) => {  Swal.fire("Error al eliminar","Su producto no pudo ser eliminado","error")} 
+    ) 
   }
 
   calcularTotal(){
     this.totalCompra = 0;
-    this.ordenes.forEach(element=>{
-      element.total = element.cantidad * element.precio
-      this.totalCompra = this.totalCompra + element.total 
-    })
+    this.productosOrdenDTO.forEach(element=>{
+      element.total_producto = element.cantidad * element.precio_producto
+      this.totalCompra = this.totalCompra + element.total_producto
+    }) 
   }
 
   validarCantidad(){
+    if(this.nuevoProductoOrden.cantidad >0)
+      this.isCorrecto = true
+    else 
+      this.isCorrecto = false
+    this.nuevoProductoOrden.id_producto = this.productoAComprar.id_producto;
+    this.nuevoProductoOrden.precio_producto = this.productoAComprar.precio;
     if(this.productoAComprar.stock < this.nuevoProductoOrden.cantidad){
       this.mensajeError = "La cantidad solicitada excede el stock disponible del producto, se asignó por defecto el stock disponible"
       this.nuevoProductoOrden.cantidad = this.productoAComprar.stock;
@@ -203,34 +174,102 @@ export class PrincipalComponent implements OnInit {
     }else{
       this.mensajeError = ""
       this.calcularTotalOrden()
-    } 
+    }  
+  }
+
+  validarTiendaProducto(){
+    if(this.productosOrdenDTO.length == 0)
+      this.solicitarProducto()
+    else{
+      if(this.productosOrdenDTO[0].id_tienda == this.productoAComprar.id_tienda){
+        var existe = this.productosOrdenDTO.find(element => element.id_producto == this.nuevoProductoOrden.id_producto)
+        if(existe == undefined){   
+          this.solicitarProducto()
+        }else{
+          this.popupCompra = false;
+          Swal.fire("Producto no agregado","Ya existe este producto en su lista","error")
+        }
+        
+      }else{
+        this.popupCompra = false
+        Swal.fire("Producto no agregado","Tiene una orden de compra pendiente en otra tienda,por favor finalicela para poder efectuar otro pedido de otra tienda","error")
+      }
+    }
+    
+    
   }
 
   solicitarProducto(){
-    console.log(this.nuevoProductoOrden)
+    this.nuevaOrden.id_estado_pedido = 1
+    this.nuevaOrden.id_metodo_pago_tienda = 8
+    if(this.nuevaOrden.id_orden_compra == 0){
+      this._ordenCompraService.registrar(this.nuevaOrden).subscribe(
+        (res) => { 
+          var productoOrden = res;
+          this.nuevoProductoOrden.id_orden_compra = productoOrden.insertId
+          this._productoPorOrdenService.registrar(this.nuevoProductoOrden).subscribe(
+            (res) => { 
+              this.popupCompra = false;
+              this.traerProductosPorOrden()
+              Swal.fire({
+                title: 'Producto Agregado',
+                text: "El producto se agregó a su carrito de compras",
+                icon: 'success',
+                showCancelButton: true,
+                confirmButtonText: 'Seguir comprando',
+                cancelButtonText :'OK',
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  this.seguirComprando();
+                }
+              })
+              
+            },
+            (err) => {  Swal.fire("Error al guardar","Su producto no pudo ser agregado","error")} 
+          )
+        },
+        (err) => { } 
+      )
+    }else{
+      this.nuevoProductoOrden.id_orden_compra = this.nuevaOrden.id_orden_compra
+      this._productoPorOrdenService.registrar(this.nuevoProductoOrden).subscribe(
+        (res) => { 
+          this.popupCompra = false;
+          this.traerProductosPorOrden()
+          Swal.fire({
+            title: 'Producto Agregado',
+            text: "El producto se agregó a su carrito de compras",
+            icon: 'success',
+            showCancelButton: true,
+            confirmButtonText: 'Seguir comprando',
+            cancelButtonText :'OK',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.seguirComprando();
+            }
+          })
+          
+        },
+        (err) => {  Swal.fire("Error al guardar","Su producto no pudo ser agregado","error")} 
+      )
+    }
+    
     //mandar a guardar los datos de la orden
-    this.popupCompra = false;
-    Swal.fire({
-      title: 'Producto Agregado',
-      text: "El producto se agregó a su carrito de compras",
-      icon: 'success',
-      showCancelButton: true,
-      confirmButtonText: 'Seguir comprando',
-      cancelButtonText :'OK',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.seguirComprando();
-      }
-    }) 
+    /*   */
   }
 
   calcularTotalOrden(){
-    this.nuevoProductoOrden.total = this.nuevoProductoOrden.cantidad * this.nuevoProductoOrden.precio 
+    console.log("entreeee")
+    this.nuevoProductoOrden.total_producto = this.nuevoProductoOrden.cantidad * this.nuevoProductoOrden.precio_producto 
+    console.log(this.nuevoProductoOrden)
   }
 
   mostrarPopup(producto : Productocompleto){
     this.productoMostrado = producto
     this.popupVisible = true;
+    var nuevoProducto = new Producto()
+    nuevoProducto.id_producto = producto.id_producto.toString()
+    this.actualizarContadorProducto(nuevoProducto)
   }
 
   mostrarPopupTienda(idTienda : number){
@@ -248,19 +287,21 @@ export class PrincipalComponent implements OnInit {
   }
 
   mostrarPopupCompra(producto : Productocompleto){
+    this.nuevoProductoOrden.cantidad=0
+    this.nuevoProductoOrden.total_producto=0
+    console.log(producto)
     if(this.isLoged){
       // metodo para traer datos tienda
       // tienda tarida se asiga a la variable de a tienda en ep popup
       //this.datosTienda = tiendaEncontrada
       this.popupCompra = true;
       this.productoAComprar = producto;
-      this.nuevoProductoOrden.nombre_producto = producto.nombre;
+      /* this.nuevoProductoOrden.nombre_producto = producto.nombre;
       this.nuevoProductoOrden.total = 0;
       this.nuevoProductoOrden.precio = producto.precio;
-      this.nuevoProductoOrden.id_producto = producto.id_producto;
-      var nuevoProducto = new Producto()
-      nuevoProducto.id_producto = producto.id_producto.toString()
-      this.actualizarContadorProducto(nuevoProducto)
+      this.nuevoProductoOrden.id_producto = producto.id_producto; */
+
+
     }else{
       Swal.fire({
         title: 'Alerta',
@@ -293,6 +334,7 @@ export class PrincipalComponent implements OnInit {
   }
 
   actualizarContadorTienda(tienda: Tienda){
+    console.log(tienda +"ff")
     tienda.contador = tienda.contador+1
     this._tiendaService.actualizarContador(tienda).subscribe(
       (res) => { console.log("actualice contador",tienda)},
@@ -335,7 +377,6 @@ export class PrincipalComponent implements OnInit {
     this.listaprocompleto=[]
     console.log(this.listacompletaproductos)
     for (let i in this.listacompletaproductos){
-      console.log("entre cc" + this.listacompletaproductos[i])
       if(this.nomb == this.listacompletaproductos[i].nombre){
         console.log("entre" + i)
      
@@ -383,21 +424,6 @@ export class PrincipalComponent implements OnInit {
           }},
         (err) => { }
       )
-
-      
-     /*  this._productoService.obtener_porid_subcategorias(this.productotemproral).subscribe(
-        (res) => {  var lista = res as Producto[];
-          console.log(lista.length+ "esta es la longitud")
-          cuenta++
-          for( let j in lista){
-            this.listaprocategoria.push(lista[j])
-            if(cuenta === lista1.length){
-              this.arreglodeproductosactivos(this.listaprocategoria)
-            }
-          }
-                },
-        (err) => { }
-    )  */
     }     
     
   }

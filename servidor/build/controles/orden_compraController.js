@@ -27,10 +27,23 @@ class OrdencompraController {
             res.send(ord);
         });
     }
+    obtenerPorUsuarioCedula(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const cedula = req.params.cedula;
+            const ord = yield base_datos_1.default.query(`SELECT * FROM orden_compra where id_estado_pedido = 1 AND cedula ='${cedula}'`);
+            res.send(ord);
+        });
+    }
     agregar_orden_compra(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const agrega_metodo_tienda = yield base_datos_1.default.query('INSERT INTO orden_compra set  ? ', [req.body]);
-            res.json({ message: 'orden de compra agregada ' });
+            const nuevaOrden = yield base_datos_1.default.query('INSERT INTO orden_compra set  ? ', [req.body]);
+            res.send(nuevaOrden);
+        });
+    }
+    actualizar_orden_compra(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const agrega_pro = yield base_datos_1.default.query("UPDATE orden_compra SET  total = ?, direccion= ?, celular= ?, nombres= ?, cedula_envio= ?, id_metodo_pago_tienda = ?, id_estado_pedido = ? WHERE id_orden_compra = ?", [req.body.total, req.body.direccion, req.body.celular, req.body.nombres, req.body.cedula_envio, req.body.id_metodo_pago_tienda, req.body.id_estado_pedido, req.params.id_orden_compra]);
+            res.json({ message: 'Producto actualizado ' });
         });
     }
 }

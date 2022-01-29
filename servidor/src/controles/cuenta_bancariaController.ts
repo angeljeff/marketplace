@@ -16,6 +16,12 @@ class CuentabancoController {
         res.send(cuen);
     }
 
+    public async obtenerPoridmetodopago(req: Request, res: Response): Promise<void> {
+        const cuenta = req.params.id_metodo_pago_tienda
+        const cuen = await pool.query(`SELECT * FROM datos_cuentas_bancaria where id_metodo_pago_tienda ='${cuenta}'`);
+        res.send(cuen);
+    }
+
 
     public async agregar_cuenta_banco(req: Request, res: Response): Promise<void> {
         const agrega_cuenta = await pool.query('INSERT INTO datos_cuentas_bancaria set  ? ', [req.body]);

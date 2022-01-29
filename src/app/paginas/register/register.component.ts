@@ -58,9 +58,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this.traerListadoCantones();
     this.traerListadoTiposUsuarios();
-    this.cargarUsuarioLogueado()
-     /* this.obtenerDatosPorCedula("0930492731") */
-    
+    this.cargarUsuarioLogueado()   
 
     this.route.queryParams.subscribe(params => {
       this.cedulaRecibida = params['id'] || 0;
@@ -92,7 +90,6 @@ export class RegisterComponent implements OnInit {
     this._usuarioService.obtenerDatoCedula(this.usuarioNuevo).subscribe(
       (res) => {
         if (res.length > 0){
-          console.log("esta es la longitud" + res.length)
           this.mostrarmensajes("Este usuario ya se encuentra registrado")
         }else{
           if(!this.isedicion){
@@ -177,7 +174,6 @@ export class RegisterComponent implements OnInit {
               this.router.navigate(["/login"])
             }
             
-            //this.router.navigate(["/login"]);
           }
         }) 
       
@@ -233,13 +229,12 @@ export class RegisterComponent implements OnInit {
   setearValorTipoUsuario(e:any){ 
     this.usuarioNuevo.id_tipo_usuario = e.value.id_tipo_usuario
   }
-  /* constedulaUsvuario = this.validarCedula("0930482731"); */
 
   verificarcampos(){
     if(this.usuarioNuevo.nombres !==""){
       if(this.usuarioNuevo.apellidos!==""){
         if(this.usuarioNuevo.cedula!=="" && this.usuarioNuevo.cedula.length === 10){
-          if(this.usuarioNuevo.direccion!=="" /* && this.productonuevo.precio!==null */){
+          if(this.usuarioNuevo.direccion!=="" ){
             if(this.usuarioNuevo.genero!=="" /* && this.productonuevo.stock!==null */){
               this.usuarioNuevo.fecha_nacimiento = this.fecha
               console.log(this.usuarioNuevo.fecha_nacimiento + "esta es la fecha")
@@ -323,13 +318,6 @@ export class RegisterComponent implements OnInit {
         if(this.usuarioNuevo.correo !==""){
           if(this.usuarioNuevo.contrasenia!=="" && this.usuarioNuevo.contrasenia.length >= 8){
             this.actualizar()
-          
-                               /* this.obtenerDatos(this.usuarioNuevo.cedula) */
-                               /* if(!this.isedicion){
-                                  this.registrar()
-                                  }else{
-                                     this.actualizar()
-                                    }  */
 
           }else{
         this.mostrarmensajes('Por favor indique una contraseña más segura')

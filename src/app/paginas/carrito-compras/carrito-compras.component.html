@@ -226,28 +226,28 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let element of ordenes;let i = index">
+                        <tr *ngFor="let element of productosPorOrdenDTO;let i = index">
                             <td>
                                 <div class="ps-product--cart">
                                     <div class="ps-product__thumbnail">
-                                        <a href="product-default.html"><img src="{{element.imagen}}" alt=""></a>
+                                        <a><img src="{{element.imagen}}" alt=""></a>
                                     </div>
                                     <div class="ps-product__content">
-                                        <a (click)="mostrarPopupProducto(element)">{{element.nombre_producto}}</a>
-                                        <p>Sold By:<strong> YOUNG SHOP</strong></p>
+                                        <a>{{element.nombre}}</a>
+                                       <!--  <p>Sold By:<strong> YOUNG SHOP</strong></p> -->
                                     </div>
                                 </div>
                             </td>
 
-                            <td class="price">${{element.precio}}</td>
+                            <td class="price">${{element.precio_producto}}</td>
                             <td>
                                 <div class="form-group--number">
-                                    <dx-number-box [(value)]="element.cantidad" (onChange)="calcularTotal()" ></dx-number-box>
+                                    <dx-number-box [(value)]="element.cantidad" (onChange)="actualizarCantidadProducto(element)" ></dx-number-box>
                                 </div>
                             </td>
-                            <td>${{element.total}}</td>                             
+                            <td>${{element.total_producto}}</td>                             
                             <td>
-                                <button class="btn-table" (click)="eliminarRegistro(i)">X</button>
+                                <button class="btn-table" (click)="eliminarRegistro(i,element)">X</button>
                             </td>
                         </tr>
                     </tbody>
@@ -284,21 +284,26 @@
                 <div class="row">
                     <div class="col-xl-7 col-lg-8 col-sm-12">
                         <div class="ps-form__billing-info">
-                            <h4 class="ps-form__heading">Datos de Envio</h4>
+                            <h4 class="ps-form__heading">Datos de Envio</h4><button (click)="habilitarcampos()" class="color-principal btn" >Utilizar otros datos</button>
                             <div class="form-group">
                                 <label>Nombres<sup>*</sup></label>
-                                <dx-text-box [(value)]="newDatosEnvio.nombres" placeholder="Nombres completos"></dx-text-box>
+                                <dx-text-box [(value)]="nuevaOrden.nombres" [disabled]="!camposedicion" placeholder="Nombres completos"></dx-text-box>
                             </div>
 
                              <div class="form-group">
                                 <label>Celular<sup>*</sup></label>
-                                <dx-text-box [(value)]="newDatosEnvio.celular" placeholder="Celular"></dx-text-box>
+                                <dx-text-box [(value)]="nuevaOrden.celular" [disabled]="!camposedicion" placeholder="Celular"></dx-text-box>
                             </div>
 
                              <div class="form-group">
                                 <label>Dirección<sup>*</sup></label>
-                                <dx-text-box [(value)]="newDatosEnvio.direccion" placeholder="Dirección de entrega"></dx-text-box>
+                                <dx-text-box [(value)]="nuevaOrden.direccion" [disabled]="!camposedicion"  placeholder="Dirección de entrega"></dx-text-box>
                             </div>
+                            <div class="form-group">
+                                <label>Cédula<sup>*</sup></label>
+                                <dx-text-box [(value)]="nuevaOrden.cedula_envio" [disabled]="!camposedicion" placeholder="Cédula para el envío"></dx-text-box>
+                            </div>
+                            
                         </div>
 
                     </div>
@@ -315,11 +320,11 @@
                                     <div class="ps-block__content">
                                         <table class="table ps-block__products">
                                             <tbody>
-                                                <tr *ngFor="let element of ordenes;let i = index">
+                                                <tr *ngFor="let element of productosPorOrdenDTO;let i = index">
                                                     <td>
-                                                        <a> {{element.nombre_producto}}</a>
+                                                        <a> {{element.nombre}}</a>
                                                     </td>
-                                                    <td class="text-right">${{element.total}}</td>
+                                                    <td class="text-right">${{element.total_producto}}</td>
                                                 </tr>
 
                                             </tbody>
@@ -333,27 +338,54 @@
                                 <hr class="py-3">
 
                                 <div class="form-group">
-                                   <div class="ps-radio">
-                                        <input class="form-control" type="radio" id="pay-paypal" (change)="asignarValor(1)" name="payment-method" value="paypal" checked>
-                                        <label for="pay-paypal" style="color: black;">Contacto Directo</label>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
                                     <div class="ps-radio">
-                                        <input class="form-control" type="radio" id="pay-payu" [disabled]="disablePago2" (change)="asignarValor(2)" name="payment-method">
-                                        <label for="pay-payu" style="color: black;">Pago contra entrega </label>
-                                    </div>
-                                </div>
+                                         <input class="form-control" for="pay-paypal" [disabled]="isPago3" type="radio" id="pay-paypal" (change)="asignarValor(3)" name="payment-method">
+                                         <label  style="color: black;" for="pay-paypal" *ngIf="!isPago3">Contacto Directo</label>
+                                         <label  *ngIf="isPago3" style="color: black;text-decoration:line-through;">Contacto Directo</label>
+                                     </div>
+                                     <div *ngIf="dataContactoDirecto">
+                                         <div class="row">
+                                             <div class="col-md-2"></div>
+                                             <div class="col-md-10"><p>Aqui se mostrara los datos</p></div>
+                                         </div>
+                                     </div>
+                                 </div>
+ 
+                                 <div class="form-group">
+                                     <div class="ps-radio">
+                                         <input class="form-control" for="pay-payu" type="radio" [disabled]="isPago2" id="pay-payu"  (change)="asignarValor(2)" name="payment-method">
+                                         <label  style="color: black;"  for="pay-payu" *ngIf="!isPago2">Pago contra entrega </label>
+                                         <label  *ngIf="isPago2" style="color: black;text-decoration:line-through;">Pago contra entrega </label>
+                                     </div>
+                                 </div>
+ 
+                                 <div class="form-group">
+                                     <div class="ps-radio">
+                                         <input class="form-control" for="pay-mercadopago" type="radio" [disabled]="isPago1" id="pay-mercadopago" (change)="asignarValor(1)" name="payment-method">
+                                         <label  style="color: black;"  for="pay-mercadopago" *ngIf="!isPago1">Transferencia / Depósito Bancario</label>
+                                         <label  *ngIf="isPago1" style="color: black;text-decoration:line-through;">Transferencia / Depósito Bancario</label>
+                                     </div>
+                                     <div *ngIf="dataTransferencia">
+                                         <div class="row">
+                                             <div class="col-md-2"></div>
+                                             <div class="col-md-10"><p>Aqui se mostrara los datos</p></div>
+                                         </div>
+                                         <div class="row">
+                                             <div class="col-md-2"></div>
+                                             <div class="col-md-10">
+                                                  <div class="col-md-12">
+                                                     <img src="{{imagenPago}}" alt="">
+                                                     <br><br><br>
+                                                     <label>Escoge una imagen:</label><br>
+                                                     <input type="file" class="btn color-principal" (change)="handleFileSelect($event)" height="5em">
+                                                     <br>
+                                                 </div>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
 
-                                <div class="form-group">
-                                    <div class="ps-radio">
-                                        <input class="form-control" type="radio" id="pay-mercadopago" (change)="asignarValor(3)" name="payment-method" value="mercado-pago">
-                                        <label for="pay-mercadopago" style="color: black;">Transferencia / Depósito Bancario</label>
-                                    </div>
-                                </div>
-
-                                <a class="ps-btn ps-btn--fullwidth" (click)="realizarPedido()">Realizar Pedido</a>
+                                <a class="ps-btn ps-btn--fullwidth color-principal" (click)=" verificarcampos()">Realizar Pedido</a>
 
                             </div>
                         </div>
@@ -366,7 +398,7 @@
         <div class="row">
             <div class="col-md-3" style="float: right;">
                 <div class="ps-section__cart-actions">
-                    <a class="ps-btn" (click)="cambiarPantalla(1)" >
+                    <a class="ps-btn color-principal" (click)="cambiarPantalla(1)" >
                             <i class="icon-arrow-left"></i> Atras
                     </a>
                 </div>

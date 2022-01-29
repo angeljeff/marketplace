@@ -1,7 +1,7 @@
 
 export class Tienda{
     id_tienda: string;
-    nombre: string
+    nombre_ti: string
     direccion: string
     correo_electronico: string
     telefono: string 
@@ -13,7 +13,7 @@ export class Tienda{
     id_estado_tienda: number;
     cedula: string;
     constructor(){
-       this.nombre = ""
+       this.nombre_ti = ""
        this.direccion = ""
        this.telefono = ""
        this.hora_apertura = new Date()

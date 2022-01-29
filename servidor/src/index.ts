@@ -15,7 +15,7 @@ import estado_ti from './routes/estado_tiendaRouter';
 import metodopago from './routes/metodo_pagoRouter';
 import metodo_pag_tienda from './routes/metodopagotiendaRouter';
 import orden_compra from './routes/orden_compraRouter';
-import orden_temporal from './routes/orden_compraRouter';
+import pago_orden from './routes/pagoporordenRouter';
 import productosxorden from './routes/productosxordenRouter';
 import tipo_usuario from './routes/tipoUsuarioRouter';
 import ventas from './routes/VentasRouter';
@@ -57,7 +57,7 @@ class Server {
         this.app.use('/metodopago',metodopago);
         this.app.use('/metodopagotienda',metodo_pag_tienda);
         this.app.use('/ordencompra',orden_compra);
-        this.app.use('/ordentemporal',orden_temporal);
+        this.app.use('/pagoorden',pago_orden);
         this.app.use('/productosxorden',productosxorden);
         this.app.use('/tipousuario',tipo_usuario);
         this.app.use('/ventas',ventas);

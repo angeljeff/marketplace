@@ -298,7 +298,7 @@ arregloEstadisticaTiendas : Estadistica [] = []
       cont++
       if(cont<=10){
         var nuevaEstadistica = new Estadistica();
-        nuevaEstadistica.nombre = element.nombre
+        nuevaEstadistica.nombre = element.nombre_ti
         nuevaEstadistica.val = element.contador
         this.arregloEstadisticaTiendas.push(nuevaEstadistica)
       }

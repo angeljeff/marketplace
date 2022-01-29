@@ -12,8 +12,10 @@ class OrdenCompraRoutes {
     }
     config() {
         this.router.get('/listar', orden_compraController_1.default.listar_orden_compra);
-        this.router.get('/obtener/:id_orden_compra', orden_compraController_1.default.obtenerPorid);
-        this.router.post('/Agregar', orden_compraController_1.default.agregar_orden_compra);
+        this.router.post('/obtener/:id_orden_compra', orden_compraController_1.default.obtenerPorid);
+        this.router.post('/traerOrdenUsuario/:cedula', orden_compraController_1.default.obtenerPorUsuarioCedula);
+        this.router.post('/agregar', orden_compraController_1.default.agregar_orden_compra);
+        this.router.put('/actualizar/:id_orden_compra', orden_compraController_1.default.actualizar_orden_compra);
     }
 }
 const orden_compra = new OrdenCompraRoutes();

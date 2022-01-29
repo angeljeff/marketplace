@@ -47,9 +47,17 @@ class TiendaController {
             res.send(tiendaa);
         });
     }
+    actualizar_contador(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log(req.body.contador);
+            console.log(req.params.id_tienda + "tienda");
+            yield base_datos_1.default.query("UPDATE tiendas SET contador= ? WHERE id_tienda = ?", [req.body.contador, req.params.id_tienda]);
+            res.json({ message: 'Tienda actualizada' });
+        });
+    }
     actualizar_datos_tienda(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const actualiza_tienda = yield base_datos_1.default.query("UPDATE tiendas SET  nombre= ?, direccion = ? , correo_electronico = ? , hora_apertura = ?, hora_cierre = ?, descripcion = ?, telefono = ? , id_cantones = ? WHERE id_tienda = ?", [req.body.nombre, req.body.direccion, req.body.correo_electronico, req.body.hora_apertura, req.body.hora_cierre, req.body.descripcion, req.body.telefono, req.body.id_cantones, req.params.id_tienda]);
+            const actualiza_tienda = yield base_datos_1.default.query("UPDATE tiendas SET  nombre_ti= ?, direccion = ? , correo_electronico = ? , hora_apertura = ?, hora_cierre = ?, descripcion = ?, telefono = ? , id_cantones = ? WHERE id_tienda = ?", [req.body.nombre_ti, req.body.direccion, req.body.correo_electronico, req.body.hora_apertura, req.body.hora_cierre, req.body.descripcion, req.body.telefono, req.body.id_cantones, req.params.id_tienda]);
             res.json({ message: 'tienda actualizada' });
         });
     }
@@ -68,16 +76,3 @@ class TiendaController {
 }
 const tiendaController = new TiendaController;
 exports.default = tiendaController;
-/*
-{
-    "cedula":"1111111",
-    "id_tipo_usuario":11,
-    "id_cantones":2,
-    "nombres":"heffferso",
-    "apelllidos":"vv vvv",
-    "direccion":"guasmo norte",
-    "fecha_nacimiento":"10/12/12",
-    "genero":"maculon",
-    "correo":"112222",
-    "contraseña":"fdfdgddd"
-}*/ 

@@ -30,7 +30,7 @@ class ProductoController {
     }
     listarprocompleto(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const lista_productos_com = yield base_datos_1.default.query('SELECT pro.nombre, pro.id_producto, pro.precio, pro.imagen, pro.stock, pro.id_sub_categoria, pro.id_tienda, pro.descripcion, sub.descripcion_sub, cat.descripcion_cat, cat.id_categoria FROM productos AS pro INNER JOIN sub_categorias AS sub ON pro.id_sub_categoria = sub.id_sub_categoria INNER JOIN categorias AS cat ON sub.id_categoria = cat.id_categoria INNER JOIN tiendas AS ti ON pro.id_tienda = ti.id_tienda where ti.id_estado_tienda=1 and pro.id_estado_pro = 2 and pro.estado=1');
+            const lista_productos_com = yield base_datos_1.default.query('SELECT pro.nombre, pro.id_producto, pro.precio, pro.imagen, pro.stock, pro.id_sub_categoria, pro.id_tienda, pro.descripcion, sub.descripcion_sub, cat.descripcion_cat, cat.id_categoria, ti.nombre_ti FROM productos AS pro INNER JOIN sub_categorias AS sub ON pro.id_sub_categoria = sub.id_sub_categoria INNER JOIN categorias AS cat ON sub.id_categoria = cat.id_categoria INNER JOIN tiendas AS ti ON pro.id_tienda = ti.id_tienda where ti.id_estado_tienda=1 and pro.id_estado_pro = 2 and pro.estado=1');
             res.send(lista_productos_com);
         });
     }
@@ -73,6 +73,12 @@ class ProductoController {
             res.json({ message: 'Producto actualizado ' });
         });
     }
+    actualizar_estado(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const agrega_producto = yield base_datos_1.default.query("UPDATE productos SET  id_estado_pro = ? WHERE id_producto = ?", [req.body.id_estado_pro, req.params.id_producto]);
+            res.json({ message: 'Producto actualizado ' });
+        });
+    }
     actualizar_contador(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const agrega_producto = yield base_datos_1.default.query("UPDATE productos SET  contador= ? WHERE id_producto = ?", [req.body.contador, req.params.id_producto]);
@@ -106,19 +112,3 @@ class ProductoController {
 }
 const productoController = new ProductoController;
 exports.default = productoController;
-/*
-
-{
-     
-    "nombre":"ddd",
-    "precio":4,
-    "imagen":"jjjjjfff",
-    "stock":3,
-    "descripcion":"guasmo norte",
-    "contador":1,
-    "id_sub_categoria":2,
-    "id_tienda":1,
-    "id_estado_pro":1
-    
-
-}*/ 

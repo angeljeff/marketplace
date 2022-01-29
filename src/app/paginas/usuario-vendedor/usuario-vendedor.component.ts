@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { OrdenTemporal } from 'src/app/clases/ordenTemporal';
+import { OrdenCompra } from 'src/app/clases/ordenCompra';
 import { Producto } from 'src/app/clases/producto';
 import { Productocompleto } from 'src/app/clases/Productocompleto';
+import { ProductosPorOrdenDTO } from 'src/app/clases/productosOrdenCompra';
 import { Usuario } from 'src/app/clases/usuario';
 import { AuthenService } from 'src/app/services/authen.service';
 import { ProductoService } from 'src/app/services/productos.services';
@@ -30,31 +31,8 @@ export class UsuarioVendedorComponent implements OnInit {
   listacompletaproductos : Productocompleto []=[]
 
 
-  ordenes: OrdenTemporal[] = [{
-    nombre_producto: 'Producto1',
-    cantidad : 3,
-    id_orden : 1,
-    precio : 8.50,
-    id_producto : 10,
-    total : 50,
-    imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
-  }, {
-    nombre_producto: 'Producto2',
-    cantidad : 5,
-    id_orden : 1,
-    precio : 18.50,
-    id_producto : 11,
-    total : 25,
-    imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
-  }, {
-    nombre_producto: 'Producto3',
-    cantidad : 1,
-    id_orden : 1,
-    precio : 12.50,
-    id_producto : 11,
-    total : 25,
-    imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
-  }];
+  ordenes: OrdenCompra[] = [];
+  productosPorOrdenDTO: ProductosPorOrdenDTO[] = [];
   
 
 
@@ -128,10 +106,10 @@ export class UsuarioVendedorComponent implements OnInit {
 
   calcularTotal(){
     this.totalCompra = 0;
-    this.ordenes.forEach(element=>{
+    /* this.ordenes.forEach(element=>{
       element.total = element.cantidad * element.precio
       this.totalCompra = this.totalCompra + element.total 
-    })
+    }) */
   }
 
   editarPerfil(){
@@ -196,13 +174,11 @@ export class UsuarioVendedorComponent implements OnInit {
   }
   llamarporcategorias(lista1:number[]){
     var cuenta = 0
-    var limite = lista1.length
     this.listaprocategoria.splice(0, this.listaprocategoria.length)
     for (let i in lista1){
       this.productotemproral.id_sub_categoria = lista1[i],
       this._productoService.obtener_porid_subcategorias(this.productotemproral).subscribe(
         (res) => {  var lista = res as Producto[];
-          console.log(lista.length+ "esta es la longitud")
           cuenta++
           for( let j in lista){
             this.listaprocategoria.push(lista[j])
@@ -225,7 +201,6 @@ export class UsuarioVendedorComponent implements OnInit {
         this.listapro.push(listaproductos[i])
       }
     }
-    console.log("esta es el arreglo final", this.listapro)
   }
 }
 

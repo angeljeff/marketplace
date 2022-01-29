@@ -20,7 +20,7 @@ const estado_tiendaRouter_1 = __importDefault(require("./routes/estado_tiendaRou
 const metodo_pagoRouter_1 = __importDefault(require("./routes/metodo_pagoRouter"));
 const metodopagotiendaRouter_1 = __importDefault(require("./routes/metodopagotiendaRouter"));
 const orden_compraRouter_1 = __importDefault(require("./routes/orden_compraRouter"));
-const orden_compraRouter_2 = __importDefault(require("./routes/orden_compraRouter"));
+const pagoporordenRouter_1 = __importDefault(require("./routes/pagoporordenRouter"));
 const productosxordenRouter_1 = __importDefault(require("./routes/productosxordenRouter"));
 const tipoUsuarioRouter_1 = __importDefault(require("./routes/tipoUsuarioRouter"));
 const VentasRouter_1 = __importDefault(require("./routes/VentasRouter"));
@@ -52,7 +52,7 @@ class Server {
         this.app.use('/metodopago', metodo_pagoRouter_1.default);
         this.app.use('/metodopagotienda', metodopagotiendaRouter_1.default);
         this.app.use('/ordencompra', orden_compraRouter_1.default);
-        this.app.use('/ordentemporal', orden_compraRouter_2.default);
+        this.app.use('/pagoorden', pagoporordenRouter_1.default);
         this.app.use('/productosxorden', productosxordenRouter_1.default);
         this.app.use('/tipousuario', tipoUsuarioRouter_1.default);
         this.app.use('/ventas', VentasRouter_1.default);

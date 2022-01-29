@@ -73,7 +73,7 @@ export class SeccionTiendaAdministradorComponent implements OnInit {
     console.log(tienda)
     Swal.fire({
       title: this.tituloPopup,
-      text: this.textoPopup + tienda.nombre,
+      text: this.textoPopup + tienda.nombre_ti,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'OK',

@@ -62,3 +62,6 @@
   align-content: center;
 }
 
+input[type="file"] {
+  height: 3em;
+}

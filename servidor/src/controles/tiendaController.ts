@@ -31,13 +31,15 @@ class TiendaController {
     }
 
     public async actualizar_contador(req: Request, res: Response): Promise<void> {
-        await pool.query("UPDATE tiendas SET contador= ? WHERE id_tienda = ?", [req.body.contador ,   req.params.id_producto]);
+        console.log(req.body.contador)
+        console.log(req.params.id_tienda +"tienda")
+        await pool.query("UPDATE tiendas SET contador= ? WHERE id_tienda = ?", [req.body.contador ,  req.params.id_tienda]);
         res.json({ message: 'Tienda actualizada' });
     }
 
     public async actualizar_datos_tienda(req: Request, res: Response): Promise<void> {
-        const actualiza_tienda = await pool.query("UPDATE tiendas SET  nombre= ?, direccion = ? , correo_electronico = ? , hora_apertura = ?, hora_cierre = ?, descripcion = ?, telefono = ? , id_cantones = ? WHERE id_tienda = ?",
-        [req.body.nombre, req.body.direccion,  req.body.correo_electronico,  req.body.hora_apertura ,  req.body.hora_cierre,  req.body.descripcion,  req.body.telefono,req.body.id_cantones, req.params.id_tienda]);
+        const actualiza_tienda = await pool.query("UPDATE tiendas SET  nombre_ti= ?, direccion = ? , correo_electronico = ? , hora_apertura = ?, hora_cierre = ?, descripcion = ?, telefono = ? , id_cantones = ? WHERE id_tienda = ?",
+        [req.body.nombre_ti, req.body.direccion,  req.body.correo_electronico,  req.body.hora_apertura ,  req.body.hora_cierre,  req.body.descripcion,  req.body.telefono,req.body.id_cantones, req.params.id_tienda]);
         res.json({ message: 'tienda actualizada' });
     }
 

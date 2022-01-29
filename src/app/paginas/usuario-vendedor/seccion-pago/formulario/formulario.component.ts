@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Banco } from 'src/app/clases/Banco';
-import { DatosPago } from 'src/app/clases/datosPago';
+import { DatosPago, DatosPagopresentacion } from 'src/app/clases/datosPago';
 import { Usuario } from 'src/app/clases/usuario';
 import { AuthenService } from 'src/app/services/authen.service';
 import { BancoService } from 'src/app/services/banco.service';
@@ -21,6 +21,9 @@ export class FormularioComponent implements OnInit {
   tipocuenta:string[]= ["Ahorros", "Corriente"]
   comprobarcedula: any;
   nuevacuentabancaria: DatosPago = new DatosPago()
+  cuentabanco: DatosPago= new DatosPago()
+  listadoDatosPagoBanco: DatosPago[] = [];
+   listafinal:DatosPagopresentacion  [] = [];
 
 
   menu: string[] = [
@@ -42,6 +45,7 @@ export class FormularioComponent implements OnInit {
   ngOnInit(): void {
     this.menuDefault = this.menu[0];
     this.traerListadobancos()
+    this. obtenercuentas()
   }
 
   
@@ -54,6 +58,7 @@ export class FormularioComponent implements OnInit {
         break;
       case "Cuentas Activas":
         this.newCuenta = false;
+        this. obtenercuentas()
         break;
       default:    
     }      
@@ -133,6 +138,26 @@ export class FormularioComponent implements OnInit {
       }
     })
   
+  }
+  obtenercuentas(){
+    this.cuentabanco.id_metodo_pago_tienda= this.idPago
+    this.cuentabancaria.consultardatosbancarios(this.cuentabanco).subscribe(
+      (res)=> {this.listafinal = res as DatosPagopresentacion[]
+               if(this.listafinal.length !=0){
+                 for(let i in this.listafinal){
+                  this.listafinal[i].cedula_titular= '0'+ this.listafinal[i].cedula_titular
+                   if(this.listafinal[i].id_banco == 1){
+                     this.listafinal[i].nombre_banco= "Guayaquil"
+                   }
+                   else{
+                    this.listafinal[i].nombre_banco= "Pichincha"
+                   }
+                 }
+               }
+              },
+      (err)=>{})
+
+
   }
 
   validarCedula(cedula: string) {

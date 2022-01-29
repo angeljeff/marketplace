@@ -163,9 +163,10 @@
         <div class="col-md-1"></div>
     </div>
                         
+</div>
 
 
-<div class="ps-section__content" *ngIf="seccionEstadistica">
+<div *ngIf="seccionEstadistica">
     <dx-pie-chart
         type="doughnut"
         title="Listado de Productos más visitados"
@@ -180,11 +181,6 @@
         <dxo-tooltip [enabled]="true" [customizeTooltip]="customizeTooltip">
         </dxo-tooltip>
     </dx-pie-chart>
-
-</div>
-
-
-
 
 </div>
 

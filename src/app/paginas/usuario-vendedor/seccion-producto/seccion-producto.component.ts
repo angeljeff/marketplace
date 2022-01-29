@@ -70,7 +70,6 @@ export class SeccionProductoComponent implements OnInit {
     this._tiendaService.obtener_datos_tienda(this.consultatienda).subscribe(
       (res) => { var tienda = res as Tienda[];
         if(tienda.length != 0){
-          console.log("entre")
           this.tiendaobtenida = tienda[0]
           this.traerListadoProductosporTienda()
           console.log( this.tiendaobtenida.id_tienda + "esta es la tienda obtenida")
@@ -107,7 +106,6 @@ export class SeccionProductoComponent implements OnInit {
     ) 
  
   }
-
 
   
   editProduct = (e:any) => {  
@@ -174,7 +172,6 @@ export class SeccionProductoComponent implements OnInit {
     console.log(this.productonuevo.imagen);
   }
 
- 
 
   actualizar(){
     this.mensajeLoading = "Actualizando producto";
@@ -193,7 +190,6 @@ export class SeccionProductoComponent implements OnInit {
           if (result.isConfirmed) {
             this.productonuevo= new Producto()
             this.isedicionpro = false
-            /* this.router.navigate(["/login"]); */
           }
         }) 
       
@@ -205,6 +201,7 @@ export class SeccionProductoComponent implements OnInit {
 
   mostrarSecProducto(numero : number){
     if(this.tiendaobtenida.id_tienda==""){
+     
       this.poseetienda=true
       this.seccionNewProducto = false;
       this.seccionListProducto = false;
@@ -218,13 +215,14 @@ export class SeccionProductoComponent implements OnInit {
         this.seccionEstadistica = false;
         this.traerListadoProductosporTienda()
       }  
-      else if(numero = 2){
+      else if(numero == 2){
         this.seccionNewProducto = true;
         this.seccionListProducto = false;
         this.seccionEstadistica = false;
         this.productonuevo= new Producto()
       }
-      else if(numero = 3){
+      else if(numero == 3){
+        console.log("entre en if")
         this.seccionNewProducto = false;
         this.seccionListProducto = false;
         this.seccionEstadistica = true;
@@ -236,9 +234,7 @@ export class SeccionProductoComponent implements OnInit {
   }
 
   traerListadoProductosporTienda(){
-    console.log("este es el id que llega   "+this.tiendaobtenida.id_tienda )
     this.consultaproducto.id_tienda= Number(this.tiendaobtenida.id_tienda)
-    console.log(this.consultaproducto.id_tienda +"ES EL ID TIENDA")
     this._productoService.obtener_productos(this.consultaproducto).subscribe(
       (res) => { var lista = res as Productodto[];
         this.nuevoarregloproductos(lista)},
@@ -272,6 +268,7 @@ export class SeccionProductoComponent implements OnInit {
   }
 
   crearObjetoEstadistica(){
+    this.arregloEstadisticaProductos=[]
     this.listaproductos.forEach(element=>{
       var nuevaEstadistica = new Estadistica();
       nuevaEstadistica.nombre = element.nombre
@@ -350,7 +347,6 @@ obtenerDatosPoridproducto(){
   this._productoService.obtener_productosporid(this.productobuscado).subscribe(
     (res) => {
       this.productonuevo = res[0];
-      console.log(res + "esta es el producto devuelto")
       
       //this.nombreCanton = this.listaCantones.find(element => element.id_cantones == this.usuarioNuevo.id_cantones)?.descripcion ?? "" ;
      

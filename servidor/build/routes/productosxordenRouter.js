@@ -12,8 +12,12 @@ class ProductosporordenRoutes {
     }
     config() {
         this.router.get('/listar', productosxordenController_1.default.listar_pro_orden);
-        this.router.get('/obtener/:id_producto_orden', productosxordenController_1.default.obtenerPorid);
-        this.router.post('/Agregar', productosxordenController_1.default.agregar_pro_orden);
+        this.router.post('/obtener/:id_producto_orden', productosxordenController_1.default.obtenerPorid);
+        this.router.post('/obtenerPorIdOrden/:id_orden_compra', productosxordenController_1.default.obtenerPorIdOrdenCompra);
+        this.router.post('/obtenerPorIdOrdenDTO/:id_orden_compra', productosxordenController_1.default.obtenerPorIdOrdenCompraDTO);
+        this.router.post('/agregar', productosxordenController_1.default.agregar_pro_orden);
+        this.router.put('/actualizar/:id_producto_orden', productosxordenController_1.default.actualizar_pro_orden);
+        this.router.delete('/eliminar/:id_producto_orden', productosxordenController_1.default.eliminar);
     }
 }
 const productosxorden = new ProductosporordenRoutes();

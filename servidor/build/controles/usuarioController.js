@@ -28,6 +28,12 @@ class UsuarioControl {
             res.send(lista);
         });
     }
+    listarAdministradores(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const lista = yield base_datos_1.default.query('SELECT * FROM usuarios where id_tipo_usuario = 3');
+            res.send(lista);
+        });
+    }
     listarUsuariosActivos(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const lista = yield base_datos_1.default.query('SELECT * FROM usuarios where Activo = 1');

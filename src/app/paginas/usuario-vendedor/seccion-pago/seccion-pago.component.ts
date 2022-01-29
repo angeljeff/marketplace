@@ -83,7 +83,6 @@ export class SeccionPagoComponent implements OnInit {
     if(this.consultatienda.cedula==""){
       this.consultatienda.cedula="01"}
     else{this.consultatienda.cedula= this.objetoUsuario.cedula}
-    console.log(this.consultatienda.cedula + "esta es lac edula enviada")
     this._tiendaService.obtener_datos_tienda(this.consultatienda).subscribe(
       (res) => { var tienda = res as Tienda[];
         if(tienda.length != 0){
@@ -118,7 +117,6 @@ export class SeccionPagoComponent implements OnInit {
     this.consulta.id_tienda= Number(this.tiendaencontrada.id_tienda)
     this._metodopagotiendaservice.consultarmetodopagotienda(this.consulta).subscribe(
       (res) => { var metodos = res as Met_pag_tienda[];
-        console.log(metodos + "longitud")
         if(metodos.length != 0){
           this.existemetodospago=true
           for(let i in metodos){
@@ -182,7 +180,6 @@ export class SeccionPagoComponent implements OnInit {
             (res) => {        },
             (err) => { this.mostrarLoading = false; Swal.fire('error')})  
         }else{
-          console.log("2 false")
           this.nuevo_metodo_pago.estado_metodo = 0
           this._metodopagotiendaservice.actualizarmetodopagotienda(this.nuevo_metodo_pago).subscribe(
             (res) => {        },
@@ -192,13 +189,11 @@ export class SeccionPagoComponent implements OnInit {
       else if(this.todosmetodos[j].id_metodo_pago == this.transferenciabancaria){
         this.nuevo_metodo_pago.id_metodo_pago_tienda = this.todosmetodos[j].id_metodo_pago_tienda
         if(this.tipoPago3==true){
-          console.log("entre 3 true")
           this.nuevo_metodo_pago.estado_metodo = 1
           this._metodopagotiendaservice.actualizarmetodopagotienda(this.nuevo_metodo_pago).subscribe(
             (res) => {        },
             (err) => { this.mostrarLoading = false; Swal.fire('error')})  
         }else{
-          console.log("3 false")
           this.nuevo_metodo_pago.estado_metodo = 0
           this._metodopagotiendaservice.actualizarmetodopagotienda(this.nuevo_metodo_pago).subscribe(
             (res) => {        },

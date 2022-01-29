@@ -128,7 +128,7 @@
 
                             <div class="ps-cart__content">
                                 <div class="ps-cart__items">
-                                    <div class="ps-product--cart-mobile" *ngFor="let element of ordenes;let i = index">
+                                    <div class="ps-product--cart-mobile" *ngFor="let element of productosOrdenDTO;let i = index">
                                         <div class="ps-product__thumbnail">
                                             <a href="#">
                                                 <img src="{{element.imagen}}" alt="">
@@ -136,12 +136,12 @@
                                         </div>
 
                                         <div class="ps-product__content">
-                                            <a class="ps-product__remove"  (click)="eliminarRegistro(i)">
+                                            <a class="ps-product__remove"  (click)="eliminarRegistro(i, element)">
                                                 <i class="icon-cross"></i>
                                             </a>
-                                            <a>{{element.nombre_producto}}</a><br>
+                                            <a>{{element.nombre}}</a><br>
                                            <!--  <p><strong>Sold by:</strong> YOUNG SHOP</p> -->
-                                            <small>{{element.cantidad}} x ${{element.precio}}</small>
+                                            <small>{{element.cantidad}} x ${{element.precio_producto}}</small>
                                         </div>
                                     </div>
                                 </div>
@@ -274,9 +274,10 @@
                             <br>
                             <h4>{{element.nombre}}</h4>
                             <img src="{{element.imagen}}" alt="Imagen del producto" style="width:125pt; height: 150pt; margin:auto" (click)="mostrarPopup(element)">
+                            <p><span>Tienda:</span>  {{element.nombre_ti}}</p>
                             <p><span>Categoría:</span>  {{element.descripcion_cat}}</p>
                             <p><span>Subcategoria:</span> {{element.descripcion_sub}}</p>
-                            <p><span>Precio:</span> {{element.stock}}</p>
+                            <p><span>Precio:</span> {{element.precio}}</p>
                              <div class="row buttonP">
                                  <div class="col-md-6">
                                       <button class="color-principal btn" (click)="mostrarPopupCompra(element)">Comprar</button>
@@ -418,7 +419,7 @@
 <dx-popup
     [width]="'50%'"
     [height]="'50%'"
-    [title]="datosTienda.nombre.toUpperCase()"
+    [title]="datosTienda.nombre_ti.toUpperCase()"
     [closeOnOutsideClick]="true"
     [(visible)]="popupTienda">
     <div *dxTemplate="let data of 'content'">
@@ -516,14 +517,14 @@
                                                 <dx-number-box [(value)]="nuevoProductoOrden.cantidad" (onChange)="validarCantidad()" ></dx-number-box>
                                                 </div>
                                         </td>
-                                        <td>${{nuevoProductoOrden.total}}</td>                             
+                                        <td>${{nuevoProductoOrden.total_producto}}</td>                             
                                         
                                     </tr>
                                 </tbody>
                             </table>
                             <div class="row">
                                 <div class="col-md-4"></div>
-                                <div class="col-md-4"><button class="btn color-principal" (click)="solicitarProducto()">Añadir al Carrito</button></div>
+                                <div class="col-md-4"><button class="btn color-principal" [disabled]="!isCorrecto" (click)="validarTiendaProducto()">Añadir al Carrito</button></div>
                                 <div class="col-md-4"></div>
                             </div>
                             

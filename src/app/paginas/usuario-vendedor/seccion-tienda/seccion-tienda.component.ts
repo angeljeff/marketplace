@@ -33,7 +33,6 @@ export class SeccionTiendaComponent implements OnInit {
   listaCantones : Canton []=[]
   mensajeLoading=""
   mostrarLoading=false
-  //cantones : Canton[]=[{id:1,nombre:"Guayaquil"},{id:2,nombre:"Manta"}]
 
   tiendaEncontrada = new Tienda();
 
@@ -187,7 +186,7 @@ export class SeccionTiendaComponent implements OnInit {
 
 
   verificarcampos(){
-    if(this.newTienda.nombre !==""){
+    if(this.newTienda.nombre_ti !==""){
       if(this.newTienda.direccion!==""){
         if(this.newTienda.correo_electronico!==""){
           if(this.newTienda.id_cantones!==0 ){
