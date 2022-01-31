@@ -18,86 +18,8 @@
                     Menú
                     ======================================-->
                     <div class="menu--product-categories">
-                        <div class="menu__toggle">
+                        <div class="menu__toggle" (click)="redirigir()">
                             <i class="icon-menu"></i>
-                            <span> Shop by Department</span>
-                        </div>
-
-                        <div class="menu__content" >
-                            <ul class="menu--dropdown" >
-                                <li class="menu-item-has-children has-mega-menu propiedad">
-                                    <a href="#" class="propiedad"><i class="icon-bug" ></i >Plaguicidas</a>
-                                    <div class="mega-menu">
-                                        <div class="mega-menu__column">
-                                            <h4 (click)="llamarporcategorias([1,2])">Fungicidas<span class="sub-toggle"></span></h4>
-                                            <ul class="mega-menu__list">
-                                                <li><a (click)="llamarsubcategorias(1)">De contacto</a>
-                                                </li>
-                                                <li><a (click)="llamarsubcategorias(2)">Sistémico</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="mega-menu__column">
-                                            <h4 (click)="llamarporcategorias([5,6])">Insecticidas<span class="sub-toggle"></span></h4>
-                                            <ul class="mega-menu__list">
-                                                <li><a (click)="llamarsubcategorias(5)">Orgánicos</a>
-                                                </li>
-                                                <li><a (click)="llamarsubcategorias(6)">Inorgánicos</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="mega-menu__column">
-                                            <h4 (click)="llamarporcategorias([7,8])">Acaricidas<span class="sub-toggle"></span></h4>
-                                            <ul class="mega-menu__list">
-                                                <li><a (click)="llamarsubcategorias(7)">Doméstico</a>
-                                                </li>
-                                                <li><a (click)="llamarsubcategorias(8)">Ganadero</a>
-                                                </li>
-                                                
-                                            </ul>
-                                        </div>
-                                        <div class="mega-menu__column">
-                                            <h4 (click)="llamarporcategorias([9,10])">Rodenticidas<span class="sub-toggle"></span></h4>
-                                            <ul class="mega-menu__list">
-                                                <li><a (click)="llamarsubcategorias(9)">De acción acelerada</a>
-                                                </li>
-                                                <li><a (click)="llamarsubcategorias(10)">De acción lenta</a>
-                                                </li>
-                                                
-                                            </ul>
-                                        </div>
-                                        <div class="mega-menu__column">
-                                            <h4 (click)="llamarporcategorias([11,12,13,14])">Herbicidas<span class="sub-toggle"></span></h4>
-                                            <ul class="mega-menu__list">
-                                                <li><a (click)="llamarsubcategorias(11)">Residuales</a>
-                                                </li>
-                                                <li><a (click)="llamarsubcategorias(12)">Foliares</a>
-                                                </li>
-                                                <li><a (click)="llamarsubcategorias(13)">Presiembra</a>
-                                                </li>
-                                                <li><a (click)="llamarsubcategorias(14)">Postsiembra</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="menu-item-has-children has-mega-menu">
-                                    <p (click)="llamarporcategorias([15,16,17])"><i class="icon-fire"></i>  Fertilizantes</p>
-                                    <div class="mega-menu">
-                                        <div class="mega-menu__column">                             
-                                            <ul class="mega-menu__list">
-                                                <li><a (click)="llamarsubcategorias(15)">De origen natural</a>
-                                                </li>
-                                                <li><a (click)="llamarsubcategorias(16)">Fabricados</a>
-                                                </li>
-                                                <li><a (click)="llamarsubcategorias(17)">Biofertilizantes</a>
-                                                </li>
-                                                
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
                         </div>
                     </div><!-- End menu-->
                 </div><!-- End Header Content Left-->
@@ -112,7 +34,7 @@
                                             valueExpr="nombre"
                                             placeholder="Nombre del producto" class="buscador">
                                         </dx-autocomplete>
-                        <button (click)="buscarproducto()">Buscar</button>
+                        <button >Buscar</button>
                     </form>
                 </div>
 
@@ -129,56 +51,34 @@
                             </a>
 
                             <div class="ps-cart__content">
-
                                 <div class="ps-cart__items">
-
-                                    <div class="ps-product--cart-mobile">
-
+                                    <div class="ps-product--cart-mobile" *ngFor="let element of productosOrdenDTO;let i = index">
                                         <div class="ps-product__thumbnail">
                                             <a href="#">
-                                                <img src="../shared/../shared/img/products/clothing/7.jpg" alt="">
+                                                <img src="{{element.imagen}}" alt="">
                                             </a>
                                         </div>
 
                                         <div class="ps-product__content">
-                                            <a class="ps-product__remove" href="#">
+                                            <a class="ps-product__remove"  (click)="eliminarRegistro(i, element)">
                                                 <i class="icon-cross"></i>
                                             </a>
-                                            <a href="product-default.html">MVMTH Classical Leather Watch In Black</a>
-                                            <p><strong>Sold by:</strong> YOUNG SHOP</p>
-                                            <small>1 x $59.99</small>
+                                            <a>{{element.nombre}}</a><br>
+                                           
+                                            <small>{{element.cantidad}} x ${{element.precio_producto}}</small>
                                         </div>
-
                                     </div>
-
-                                    <div class="ps-product--cart-mobile">
-
-                                        <div class="ps-product__thumbnail">
-                                            <a href="#">
-                                                <img src="../shared/img/products/clothing/5.jpg" alt="">
-                                            </a>
-                                        </div>
-
-                                        <div class="ps-product__content">
-                                            <a class="ps-product__remove" href="#">
-                                                <i class="icon-cross"></i>
-                                            </a>
-                                            <a href="product-default.html">Sleeve Linen Blend Caro Pane Shirt</a>
-                                            <p><strong>Sold by:</strong> YOUNG SHOP</p>
-                                            <small>1 x $59.99</small>
-                                        </div>
-
-                                    </div>
-
                                 </div>
 
                                 <div class="ps-cart__footer">
-
-                                    <h3>Sub Total:<strong>$59.99</strong></h3>
-                                    <figure>
-                                        <a class="ps-btn" href="shopping-cart.html">View Cart</a>
-                                        <a class="ps-btn" href="checkout.html">Checkout</a>
-                                    </figure>
+                                    <h3>Total:<strong>${{totalCompra}}</strong></h3>
+                                    <div class="row">
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-10" style="text-align: center;">
+                                                <a class="ps-btn color-principal" (click)="verCarrito()">Ver Carrito</a>
+                                        </div>
+                                        <div class="col-md-1"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -218,32 +118,141 @@
             </div>
             
             <div class="row">
-                    <div class="col-md-4" *ngFor="let element of listaprocompleto">
-                    <br>
-                    <div class="card cardProductos">
-                        <br>
-                        <h4>{{element.nombre}}</h4>
-                        <img src="{{element.imagen}}" alt="Imagen del producto" style="width:150pt; height: 175pt; display:bloc; margin:auto"> <!-- style="width:150pt; height: 175pt;" --> 
-                        <p>Categoría: {{element.descripcion_cat}}</p>
-                        <!-- <p>{{element.descripcion}}</p> -->
-                        
-                        <p>Subcategoria: <span>{{element.descripcion_sub}}</span></p>
-                        <p>Precio: <span>{{element.stock}}</span></p>
-                            <div class="row buttonP">
-                                <div class="col-md-6">
-                                    <button class="color-principal btn" (click)="comprar()">Comprar</button>
-                                </div>
-                                <div class="col-md-6">
-                                    <button class="color-principal btn" (click)="comprar()">Visitar Tienda</button>
-                                </div>
+                <div class="col-md-4" *ngFor="let element of listacompletaproductos">
+                   <br>
+                   <div class="card cardProductos">
+                       <br>
+                       <h4>{{element.nombre}}</h4>
+                       <img src="{{element.imagen}}" alt="Imagen del producto" style="width:125pt; height: 150pt; margin:auto" (click)="mostrarPopup(element)">
+                       <p><span>Tienda:</span>  {{element.nombre_ti}}</p>
+                       <p><span>Categoría:</span>  {{element.descripcion_cat}}</p>
+                       <p><span>Subcategoria:</span> {{element.descripcion_sub}}</p>
+                       <p><span>Precio:</span> {{element.precio}}</p>
+                        <div class="row buttonP">
+                            <div class="col-md-2"> </div>
+                            <div class="col-md-8">
+                                 <button class="color-principal btn" style="width: 80%; font-size: 13pt;" (click)="mostrarPopupCompra(element)">Comprar</button>
                             </div>
-                            <br>
-                    </div>
-                </div> 
-            </div>
+                            <div class="col-md-2"> </div>
+                        </div>
+                        <br>
+                   </div>
+               </div> 
+           </div>
         </div>
         <div class="col-md-2"></div>
     </div>
 
 	
 </body>
+
+
+<dx-popup
+    [width]="'60%'"
+    [height]="'66%'"
+    [closeOnOutsideClick]="true"
+    [(visible)]="popupVisible">
+    <div *dxTemplate="let data of 'content'">
+        <div class="row" >
+            <div class="col-md-4"><img src="{{productoMostrado.imagen}}" alt=""></div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-12"><h2>{{productoMostrado.nombre}}</h2></div>
+                    <div class="col-md-12">
+                        <h4>Descripcion:</h4>
+                        <p>{{productoMostrado.descripcion}}</p>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-4"><h5>Cantidad Disponible:</h5></div>
+                            <div class="col-md-8">{{productoMostrado.stock}}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-4"><h5>Categoria:</h5></div>
+                            <div class="col-md-8">{{productoMostrado.descripcion_cat}}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-4"><h5>Sub-Categoria:</h5></div>
+                            <div class="col-md-8">{{productoMostrado.descripcion_sub}}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-4"><h5>Precio:</h5></div>
+                            <div class="col-md-8">${{productoMostrado.precio}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</dx-popup>
+
+<dx-popup
+    [width]="'50%'"
+    [height]="'70%'"
+    [(visible)]="popupCompra">
+    <div *dxTemplate="let data of 'content'">
+        <div class="ps-section__content centrar">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-10">
+                    <div class="table-responsive">
+                    <div class="row">
+                        <div class="col-md-6"><img src="{{productoAComprar.imagen}}" alt="" style="width: 250px;height: auto;"></div>
+                        <div class="col-md-4">
+                            <br><br>
+                            <h4>{{productoAComprar.nombre}}</h4><br>
+                            <h4>Cantidad disponible: {{productoAComprar.stock}}</h4>
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">
+                            <p style="color: red;font-weight: bold;">{{mensajeError}}</p>
+                            <table class="table ps-table--shopping-cart centrar">
+                                <thead>
+                                    <tr>
+                                        <th>Precio</th>
+                                        <th>Cantidad</th>
+                                        <th>Total</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="price">${{productoAComprar.precio}}</td>
+                                        <td>
+                                            <div class="form-group--number">
+                                                <dx-number-box [(value)]="nuevoProductoOrden.cantidad" (onChange)="validarCantidad()" ></dx-number-box>
+                                                </div>
+                                        </td>
+                                        <td>${{nuevoProductoOrden.total_producto}}</td>                             
+                                        
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="row">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4"><button class="btn color-principal" [disabled]="!isCorrecto" (click)="validarTiendaProducto()">Añadir al Carrito</button></div>
+                                <div class="col-md-4"></div>
+                            </div>
+                            
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+                    
+                </div>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+        </div> 
+
+    </div>
+   
+</dx-popup>

@@ -144,7 +144,6 @@ export class UsuarioAdministradorComponent implements OnInit {
 
   }
 
-
   llamarsubcategorias(opcion:number){
     
     this.productotemproral.id_sub_categoria = opcion

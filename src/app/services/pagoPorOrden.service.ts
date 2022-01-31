@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { PagoPorOrden } from "../clases/pagoPorOrden";
+import { OrdenCompra } from "../clases/ordenCompra";
 
 @Injectable({
   providedIn: "root",
@@ -15,13 +16,10 @@ export class PagoPorOrdenService{
     return this.http.post<any>(this.URL + "/agregar", pago);
   }
 
- /*  traerOrdenPorUsuario(orden : OrdenCompra ) {
-    return this.http.post<any>(this.URL + `/traerOrdenUsuario/${orden.cedula}`, orden);
+  obtenerPagoPorIdOrden(orden : OrdenCompra) {
+    return this.http.post<any>(this.URL + `/traerPagoPorIdOrden/${orden.id_orden_compra}`, orden);
   }
 
-  actualizarOrden(orden : OrdenCompra ) {
-    return this.http.put<any>(this.URL + `/actualizar/${orden.id_orden_compra}`, orden);
-  } */
 
   
 }

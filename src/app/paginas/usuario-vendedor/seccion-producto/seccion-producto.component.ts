@@ -49,8 +49,6 @@ export class SeccionProductoComponent implements OnInit {
   
 
 
-
-
   constructor( public _productoService : ProductoService,
     public router : Router,
     public _subcategoriaService: SubCategoriaService,
@@ -81,7 +79,6 @@ export class SeccionProductoComponent implements OnInit {
   }
 
   registrar(){
-    console.log(this.productonuevo.precio + "este es el precio")
     this.productonuevo.id_tienda = Number(this.tiendaobtenida.id_tienda)
     this.mensajeLoading = "Guardando Producto";
     this.mostrarLoading = true;
@@ -347,8 +344,6 @@ obtenerDatosPoridproducto(){
   this._productoService.obtener_productosporid(this.productobuscado).subscribe(
     (res) => {
       this.productonuevo = res[0];
-      
-      //this.nombreCanton = this.listaCantones.find(element => element.id_cantones == this.usuarioNuevo.id_cantones)?.descripcion ?? "" ;
      
     },
     (err) => { }

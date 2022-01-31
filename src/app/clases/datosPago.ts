@@ -29,7 +29,7 @@ export class DatosPagopresentacion{
     numero_cuenta:string;
     tipo_cuenta: string;
     id_metodo_pago_tienda:number
-    nombre_banco: string
+    descripcion: string
 
    
     constructor(){
@@ -40,7 +40,7 @@ export class DatosPagopresentacion{
        this.tipo_cuenta = ""
        this.id_metodo_pago_tienda=0
        this.id_cuenta_banco=""
-       this.nombre_banco=""
+       this.descripcion=""
 
     }
 }

@@ -23,3 +23,6 @@
  input[type="file"] {
     height: 3em;
 }
+.ayuda p{
+    margin-bottom: -0.5em;
+  }

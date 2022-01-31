@@ -253,9 +253,7 @@ export class PrincipalComponent implements OnInit {
         (err) => {  Swal.fire("Error al guardar","Su producto no pudo ser agregado","error")} 
       )
     }
-    
-    //mandar a guardar los datos de la orden
-    /*   */
+ 
   }
 
   calcularTotalOrden(){
@@ -291,15 +289,9 @@ export class PrincipalComponent implements OnInit {
     this.nuevoProductoOrden.total_producto=0
     console.log(producto)
     if(this.isLoged){
-      // metodo para traer datos tienda
-      // tienda tarida se asiga a la variable de a tienda en ep popup
-      //this.datosTienda = tiendaEncontrada
       this.popupCompra = true;
       this.productoAComprar = producto;
-      /* this.nuevoProductoOrden.nombre_producto = producto.nombre;
-      this.nuevoProductoOrden.total = 0;
-      this.nuevoProductoOrden.precio = producto.precio;
-      this.nuevoProductoOrden.id_producto = producto.id_producto; */
+
 
 
     }else{
@@ -343,7 +335,7 @@ export class PrincipalComponent implements OnInit {
   }
 
   seguirComprando(){
-    var tiendaId = 1; // setear el Id de ña tienda perteneciente a un producto de la orden
+    var tiendaId= Number(this.productoAComprar.id_tienda); // setear el Id de ña tienda perteneciente a un producto de la orden
     this.router.navigate(['/productos-tienda'], { queryParams: { id: tiendaId } });
   }
 
@@ -358,24 +350,17 @@ export class PrincipalComponent implements OnInit {
   }
 
   irPerfilUsuario(){
-    //1 Vendedor
-    //2 Comprador
-    //3 Administrador
-    this.usuarioLogueado.id_tipo_usuario = 3;
     if(this.usuarioLogueado.id_tipo_usuario == 1)
       this.router.navigate(['/usuarioVendedor']);
     else if(this.usuarioLogueado.id_tipo_usuario == 2)
-      this.router.navigate(['/usuarioComprador']);
+      this.router.navigate(['/usuario-Comprador']);
     else if(this.usuarioLogueado.id_tipo_usuario == 3)
       this.router.navigate(['/usuarioAdministrador']);
       
   }
 
   buscarproducto(){
-    console.log(this.listacompletaproductos)
-    console.log("nombre" + this.nomb)
     this.listaprocompleto=[]
-    console.log(this.listacompletaproductos)
     for (let i in this.listacompletaproductos){
       if(this.nomb == this.listacompletaproductos[i].nombre){
         console.log("entre" + i)
@@ -399,12 +384,6 @@ export class PrincipalComponent implements OnInit {
       (res) => { this.listaprocompleto = res as Productocompleto[]},
       (err) => { }
     )
-   /*  this._productoService.obtener_porid_subcategorias(this.productotemproral).subscribe(
-      (res) => { var lista = res as Producto[];
-         this.arreglodeproductosactivos(lista)
-                },
-      (err) => { }
-    )     */
   }
   llamarporcategorias(lista1:number[]){
     var cuenta = 0
@@ -418,9 +397,6 @@ export class PrincipalComponent implements OnInit {
           for( let j in lista){
             this.listaprocompleto.push(lista[j])
             this.iniciodepagina()
-           /* if(cuenta === lista1.length){
-              /* this.arreglodeproductosactivos(this.listaprocategoria) */
-           /* }*/
           }},
         (err) => { }
       )
@@ -471,17 +447,6 @@ mostrardatostienda(){
 
   }
 
- /*  traerproductoscompletos(){
-    this.listaprocompleto.splice(0, this.listaprocompleto.length)
-    this._productocomletoService.traerpro_completos().subscribe(
-      (res) => {  this.listaprocompleto = res as Productocompleto[];
-        console.log(this.listaprocompleto)
-       
-              },
-      (err) => { }
-  )
-
-  } */
 
 
   itemClick(data:any) {
@@ -498,12 +463,10 @@ mostrardatostienda(){
     }    
 
     if (item.price) {
-      //this.currentProduct = item;
+      
     }
   }
 
-  comprar(){
-
-  }
+ 
  
 }

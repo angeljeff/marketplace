@@ -23,6 +23,7 @@ class ProductoRoutes {
         this.router.put('/eliminar/:id_producto', productoController_1.default.eliminarproducto);
         this.router.put('/rechazar/:id_producto', productoController_1.default.desactivar);
         this.router.put('/contador/:id_producto', productoController_1.default.actualizar_contador);
+        this.router.put('/updateStock/:id_producto', productoController_1.default.actualizar_stock);
         this.router.post('/obtenerporidsub/:id_sub_categoria', productoController_1.default.obtenerPoridsubcategoria);
     }
 }

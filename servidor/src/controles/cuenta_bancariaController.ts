@@ -18,7 +18,7 @@ class CuentabancoController {
 
     public async obtenerPoridmetodopago(req: Request, res: Response): Promise<void> {
         const cuenta = req.params.id_metodo_pago_tienda
-        const cuen = await pool.query(`SELECT * FROM datos_cuentas_bancaria where id_metodo_pago_tienda ='${cuenta}'`);
+        const cuen = await pool.query(`SELECT dato.tipo_cuenta, dato.numero_cuenta,dato.titular_cuenta, dato.cedula_titular, bn.descripcion FROM datos_cuentas_bancaria as dato INNER JOIN bancos as bn on dato.id_banco = bn.id_banco where id_metodo_pago_tienda ='${cuenta}'`);
         res.send(cuen);
     }
 

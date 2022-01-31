@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { OrdenCompra } from 'src/app/clases/ordenCompra';
@@ -9,17 +10,14 @@ import { AuthenService } from 'src/app/services/authen.service';
 import { ProductoService } from 'src/app/services/productos.services';
 
 @Component({
-  selector: 'app-usuario-vendedor',
-  templateUrl: './usuario-vendedor.component.html',
-  styleUrls: ['./usuario-vendedor.component.css']
+  selector: 'app-usuario-comprador',
+  templateUrl: './usuario-comprador.component.html',
+  styleUrls: ['./usuario-comprador.component.css']
 })
-export class UsuarioVendedorComponent implements OnInit {
+export class UsuarioCompradorComponent implements OnInit {
 
-  seccionOrdenes = true;
-  seccionProducto = false;
-  seccionTienda = false;
-  seccionPago = false;
-  seccionPedido = false;
+ 
+  seccionPedido = true;
   isLoged = false;
   nombreUsuario = ""
   usuarioLogueado : Usuario = new Usuario();
@@ -42,6 +40,8 @@ export class UsuarioVendedorComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarUsuarioLogueado()
+
+    // Crear un metodo para traer la tienda asociada al usuario si no tiene tienda setear la variable idNewTienda en true, sino en false
   }
 
   cargarUsuarioLogueado() {
@@ -57,6 +57,7 @@ export class UsuarioVendedorComponent implements OnInit {
             this.nombreUsuario = array[0];
             var cedul= this.usuarioLogueado.cedula.toString()
             if(cedul.length ===9){
+              console.log(cedul.length + "esta es la longitud del cedula")
               this.primerdigito="0"
             }
           },
@@ -76,6 +77,9 @@ export class UsuarioVendedorComponent implements OnInit {
 
   }
 
+  registrar(){
+
+  }
 
   redirigir(){
     this.router.navigate(["/principal"]);
@@ -83,10 +87,9 @@ export class UsuarioVendedorComponent implements OnInit {
 
   irPerfilUsuario(){
     if(this.usuarioLogueado.id_tipo_usuario == 1)
-    this.router.navigate(['/usuarioVendedor']);
+      this.router.navigate(['/usuario-Comprador']);
     else if(this.usuarioLogueado.id_tipo_usuario == 2)
-    this.router.navigate(['/usuarioComprador']);
-      
+      this.router.navigate(['/usuarioVendedor']);
   }
 
   verCarrito(){
@@ -97,8 +100,6 @@ export class UsuarioVendedorComponent implements OnInit {
     this.ordenes.splice(i, 1);
     this.calcularTotal();
   }
-
-
 
   calcularTotal(){
     this.totalCompra = 0;
@@ -112,49 +113,6 @@ export class UsuarioVendedorComponent implements OnInit {
     this.router.navigate(['/register'], { queryParams: { id: this.usuarioLogueado.cedula } });
   }
 
- 
-  mostrarSeccion(numero : number){
-    switch (numero) {
-      case 1:
-        this.seccionOrdenes = true;
-        this.seccionProducto = false;
-        this.seccionTienda = false;
-        this.seccionPago = false;
-        this.seccionPedido = false;
-       break;
-      case 2:
-        this.seccionOrdenes = false;
-        this.seccionProducto = true;
-        this.seccionTienda = false;
-        this.seccionPago = false;
-        this.seccionPedido = false;
-        break;
-      case 3:
-        this.seccionOrdenes = false;
-        this.seccionProducto = false;
-        this.seccionTienda = true;
-        this.seccionPago = false;
-        this.seccionPedido = false;
-        break;
-      case 4:
-        this.seccionOrdenes = false;
-        this.seccionProducto = false;
-        this.seccionTienda = false;
-        this.seccionPago = true;
-        this.seccionPedido = false;
-        break;
-      case 5:
-        this.seccionOrdenes = false;
-        this.seccionProducto = false;
-        this.seccionTienda = false;
-        this.seccionPago = false;
-        this.seccionPedido = true;
-        break;
-      default:    
-    }  
-    
-
-  }
 
 
   llamarsubcategorias(opcion:number){
@@ -199,19 +157,3 @@ export class UsuarioVendedorComponent implements OnInit {
   }
 }
 
-export class Productos {
-  ID: number;
-  Nombre: string;
-  Cantidad: number;
-  Estado: string;
-  Descripcion: string;
-  Picture : string;
-  constructor(){
-    this.ID = 0;
-    this.Nombre = "";
-    this.Cantidad = 0;
-    this.Estado = "";
-    this.Descripcion = "";
-    this.Picture = "";
-  }
-}

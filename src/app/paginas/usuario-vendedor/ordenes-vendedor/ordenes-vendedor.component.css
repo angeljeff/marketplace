@@ -3,3 +3,14 @@
 .centrar{
     text-align: center;
 }
+
+::ng-deep  .dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-edit .dx-link{
+    background-color: #1db61d;
+    color: white;
+}
+
+.color-principal{
+    background-color: #1db61d;
+    color: white;
+    border-color: transparent;
+}

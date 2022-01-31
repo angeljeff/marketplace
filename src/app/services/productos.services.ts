@@ -7,8 +7,8 @@ import { Producto } from "../clases/producto";
   providedIn: "root",
 })
 export class ProductoService{
-  private URL = 'http://192.168.100.251:3000/producto';
-  //private URL = 'http://localhost:3000/producto';
+  //private URL = 'http://192.168.100.251:3000/producto';
+  private URL = 'http://localhost:3000/producto';
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -21,7 +21,7 @@ export class ProductoService{
   }
 
   obtener_todos_productos_activos() {
-    return this.http.get<any>(this.URL + `/listarProActivos/`);
+    return this.http.get<any>(this.URL + `/listarProActivos`);
   }
 
   listarProductos() {
@@ -42,6 +42,10 @@ export class ProductoService{
 
   actualizarContador(producto : Producto) {
     return this.http.put<any>(this.URL + `/contador/${Number(producto.id_producto)}`, producto);
+  }
+
+  actualizarStock(producto : Producto) {
+    return this.http.put<any>(this.URL + `/updateStock/${Number(producto.id_producto)}`, producto);
   }
 
   actualizarEstado(producto : Producto) {

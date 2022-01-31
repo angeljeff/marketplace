@@ -1,5 +1,5 @@
 
- <header class="header header--standard header--market-place-4" data-sticky="true" >
+ <header class="header header--standard header--market-place-4" data-sticky="true" *ngIf="mostrarMenu">
     <!--=====================================
     Header Content
     ======================================-->
@@ -17,171 +17,67 @@
                 Menú
                 ======================================-->
                 <div class="menu--product-categories">
-                    
-                    <div class="menu__toggle">
+                    <div class="menu__toggle" (click)="redirigir()">
                         <i class="icon-menu"></i>
-                        <span> Shop by Department</span>
-                    </div>
-
-                    <div class="menu__content" >
-                        <ul class="menu--dropdown" >
-                            <li class="menu-item-has-children has-mega-menu">
-                                <a href="#"><i class="icon-laundry"></i>Plaguicidas</a>
-                                <div class="mega-menu">
-                                    <div class="mega-menu__column">
-                                        <h4 (click)="llamarporcategorias([1,2])">Fungicidas<span class="sub-toggle"></span></h4>
-                                        <ul class="mega-menu__list">
-                                            <li><a (click)="llamarsubcategorias(1)">De contacto</a>
-                                            </li>
-                                            <li><a (click)="llamarsubcategorias(2)">Sistémico</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="mega-menu__column">
-                                        <h4 (click)="llamarporcategorias([5,6])">Insecticidas<span class="sub-toggle"></span></h4>
-                                        <ul class="mega-menu__list">
-                                            <li><a (click)="llamarsubcategorias(5)">Orgánicos</a>
-                                            </li>
-                                            <li><a (click)="llamarsubcategorias(6)">Inorgánicos</a>
-                                            </li>
-                                            
-                                        </ul>
-                                    </div>
-                                    <div class="mega-menu__column">
-                                        <h4 (click)="llamarporcategorias([7,8])">Acaricidas<span class="sub-toggle"></span></h4>
-                                        <ul class="mega-menu__list">
-                                            <li><a (click)="llamarsubcategorias(7)">Doméstico</a>
-                                            </li>
-                                            <li><a (click)="llamarsubcategorias(8)">Ganadero</a>
-                                            </li>
-                                            
-                                        </ul>
-                                    </div>
-                                    <div class="mega-menu__column">
-                                        <h4 (click)="llamarporcategorias([9,10])">Rodenticidas<span class="sub-toggle"></span></h4>
-                                        <ul class="mega-menu__list">
-                                            <li><a (click)="llamarsubcategorias(9)">De acción acelerada</a>
-                                            </li>
-                                            <li><a (click)="llamarsubcategorias(10)">De acción lenta</a>
-                                            </li>
-                                            
-                                        </ul>
-                                    </div>
-                                    <div class="mega-menu__column">
-                                        <h4 (click)="llamarporcategorias([11,12,13,14])">Herbicidas<span class="sub-toggle"></span></h4>
-                                        <ul class="mega-menu__list">
-                                            <li><a (click)="llamarsubcategorias(11)">Residuales</a>
-                                            </li>
-                                            <li><a (click)="llamarsubcategorias(12)">Foliares</a>
-                                            </li>
-                                            <li><a (click)="llamarsubcategorias(13)">Presiembra</a>
-                                            </li>
-                                            <li><a (click)="llamarsubcategorias(14)">Postsiembra</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="menu-item-has-children has-mega-menu">
-                                <a href="" (click)="llamarporcategorias([15,16,17])"><i class="icon-laundry"></i> Fertilizantes</a>
-                                <div class="mega-menu">
-                                    <div class="mega-menu__column">                             
-                                        <ul class="mega-menu__list">
-                                            <li><a (click)="llamarsubcategorias(15)">De origen natural</a>
-                                            </li>
-                                            <li><a (click)="llamarsubcategorias(16)">Fabricados</a>
-                                            </li>
-                                            <li><a (click)="llamarsubcategorias(17)">Biofertilizantes</a>
-                                            </li>
-                                            
-                                        </ul>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
                     </div>
                 </div><!-- End menu-->
             </div><!-- End Header Content Left-->
-
             <!--=====================================
             Search
             ======================================-->
-
             <div class="header__content-center">
-                <form class="ps-form--quick-search" action="index.html" method="get">
-                    <input class="form-control" type="text" placeholder="Nombre del producto">
+                <form class="ps-form--quick-search" action="index.html" method="get" >
+                    <dx-autocomplete #data2
+                                        valueExpr="nombre"
+                                        placeholder="Nombre del producto" class="buscador" style="width: 100%;">
+                                    </dx-autocomplete>
                     <button>Buscar</button>
                 </form>
             </div>
 
             <div class="header__content-right">
-
                 <div class="header__actions">
-
-                    <!--=====================================
-                    Wishlist
-                    ======================================-->
-
-                    <a class="header__extra" href="#">
-                        <i class="icon-heart"></i><span><i>0</i></span>
-                    </a>
-
+                   
                     <!--=====================================
                     Cart
                     ======================================-->
-
                     <div class="ps-cart--mini">
 
                         <a class="header__extra" href="#">
-                            <i class="icon-bag2"></i><span><i>0</i></span>
+                            <i class="icon-bag2" ></i><span><i>0</i></span>
                         </a>
 
-                        <div class="ps-cart__content">
+<!--                             <div class="ps-cart__content">
                             <div class="ps-cart__items">
-                                <div class="ps-product--cart-mobile">
+                                <div class="ps-product--cart-mobile" *ngFor="let element of productosPorOrdenDTO;let i = index">
                                     <div class="ps-product__thumbnail">
                                         <a href="#">
-                                            <img src="../shared/../shared/img/products/clothing/7.jpg" alt="">
+                                            <img src="{{element.imagen}}" alt="">
                                         </a>
                                     </div>
 
                                     <div class="ps-product__content">
-                                        <a class="ps-product__remove" href="#">
+                                        <a class="ps-product__remove"  (click)="eliminarRegistro(i)">
                                             <i class="icon-cross"></i>
                                         </a>
-                                        <a href="product-default.html">MVMTH Classical Leather Watch In Black</a>
-                                        <p><strong>Sold by:</strong> YOUNG SHOP</p>
-                                        <small>1 x $59.99</small>
+                                        <a>{{element.nombre}}</a><br>
+                                         <p><strong>Sold by:</strong> YOUNG SHOP</p> -->
+<!--                                           <small>{{element.cantidad}} x ${{element.precio_producto}}</small>
                                     </div>
                                 </div>
-
-                                <div class="ps-product--cart-mobile">
-                                    <div class="ps-product__thumbnail">
-                                        <a href="#">
-                                            <img src="../shared/img/products/clothing/5.jpg" alt="">
-                                        </a>
-                                    </div>
-
-                                    <div class="ps-product__content">
-                                        <a class="ps-product__remove" href="#">
-                                            <i class="icon-cross"></i>
-                                        </a>
-                                        <a href="product-default.html">Sleeve Linen Blend Caro Pane Shirt</a>
-                                        <p><strong>Sold by:</strong> YOUNG SHOP</p>
-                                        <small>1 x $59.99</small>
-                                    </div>
-                                </div>
-                            </div>
-
+                            </div> -->
+<!-- 
                             <div class="ps-cart__footer">
-
-                                <h3>Sub Total:<strong>$59.99</strong></h3>
-                                <figure>
-                                    <a class="ps-btn" href="shopping-cart.html">View Cart</a>
-                                    <a class="ps-btn" href="checkout.html">Checkout</a>
-                                </figure>
+                                <h3>Total:<strong>${{totalCompra}}</strong></h3>
+                                <div class="row">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-10" style="text-align: center;">
+                                            <a class="ps-btn color-principal" (click)="verCarrito()">Ver Carrito</a>
+                                    </div>
+                                    <div class="col-md-1"></div>
+                                </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
 
                     <!--=====================================
@@ -190,14 +86,14 @@
 
                     <div class="ps-block--user-header">
                         <div class="ps-block__left">
-                            <i class="icon-user"></i>
+                            <i class="icon-user" (click)="irPerfilUsuario()"></i>
                         </div>
                         <div class="ps-block__right" *ngIf="!isLoged">
                             <a routerLink="/login">Ingresar</a>
                             <a routerLink="/register">Registrar</a>
                         </div>
                         <div class="ps-block__right" *ngIf="isLoged">
-                            <a >{{nombreUsuario}}</a>
+                            <a (click)="irPerfilUsuario()">{{nombreUsuario}}</a>
                             <a (click)="logout()">Salir</a>
                         </div>
                     </div>
@@ -210,7 +106,14 @@
 <div class="ps-section--shopping ps-shopping-cart" *ngIf="mostrarPaso1">
     <div class="container">
         <div class="centrar">
-            <h1>Carrito de Compras</h1><br>
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6"> <h1>Carrito de Compras</h1><br></div>
+                <div class="col-md-3">
+                    <button (click)="cancelarPedido()" class="btn" style="width: 60%;margin-top: 1em;font-size: 11pt;color: white;background-color: red;">Cancelar</button>
+                </div>
+            </div>
+           
         </div>
 
         <div class="ps-section__content centrar">
@@ -284,7 +187,11 @@
                 <div class="row">
                     <div class="col-xl-7 col-lg-8 col-sm-12">
                         <div class="ps-form__billing-info">
-                            <h4 class="ps-form__heading">Datos de Envio</h4><button (click)="habilitarcampos()" class="color-principal btn" >Utilizar otros datos</button>
+                            <div class="row">
+                                <div class="col-md-3"><h4 class="ps-form__heading">Datos de Envio</h4></div>
+                                <div class="col-md-9"><button (click)="habilitarcampos()" class="color-principal btn" >Utilizar otros datos</button></div>
+                            </div>
+                            
                             <div class="form-group">
                                 <label>Nombres<sup>*</sup></label>
                                 <dx-text-box [(value)]="nuevaOrden.nombres" [disabled]="!camposedicion" placeholder="Nombres completos"></dx-text-box>
@@ -346,7 +253,13 @@
                                      <div *ngIf="dataContactoDirecto">
                                          <div class="row">
                                              <div class="col-md-2"></div>
-                                             <div class="col-md-10"><p>Aqui se mostrara los datos</p></div>
+                                             <div class="col-md-10">
+                                                 <div class="row ayuda">
+                                                     <div class="col-md-12"><p><span style="font-weight: bold;">Telefono: </span>{{datosTienda.telefono}}</p></div>
+                                                     <div class="col-md-12"><p><span style="font-weight: bold;">Correo: </span>{{datosTienda.correo_electronico}}</p></div>
+                                                     <div class="col-md-12"><p><span style="font-weight: bold;">Dirección: </span>{{datosTienda.direccion}}</p></div>
+                                                 </div>
+                                             </div>
                                          </div>
                                      </div>
                                  </div>
@@ -368,18 +281,39 @@
                                      <div *ngIf="dataTransferencia">
                                          <div class="row">
                                              <div class="col-md-2"></div>
-                                             <div class="col-md-10"><p>Aqui se mostrara los datos</p></div>
+                                             <div class="col-md-10">
+                                                <div class="row">
+                                                    <div class="col-md-2"></div>
+                                                    <div class="col-md-10" >
+                                                        <div class="row ayuda card" style="margin-top: 1em;" *ngFor="let element of listaDatosCuenta;let i = index">
+                                                            <div class="col-md-12 centrar"><p><span style="font-weight: bold;">Banco: </span>{{element.descripcion}}</p></div>
+                                                            <div class="col-md-12"><p><span style="font-weight: bold;">Titular Cuenta: </span>{{element.titular_cuenta}}</p></div>
+                                                            <div class="col-md-12"><p><span style="font-weight: bold;">Cédula: </span>{{element.cedula_titular}}</p></div>
+                                                            <div class="col-md-12"><p><span style="font-weight: bold;">Número Cuenta: </span>{{element.numero_cuenta}}</p></div>
+                                                            <div class="col-md-12"><p><span style="font-weight: bold;">Tipo Cuenta: </span>{{element.tipo_cuenta}}</p></div>
+                                                            <br>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </div>
+                                             </div>
                                          </div>
                                          <div class="row">
-                                             <div class="col-md-2"></div>
+
+                                           
                                              <div class="col-md-10">
-                                                  <div class="col-md-12">
+                                                  <div class="col-md-10">
                                                      <img src="{{imagenPago}}" alt="">
                                                      <br><br><br>
                                                      <label>Escoge una imagen:</label><br>
                                                      <input type="file" class="btn color-principal" (change)="handleFileSelect($event)" height="5em">
                                                      <br>
                                                  </div>
+                                             </div>
+                                             <div class="col-md-2">
+                                                <a class="ps-product__remove"  (click)="limpiarimagen()">
+                                                    <i class="icon-cross"></i>
+                                                </a>
                                              </div>
                                          </div>
                                      </div>

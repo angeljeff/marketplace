@@ -33,6 +33,12 @@ class PagoporordenController {
             res.json({ message: 'pago agregado ' });
         });
     }
+    obtenerPagoPorIdOrden(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const ord = yield base_datos_1.default.query('SELECT * FROM pago_por_orden where id_orden_compra =  ? ', [req.params.id_orden_compra]);
+            res.send(ord);
+        });
+    }
 }
 const pagoordenController = new PagoporordenController;
 exports.default = pagoordenController;

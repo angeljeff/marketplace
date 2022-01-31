@@ -7,34 +7,35 @@
     </ul>
     <div class="ps-section__content" *ngIf="seccionListActivas">
             <div class="row centrar">
-                <div class="col-md-12 centrar"><h2> Mis Ordenes</h2></div>
+                <div class="col-md-12 centrar"><h2> Ordenes Pendientes</h2></div>
             </div>
         
         <dx-data-grid
             id="gridContainer"
-            [dataSource]="productos"
-            keyExpr="ID"
+            [dataSource]="listaPedidosSolicitados"
             [showBorders]="true">
-            <dxi-column
-                dataField="Picture"
-                [width]="100"
-                [allowFiltering]="false"
-                [allowSorting]="false"
-                cellTemplate="cellTemplate"
-            ></dxi-column>
-            <dxi-column dataField="Nombre" caption="Producto"></dxi-column>
-            <dxi-column dataField="Cantidad" caption="Cantidad"></dxi-column>
-            <dxi-column dataField="Estado" caption="Estado"></dxi-column>
-            <dxi-column dataField="Descripcion" caption="Descripcion"></dxi-column>
-            <div *dxTemplate="let data of 'cellTemplate'">
-                <img [src]="data.value" />
-            </div>
+            <dxi-column dataField="id_orden_compra" alignment="center" caption="ID"></dxi-column>
+            <dxi-column dataField="nombres"  alignment="center"  caption="Nombre Comprador"></dxi-column>
+           <!--  <dxi-column dataField="cantidadProductos"  alignment="center"  caption="Cantidad Productos"></dxi-column> -->
+            <dxi-column dataField="total"  alignment="center"  caption="Total"></dxi-column>
+            <dxi-column dataField="descripcion"  alignment="center"  caption="Tipo Pago"></dxi-column>
+            <dxi-column dataField="nombre_estado"  alignment="center"  caption="Estado Pedido"></dxi-column>
 
-            <dxo-export [enabled]="true" fileName="Productos"></dxo-export>
-                <dxo-paging [pageSize]="4"></dxo-paging>
+            <dxi-column type="buttons"  caption="Lista Productos">
+                <dxi-button icon="far fa-list-alt" [onClick]="mostrarListaProductos"></dxi-button>    
+            </dxi-column>
+            <dxi-column type="buttons"  caption="Entregado">
+                <i class="far fa-check-square"></i>
+                <dxi-button text="Entregado" cssClass="btn" [onClick]="ETOrden"></dxi-button>    
+            </dxi-column>
+            <dxi-column type="buttons"  caption="Rechazado">
+                <dxi-button text="Rechazado" cssClass="btn" [onClick]="RCOrden"></dxi-button>    
+            </dxi-column>
+            <dxo-export [enabled]="true" fileName="Pedidos"></dxo-export>
+                <dxo-paging [pageSize]="10"></dxo-paging>
                 <dxo-pager
                     [showPageSizeSelector]="true"
-                    [allowedPageSizes]="[5,8,10]"
+                    [allowedPageSizes]="[5,10,20]"
                 ></dxo-pager>
         </dx-data-grid>
     </div>
@@ -43,33 +44,89 @@
                 <div class="col-md-12 centrar"><h2>Todas las ordenes</h2></div>
             </div>
         
-        <dx-data-grid
+            <dx-data-grid
             id="gridContainer"
-            [dataSource]="productos"
-            keyExpr="ID"
+            [dataSource]="listaPedidos"
             [showBorders]="true">
-            <dxi-column
-                dataField="Picture"
-                [width]="100"
-                [allowFiltering]="false"
-                [allowSorting]="false"
-                cellTemplate="cellTemplate"
-            ></dxi-column>
-            <dxi-column dataField="Nombre" caption="Producto"></dxi-column>
-            <dxi-column dataField="Cantidad" caption="Cantidad"></dxi-column>
-            <dxi-column dataField="Estado" caption="Estado"></dxi-column>
-            <dxi-column dataField="Descripcion" caption="Descripcion"></dxi-column>
-            <div *dxTemplate="let data of 'cellTemplate'">
-                <img [src]="data.value" />
-            </div>
+            <dxi-column dataField="id_orden_compra" alignment="center" caption="ID"></dxi-column>
+            <dxi-column dataField="nombres"  alignment="center"  caption="Nombre Comprador"></dxi-column>
+           <!--  <dxi-column dataField="cantidadProductos"  alignment="center"  caption="Cantidad Productos"></dxi-column> -->
+            <dxi-column dataField="total"  alignment="center"  caption="Total"></dxi-column>
+            <dxi-column dataField="descripcion"  alignment="center"  caption="Tipo Pago"></dxi-column>
+            <dxi-column dataField="nombre_estado"  alignment="center"  caption="Estado Pedido"></dxi-column>
 
-            <dxo-export [enabled]="true" fileName="Productos"></dxo-export>
-                <dxo-paging [pageSize]="4"></dxo-paging>
+            <dxi-column type="buttons"  caption="Lista Productos">
+                <dxi-button icon="far fa-list-alt" [onClick]="mostrarListaProductos"></dxi-button>    
+            </dxi-column>
+
+            <dxo-export [enabled]="true" fileName="Pedidos"></dxo-export>
+                <dxo-paging [pageSize]="10"></dxo-paging>
                 <dxo-pager
                     [showPageSizeSelector]="true"
-                    [allowedPageSizes]="[5,8,10]"
+                    [allowedPageSizes]="[5,10,20]"
                 ></dxo-pager>
         </dx-data-grid>
     </div>
+
+
+    <dx-popup
+    [width]="'60%'"
+    [height]="'70%'"
+    [closeOnOutsideClick]="true"
+    [(visible)]="popupListaProductos">
+    <div *dxTemplate="let data of 'content'">
+         <dx-scroll-view width="100%" height="100%">
+             <div class="centrar"><h3>Pedido # {{ordenaMostrar.id_orden_compra}}</h3></div>
+             
+             <div class="row" style="margin:1em">
+                <div class="col-md-6"><h4>Nombre Comprador: <span style="font-weight: normal;">{{ordenaMostrar.nombres}}</span> </h4></div> 
+                <div class="col-md-6"><h4>Cédula: <span style="font-weight: normal;">{{ordenaMostrar.cedula}}</span> </h4></div> 
+                <div class="col-md-6"><h4>Celular: <span style="font-weight: normal;">{{ordenaMostrar.celular}}</span> </h4></div> 
+                <div class="col-md-6"><h4>Dirección: <span style="font-weight: normal;">{{ordenaMostrar.direccion}}</span> </h4></div> 
+                <div class="col-md-6"><h4>Forma Pago: <span style="font-weight: normal;">{{ordenaMostrar.descripcion}}</span> </h4><button class="btn color-principal" *ngIf="ordenaMostrar.descripcion == 'Transferencia/ Depósito Bancario'" (click)="mostrarPago()">Ver Pago</button></div> 
+                <div class="col-md-6"><h4>Total: <span style="font-weight: normal;">{{ordenaMostrar.total}}</span> </h4></div>  
+            </div>
+
+            <div *ngIf="mostrarP">
+                <div class="row centrar">
+                    <div class="col-md-12">
+                        <img src="{{imagenPago}}" style="width: 60%;height: auto;" alt="">
+                    </div>
+                </div>
+                
+            </div>
+             
+            <div class="ps-section__content centrar">
+                <div class="table-responsive">
+                    <table class="table ps-table--shopping-cart centrar">
+                        <thead>
+                            <tr class="centrar">
+                                <th style="text-align: center;">Producto</th>
+                                <th>Precio</th>
+                                <th>Cantidad</th>
+                                <th>Total</th> 
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let element of productosPorOrdenDTO;let i = index">
+                                <td  class="centrar">{{element.nombre}}</td>
+                                <td class="price">${{element.precio_producto}}</td>
+                                <td>{{element.cantidad}}</td>   
+                                <td style="text-align: center;">${{element.total_producto}}</td>                             
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr>
+
+                <div class="d-flex flex-row-reverse" style="margin-right: 2em;">
+                    <div class="p-2"><h3>Total <span>${{totalCompra}}</span></h3></div>             
+                </div>
+            </div> 
+         </dx-scroll-view>
+        
+    </div>
+   
+</dx-popup>
 
  

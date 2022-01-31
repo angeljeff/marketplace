@@ -1,10 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DatosEnvio } from 'src/app/clases/datosEnvio';
-import { OrdenCompra } from 'src/app/clases/ordenCompra';
+import { OrdenCompra, OrdenCompraDto } from 'src/app/clases/ordenCompra';
 import { Pedido } from 'src/app/clases/pedido';
 import { Producto } from 'src/app/clases/producto';
 import { ProductosPorOrdenDTO } from 'src/app/clases/productosOrdenCompra';
+import { Usuario } from 'src/app/clases/usuario';
+import { OrdenCompraService } from 'src/app/services/ordenCompra.service';
+import { ProductoPorOrdenService } from 'src/app/services/productoPorOrden.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-seccion-pedido',
@@ -12,6 +16,7 @@ import { ProductosPorOrdenDTO } from 'src/app/clases/productosOrdenCompra';
   styleUrls: ['./seccion-pedido.component.css']
 })
 export class SeccionPedidoComponent implements OnInit {
+  @Input() objetoUsuario: Usuario = new Usuario();
   mostrarPaso1 = true;
   seccionLista = false;
   totalCompra = 0;
@@ -25,43 +30,69 @@ export class SeccionPedidoComponent implements OnInit {
   popupListaProductos = false;
   dataContactoDirecto = false;
   dataTransferencia = false;
-  listaPedidos : Pedido [] = [{
-    id_pedido : 1,
-    nombre: "Pedido 1",
-    cantidadProductos : 10,
-    total : 150,
-    nombreTienda: "Agripac",
-    nombre_estado : "Realizada"
-  },
-{
-    id_pedido : 2,
-    nombre: "Pedido 2",
-    cantidadProductos : 5,
-    total : 60,
-    nombreTienda: "Agripac2",
-    nombre_estado : "Realizada"
-  }]
+  listaPedidos : OrdenCompraDto [] = []
 
   ordenes: OrdenCompra[] = []; 
+  nuevaOrden :OrdenCompra = new OrdenCompra()
   productosPorOrdenDTO: ProductosPorOrdenDTO[] = []; 
 
   productos: Producto[] = []; 
 
-pago2 = false;
-disablePago2 = true;
-imagenPago = ""
+  pago2 = false;
+  disablePago2 = true;
+  imagenPago = ""
 
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,
+    public _ordenesService : OrdenCompraService,
+    public _productoPorOrdenService : ProductoPorOrdenService) { }
 
   ngOnInit(): void {
-    this.calcularTotal();
-    this.productoMostrado = this.productos[0];
+    this.traerListadoOrdenes()
+    
+    
+  }
+
+  traerListadoOrdenes(){
+    var cedula = localStorage.getItem("cedulaUser") ?? "";
+    this.nuevaOrden.cedula = cedula
+    
+    this._ordenesService.traerOrdenPorUsuarioDTO(this.nuevaOrden).subscribe(
+      (res) => { var ordenes = res as OrdenCompraDto[];
+                  this.separarOrdenes(ordenes)},
+      (err) => { }
+    )  
+  }
+
+  separarOrdenes(lista : OrdenCompraDto[]){
+    lista.forEach(element=>{
+      if(element.id_estado_pedido == 5 || element.id_estado_pedido == 1){
+        //nada
+      }else{
+        this.listaPedidos.push(element)
+      }
+
+    })
+  }
+
+  traerProductosPorOrden(){
+    this._productoPorOrdenService.traerListadoPorOrden(this.nuevaOrden).subscribe(
+      (res) => { 
+        this.productosPorOrdenDTO = res as ProductosPorOrdenDTO[];
+        this.calcularTotal();
+      },
+      (err) => {  Swal.fire("error")} 
+    )
+  }
+
+  calcularTotal(){
+    this.productosPorOrdenDTO.forEach(element=>{
+      element.total_producto = element.cantidad * element.precio_producto
+      this.totalCompra = this.totalCompra + element.total_producto
+    }) 
   }
 
   mostrarPopupProducto(productoOrden : ProductosPorOrdenDTO){
-    // LLamar al metodo obtener producto y traer los datos 
-    //asignarle a la variable productoEncontrado
     this.popupVisible = true;
     
   }
@@ -77,32 +108,17 @@ imagenPago = ""
     } 
   }
 
-  calcularTotal(){
-    this.totalCompra = 0;
-    /* this.ordenes.forEach(element=>{
-      element.total = element.cantidad * element.precio
-      this.totalCompra = this.totalCompra + element.total 
-    }) */
-  }
 
-  cambiarPantalla(num : number){
-    if(num == 1){
-      this.mostrarPaso1 = true;
-      this.mostrarPaso2 = false;
-    }else if(num == 2){
-      this.mostrarPaso1 = false;
-      this.mostrarPaso2 = true;
-    }
-  }
+
+  
   
 
   mostrarListaProductos = (e:any) => {  
-    console.log(e.row.data)  
+    console.log(e.row.data)
+    this.nuevaOrden.id_orden_compra = e.row.data.id_orden_compra
+    this.traerProductosPorOrden() 
     this.popupListaProductos = true;
-    this.nombrePedido = (e.row.data.nombre).toUpperCase();
-    this.nombreTienda = (e.row.data.nombreTienda).toUpperCase();
-    //traer lista de productos asociadas al pedido
-    //asignar la lista al arreglo de pedidos
+    this.nombreTienda = (e.row.data.nombre_ti).toUpperCase();
   }
 
 
@@ -117,15 +133,7 @@ imagenPago = ""
     }
   }
 
-  realizarPedido(){
-    //aqui mandar a guardar la orden con estado solicitada
-    console.log(this.pago2)
-  }
 
-  seguirComprando(){
-    var tiendaId = 1; // setear el Id de ña tienda perteneciente a un producto de la orden
-    this.router.navigate(['/productos-tienda'], { queryParams: { id: tiendaId } });
-  }
 
   handleFileSelect(evt: any){
     var files = evt.target.files;
@@ -146,13 +154,6 @@ imagenPago = ""
     this.imagenPago ="data:image/png;base64,"+ base64textString
     console.log(this.imagenPago);
   }
-
-
-  eliminarRegistro(i: number) {
-    this.ordenes.splice(i, 1);
-    this.calcularTotal();
-  }
-
 
 
 }

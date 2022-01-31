@@ -3,197 +3,8 @@
     <li><a (click)="mostrarSecPedido(2)">Mis Pedidos</a></li>
 </ul>
 
-<div class="ps-section--shopping ps-shopping-cart" *ngIf="mostrarPaso1">
-    <div class="container">
-        <div class="centrar">
-            <h1>Carrito de Compras</h1><br>
-        </div>
-
-        <div class="ps-section__content centrar">
-            <div class="table-responsive">
-                <table class="table ps-table--shopping-cart centrar">
-                    <thead>
-                        <tr>
-                            <th>Producto</th>
-                            <th>Precio</th>
-                            <th>Cantidad</th>
-                            <th>Total</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let element of productosPorOrdenDTO;let i = index">
-                            <td>
-                                <div class="ps-product--cart">
-                                    <div class="ps-product__thumbnail">
-                                        <a href="product-default.html"><img src="{{element.imagen}}" alt=""></a>
-                                    </div>
-                                    <div class="ps-product__content">
-                                        <a (click)="mostrarPopupProducto(element)">{{element.nombre}}</a>
-                                       <!--  <p>Sold By:<strong> YOUNG SHOP</strong></p> -->
-                                    </div>
-                                </div>
-                            </td>
-
-                            <td class="price">${{element.precio_producto}}</td>
-                            <td>
-                                <div class="form-group--number">
-                                    <dx-number-box [(value)]="element.cantidad" (onChange)="calcularTotal()" ></dx-number-box>
-                                </div>
-                            </td>
-                            <td>${{element.total_producto}}</td>                             
-                            <td>
-                                <button class="btn-table" (click)="eliminarRegistro(i)">X</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <hr>
-
-            <div class="d-flex flex-row-reverse">
-                <div class="p-2"><h3>Total <span>${{totalCompra}}</span></h3></div>             
-            </div>
-
-            <div class="ps-section__cart-actions">
-                <a class="ps-btn color-principal" (click)="seguirComprando()">
-                    <i class="icon-arrow-left"></i> Seguir comprando
-                </a>
-
-                <a class="ps-btn color-principal" (click)="cambiarPantalla(2)">
-                    Continuar <i class="icon-arrow-right"></i> 
-                </a>
-            </div>
- 
-        </div> 
-    </div>
-</div>
-
-
-<div class="ps-checkout ps-section--shopping" *ngIf="mostrarPaso2">
-    <div class="container">
-        <div class="col-md-12 centrar">
-            <h1>Verificar Pedido</h1><br>
-        </div>
-
-        <div class="ps-section__content">
-            <form class="ps-form--checkout" action="do_action" method="post">
-                <div class="row">
-                    <div class="col-xl-7 col-lg-8 col-sm-12">
-                        <div class="ps-form__billing-info">
-                            <h4 class="ps-form__heading">Datos de Envio</h4>
-                            <div class="form-group">
-                                <label>Nombres<sup>*</sup></label>
-                                <dx-text-box [(value)]="newDatosEnvio.nombres" placeholder="Nombres completos"></dx-text-box>
-                            </div>
-
-                             <div class="form-group">
-                                <label>Celular<sup>*</sup></label>
-                                <dx-text-box [(value)]="newDatosEnvio.celular" placeholder="Celular"></dx-text-box>
-                            </div>
-
-                             <div class="form-group">
-                                <label>Dirección<sup>*</sup></label>
-                                <dx-text-box [(value)]="newDatosEnvio.direccion" placeholder="Dirección de entrega"></dx-text-box>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="col-xl-5 col-lg-4 col-sm-12">
-                        <div class="ps-form__total">
-                            <h4 class="ps-form__heading">Tu Orden</h4>
-                            <div class="content">
-                                <div class="ps-block--checkout-total">
-                                    <div class="ps-block__header d-flex justify-content-between centrar">
-                                        <p  style="color: black;font-weight: bold;">Producto</p>
-                                        <p  style="color: black;font-weight: bold;">Total</p>
-                                    </div>
-                                    <div class="ps-block__content">
-                                        <table class="table ps-block__products">
-                                            <tbody>
-                                                <tr *ngFor="let element of productosPorOrdenDTO;let i = index">
-                                                    <td>
-                                                        <a> {{element.nombre}}</a>
-                                                    </td>
-                                                    <td class="text-right">${{element.total_producto}}</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <h2 class="text-right">Total <span>${{totalCompra}}</span></h2>
-                                    </div>
-                                </div>
-
-                                <hr class="py-3">
-
-                                <div class="form-group">
-                                   <div class="ps-radio">
-                                        <input class="form-control" type="radio" id="pay-paypal" (change)="asignarValor(1)" name="payment-method">
-                                        <label for="pay-paypal" style="color: black;">Contacto Directo</label>
-                                    </div>
-                                    <div *ngIf="dataContactoDirecto">
-                                        <div class="row">
-                                            <div class="col-md-2"></div>
-                                            <div class="col-md-10"><p>Aqui se mostrara los datos</p></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="ps-radio">
-                                        <input class="form-control" type="radio" id="pay-payu"  (change)="asignarValor(2)" name="payment-method">
-                                        <label for="pay-payu" style="color: black;">Pago contra entrega </label>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="ps-radio">
-                                        <input class="form-control" type="radio" id="pay-mercadopago" (change)="asignarValor(3)" name="payment-method">
-                                        <label for="pay-mercadopago" style="color: black;">Transferencia / Depósito Bancario</label>
-                                    </div>
-                                    <div *ngIf="dataTransferencia">
-                                        <div class="row">
-                                            <div class="col-md-2"></div>
-                                            <div class="col-md-10"><p>Aqui se mostrara los datos</p></div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-2"></div>
-                                            <div class="col-md-10">
-                                                 <div class="col-md-12">
-                                                    <img src="{{imagenPago}}" alt="">
-                                                    <br><br><br>
-                                                    <label>Escoge una imagen:</label><br>
-                                                    <input type="file" class="btn color-principal" (change)="handleFileSelect($event)" height="5em">
-                                                    <br>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <a class="ps-btn ps-btn--fullwidth color-principal" (click)="realizarPedido()">Realizar Pedido</a>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-
-        </div>
-
-        <div class="row">
-            <div class="col-md-3" style="float: right;">
-                <div class="ps-section__cart-actions">
-                    <a class="ps-btn color-principal" (click)="cambiarPantalla(1)" >
-                            <i class="icon-arrow-left"></i> Atras
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-9"></div>
-        </div>
-
-    </div>
-
+<div *ngIf="mostrarPaso1">
+    <app-carrito-compras [mostrarMenu]="false"></app-carrito-compras>
 </div>
 
 
@@ -205,34 +16,24 @@
                 id="gridContainer"
                 [dataSource]="listaPedidos"
                 [showBorders]="true">
-               <!--  <dxi-column
-                    dataField="imagen"
-                    [width]="100"
-                    [allowFiltering]="false"
-                    [allowSorting]="false"
-                    cellTemplate="cellTemplate"
-                ></dxi-column> -->
-                <dxi-column dataField="id_pedido" alignment="center" caption="ID"></dxi-column>
-                <dxi-column dataField="nombre" alignment="center" caption="Pedido"></dxi-column>
-                <dxi-column dataField="nombreTienda"  alignment="center"  caption="Nombre Tienda"></dxi-column>
-                <dxi-column dataField="cantidadProductos"  alignment="center"  caption="Cantidad Productos"></dxi-column>
+                <dxi-column dataField="id_orden_compra" alignment="center" caption="ID"></dxi-column>
+                <dxi-column dataField="nombre_ti"  alignment="center"  caption="Nombre Tienda"></dxi-column>
+               <!--  <dxi-column dataField="cantidadProductos"  alignment="center"  caption="Cantidad Productos"></dxi-column> -->
                 <dxi-column dataField="total"  alignment="center"  caption="Total"></dxi-column>
-                <dxi-column dataField="nombre_estado"  alignment="center"  caption="Estado"></dxi-column>
-                <!-- <div *dxTemplate="let data of 'cellTemplate'">
-                    <img [src]="data.value" />
-                </div> -->
+                <dxi-column dataField="descripcion"  alignment="center"  caption="Tipo Pago"></dxi-column>
+                <dxi-column dataField="nombre_estado"  alignment="center"  caption="Estado Pedido"></dxi-column>
 
-                <dxi-column type="buttons"  caption="Ver Lista">
+                <dxi-column type="buttons"  caption="Lista Productos">
                     <dxi-button icon="far fa-list-alt" [onClick]="mostrarListaProductos"></dxi-button>    
                 </dxi-column>
             <!--   <dxi-column type="buttons"  caption="Eliminar">
                     <dxi-button icon="fas fa-trash-alt" [onClick]="deleteProduct"></dxi-button>    
                 </dxi-column> -->
                 <dxo-export [enabled]="true" fileName="Pedidos"></dxo-export>
-                    <dxo-paging [pageSize]="4"></dxo-paging>
+                    <dxo-paging [pageSize]="10"></dxo-paging>
                     <dxo-pager
                         [showPageSizeSelector]="true"
-                        [allowedPageSizes]="[5,8,10]"
+                        [allowedPageSizes]="[5,10,20]"
                     ></dxo-pager>
             </dx-data-grid>
             </div>
@@ -266,8 +67,7 @@
                 </div>
             </div>
         </div>
-    </div>
-   
+    </div> 
 </dx-popup>
 
 <dx-popup
@@ -279,7 +79,7 @@
          <dx-scroll-view width="100%" height="100%">
              <div class="centrar">
                 <h4>{{nombrePedido}}</h4>
-                <h4>TIENDA : {{nombreTienda}}</h4>
+                <h4>TIENDA : {{nombreTienda}}</h4>   
              </div>
              
             <div class="ps-section__content centrar">
@@ -297,7 +97,7 @@
                             <tr *ngFor="let element of productosPorOrdenDTO;let i = index">
                                 <td  class="centrar">{{element.nombre}}</td>
                                 <td class="price">${{element.precio_producto}}</td>
-                                <td>${{element.cantidad}}</td>   
+                                <td>{{element.cantidad}}</td>   
                                 <td style="text-align: center;">${{element.total_producto}}</td>                             
                             </tr>
                         </tbody>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { range } from 'rxjs';
 import { Canton } from 'src/app/clases/canton';
 import { Producto } from 'src/app/clases/producto';
 import { TipoUsuario } from 'src/app/clases/tipoUsuario';
@@ -58,7 +59,8 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this.traerListadoCantones();
     this.traerListadoTiposUsuarios();
-    this.cargarUsuarioLogueado()   
+    this.cargarUsuarioLogueado() 
+
 
     this.route.queryParams.subscribe(params => {
       this.cedulaRecibida = params['id'] || 0;
@@ -151,7 +153,7 @@ export class RegisterComponent implements OnInit {
     ) 
 
   }
-/*   passwordComparison =()=> this.password; */
+
   actualizar(){
     this.mensajeLoading = "Actualizando Usuario";
     this.mostrarLoading = true;
@@ -170,7 +172,14 @@ export class RegisterComponent implements OnInit {
           if (result.isConfirmed) {
             if(this.usuarioNuevo.id_tipo_usuario== 1){
               this.router.navigate(["/usuarioVendedor"])
-            }else{
+            }
+            else if (this.usuarioNuevo.id_tipo_usuario== 2){
+              this.router.navigate(["/usuario-Comprador"])
+            }
+            else if (this.usuarioNuevo.id_tipo_usuario== 3){
+              this.router.navigate(["/usuarioAdministrador"])
+            }
+            else{
               this.router.navigate(["/login"])
             }
             
@@ -200,11 +209,15 @@ export class RegisterComponent implements OnInit {
   }
 
   irPerfilUsuario(){
-    this.usuarioLogueado.id_tipo_usuario =2;
-    if(this.usuarioLogueado.id_tipo_usuario == 1)
-      this.router.navigate(['/usuarioComprador']);
-    else if(this.usuarioLogueado.id_tipo_usuario == 2)
+    console.log(this.usuarioLogueado.id_tipo_usuario + " " + this.usuarioLogueado.cedula )
+    if(this.usuarioLogueado.id_tipo_usuario == 1){
       this.router.navigate(['/usuarioVendedor']);
+      
+    } 
+    else if(this.usuarioLogueado.id_tipo_usuario == 2){
+      this.router.navigate(['/usuario-Comprador']);
+    }
+      
   }
   logout() {
     localStorage.removeItem("cedulaUser");
@@ -218,7 +231,6 @@ export class RegisterComponent implements OnInit {
   }
   setearValorCanton(e:any){ 
     console.log(e.value)
-    //this.usuarioNuevo.id_cantones = e.value.id_cantones
     console.log(this.usuarioNuevo)
   }
 
@@ -238,7 +250,6 @@ export class RegisterComponent implements OnInit {
             if(this.usuarioNuevo.genero!=="" /* && this.productonuevo.stock!==null */){
               this.usuarioNuevo.fecha_nacimiento = this.fecha
               console.log(this.usuarioNuevo.fecha_nacimiento + "esta es la fecha")
-              /* console.log(this.usuarioNuevo.fecha_nacimiento.getUTCFullYear() + 10 +"esta es el avo") */
               if(this.usuarioNuevo.id_cantones !== 0){
                 if(this.usuarioNuevo.id_tipo_usuario !== 0){
                   if(this.usuarioNuevo.celular !=="" && this.usuarioNuevo.celular.length === 10){
@@ -248,12 +259,13 @@ export class RegisterComponent implements OnInit {
                         if(this.comprobarcedula=== true){
                           if(this.usuarioNuevo.fecha_nacimiento !== undefined){
                             if(2022 - (this.usuarioNuevo.fecha_nacimiento.getUTCFullYear() )>=18){
-                               this.obtenerDatos(this.usuarioNuevo.cedula)
-                               /* if(!this.isedicion){
-                                  this.registrar()
-                                  }else{
-                                     this.actualizar()
-                                    }  */
+                              this.recorrerstring(this.usuarioNuevo.celular)
+                              if(this.celular == true){
+                                this.obtenerDatos(this.usuarioNuevo.cedula)
+                              }else{
+                                this.mostrarmensajes('Su celular debe ser solo números')
+                              }
+  
                             }else{
                               this.mostrarmensajes('debe ser mayor de edad para poder registrarse')
                             }
@@ -404,6 +416,22 @@ export class RegisterComponent implements OnInit {
       return false;
     }
   
+  }
+  celular=true
+  recorrerstring(letra:string){
+    for( var i = 0; i < letra.length; i++){
+      this.celular=true
+      var b=letra.charAt(i)
+      if ((b == '0') ||(b == '1') ||(b == '2')||(b == '3')||(b == '4')||(b == '5')||(b == '6')||(b == '7')||(b == '8')||(b == '9')){
+
+      }
+      else{
+        this.celular= false
+        break
+
+      }
+    }
+
   }
 
 }

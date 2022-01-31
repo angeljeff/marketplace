@@ -24,6 +24,27 @@
         </div>
 
     </div>
+    <div class="container" *ngIf="tiendainhabilitada">
+
+        <div class="ps-section__header">
+            <h1>Tienda Inhabilitada</h1>
+            <h4>Tu tienda se ha inactivado por decisición de los administradores <br> Tus productos y los que publique no se serán visualizados por los usuarios<br>
+            Para más información, ponte en contacto con nosotros</h4>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-12"></div>
+            <div class="col-lg-4 col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <img src="../../../assets/tiendainhabilitada.jpg" alt="tienda inactiva" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-12"> </div>
+        </div>
+
+    </div>
 
     <div class="container" *ngIf="mostrarFormularioRegistro">
             <div class="ps-my-account">
@@ -66,7 +87,7 @@
             
 
                             <div class="form-group">
-                                <dx-text-box [(value)]="newTienda.telefono" class="controles" placeholder="Telefono"></dx-text-box>
+                                <dx-text-box [(value)]="newTienda.telefono" class="controles" placeholder="Celular contacto"></dx-text-box>
                             </div>
 
                             <div class="form-group">
@@ -76,10 +97,6 @@
                              <div class="form-group">
                                 <dx-date-box [(value)]="hora2" type="time" placeholder="Hora cierre"> </dx-date-box>
                             </div>
-
-                            <!-- <div class="form-group">
-                                <dx-select-box [items]="cantones"  displayExpr="nombre" placeholder="Seleccionar Canton" (onValueChanged)="setearValorCanton($event)" ></dx-select-box>
-                            </div> -->
 
                              <div class="form-group">
                                 <dx-text-area [height]="90" [maxLength]="500" [(value)]="newTienda.descripcion" placeholder="Descripcion"></dx-text-area>
@@ -122,6 +139,7 @@
                         </div>
                     </div>
                     <div class="col-md-6 negrita">
+                        <p><span>Teléfono contacto: </span>{{tiendaEncontrada.telefono}}</p>
                         <p><span>Dirección: </span>{{tiendaEncontrada.direccion}}</p>
                         <p><span>Descripción: </span></p>
                         <p>{{tiendaEncontrada.descripcion}}</p>

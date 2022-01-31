@@ -85,6 +85,12 @@ class ProductoController {
             res.json({ message: 'Producto actualizado ' });
         });
     }
+    actualizar_stock(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const agrega_producto = yield base_datos_1.default.query("UPDATE productos SET  stock = ? WHERE id_producto = ?", [req.body.stock, req.params.id_producto]);
+            res.json({ message: 'Producto actualizado ' });
+        });
+    }
     eliminarproducto(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const agrega_producto = yield base_datos_1.default.query("UPDATE productos SET  estado=0 WHERE id_producto = ?", [req.params.id_producto]);

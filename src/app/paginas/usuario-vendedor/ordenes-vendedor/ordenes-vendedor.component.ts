@@ -1,4 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { iif } from 'rxjs';
+import { OrdenCompra, OrdenCompraDto } from 'src/app/clases/ordenCompra';
+import { PagoPorOrden } from 'src/app/clases/pagoPorOrden';
+import { Producto } from 'src/app/clases/producto';
+import { ProductosPorOrdenDTO } from 'src/app/clases/productosOrdenCompra';
+import { Tienda } from 'src/app/clases/tienda';
+import { Usuario } from 'src/app/clases/usuario';
+import { Ventas } from 'src/app/clases/ventas';
+import { OrdenCompraService } from 'src/app/services/ordenCompra.service';
+import { PagoPorOrdenService } from 'src/app/services/pagoPorOrden.service';
+import { ProductoPorOrdenService } from 'src/app/services/productoPorOrden.service';
+import { ProductoService } from 'src/app/services/productos.services';
+import { TiendaService } from 'src/app/services/tienda.service';
+import { VentasService } from 'src/app/services/ventasService';
+import Swal from 'sweetalert2';
 import { Productos } from '../usuario-vendedor.component';
 
 @Component({
@@ -7,55 +22,179 @@ import { Productos } from '../usuario-vendedor.component';
   styleUrls: ['./ordenes-vendedor.component.css']
 })
 export class OrdenesVendedorComponent implements OnInit {
+  @Input() objetoUsuario: Usuario = new Usuario();
+  listaPedidosSolicitados : OrdenCompraDto [] = []
+  listaPedidos : OrdenCompraDto [] = []
 
-  productos: Productos[] = [{
-  ID: 1,
-  Nombre: 'Producto1',
-  Cantidad: 10,
-  Estado: 'Activo',
-  Descripcion: 'CEO',
-  Picture: 'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
- 
-}, {
-  ID: 10,
-  Nombre: 'Producto2',
-  Cantidad: 20,
-  Estado: 'Activo',
-  Descripcion: 'CEO',
-  Picture: 'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
-},
-{
-  ID: 10,
-  Nombre: 'Producto3',
-  Cantidad: 20,
-  Estado: 'Activo',
-  Descripcion: 'CEO',
-  Picture: 'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
-},
-{
-  ID: 10,
-  Nombre: 'Producto4',
-  Cantidad: 20,
-  Estado: 'Activo',
-  Descripcion: 'CEO',
-  Picture: 'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
-},
-{
-  ID: 10,
-  Nombre: 'Producto5',
-  Cantidad: 20,
-  Estado: 'Activo',
-  Descripcion: 'CEO',
-  Picture: 'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
-}];
+  ordenes: OrdenCompra[] = []; 
+  nuevaOrden :OrdenCompra = new OrdenCompra()
+  productosPorOrdenDTO: ProductosPorOrdenDTO[] = []; 
+  popupListaProductos = false
+  totalCompra = 0
+  idEstadoOrden = 0
+  tituloPopup = ""
+  textoPopup = ""
+  imagenPago = ""
+  ordenaMostrar : OrdenCompraDto = new OrdenCompraDto
+
+  tienda : Tienda = new Tienda()
+  mostrarP = false
 
   seccionListActivas: boolean= true;
   seccionTodasordenes: boolean= false;
+  listaProductos: Producto []=[]
 
-  constructor() { }
+  constructor(public _ordenesService : OrdenCompraService,
+    public _tiendaService: TiendaService,
+    public _pagoPorOrdenService : PagoPorOrdenService,
+    public _productoService : ProductoService,
+    public _ventasService : VentasService,
+    public _productoPorOrdenService : ProductoPorOrdenService) { }
 
   ngOnInit(): void {
+    this.traerListadoProductos()
+    this.traerTienda()
+  }
 
+  traerListadoProductos(){
+    this._productoService.obtener_todos_productos_activos().subscribe(
+      (res) => {
+       this.listaProductos = res as Producto[];
+      },
+      (err) => { } )
+  }
+
+  traerTienda(){
+    var cedula = localStorage.getItem("cedulaUser") ?? "";
+    this.tienda.cedula = cedula
+    this._tiendaService.obtener_datos_tienda(this.tienda).subscribe(
+      (res) => {
+        var tienda = res as Tienda[];
+        this.tienda = tienda[0];
+        this.traerListadoOrdenes()
+      },
+      (err) => { } )
+  }
+
+  traerListadoOrdenes(){
+    this._ordenesService.obtenerOrdenesPorTienda(this.tienda).subscribe(
+      (res) => { var ordenes = res as OrdenCompraDto[];
+                  this.separarOrdenes(ordenes)},
+      (err) => { }
+    )  
+  }
+
+  separarOrdenes(lista : OrdenCompraDto[]){
+    this.listaPedidos = []
+    this.listaPedidosSolicitados = []
+    lista.forEach(element=>{
+      if(element.id_estado_pedido == 4){
+        this.listaPedidosSolicitados.push(element)
+      }else{
+        if(element.id_estado_pedido == 2 || element.id_estado_pedido == 3)
+          this.listaPedidos.push(element)
+      }
+    })
+  }
+
+
+  ETOrden = (e:any) => { 
+    this.idEstadoOrden = 2;
+    this.tituloPopup = "Orden Entregada"
+    this.textoPopup = "Está seguro de marcar la orden como entregada"
+    this.actualizarCantidadProductos()
+    this.editarOrden(e.row.data)  
+  }
+
+  RCOrden = (e:any) => { 
+    this.idEstadoOrden = 3;
+    this.tituloPopup = "Rechazar Orden"
+    this.textoPopup = "Está seguro de marcar la orden como rechazada"
+    this.editarOrden(e.row.data)  
+  }
+
+  editarOrden(orden: OrdenCompra){
+    Swal.fire({
+      title: this.tituloPopup,
+      text: this.textoPopup ,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'OK',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        orden.id_estado_pedido = this.idEstadoOrden;
+        this._ordenesService.actualizarEstadoOrden(orden).subscribe(
+          (res) => { Swal.fire("Ok","Orden actualizada","success");
+                    this.traerListadoOrdenes()
+                    if(orden.id_estado_pedido == 2){
+                      var ventas = new Ventas()
+                      ventas.id_orden_compra= orden.id_orden_compra
+                      this._ventasService.agregarventa(ventas).subscribe(
+                        (res)=>{}, (err)=>{}
+                      )
+          
+                    }
+                  },
+                   
+          (err) => { Swal.fire('error')}
+        ) 
+      }
+    }) 
+  }
+
+  actualizarCantidadProductos(){
+    this.productosPorOrdenDTO.forEach(element2=>{
+      var producto = this.listaProductos.find(element=> element.id_producto == element2.id_producto.toString()) ?? new Producto()
+      producto.stock = (producto.stock ?? 0) - element2.cantidad
+      this._productoService.actualizarStock(producto).subscribe(
+        (res) => { },
+        (err) => { Swal.fire('error')}
+      ) 
+    })
+  }
+
+  traerImagenPago(){
+    this.imagenPago= ""
+    this._pagoPorOrdenService.obtenerPagoPorIdOrden(this.nuevaOrden).subscribe(
+      (res) => { var lista = res as PagoPorOrden[]
+                if(lista.length != 0)
+                  this.imagenPago = lista[0].imagen_comprobante
+        },
+      (err) => { Swal.fire('error')}
+    ) 
+  }
+
+  mostrarPago(){
+    this.mostrarP = !this.mostrarP
+  }
+
+
+  mostrarListaProductos = (e:any) => {  
+    console.log(e.row.data)
+    this.nuevaOrden.id_orden_compra = e.row.data.id_orden_compra
+    this.traerProductosPorOrden() 
+    this.traerImagenPago()
+    this.ordenaMostrar = e.row.data
+    this.popupListaProductos = true;
+    //this.nombreTienda = (e.row.data.nombre_ti).toUpperCase();
+  }
+
+  traerProductosPorOrden(){
+    this._productoPorOrdenService.traerListadoPorOrden(this.nuevaOrden).subscribe(
+      (res) => { 
+        this.productosPorOrdenDTO = res as ProductosPorOrdenDTO[];
+        this.calcularTotal();
+      },
+      (err) => {  Swal.fire("error")} 
+    )
+  }
+
+  calcularTotal(){
+    this.productosPorOrdenDTO.forEach(element=>{
+      element.total_producto = element.cantidad * element.precio_producto
+      this.totalCompra = this.totalCompra + element.total_producto
+    }) 
   }
 
   

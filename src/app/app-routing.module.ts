@@ -10,6 +10,7 @@ import { AuthGuardService } from './services/auth.service';
 import { CarritoComprasComponent } from './paginas/carrito-compras/carrito-compras.component';
 import { ProductosTiendaComponent } from './paginas/productos-tienda/productos-tienda.component';
 import { UsuarioAdministradorComponent } from './paginas/usuario-administrador/usuario-administrador.component';
+import { UsuarioCompradorComponent } from './paginas/usuario-comprador/usuario-comprador.component';
 
 const routes: Routes = [
         { 
@@ -54,6 +55,11 @@ const routes: Routes = [
         },{
           path:'productos-tienda', 
           component: ProductosTiendaComponent,
+          canActivate: [AuthGuardService],
+        },
+        {
+          path:'usuario-Comprador', 
+          component: UsuarioCompradorComponent,
           canActivate: [AuthGuardService],
         },
         {

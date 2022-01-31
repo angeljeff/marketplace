@@ -6,8 +6,8 @@ import { Usuario } from "../clases/usuario";
   providedIn: "root",
 })
 export class UsuarioService{
-  private URL = 'http://192.168.100.251:3000/usuario';
-  //private URL = 'http://localhost:3000/usuario';
+  //private URL = 'http://192.168.100.251:3000/usuario';
+  private URL = 'http://localhost:3000/usuario';
 
   constructor(private http: HttpClient) {}
 

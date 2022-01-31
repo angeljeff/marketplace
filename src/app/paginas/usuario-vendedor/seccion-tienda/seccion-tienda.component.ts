@@ -33,6 +33,7 @@ export class SeccionTiendaComponent implements OnInit {
   listaCantones : Canton []=[]
   mensajeLoading=""
   mostrarLoading=false
+  tiendainhabilitada=false
 
   tiendaEncontrada = new Tienda();
 
@@ -42,27 +43,30 @@ export class SeccionTiendaComponent implements OnInit {
    public router: Router
   ) { }
 
-  ngOnInit(): void {
-    console.log(this.objetoUsuario)
-    // Crear un metodo para traer la tienda asociada al usuario *(objetousuario.cedula) si no tiene tienda setear la variable idNewTienda en true, sino en false
-     
+  ngOnInit(): void {    
     this.traerDatosTienda();
     this.traerListaCantones();
   }
 
   traerDatosTienda(){
-    //this.isNewTienda = false;
    this.buscartienda.cedula= this.objetoUsuario.cedula
    this._tiendaService.obtener_datos_tienda(this.buscartienda).subscribe(
       (res) => {
         var tienda = res as Tienda[];
-        console.log(tienda.length)
         if(tienda.length != 0){
-          console.log("entre")
-          this.ll()
-          this.isNewTienda = false;
-          this.existeTienda = true;
-          this.tiendaEncontrada = tienda[0]
+          if(tienda[0].id_estado_tienda == 2){
+            this.isNewTienda = false;
+            this.existeTienda = false;
+            this.mostrarFormularioRegistro = false;
+            this.tiendainhabilitada=true  
+          }else{
+            console.log("entre")
+            this.ll()
+            this.isNewTienda = false;
+            this.existeTienda = true;
+            this.tiendaEncontrada = tienda[0]
+          }
+         
         }else{
           this.existeTienda = false;
           this.isNewTienda = true;
@@ -84,12 +88,6 @@ export class SeccionTiendaComponent implements OnInit {
     )
   }
 
-  setearValorCanton(e:any){ 
-    /* console.log(e.value)
-    this.newTienda.canton = e.value.id
-    console.log("valor canton ",this.newTienda.canton) */
-
-  }
 
   registrar(){
     this.newTienda.cedula = this.buscartienda.cedula
@@ -116,7 +114,6 @@ export class SeccionTiendaComponent implements OnInit {
             this.existeTienda = true;
             this.traerDatosTienda()
             
-            /* this.router.navigate(['./seccion-tienda.component.html']);*/
           } 
         }) 
       
@@ -149,7 +146,6 @@ export class SeccionTiendaComponent implements OnInit {
             this.mostrarFormularioRegistro= false
             this.existeTienda = true;
             this.traerDatosTienda()
-            /* this.router.navigate(["/login"]); */
           }
         }) 
       
@@ -171,17 +167,10 @@ export class SeccionTiendaComponent implements OnInit {
       this._tiendaService.obtener_datos_tienda(this.buscartienda).subscribe(
         (res) => {
           this.newTienda = res[0];
-
-          /* console.log(res + "esta es el producto devuelto") */
-          
-          //this.nombreCanton = this.listaCantones.find(element => element.id_cantones == this.usuarioNuevo.id_cantones)?.descripcion ?? "" ;
          
         },
         (err) => { }
       ) 
-    
-
-
   }
 
 
@@ -190,15 +179,21 @@ export class SeccionTiendaComponent implements OnInit {
       if(this.newTienda.direccion!==""){
         if(this.newTienda.correo_electronico!==""){
           if(this.newTienda.id_cantones!==0 ){
-            if(this.newTienda.telefono !=="" && this.newTienda.telefono.length>=5 ){
+            if(this.newTienda.telefono !=="" && this.newTienda.telefono.length==10 ){
               if(this.newTienda.descripcion!=="" && this.newTienda.descripcion.length>= 10){
                 if(this.hora !== undefined){
                   if(this.hora2 !== undefined){
-                    if(!this.isedicion){
+                    this.recorrerstring(this.newTienda.telefono)
+                    if (this.celular ==true){
+                      if(!this.isedicion){
                       this.registrar()
                     }else{
                       this.actualizar()
-                    } 
+                    }  
+                    }else{
+                      this.mostrarmensajes('El celular debe contener solo números')
+                    }
+                    
                   }else{
                     this.mostrarmensajes('Por favor registre una hora de cierre')
                   }
@@ -243,6 +238,23 @@ export class SeccionTiendaComponent implements OnInit {
       }
     })
   
+  }
+
+  celular=true
+  recorrerstring(letra:string){
+    for( var i = 0; i < letra.length; i++){
+      this.celular=true
+      var b=letra.charAt(i)
+      if ((b == '0') ||(b == '1') ||(b == '2')||(b == '3')||(b == '4')||(b == '5')||(b == '6')||(b == '7')||(b == '8')||(b == '9')){
+
+      }
+      else{
+        this.celular= false
+        break
+
+      }
+    }
+
   }
 
 }

@@ -1,19 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { elementAt } from 'rxjs';
+import DataSource from 'devextreme/data/data_source';
 import { DatosEnvio } from 'src/app/clases/datosEnvio';
+import { DatosPago, DatosPagopresentacion } from 'src/app/clases/datosPago';
 import { Met_pag_tienda } from 'src/app/clases/metodopagotienda';
 import { OrdenCompra } from 'src/app/clases/ordenCompra';
 import { PagoPorOrden } from 'src/app/clases/pagoPorOrden';
 import { Producto } from 'src/app/clases/producto';
 import { ProductosPorOrdenDTO } from 'src/app/clases/productosOrdenCompra';
+import { Tienda } from 'src/app/clases/tienda';
 import { Usuario } from 'src/app/clases/usuario';
 import { AuthenService } from 'src/app/services/authen.service';
+import { DatoscuentabancoService } from 'src/app/services/cuentabancaria.service';
 import { MetodopagotiendaService } from 'src/app/services/metodopagotienda.service';
 import { OrdenCompraService } from 'src/app/services/ordenCompra.service';
 import { PagoPorOrdenService } from 'src/app/services/pagoPorOrden.service';
 import { ProductoPorOrdenService } from 'src/app/services/productoPorOrden.service';
 import { ProductoService } from 'src/app/services/productos.services';
+import { TiendaService } from 'src/app/services/tienda.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -22,6 +26,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./carrito-compras.component.css']
 })
 export class CarritoComprasComponent implements OnInit {
+  @Input() mostrarMenu : boolean = true;
   mostrarPaso1 = true;
   totalCompra = 0;
   popupVisible = false;
@@ -45,6 +50,8 @@ export class CarritoComprasComponent implements OnInit {
   contador = 0
   camposedicion=false
   comprobarcedula:any ;
+  datosPago : DatosPago = new DatosPago()
+  listaDatosCuenta : DatosPagopresentacion [] = []
 
   ordenes: OrdenCompra[] = []; 
   productosPorOrdenDTO: ProductosPorOrdenDTO[] = []; 
@@ -53,12 +60,15 @@ export class CarritoComprasComponent implements OnInit {
   productos: Producto[] = []; 
   cedula = ""
   nuevaOrden : OrdenCompra = new OrdenCompra()
+  datosTienda : Tienda = new Tienda();
 
   constructor(private router: Router,
         public authenService : AuthenService,
         public _ordenCompraService : OrdenCompraService,
         public _productoPorOrdenService : ProductoPorOrdenService,
         public _metodoPagoTienda : MetodopagotiendaService,
+        public _tiendaService : TiendaService,
+        public _datosPagoService : DatoscuentabancoService,
         public _pagoPorOrdenService : PagoPorOrdenService,
         public _productoService: ProductoService) { }
 
@@ -93,7 +103,7 @@ export class CarritoComprasComponent implements OnInit {
         if(lista.length != 0){
           this.nuevaOrden = lista[0]
           this.nuevaOrden.id_metodo_pago_tienda=0
-          this.nuevaOrden.nombres = this.usuarioLogueado.nombres + "" + this.usuarioLogueado.apellidos
+          this.nuevaOrden.nombres = this.usuarioLogueado.nombres + " " + this.usuarioLogueado.apellidos
           this.nuevaOrden.cedula_envio = "0"+ this.usuarioLogueado.cedula
           this.nuevaOrden.celular = "0"+ this.usuarioLogueado.celular
           this.nuevaOrden.direccion = this.usuarioLogueado.direccion 
@@ -114,6 +124,25 @@ export class CarritoComprasComponent implements OnInit {
     )
   }
 
+  traerDatosTienda(){
+    this._tiendaService.obtener_datos_tienda_porid(this.datosTienda).subscribe(
+      (res) => { 
+        var tiendas = res as Tienda[];
+        this.datosTienda = tiendas[0];
+      },
+      (err) => {  Swal.fire("Error al guardar","Su producto no pudo ser agregado","error")} 
+    )
+  }
+
+  traerDatosCuentasBancarias(){
+    this._datosPagoService.consultardatosbancarios(this.datosPago).subscribe(
+      (res) => { 
+        this.listaDatosCuenta = res as DatosPagopresentacion[];
+      },
+      (err) => {  Swal.fire("error")} 
+    )
+  }
+
   traerMetodosPagoTienda(){
     var metodoPago = new Met_pag_tienda()
     metodoPago.id_tienda = this.idTienda
@@ -124,13 +153,18 @@ export class CarritoComprasComponent implements OnInit {
       },
       (err) => {  Swal.fire("Error al guardar","Su producto no pudo ser agregado","error")} 
     )
+    this.datosTienda.id_tienda = this.idTienda.toString()
+    this.traerDatosTienda()
   }
 
   validarMetodos(){
     console.log(this.listadoMetodosPago)
     this.listadoMetodosPago.forEach(element=>{
-      if(element.id_metodo_pago == 1) 
+      if(element.id_metodo_pago == 1) {
         this.isPago1 = element.estado_metodo==1 ? false : true
+        this.datosPago.id_metodo_pago_tienda = element.id_metodo_pago_tienda
+        this.traerDatosCuentasBancarias()
+      }
       else if(element.id_metodo_pago == 2) 
         this.isPago2 = element.estado_metodo==1 ? false : true
       else if(element.id_metodo_pago == 3) 
@@ -204,7 +238,7 @@ export class CarritoComprasComponent implements OnInit {
   }
 
   seguirComprando(){
-    var tiendaId = 1; // setear el Id de ña tienda perteneciente a un producto de la orden
+    var tiendaId = this.idTienda; // setear el Id de ña tienda perteneciente a un producto de la orden
     this.router.navigate(['/productos-tienda'], { queryParams: { id: tiendaId } });
   }
 
@@ -230,6 +264,9 @@ export class CarritoComprasComponent implements OnInit {
     if(num == 3){
       this.dataContactoDirecto = true;
       this.dataTransferencia = false;
+    }else if(num == 2){
+      this.dataContactoDirecto = false;
+      this.dataTransferencia = false;
     }else if(num == 1){
       this.dataContactoDirecto = false;
       this.dataTransferencia = true;
@@ -244,6 +281,37 @@ export class CarritoComprasComponent implements OnInit {
     else
       this.realizarPedido()
     
+  }
+
+  cancelarPedido(){
+    Swal.fire({
+      title: 'Cancelar Orden',
+      text: "Está seguro de anular su pedido",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Si',
+      cancelButtonText :'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.nuevaOrden.id_estado_pedido = 5 //estado cancelado
+        this._ordenCompraService.actualizarEstadoOrden(this.nuevaOrden).subscribe(
+          (res) => { 
+            Swal.fire({
+              title: 'Orden Cancelada',
+              text: "Su orden ha sido anulada con éxito",
+              icon: 'success',
+              showCancelButton: false,
+              confirmButtonText: 'OK',
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.router.navigate(["/principal"]);
+              }
+            }) 
+          },
+          (err) => {  Swal.fire("Error al guardar","Error a cancelar su pedido","error")} 
+        ) 
+      }
+    })   
   }
 
   realizarPedido(){
@@ -295,6 +363,23 @@ export class CarritoComprasComponent implements OnInit {
     }) 
   }
 
+  limpiarimagen(){
+    if(this.imagenPago!=""){
+      this.imagenPago=""
+    }
+  }
+
+  redirigir(){
+    this.router.navigate(["/principal"]);
+  }
+
+  irPerfilUsuario(){
+    if(this.usuarioLogueado.id_tipo_usuario == 1)
+    this.router.navigate(['/usuarioVendedor']);
+    else if(this.usuarioLogueado.id_tipo_usuario == 2)
+    this.router.navigate(['/usuarioComprador']);
+      
+  }
 
   eliminarRegistro(i: number,  producto : ProductosPorOrdenDTO) {
     Swal.fire({

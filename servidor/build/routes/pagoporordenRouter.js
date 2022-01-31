@@ -13,6 +13,7 @@ class PagoporordenlRoutes {
     config() {
         this.router.get('/listar', PagoxordenController_1.default.listar_pago_orden);
         this.router.get('/obtener/:id_pago_por_orden', PagoxordenController_1.default.obtenerPorid);
+        this.router.post('/traerPagoPorIdOrden/:id_orden_compra', PagoxordenController_1.default.obtenerPagoPorIdOrden);
         this.router.post('/agregar', PagoxordenController_1.default.agregar_pago_orden);
     }
 }

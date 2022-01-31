@@ -99,7 +99,13 @@ export class FormularioComponent implements OnInit {
             if(this.newDatosPago.tipo_cuenta!=="" ){
               this.comprobarcedula = this.validarCedula(this.newDatosPago.cedula_titular);
               if(this.comprobarcedula=== true){
-                this.guardar()
+                this.recorrerstring(this.newDatosPago.numero_cuenta)
+                if(this.celular == true){
+                   this.guardar() 
+                }else{
+                  this.mostrarmensajes('ingrese un número de cuenta válido')
+                }
+
               }else{
             this.mostrarmensajes('Por favor ingrese un número de cédula válida')
           }
@@ -146,12 +152,6 @@ export class FormularioComponent implements OnInit {
                if(this.listafinal.length !=0){
                  for(let i in this.listafinal){
                   this.listafinal[i].cedula_titular= '0'+ this.listafinal[i].cedula_titular
-                   if(this.listafinal[i].id_banco == 1){
-                     this.listafinal[i].nombre_banco= "Guayaquil"
-                   }
-                   else{
-                    this.listafinal[i].nombre_banco= "Pichincha"
-                   }
                  }
                }
               },
@@ -215,6 +215,21 @@ export class FormularioComponent implements OnInit {
   
   }
 
+  celular=true
+  recorrerstring(letra:string){
+    for( var i = 0; i < letra.length; i++){
+      this.celular=true
+      var b=letra.charAt(i)
+      if ((b == '0') ||(b == '1') ||(b == '2')||(b == '3')||(b == '4')||(b == '5')||(b == '6')||(b == '7')||(b == '8')||(b == '9')){
 
+      }
+      else{
+        this.celular= false
+        break
+
+      }
+    }
+
+  }
 
 }

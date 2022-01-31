@@ -29,6 +29,7 @@ import { SeccionProductoAdministradorComponent } from './paginas/usuario-adminis
 import { SeccionTiendaAdministradorComponent } from './paginas/usuario-administrador/seccion-tienda-administrador/seccion-tienda-administrador.component';
 import { SeccionEstadisticaAdministradorComponent } from './paginas/usuario-administrador/seccion-estadistica-administrador/seccion-estadistica-administrador.component';
 import { SeccionUsuarioAdministradorComponent } from './paginas/usuario-administrador/seccion-usuario-administrador/seccion-usuario-administrador.component';
+import { UsuarioCompradorComponent } from './paginas/usuario-comprador/usuario-comprador.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { SeccionUsuarioAdministradorComponent } from './paginas/usuario-administ
     SeccionProductoAdministradorComponent,
     SeccionTiendaAdministradorComponent,
     SeccionEstadisticaAdministradorComponent,
-    SeccionUsuarioAdministradorComponent
+    SeccionUsuarioAdministradorComponent,
+    UsuarioCompradorComponent
   ],
   imports: [
     FormsModule,

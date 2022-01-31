@@ -7,8 +7,8 @@ import { Tienda } from "../clases/tienda";
   providedIn: "root",
 })
 export class TiendaService{
-  private URL = 'http://192.168.100.251:3000/tienda';
-  //private URL = 'http://localhost:3000/tienda';
+  //private URL = 'http://192.168.100.251:3000/tienda';
+  private URL = 'http://localhost:3000/tienda';
 
   constructor(private http: HttpClient) {}
 

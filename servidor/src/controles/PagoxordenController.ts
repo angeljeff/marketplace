@@ -22,6 +22,11 @@ class PagoporordenController {
         res.json({ message: 'pago agregado ' });
     }
 
+    public async obtenerPagoPorIdOrden(req: Request, res: Response): Promise<void> {
+        const ord = await pool.query('SELECT * FROM pago_por_orden where id_orden_compra =  ? ', [req.params.id_orden_compra]);
+        res.send(ord);
+    }
+
 
    
 }

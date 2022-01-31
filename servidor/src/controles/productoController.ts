@@ -63,6 +63,12 @@ class ProductoController {
         res.json({ message: 'Producto actualizado ' });
     }
 
+    public async actualizar_stock(req: Request, res: Response): Promise<void> {
+        const agrega_producto = await pool.query("UPDATE productos SET  stock = ? WHERE id_producto = ?",
+        [req.body.stock ,   req.params.id_producto]);
+        res.json({ message: 'Producto actualizado ' });
+    }
+
     public async eliminarproducto(req: Request, res: Response): Promise<void> {
         const agrega_producto = await pool.query("UPDATE productos SET  estado=0 WHERE id_producto = ?",[ req.params.id_producto]);
         res.json({ message: 'Producto actualizado ' });
