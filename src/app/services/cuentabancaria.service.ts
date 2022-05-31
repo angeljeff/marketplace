@@ -7,8 +7,8 @@ import { DatosPago } from "../clases/datosPago";
   providedIn: "root",
 })
 export class DatoscuentabancoService{
-  //private URL = "http://159.223.107.115:3000/usuario";
-  private URL = 'http://localhost:3000/Cuentasb';
+  private URL = "http://67.207.92.81:3000/Cuentasb";
+  //private URL = 'http://localhost:3000/Cuentasb';
 
   constructor(private http: HttpClient, private router: Router) {}
 

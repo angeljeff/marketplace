@@ -9,7 +9,8 @@ import { Ventas } from "../clases/ventas";
 })
 export class VentasService{
 
-  private URL = 'http://localhost:3000/ventas';
+  private URL = 'http://67.207.92.81:3000/ventas';
+  //private URL = 'http://localhost:3000/ventas';
 
   constructor(private http: HttpClient, private router: Router) {}
 

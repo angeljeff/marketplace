@@ -7,8 +7,8 @@ import { Met_pag_tienda } from "../clases/metodopagotienda";
   providedIn: "root",
 })
 export class MetodopagotiendaService{
-
-  private URL = 'http://localhost:3000/metodopagotienda';
+  private URL = "http://67.207.92.81:3000/metodopagotienda";
+  //private URL = 'http://localhost:3000/metodopagotienda';
 
   constructor(private http: HttpClient, private router: Router) {}
 

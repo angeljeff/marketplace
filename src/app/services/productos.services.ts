@@ -7,8 +7,9 @@ import { Producto } from "../clases/producto";
   providedIn: "root",
 })
 export class ProductoService{
-  //private URL = 'http://192.168.100.251:3000/producto';
-  private URL = 'http://localhost:3000/producto';
+  private URL = "http://67.207.92.81:3000/producto";
+
+  //private URL = 'http://localhost:3000/producto';
 
   constructor(private http: HttpClient, private router: Router) {}
 

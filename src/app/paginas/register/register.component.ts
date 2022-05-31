@@ -131,7 +131,7 @@ export class RegisterComponent implements OnInit {
   registrar(){
     this.mensajeLoading = "Guardando Usuario";
     this.mostrarLoading = true;
-    this.usuarioNuevo.fecha_nacimiento = this.fecha;
+    this.usuarioNuevo.fecha_nacimiento = new Date(this.fecha.toISOString());
     console.log(this.usuarioNuevo)
      this._usuarioService.registrar(this.usuarioNuevo).subscribe(
       (res) => {
