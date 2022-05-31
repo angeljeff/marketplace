@@ -24,6 +24,11 @@ const pagoporordenRouter_1 = __importDefault(require("./routes/pagoporordenRoute
 const productosxordenRouter_1 = __importDefault(require("./routes/productosxordenRouter"));
 const tipoUsuarioRouter_1 = __importDefault(require("./routes/tipoUsuarioRouter"));
 const VentasRouter_1 = __importDefault(require("./routes/VentasRouter"));
+
+const bodyParser = __importDefault(require('body-parser'));
+const path_1 = __importDefault(require("path"));
+
+
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
@@ -35,6 +40,12 @@ class Server {
         this.app.use((0, morgan_1.default)('dev'));
         this.app.use((0, cors_1.default)());
         this.app.use(express_1.default.json());
+
+        this.app.use(bodyParser.default.json({limit: '50mb', extended: true}))
+        this.app.use(bodyParser.default.urlencoded({limit: '50mb', extended: true}))
+        this.app.use(express_1.default.static(path_1.default.join(__dirname,'frontend')));
+
+
         this.app.use(express_1.default.urlencoded({ extended: false }));
     }
     routes() {
@@ -64,8 +75,6 @@ class Server {
     }
 }
 const server = new Server();
-this.app.use(bodyParser.json({limit: '50mb', extended: true}))
-this.app.use(bodyParser.urlencoded({limit: '50mb', extended: true}))
-this.app.use(express.static(path.join(__dirname,'frontend')));
+
 server.start();
 new Server();
