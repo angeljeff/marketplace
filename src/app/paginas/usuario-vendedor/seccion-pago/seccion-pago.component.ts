@@ -134,6 +134,7 @@ export class SeccionPagoComponent implements OnInit {
       )
   }
   marcarpagos(){
+   
     this.poseetienda=false;
     this.IsNewTienda = false;
     this.mostrarConfiguracion = true;
@@ -146,6 +147,10 @@ export class SeccionPagoComponent implements OnInit {
       }
       if(this.todosmetodos[i].id_metodo_pago ==1 && this.todosmetodos[i].estado_metodo ==1){
         this.tipoPago3=true
+        this.idMetodoPagoTransferencia = this.todosmetodos[i].id_metodo_pago_tienda;
+      }
+      if(this.todosmetodos[i].id_metodo_pago ==1 && this.todosmetodos[i].estado_metodo ==0){
+        this.tipoPago3=false
         this.idMetodoPagoTransferencia = this.todosmetodos[i].id_metodo_pago_tienda;
       }
     }

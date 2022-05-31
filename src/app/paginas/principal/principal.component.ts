@@ -39,6 +39,7 @@ export class PrincipalComponent implements OnInit {
   popupVisible = false
   popupTienda = false
   popupCompra = false
+  inhabilitarboton=false
   productoMostrado : Productocompleto = new Productocompleto()
   productoAComprar : Productocompleto = new Productocompleto()
   nuevaOrden : OrdenCompra = new OrdenCompra();
@@ -52,7 +53,8 @@ export class PrincipalComponent implements OnInit {
   productosOrden: ProductosPorOrden[] = [];
   productosOrdenDTO: ProductosPorOrdenDTO[] = [];
   isCorrecto = false
-
+  buscartienda: Tienda = new Tienda();
+  idelatienda="";
   isLoged = false;
   mensajeError = ""
   usuarioLogueado : Usuario = new Usuario();
@@ -82,14 +84,36 @@ export class PrincipalComponent implements OnInit {
             var arreglo = res as Usuario[];
             this.isLoged = true;
             this.usuarioLogueado = arreglo[0];
+            console.log(this.usuarioLogueado );
             var array = this.usuarioLogueado.nombres.split(" ");
             this.nombreUsuario = array[0];
             this.nuevaOrden.cedula = this.usuarioLogueado.cedula
-            this.traerOrdenCompraUsuario()
+            this.traerOrdenCompraUsuario();
+            this.traerDatosTienda();
           },
           err => {})
     });
   }
+  traerDatosTienda(){
+    this.buscartienda.cedula= this.usuarioLogueado.cedula
+    this._tiendaService.obtener_datos_tienda(this.buscartienda).subscribe(
+       (res) => {
+         var tienda = res as Tienda[];
+         if(tienda.length != 0){
+           if(tienda[0].id_estado_tienda == 1){
+             this.inhabilitarboton = true;
+             this.idelatienda=tienda[0].id_tienda;
+
+             
+  
+           }
+          
+         }
+           
+       },
+       (err) => { } )
+     
+   }
 
   traerOrdenCompraUsuario(){
     this._ordenCompraService.traerOrdenPorUsuario(this.nuevaOrden).subscribe(
@@ -201,7 +225,7 @@ export class PrincipalComponent implements OnInit {
 
   solicitarProducto(){
     this.nuevaOrden.id_estado_pedido = 1
-    this.nuevaOrden.id_metodo_pago_tienda = 8
+    this.nuevaOrden.id_metodo_pago_tienda = 11
     if(this.nuevaOrden.id_orden_compra == 0){
       this._ordenCompraService.registrar(this.nuevaOrden).subscribe(
         (res) => { 

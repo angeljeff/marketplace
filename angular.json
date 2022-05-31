@@ -49,16 +49,15 @@
               "src/app/paginas/shared/css/market-place-4.css"
             ],
             "scripts": [
-              "src/app/paginas/shared/css/plugins/lightgallery.min.css",
-              "src/app/paginas/shared/css/plugins/owl.carousel.css",
-              "src/app/paginas/shared/css/plugins/jquery-ui.min.css",
-              "src/app/paginas/shared/js/plugins/jquery-1.12.4.min.js",
+
               "src/app/paginas/shared/js/plugins/owl.carousel.min.js",
               "src/app/paginas/shared/js/plugins/imagesloaded.pkgd.min.js",
               "src/app/paginas/shared/js/plugins/masonry.pkgd.min.js",
               "src/app/paginas/shared/js/plugins/isotope.pkgd.min.js",
               "src/app/paginas/shared/js/plugins/jquery.matchHeight-min.js",
               "src/app/paginas/shared/js/plugins/slick.min.js",
+
+
               "src/app/paginas/shared/js/plugins/jquery.barrating.min.js",
               "src/app/paginas/shared/js/plugins/slick-animation.min.js",
               "src/app/paginas/shared/js/plugins/lightgallery-all.min.js",
@@ -73,16 +72,23 @@
 
           "configurations": {
             "production": {
+              "optimization": true,
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "14mb",
+                  "maximumError": "12mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "12kb",
+                  "maximumError": "14kb"
                 }
               ],
               "fileReplacements": [

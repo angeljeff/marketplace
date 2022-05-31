@@ -73,6 +73,7 @@ export class FormularioComponent implements OnInit {
 
   guardar(){
     this.newDatosPago.id_metodo_pago_tienda = this.idPago
+    console.log(this.idPago)
     this.cuentabancaria.registrarcuentaB(this.newDatosPago).subscribe(
     (res)=> { Swal.fire({
       title: 'cuenta guardada  manera correcta',

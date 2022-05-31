@@ -64,5 +64,8 @@ class Server {
     }
 }
 const server = new Server();
+this.app.use(bodyParser.json({limit: '50mb', extended: true}))
+this.app.use(bodyParser.urlencoded({limit: '50mb', extended: true}))
+this.app.use(express.static(path.join(__dirname,'frontend')));
 server.start();
 new Server();

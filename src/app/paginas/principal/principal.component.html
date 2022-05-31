@@ -278,14 +278,25 @@
                             <p><span>Categoría:</span>  {{element.descripcion_cat}}</p>
                             <p><span>Subcategoria:</span> {{element.descripcion_sub}}</p>
                             <p><span>Precio:</span> {{element.precio}}</p>
-                             <div class="row buttonP">
-                                 <div class="col-md-6">
-                                      <button class="color-principal btn" (click)="mostrarPopupCompra(element)">Comprar</button>
+                             <div class="row buttonP" *ngIf="inhabilitarboton == true">
+                                 <div class="col-md-6 " *ngIf="idelatienda == element.id_tienda.toString()">
+                                      <button disabled class="color-principal btn" (click)="mostrarPopupCompra(element)">Comprar</button>
                                  </div>
+                                 <div class="col-md-6 " *ngIf="idelatienda != element.id_tienda.toString()">
+                                    <button disabled class="color-principal btn" (click)="mostrarPopupCompra(element)">Comprar</button>
+                               </div>
                                  <div class="col-md-6">
                                      <button class="color-principal btn" (click)="mostrarPopupTienda(element.id_tienda)">Ver Tienda</button>
                                  </div>
                              </div>
+                             <div class="row buttonP" *ngIf="inhabilitarboton == false">
+                                <div class="col-md-6 ">
+                                     <button  class="color-principal btn" (click)="mostrarPopupCompra(element)">Comprar</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <button class="color-principal btn" (click)="mostrarPopupTienda(element.id_tienda)">Ver Tienda</button>
+                                </div>
+                            </div>
                              <br>
                         </div>
                     </div> 
