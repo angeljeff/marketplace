@@ -1007,6 +1007,9 @@ Apache-2.0
  
 
 
+servidor
+ISC
+
 sweetalert2
 MIT
 The MIT License (MIT)
