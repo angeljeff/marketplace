@@ -168,6 +168,17 @@ export class SeccionTiendaComponent implements OnInit {
       this._tiendaService.obtener_datos_tienda(this.buscartienda).subscribe(
         (res) => {
           this.newTienda = res[0];
+          console.log(this.newTienda)
+          this.newTienda.telefono = "0"+this.newTienda.telefono
+          var horasuma = new Date(this.newTienda.hora_apertura);
+          horasuma.setHours(horasuma.getHours()+5);
+          this.hora = horasuma;
+
+          var horasuma2 = new Date(this.newTienda.hora_cierre);
+          horasuma2.setHours(horasuma2.getHours()+5);
+          this.hora2 = horasuma2;
+          console.log(this.hora)
+          console.log(this.hora2)
          
         },
         (err) => { }

@@ -388,7 +388,11 @@
     [(visible)]="popupVisible">
     <div *dxTemplate="let data of 'content'">
         <div class="row" >
-            <div class="col-md-4"><img src="{{productoMostrado.imagen}}" alt=""></div>
+            <div class="col-md-4">
+            
+                    <img src="{{productoMostrado.imagen}}" alt="">
+
+                </div>
             <div class="col-md-8">
                 <div class="row">
                     <div class="col-md-12"><h2>{{productoMostrado.nombre}}</h2></div>
@@ -499,7 +503,7 @@
                 <div class="col-md-10">
                     <div class="table-responsive">
                     <div class="row">
-                        <div class="col-md-6"><img src="{{productoAComprar.imagen}}" alt="" style="width: 250px;height: auto;"></div>
+                        <div class="col-md-6"><img src="{{productoAComprar.imagen}}" alt="" style="width: auto;height: 250px;"></div>
                         <div class="col-md-4">
                             <br><br>
                             <h4>{{productoAComprar.nombre}}</h4><br>

@@ -131,7 +131,7 @@
                         <div class="row buttonP">
                             <div class="col-md-2"> </div>
                             <div class="col-md-8">
-                                 <button class="color-principal btn" style="width: 80%; font-size: 13pt;" (click)="mostrarPopupCompra(element)">Comprar</button>
+                                 <button class="color-principal btn" style="width: 80%; font-size: 13pt;" [disabled]="bloquear" (click)="mostrarPopupCompra(element)">Comprar</button>
                             </div>
                             <div class="col-md-2"> </div>
                         </div>

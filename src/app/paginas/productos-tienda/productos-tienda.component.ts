@@ -15,6 +15,8 @@ import { ProductosPorOrden, ProductosPorOrdenDTO } from 'src/app/clases/producto
 import { ProductoPorOrdenService } from 'src/app/services/productoPorOrden.service';
 import { OrdenCompra } from 'src/app/clases/ordenCompra';
 import { OrdenCompraService } from 'src/app/services/ordenCompra.service';
+import { Tienda } from 'src/app/clases/tienda';
+import { TiendaService } from 'src/app/services/tienda.service';
 
 @Component({
   selector: 'app-productos-tienda',
@@ -27,6 +29,7 @@ export class ProductosTiendaComponent implements OnInit {
   listapro : Producto []=[]
   listaprocategoria : Producto []=[]
   nombreUsuario = ""
+  buscartienda: Tienda = new Tienda();
   listacategorias : Categorias []=[]
   listapresentacioncategorias : Categorias []=[]
   listaprocompleto : Productocompleto []=[]
@@ -43,7 +46,8 @@ export class ProductosTiendaComponent implements OnInit {
   isCorrecto = false
   productosOrdenDTO: ProductosPorOrdenDTO[] = [];
   totalCompra = 0;
-  nuevaOrden : OrdenCompra = new OrdenCompra();
+  nuevaOrden : OrdenCompra = new OrdenCompra(); 
+  bloquear = false;
    
   menus: ArrayMenu[] = [];
 
@@ -56,6 +60,7 @@ export class ProductosTiendaComponent implements OnInit {
     public userService: UsuarioService,
     public _categoriaService: CategoriaService,
     private route: ActivatedRoute,
+    public _tiendaService : TiendaService,
     public _productocomletoService: ProductocompletoService,
     public _productoPorOrdenService: ProductoPorOrdenService,
     public _ordenCompraService: OrdenCompraService,) { }
@@ -290,10 +295,26 @@ export class ProductosTiendaComponent implements OnInit {
             this.nombreUsuario = array[0];
             this.nuevaOrden.cedula = this.usuarioLogueado.cedula
             this.traerOrdenCompraUsuario()
+            this.traerDatosTienda();
           },
           err => {})
     });
   }
+
+  traerDatosTienda(){
+    this.buscartienda.cedula= this.usuarioLogueado.cedula
+    this._tiendaService.obtener_datos_tienda(this.buscartienda).subscribe(
+       (res) => {
+         var tienda = res as Tienda[];
+         if(tienda.length != 0){
+           if(tienda[0].id_estado_tienda == 1)
+             this.bloquear = true;
+         }
+           
+       },
+       (err) => { } )
+     
+   }
   traerOrdenCompraUsuario(){
     this._ordenCompraService.traerOrdenPorUsuario(this.nuevaOrden).subscribe(
       (res) => { 

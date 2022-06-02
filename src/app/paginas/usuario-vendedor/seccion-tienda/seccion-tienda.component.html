@@ -91,7 +91,7 @@
                             </div>
 
                             <div class="form-group">
-                                <dx-date-box   [(value)]="hora" type="time" placeholder="Hora apertura"> </dx-date-box>
+                                <dx-date-box [(value)]="hora" type="time" placeholder="Hora apertura"> </dx-date-box>
                             </div>
 
                              <div class="form-group">
@@ -143,8 +143,8 @@
                         <p><span>Dirección: </span>{{tiendaEncontrada.direccion}}</p>
                         <p><span>Descripción: </span></p>
                         <p>{{tiendaEncontrada.descripcion}}</p>
-                        <p><span>Hora apertura: </span>{{tiendaEncontrada.hora_apertura}}</p>
-                        <p><span>Hora Cierre: </span>{{tiendaEncontrada.hora_cierre}}</p>
+                        <p><span>Hora apertura: </span>{{tiendaEncontrada.hora_apertura | date:'shortTime':'UTC'}}</p>
+                        <p><span>Hora Cierre: </span>{{tiendaEncontrada.hora_cierre | date:'shortTime':'UTC'}}</p>
                     </div>
                 </div>
             </div>

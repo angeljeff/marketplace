@@ -79,6 +79,7 @@ export class RegisterComponent implements OnInit {
     this._usuarioService.obtenerDatoCedula(usuarioBuscado).subscribe(
       (res) => {
         this.usuarioNuevo = res[0];
+        this.usuarioNuevo.celular = '0'+this.usuarioNuevo.celular;
         this.fecha = this.usuarioNuevo.fecha_nacimiento;
         console.log(this.usuarioNuevo.id_tipo_usuario)
         //this.nombreCanton = this.listaCantones.find(element => element.id_cantones == this.usuarioNuevo.id_cantones)?.descripcion ?? "" ;
