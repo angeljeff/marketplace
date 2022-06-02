@@ -126,6 +126,7 @@ export class SeccionTiendaComponent implements OnInit {
   actualizar(){
     var horasuma = new Date(this.hora);
     horasuma.setHours(horasuma.getHours()-5);
+    console.log(horasuma)
     this.newTienda.hora_apertura = horasuma
     var horasumacierre = new Date(this.hora2);
     horasumacierre.setHours(horasumacierre.getHours()-5);

@@ -30,6 +30,7 @@ import { SeccionTiendaAdministradorComponent } from './paginas/usuario-administr
 import { SeccionEstadisticaAdministradorComponent } from './paginas/usuario-administrador/seccion-estadistica-administrador/seccion-estadistica-administrador.component';
 import { SeccionUsuarioAdministradorComponent } from './paginas/usuario-administrador/seccion-usuario-administrador/seccion-usuario-administrador.component';
 import { UsuarioCompradorComponent } from './paginas/usuario-comprador/usuario-comprador.component';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -84,7 +85,10 @@ import { UsuarioCompradorComponent } from './paginas/usuario-comprador/usuario-c
     DxChartModule
    
   ],
-  providers: [AuthService],
+  providers: [AuthService,{
+    provide: LocationStrategy,
+    useClass: HashLocationStrategy,
+  },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
