@@ -14,7 +14,7 @@ export class AuthenService{
   usuarios2: Usuario[] = [];
   estalogeado: boolean = true;
 
-  private URL = "http://67.207.92.81:3000/usuario";
+  private URL = "http://137.184.0.8:3000/usuario";
   //private URL = 'http://localhost:3000/usuario';
 
   constructor(private http: HttpClient, private router: Router) {}

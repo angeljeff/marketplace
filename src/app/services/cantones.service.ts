@@ -6,7 +6,7 @@ import { Router } from "@angular/router";
   providedIn: "root",
 })
 export class CantonService{
-  private URL = "http://67.207.92.81:3000/cantones";
+  private URL = "http://137.184.0.8:3000/cantones";
   //private URL = 'http://localhost:3000/cantones';
 
   constructor(private http: HttpClient, private router: Router) {}

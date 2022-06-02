@@ -7,7 +7,7 @@ import { OrdenCompra } from "../clases/ordenCompra";
   providedIn: "root",
 })
 export class PagoPorOrdenService{
-  private URL = "http://67.207.92.81:3000/pagoorden";
+  private URL = "http://137.184.0.8:3000/pagoorden";
   //private URL = 'http://localhost:3000/pagoorden';
 
   constructor(private http: HttpClient) {}

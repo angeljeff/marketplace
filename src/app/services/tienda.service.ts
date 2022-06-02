@@ -8,7 +8,7 @@ import { Tienda } from "../clases/tienda";
 })
 export class TiendaService{
   //private URL = 'http://192.168.100.251:3000/tienda';
-  private URL = "http://67.207.92.81:3000/tienda";
+  private URL = "http://137.184.0.8:3000/tienda";
 
   //private URL = 'http://localhost:3000/tienda';
 

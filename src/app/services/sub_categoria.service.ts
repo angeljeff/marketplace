@@ -8,7 +8,7 @@ import { Subcategorias } from "../clases/subcategorias";
 })
 export class SubCategoriaService{
   //private URL = "http://159.223.107.115:3000/usuario";
-  private URL = "http://67.207.92.81:3000/SubCategoria";
+  private URL = "http://137.184.0.8:3000/SubCategoria";
 
   //private URL = 'http://localhost:3000/SubCategoria';
 
