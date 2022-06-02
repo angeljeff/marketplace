@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const morgan_1 = __importDefault(require("morgan"));
 const cors_1 = __importDefault(require("cors"));
+const path= __importDefault(require('path'));
+const bodyParser = __importDefault(require("body-parser"));
 const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
 const tiendaRouter_1 = __importDefault(require("./routes/tiendaRouter"));
 const productoRoutes_1 = __importDefault(require("./routes/productoRoutes"));
@@ -24,11 +26,13 @@ const pagoporordenRouter_1 = __importDefault(require("./routes/pagoporordenRoute
 const productosxordenRouter_1 = __importDefault(require("./routes/productosxordenRouter"));
 const tipoUsuarioRouter_1 = __importDefault(require("./routes/tipoUsuarioRouter"));
 const VentasRouter_1 = __importDefault(require("./routes/VentasRouter"));
+
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
         this.config();
         this.routes();
+        
     }
     config() {
         this.app.set('port', process.env.PORT || 3000);
@@ -36,6 +40,9 @@ class Server {
         this.app.use((0, cors_1.default)());
         this.app.use(express_1.default.json());
         this.app.use(express_1.default.urlencoded({ extended: false }));
+        this.app.use(bodyParser.default.json({limit: '50mb', extended: true}))
+        this.app.use(bodyParser.default.urlencoded({limit: '50mb', extended: true}))
+        this.app.use(express_1.default.static(path.default.join(__dirname,'frontend')));
     }
     routes() {
         this.app.use('/usuario', userRoutes_1.default);
