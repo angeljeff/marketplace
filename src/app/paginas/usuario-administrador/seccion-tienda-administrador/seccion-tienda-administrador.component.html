@@ -1,7 +1,10 @@
 
 <ul class="ps-section__links">      
-    <li><a (click)="mostrarSecProducto(1)">Activas</a></li>
-    <li><a (click)="mostrarSecProducto(2)">Inactivas</a></li>
+    <li *ngIf="seccionTiendasActivas" style="background:#D8D8D8; padding:1rem;"><a (click)="mostrarSecProducto(1)">Activas</a></li>
+    <li *ngIf="!seccionTiendasActivas" ><a (click)="mostrarSecProducto(1)">Activas</a></li>
+    
+    <li *ngIf="seccionTiendasInactivas" style="background:#D8D8D8; padding:1rem;"><a (click)="mostrarSecProducto(2)">Inactivas</a></li>
+    <li *ngIf="!seccionTiendasInactivas" ><a (click)="mostrarSecProducto(2)">Inactivas</a></li>
 </ul>
 
 <div class="ps-section__content" *ngIf="seccionTiendasActivas">

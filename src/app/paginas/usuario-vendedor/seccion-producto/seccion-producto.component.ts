@@ -309,14 +309,16 @@ verificarcampos(){
         if(this.productonuevo.precio >0 && this.productonuevo.precio!==null){
           if(this.productonuevo.stock!==0 && this.productonuevo.stock!==null){
             if(this.productonuevo.descripcion!==""){
+              if(this.productonuevo.imagen!==""){
               if(!this.isedicionpro){
                 this.registrar()
               }else{
                 this.actualizar()
               }
+            }else {this.mostrarmensajes('Debe agregar una imagen')}
             }else{this.mostrarmensajes('Por favor establezca una breve descripción del producto')}
           }else{this.mostrarmensajes('Por favor indique la disponibilidad del producto')}
-        }else{this.mostrarmensajes('Por favor establezca un precio al producto')}
+        }else{this.mostrarmensajes('Por favor establezca un precio válido al producto')}
       }else{this.mostrarmensajes('Debe seleccionar una subcategoría')}
     }else{this.mostrarmensajes('Debe seleccionar una categoría')}
   }else{this.mostrarmensajes('Debe llenar el campo nombre de producto')}

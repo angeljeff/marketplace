@@ -105,32 +105,49 @@
 
                             <div class="form-group">
                                 
-                            <dx-text-box [(value)]="usuarioNuevo.nombres" [disabled]="isedicion" class="controles" placeholder="Nombres" aria-required="true"></dx-text-box> 
+                            <dx-text-box [maxLength]="28" [(value)]="usuarioNuevo.nombres" [disabled]="isedicion" class="controles" placeholder="Nombres" aria-required="true">
+                                <dx-validator>
+                                    <dxi-validation-rule type="required"  message="Nombres son requeridos"></dxi-validation-rule>     
+                                </dx-validator>
+                            </dx-text-box> 
 
                             </div>
 
                             <div class="form-group">
 
-                                <dx-text-box [(value)]="usuarioNuevo.apellidos" [disabled]="isedicion" class="controles" placeholder="Apellidos"></dx-text-box>
+                                <dx-text-box [maxLength]="25" [(value)]="usuarioNuevo.apellidos" [disabled]="isedicion" class="controles" placeholder="Apellidos">
+                                    <dx-validator>
+                                        <dxi-validation-rule type="required"  message="Apellidos son requerido"></dxi-validation-rule>     
+                                    </dx-validator>
+                                </dx-text-box>
 
                             </div>
 
                             <div class="form-group">
 
-                                <dx-text-box [(value)]="usuarioNuevo.cedula" class="controles" placeholder="Cedula" [disabled]="isedicion" placeholder="Cedula"></dx-text-box>
+                                <dx-text-box  pattern="[0-9]{10}" [maxLength]="10"  [(value)]="usuarioNuevo.cedula" class="controles" placeholder="Cédula" [disabled]="isedicion" placeholder="Cédula" >         <dx-validator>
+                                    <dxi-validation-rule type="required"  message="Número de cédula es requerido"></dxi-validation-rule>
+                                    <dxi-validation-rule type="pattern" pattern="[0-9]{10}" message="Debe ingresar solo números"></dxi-validation-rule></dx-validator></dx-text-box>
+                                      
+                                    
+                                 
 
                             </div>
                             <div class="form-group">
 
-                                <dx-text-box [(value)]="usuarioNuevo.direccion" class="controles"  placeholder="Dirección"></dx-text-box>
+                                <dx-text-box [maxLength]="50" [(value)]="usuarioNuevo.direccion" class="controles"  placeholder="Dirección">
+                                    <dx-validator>
+                                        <dxi-validation-rule type="required"  message="Dirección es requerida"></dxi-validation-rule>     
+                                    </dx-validator>
+                                </dx-text-box>
 
                             </div>
                             <div class="form-group">
-                                <dx-select-box [items]="generos" [(value)]="usuarioNuevo.genero" [disabled]="isedicion" placeholder="Selecciona tu genero"></dx-select-box>
+                                <dx-select-box  [items]="generos" [(value)]="usuarioNuevo.genero" [disabled]="isedicion" placeholder="Selecciona tu género"></dx-select-box>
                             </div>
 
                             <div class="form-group">
-                                <dx-date-box [(value)]="fecha" type="date" [disabled]="isedicion" placeholder="Ingrese fecha Nacimiento"> </dx-date-box>
+                                <dx-date-box min="1940/1/1" max="2003/12/31"  [displayFormat]="'dd/MM/yyyy'"  [(value)]="fecha" type="date" [disabled]="isedicion" placeholder="Ingrese fecha Nacimiento"> </dx-date-box>
                             </div>                            
                             <div class="form-group">
                                 <dx-select-box [items]="listaCantones" [(value)]="usuarioNuevo.id_cantones" [disabled]="isedicion" valueExpr="id_cantones" displayExpr="descripcion" placeholder="Seleccionar canton"></dx-select-box>
@@ -141,20 +158,29 @@
                             </div>
 
                             <div class="form-group">
-                                <dx-text-box [(value)]="usuarioNuevo.celular" class="controles"  placeholder="Celular"></dx-text-box>
+                                <dx-text-box [maxLength]="10" [(value)]="usuarioNuevo.celular" class="controles"  placeholder="Celular">
+                                    <dx-validator>
+                                        <dxi-validation-rule type="required"  message="Número de celular es requerido"></dxi-validation-rule>
+                                        <dxi-validation-rule type="pattern" pattern="[0-9]{10}" message="Debe ingresar solo números"></dxi-validation-rule>
+                                    </dx-validator>
+                                </dx-text-box>
                             </div>
+
 
                             <div class="form-group">
 
-                                <dx-text-box [(value)]="usuarioNuevo.correo" class="controles" placeholder="Correo">
+                                <dx-text-box [maxLength]="50" [(value)]="usuarioNuevo.correo" class="controles" placeholder="Correo">
                                     <dx-validator> <dxi-validation-rule type="required"  message="Correo es requerido" ></dxi-validation-rule>
                                         <dxi-validation-rule   type="email"  message="Correo es invalido"  ></dxi-validation-rule>  </dx-validator> </dx-text-box>
                             </div>    
     
                             <div class="form-group">
-                                <dx-text-box [(value)]="usuarioNuevo.contrasenia" class="controles" placeholder="Contraseña" stylingMode="filled" [(mode)]="passwordMode"  > <dxi-button
+                                <dx-text-box [maxLength]="30" [(value)]="usuarioNuevo.contrasenia" id="price" class="controles" placeholder="Contraseña" stylingMode="filled" [(mode)]="passwordMode"  > 
+                                    <dx-validator>
+                                        <dxi-validation-rule type="required"  message="Contraseña es requerida"></dxi-validation-rule>     
+                                    </dx-validator><dxi-button
                                     name="today" location="after" [options]="passwordButton" ></dxi-button></dx-text-box>
-                                </div>     
+                                </div>   
 
                             <div class="form-group" *ngIf="!isedicion">
                                 <button class="ps-btn ps-btn--fullwidth color-principal" (click)="verificarcampos()">Registrar</button>

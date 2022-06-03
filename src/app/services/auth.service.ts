@@ -3,15 +3,21 @@ import { CanActivate, Router, ActivatedRouteSnapshot } from '@angular/router';
 import Swal from 'sweetalert2';
 import { UserLogin, Usuario } from '../clases/usuario';
 import { AuthenService } from './authen.service';
+import { UsuarioService } from './usuario.service';
 
 @Injectable()
+
 export class AuthService {
   user: Usuario= new Usuario();
   loggedIn:boolean;
+  ingresousuario: Usuario = new Usuario();
+  usuario: Usuario = new Usuario();
+ 
 
 
 
-  constructor(private router: Router,public authenService: AuthenService) {
+  constructor(private router: Router,public authenService: AuthenService,
+    public usuario_service: UsuarioService) {
     if(localStorage.getItem("logged") == undefined){
       localStorage.setItem("logged", false.toString())
     }
@@ -29,7 +35,26 @@ export class AuthService {
             localStorage.setItem('token', res.token);
             localStorage.setItem("logged", this.loggedIn.toString())
             localStorage.setItem("cedulaUser", cedula.toString())
-            this.router.navigate(['/principal']);
+            this.ingresousuario.cedula = cedula.toString();
+            this.usuario_service.obtenerDatoCedula(this.ingresousuario).subscribe(
+              (res) => { this.usuario = res[0];
+                if(this.usuario.id_tipo_usuario== 1){
+                  this.router.navigate(['/usuarioVendedor']);
+
+                }else if(this.usuario.id_tipo_usuario== 3){
+                  this.router.navigate(['/usuarioAdministrador']);
+
+                }else{
+                  this.router.navigate(['/principal']);
+                }
+                
+              },
+              (err) => { }
+            )
+
+            
+
+            
 
           },
           error => { 

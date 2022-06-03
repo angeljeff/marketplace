@@ -1,8 +1,14 @@
 
 <ul class="ps-section__links">      
-    <li><a (click)="mostrarSecProducto(1)">Pendientes</a></li>
-    <li><a (click)="mostrarSecProducto(2)">Aprobados</a></li>
-    <li><a (click)="mostrarSecProducto(3)">Rechazados</a></li>
+    <li *ngIf="seccionProPendientes" style="background:#D8D8D8; padding:1rem;"><a (click)="mostrarSecProducto(1)">Pendientes</a></li>
+    <li *ngIf="!seccionProPendientes" ><a (click)="mostrarSecProducto(1)">Pendientes</a></li>
+    
+    <li *ngIf="seccionProAprobados" style="background:#D8D8D8; padding:1rem;"><a (click)="mostrarSecProducto(2)">Aprobados</a></li>
+    <li *ngIf="!seccionProAprobados" ><a (click)="mostrarSecProducto(2)">Aprobados</a></li>
+    
+    <li *ngIf="seccionProRechazados" style="background:#D8D8D8; padding:1rem;"><a (click)="mostrarSecProducto(3)">Rechazados</a></li>
+    <li *ngIf="!seccionProRechazados" ><a (click)="mostrarSecProducto(3)">Rechazados</a></li>
+
 </ul>
 
 <div class="ps-section__content" *ngIf="seccionProPendientes">

@@ -90,7 +90,7 @@
 
                         <div class="ps-block--user-header">
                             <div class="ps-block__left">
-                                <i class="icon-user" (click)="irPerfilUsuario()"></i>
+                                <i style="cursor:pointer;" class="icon-user" (click)="irPerfilUsuario()"></i>
                             </div>
                             <div class="ps-block__right" *ngIf="!isLoged">
                                 <a routerLink="/login">Ingresar</a>
@@ -169,17 +169,25 @@
 
                             <div class="col-lg-2 col-6" (click)="mostrarSeccion(1)">
                                 <div class="text-center">
-                                    <a>
-                                        <h1><i class="fas fa-shopping-cart text-white"></i></h1>
-                                        <h4 class="text-white">Ordenes </h4>
+                                    <a *ngIf="seccionOrdenes">
+                                        <h1 style="cursor:pointer;"><i  class="fas fa-shopping-cart text-success"></i></h1>
+                                        <h4 class="text-success">Órdenes </h4>
+                                    </a>
+                                    <a *ngIf="!seccionOrdenes">
+                                        <h1 style="cursor:pointer;"><i  class="fas fa-shopping-cart text-white"></i></h1>
+                                        <h4 class="text-white">Órdenes </h4>
                                     </a>
                                 </div>
                             </div><!-- box /-->
 
                             <div class="col-lg-2 col-6" (click)="mostrarSeccion(3)">
                                 <div class="text-center">
-                                    <a>
-                                        <h1><i class="fas fa-store text-white"></i></h1>
+                                    <a *ngIf="seccionTienda">
+                                        <h1 style="cursor:pointer;"><i class="fas fa-store text-success"></i></h1>
+                                        <h4 class="text-success">Tienda </h4>
+                                    </a>
+                                    <a *ngIf="!seccionTienda">
+                                        <h1 style="cursor:pointer;"><i class="fas fa-store text-white"></i></h1>
                                         <h4 class="text-white">Tienda </h4>
                                     </a>
                                 </div>
@@ -187,8 +195,12 @@
 
                             <div class="col-lg-2 col-6" (click)="mostrarSeccion(2)">
                                 <div class="text-center">
-                                    <a>
-                                        <h1><i class="fas fa-shopping-bag text-white"></i></h1>
+                                    <a *ngIf="seccionProducto">
+                                        <h1 style="cursor:pointer;"><i class="fas fa-shopping-bag text-success"></i></h1>
+                                        <h4 class="text-success" style="margin-left: -0.4em;">Productos</h4>
+                                    </a>
+                                    <a *ngIf="!seccionProducto">
+                                        <h1 style="cursor:pointer;"><i class="fas fa-shopping-bag text-white"></i></h1>
                                         <h4 class="text-white" style="margin-left: -0.4em;">Productos</h4>
                                     </a>
                                 </div>
@@ -196,8 +208,12 @@
 
                             <div class="col-lg-2 col-6" (click)="mostrarSeccion(4)">
                                 <div class="text-center">
-                                    <a>
-                                        <h1><i class="fas fa-comment-dollar text-white"></i></h1>
+                                    <a *ngIf="seccionPago">
+                                        <h1 style="cursor:pointer;"><i class="fas fa-comment-dollar text-success"></i></h1>
+                                        <h4 class="text-success">Pago </h4>
+                                    </a>
+                                    <a *ngIf="!seccionPago">
+                                        <h1 style="cursor:pointer;"><i class="fas fa-comment-dollar text-white"></i></h1>
                                         <h4 class="text-white">Pago </h4>
                                     </a>
                                 </div>
@@ -206,8 +222,12 @@
 
                             <div class="col-lg-2 col-6" (click)="mostrarSeccion(5)">
                                 <div class="text-center">
-                                    <a>
-                                        <h1><i class="fas fa-clipboard-list text-white"></i></h1>
+                                    <a *ngIf="seccionPedido">
+                                        <h1 style="cursor:pointer;"><i class="fas fa-clipboard-list text-success"></i></h1>
+                                        <h4 class="text-success">Pedidos </h4>
+                                    </a>
+                                    <a *ngIf="!seccionPedido">
+                                        <h1 style="cursor:pointer;"><i class="fas fa-clipboard-list text-white"></i></h1>
                                         <h4 class="text-white">Pedidos </h4>
                                     </a>
                                 </div>

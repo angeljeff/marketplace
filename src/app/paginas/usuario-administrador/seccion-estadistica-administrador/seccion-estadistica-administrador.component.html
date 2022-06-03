@@ -1,7 +1,10 @@
 
 <ul class="ps-section__links">      
-    <li><a (click)="mostrarSecEstadisticas(1)">Productos</a></li>
-    <li><a (click)="mostrarSecEstadisticas(2)">Tiendas</a></li>
+    <li *ngIf="seccionEstadisticaProducto" style="background:#D8D8D8; padding:1rem;"><a (click)="mostrarSecEstadisticas(1)">Productos</a></li>
+    <li *ngIf="!seccionEstadisticaProducto" ><a (click)="mostrarSecEstadisticas(1)">Productos</a></li>
+    
+    <li *ngIf="seccionEstadisticaTienda" style="background:#D8D8D8; padding:1rem;"><a (click)="mostrarSecEstadisticas(2)">Tiendas</a></li>
+    <li *ngIf="!seccionEstadisticaTienda" ><a (click)="mostrarSecEstadisticas(2)">Tiendas</a></li>
 </ul>
 
 <div class="ps-section__content" *ngIf="seccionEstadisticaProducto">

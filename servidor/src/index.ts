@@ -1,6 +1,8 @@
 import express, { Application } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
+import path from 'path';
+import bodyParser  from 'body-parser';
 import usuario from './routes/userRoutes';
 import tienda from './routes/tiendaRouter';
 import producto from './routes/productoRoutes';
@@ -31,6 +33,7 @@ class Server {
         this.app = express();
         this.config();
         this.routes();
+       
     }
 
     config(): void {
@@ -38,7 +41,12 @@ class Server {
         this.app.use(morgan('dev'));
         this.app.use(cors());
         this.app.use(express.json());
+        const bodyParser = require('body-parser');
         this.app.use(express.urlencoded({extended: false}));
+        this.app.use(bodyParser.json({limit: '50mb', extended: true}));
+        this.app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+        this.app.use(express.static(path.join(__dirname,'frontend')));
+
     }
 
     

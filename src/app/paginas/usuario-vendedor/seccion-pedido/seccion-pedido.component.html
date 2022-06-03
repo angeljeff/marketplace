@@ -1,6 +1,9 @@
 <ul class="ps-section__links">      
-    <li><a (click)="mostrarSecPedido(1)">Mi Lista</a></li>
-    <li><a (click)="mostrarSecPedido(2)">Mis Pedidos</a></li>
+    <li *ngIf="!seccionLista" style="background:#D8D8D8; padding:1rem;"><a (click)="mostrarSecPedido(1)">Mi Lista</a></li>
+    <li *ngIf="seccionLista" ><a (click)="mostrarSecPedido(1)">Mi Lista</a></li>
+    
+    <li *ngIf="!mostrarPaso1" style="background:#D8D8D8; padding:1rem;"><a (click)="mostrarSecPedido(2)">Mis Pedidos</a></li>
+    <li *ngIf="mostrarPaso1" ><a (click)="mostrarSecPedido(2)">Mis Pedidos</a></li>
 </ul>
 
 <div *ngIf="mostrarPaso1">

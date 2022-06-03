@@ -1,7 +1,11 @@
 
 <ul class="ps-section__links">      
-    <li><a (click)="mostrarSecProducto(1)">Usuarios Administradores</a></li>
-    <li><a (click)="mostrarSecProducto(2)">Nuevo Administrador</a></li>
+    <li *ngIf="seccionListaUsuarios" style="background:#D8D8D8; padding:1rem;"><a (click)="mostrarSecProducto(1)">Usuarios Administradores</a></li>
+    <li *ngIf="!seccionListaUsuarios"><a (click)="mostrarSecProducto(1)">Usuarios Administradores</a></li>
+    
+    <li *ngIf="seccionNuevoUsuario" style="background:#D8D8D8; padding:1rem;"><a (click)="mostrarSecProducto(2)">Nuevo Administrador</a></li>
+    <li *ngIf="!seccionNuevoUsuario" ><a (click)="mostrarSecProducto(2)">Nuevo Administrador</a></li>
+
 </ul>
 
 <div class="ps-section__content" *ngIf="seccionListaUsuarios">

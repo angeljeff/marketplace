@@ -39,7 +39,7 @@ export class RegisterComponent implements OnInit {
   usuarioLogueado : Usuario = new Usuario();
 
   
-  generos:string[]= ["Maculino", "Femenino"]
+  generos:string[]= ["Masculino", "Femenino"]
 
   constructor(public _usuarioService : UsuarioService,
     public _cantonesService : CantonService,
@@ -139,7 +139,7 @@ export class RegisterComponent implements OnInit {
         this.mostrarLoading = false;
         Swal.fire({
           title: 'Usuario creado',
-          text: "Ya puedo logearse",
+          text: "Ya puede loguearse",
           icon: 'success',
           showCancelButton: false,
           confirmButtonText: 'OK'
@@ -317,6 +317,7 @@ export class RegisterComponent implements OnInit {
       }
   
       }else{
+        
         this.mostrarmensajes('Debe indicar sus apellidos')
       }
       

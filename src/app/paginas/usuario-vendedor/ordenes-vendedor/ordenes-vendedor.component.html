@@ -1,8 +1,11 @@
 
 <ul class="ps-section__links">
                       
-        <li><a (click)="mostrarSecProducto(1)">Activas</a></li>
-        <li><a (click)="mostrarSecProducto(2)">Todas</a></li>
+        <li *ngIf="seccionListActivas" style="background:#D8D8D8; padding:1rem;"><a (click)="mostrarSecProducto(1)">Activas</a></li>
+        <li *ngIf="!seccionListActivas" ><a (click)="mostrarSecProducto(1)">Activas</a></li>
+        
+        <li *ngIf="seccionTodasordenes" style="background:#D8D8D8; padding:1rem;"><a (click)="mostrarSecProducto(2)">Todas</a></li>
+        <li *ngIf="!seccionTodasordenes" ><a (click)="mostrarSecProducto(2)">Todas</a></li>
         <!-- button>Nuevo</button> -->
     </ul>
     <div class="ps-section__content" *ngIf="seccionListActivas">

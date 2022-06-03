@@ -1,8 +1,13 @@
 
 <ul class="ps-section__links" >      
-    <li><a (click)="mostrarSecProducto(1)">Mis Productos</a></li>
-    <li><a (click)="mostrarSecProducto(2)">Nuevo Producto</a></li>
-    <li><a (click)="mostrarSecProducto(3)">Estadísticas</a></li>
+    <li *ngIf="seccionListProducto" style="background:#D8D8D8; padding:1rem;"><a (click)="mostrarSecProducto(1)">Mis Productos</a></li>
+    <li *ngIf="!seccionListProducto" ><a (click)="mostrarSecProducto(1)">Mis Productos</a></li>
+    
+    <li *ngIf="seccionNewProducto" style="background:#D8D8D8; padding:1rem;"><a (click)="mostrarSecProducto(2)">Nuevo Producto</a></li>
+    <li *ngIf="!seccionNewProducto" ><a (click)="mostrarSecProducto(2)">Nuevo Producto</a></li>
+    
+    <li *ngIf="seccionEstadistica" style="background:#D8D8D8; padding:1rem;"><a (click)="mostrarSecProducto(3)">Estadísticas</a></li>
+    <li *ngIf="!seccionEstadistica" ><a (click)="mostrarSecProducto(3)">Estadísticas</a></li>
 </ul>
 <div class="ps-page__content text-center row" *ngIf="poseetienda">
     <div class="container">
@@ -78,6 +83,7 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="col-md-12">
+ 
                         <img src="{{productonuevo.imagen}}" alt="">
                         <br><br><br>
                         <label>Escoge una imagen:</label><br>

@@ -24,7 +24,7 @@ export class Producto{
        this.id_tienda= 2
        this.id_estado_pro= 1
        this.estado=1
-       this.imagen= "https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png"
+       this.imagen= ""
 
     }
 }
