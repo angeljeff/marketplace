@@ -48,6 +48,10 @@ export class ProductosTiendaComponent implements OnInit {
   totalCompra = 0;
   nuevaOrden : OrdenCompra = new OrdenCompra(); 
   bloquear = false;
+  popupaceptarcantidad=false;
+  cantidadcorrecta=false;
+  existecarrito=false
+  contadorcarrito=0
    
   menus: ArrayMenu[] = [];
 
@@ -130,6 +134,38 @@ export class ProductosTiendaComponent implements OnInit {
   }
 
   validarCantidad(){
+    this.isCorrecto = false
+    if(this.nuevoProductoOrden.cantidad >0)
+      this.isCorrecto = true
+    else 
+      this.isCorrecto = false
+    this.calcularTotalOrden();
+    this.nuevoProductoOrden.id_producto = this.productoAComprar.id_producto;
+    this.nuevoProductoOrden.precio_producto = this.productoAComprar.precio;
+    if(this.productoAComprar.stock < this.nuevoProductoOrden.cantidad){
+      this.popupaceptarcantidad=true;
+    }else{
+      this.mensajeError = ""
+      this.calcularTotalOrden()
+      this.cantidadcorrecta=true;
+    }  
+  }
+
+  poputaceptacioncantidad(){
+    this.nuevoProductoOrden.cantidad = this.productoAComprar.stock;
+    this.calcularTotalOrden();
+    this.popupaceptarcantidad=false;
+    this.popupCompra=false;
+    this.validarTiendaProducto();
+
+  }
+  poputrechazarcantidad(){
+    this.popupaceptarcantidad=false;
+    this.popupCompra=false;
+
+  }
+
+/*   validarCantidad(){
     if(this.nuevoProductoOrden.cantidad >0)
       this.isCorrecto = true
     else 
@@ -144,7 +180,7 @@ export class ProductosTiendaComponent implements OnInit {
       this.mensajeError = ""
       this.calcularTotalOrden()
     }  
-  }
+  } */
   validarTiendaProducto(){
     if(this.productosOrdenDTO.length == 0)
       this.solicitarProducto()
@@ -262,6 +298,12 @@ export class ProductosTiendaComponent implements OnInit {
     this._productoPorOrdenService.traerListadoPorOrden(this.nuevaOrden).subscribe(
       (res) => { 
         this.productosOrdenDTO = res as ProductosPorOrdenDTO[];
+        if(this.productosOrdenDTO.length !=0){
+          this.existecarrito=true
+          this.contadorcarrito=this.productosOrdenDTO.length
+        }else{
+          this.existecarrito=false
+        }
         this.calcularTotal();
       },
       (err) => {  Swal.fire("Error al guardar","Su producto no pudo ser agregado","error")} 

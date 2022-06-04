@@ -43,8 +43,11 @@
                     ======================================-->
                     <div class="ps-cart--mini">
 
-                        <a class="header__extra" href="#">
-                            <i class="icon-bag2" ></i><span><i>0</i></span>
+                        <a *ngIf="!existecarrito" class="header__extra" href="#">
+                            <i class="icon-bag2 "></i><span><i>0</i></span>
+                        </a>
+                        <a *ngIf="existecarrito" class="header__extra" href="#">
+                            <i class="icon-bag2 text-warning"></i><span><i>{{contadorcarrito}}</i></span>
                         </a>
 
 <!--                             <div class="ps-cart__content">
@@ -145,7 +148,7 @@
                             <td class="price">${{element.precio_producto}}</td>
                             <td>
                                 <div class="form-group--number">
-                                    <dx-number-box [(value)]="element.cantidad" (onChange)="actualizarCantidadProducto(element)" ></dx-number-box>
+                                    <dx-number-box  [min]="1" [(value)]="element.cantidad" (onChange)="actualizarcantidad(element)" ></dx-number-box>
                                 </div>
                             </td>
                             <td>${{element.total_producto}}</td>                             
@@ -369,4 +372,40 @@
         </div>
     </div>
    
+</dx-popup>
+
+<dx-popup
+[width]="'20%'"
+[height]="'33%'" 
+[showCloseButton]="false"
+[showTitle]="true"
+title="Cantidad no disponible"
+
+
+[(visible)]="popupaceptarcantidad">
+<div *dxTemplate="let data of 'content'">
+    <div class="ps-section__content centrar">
+        <div class="row">
+            
+            <div class="col-md-12">
+               <br>
+                <label for=""> La cantidad solicitada del producto . </label><label for=""><strong> {{productorecibido .nombre}}</strong></label><label for=""> excede el stock disponible del producto</label><br><strong></strong><label for=""><strong>¿Desea asignar el stock màximo del producto, el cúal es {{productorecibido .stock}} ?</strong></label>
+                <br><br>
+                <div class="row">
+                    <br>
+                    <div class="col-md-6"><button class="btn color-principal" style="font-size:1.5rem ; width: 6rem;"  (click)="poputaceptacioncantidad()">ok</button></div>
+                    
+                    <div class="col-md-6"><button class="btn btn-danger" style="font-size:1.5rem ; width: 8rem;" (click)="poputrechazarcantidad()">cancelar</button></div>
+                   
+                    <br>
+                </div>
+ 
+                <br>
+            </div>           
+        </div>
+
+    </div> 
+
+</div>
+
 </dx-popup>

@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import DataSource from 'devextreme/data/data_source';
+import { iif } from 'rxjs';
 import { DatosEnvio } from 'src/app/clases/datosEnvio';
 import { DatosPago, DatosPagopresentacion } from 'src/app/clases/datosPago';
 import { Met_pag_tienda } from 'src/app/clases/metodopagotienda';
@@ -19,6 +20,7 @@ import { ProductoPorOrdenService } from 'src/app/services/productoPorOrden.servi
 import { ProductoService } from 'src/app/services/productos.services';
 import { TiendaService } from 'src/app/services/tienda.service';
 import Swal from 'sweetalert2';
+import { Productos } from '../usuario-vendedor/usuario-vendedor.component';
 
 @Component({
   selector: 'app-carrito-compras',
@@ -46,15 +48,22 @@ export class CarritoComprasComponent implements OnInit {
   isPago1 = false
   isPago2 = false
   isPago3 = false
+  existecarrito=false
+  contadorcarrito=0
   idTienda = 0
   contador = 0
+  hola=""
+  popupaceptarcantidad=false
+  productorecibido: Producto = new Producto();
+  productoaenviar: Producto = new Producto();
   camposedicion=false
   comprobarcedula:any ;
   datosPago : DatosPago = new DatosPago()
   listaDatosCuenta : DatosPagopresentacion [] = []
 
   ordenes: OrdenCompra[] = []; 
-  productosPorOrdenDTO: ProductosPorOrdenDTO[] = []; 
+  productosPorOrdenDTO: ProductosPorOrdenDTO[] = [];
+  producactualizarPorOrdenDTO: ProductosPorOrdenDTO =new ProductosPorOrdenDTO; 
   listadoMetodosPago : Met_pag_tienda[] = []; 
 
   productos: Producto[] = []; 
@@ -97,6 +106,7 @@ export class CarritoComprasComponent implements OnInit {
   }
 
   traerOrdenCompraUsuario(){
+
     this._ordenCompraService.traerOrdenPorUsuario(this.nuevaOrden).subscribe(
       (res) => { 
         var lista = res as OrdenCompra[];
@@ -104,8 +114,16 @@ export class CarritoComprasComponent implements OnInit {
           this.nuevaOrden = lista[0]
           this.nuevaOrden.id_metodo_pago_tienda=0
           this.nuevaOrden.nombres = this.usuarioLogueado.nombres + " " + this.usuarioLogueado.apellidos
-          this.nuevaOrden.cedula_envio = "0"+ this.usuarioLogueado.cedula
-          this.nuevaOrden.celular = "0"+ this.usuarioLogueado.celular
+          this.nuevaOrden.cedula_envio = ""+ this.usuarioLogueado.cedula
+          
+          this.nuevaOrden.celular = ""+this.usuarioLogueado.celular
+          console.log("es la longitud del celular ",this.nuevaOrden.celular.length)
+          if(this.nuevaOrden.celular.length ==9){
+            this.nuevaOrden.celular = "0"+ this.usuarioLogueado.celular
+          }
+          if(this.nuevaOrden.cedula_envio.length ==9){
+            this.nuevaOrden.cedula_envio = "0"+ this.usuarioLogueado.cedula
+          }
           this.nuevaOrden.direccion = this.usuarioLogueado.direccion 
           this.traerProductosPorOrden()
         } 
@@ -118,6 +136,12 @@ export class CarritoComprasComponent implements OnInit {
     this._productoPorOrdenService.traerListadoPorOrden(this.nuevaOrden).subscribe(
       (res) => { 
         this.productosPorOrdenDTO = res as ProductosPorOrdenDTO[];
+        if(this.productosPorOrdenDTO.length !=0){
+          this.existecarrito=true
+          this.contadorcarrito=this.productosPorOrdenDTO.length
+        }else{
+          this.existecarrito=false
+        }
         this.calcularTotal();
       },
       (err) => {  Swal.fire("Error al guardar","Su producto no pudo ser agregado","error")} 
@@ -185,6 +209,49 @@ export class CarritoComprasComponent implements OnInit {
     this.router.navigate(['/carrito-compras']);
   }
 
+
+  actualizarcantidad(product : ProductosPorOrdenDTO){
+    this.popupaceptarcantidad=false
+    this.productoaenviar.id_producto= product.id_producto.toString();
+    this._productoService.obtener_productosporid(this.productoaenviar).subscribe(
+      (res) => {this.productorecibido= res[0];
+                if(product.cantidad > this.productorecibido.stock){
+                  this.popupaceptarcantidad=true
+                  
+                  this.producactualizarPorOrdenDTO = product
+                }else{
+                  this.actualizarCantidadProducto(product)
+                }
+      
+      },
+      (err) => {  Swal.fire("error")} 
+    )
+  }
+
+  poputaceptacioncantidad(){
+    this.calcularTotal();
+    this.popupaceptarcantidad=false
+    this.producactualizarPorOrdenDTO.cantidad= this.productorecibido.stock
+
+    this._productoPorOrdenService.actualizarProducto(this.producactualizarPorOrdenDTO).subscribe(
+      (res) => { },
+      (err) => {  Swal.fire("error")} 
+    )
+   /*  this.nuevoProductoOrden.cantidad = this.productoAComprar.stock;
+    this.calcularTotalOrden();
+    this.popupaceptarcantidad=false;
+    this.popupCompra=false;
+    this.validarTiendaProducto();*/
+
+  }
+  poputrechazarcantidad(){
+    this.traerProductosPorOrden()
+    this.popupaceptarcantidad=false;
+
+   /*  this.popupaceptarcantidad=false;
+    this.popupCompra=false;*/
+
+  } 
 
   actualizarCantidadProducto(product : ProductosPorOrdenDTO){
     this.calcularTotal();

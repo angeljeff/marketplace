@@ -46,8 +46,11 @@
                         ======================================-->
                         <div class="ps-cart--mini">
 
-                            <a class="header__extra" href="#">
-                                <i class="icon-bag2"></i><span><i>0</i></span>
+                            <a *ngIf="!existecarrito" class="header__extra" href="#">
+                                <i class="icon-bag2 "></i><span><i>0</i></span>
+                            </a>
+                            <a *ngIf="existecarrito" class="header__extra" href="#">
+                                <i class="icon-bag2 text-warning"></i><span><i>{{contadorcarrito}}</i></span>
                             </a>
 
                             <div class="ps-cart__content">
@@ -203,7 +206,7 @@
                 <div class="col-md-10">
                     <div class="table-responsive">
                     <div class="row">
-                        <div class="col-md-6"><img src="{{productoAComprar.imagen}}" alt="" style="width: 250px;height: auto;"></div>
+                        <div class="col-md-6"><img src="{{productoAComprar.imagen}}" alt="" style="width: auto;height: 25rem;"></div>
                         <div class="col-md-4">
                             <br><br>
                             <h4>{{productoAComprar.nombre}}</h4><br>
@@ -252,7 +255,42 @@
                 <div class="col-md-1"></div>
             </div>
         </div> 
-
     </div>
-   
+</dx-popup>
+
+
+<dx-popup
+[width]="'20%'"
+[height]="'33%'" 
+[showCloseButton]="false"
+[showTitle]="true"
+title="Cantidad no disponible"
+
+
+[(visible)]="popupaceptarcantidad">
+<div *dxTemplate="let data of 'content'">
+    <div class="ps-section__content centrar">
+        <div class="row">
+            
+            <div class="col-md-12">
+               <br>
+                <label for=""> La cantidad solicitada del producto . </label><label for=""><strong> {{productoAComprar .nombre}}</strong></label><label for=""> excede el stock disponible del producto</label><br><strong></strong><label for=""><strong>¿Desea asignar el stock màximo del producto, el cúal es {{productoAComprar .stock}} ?</strong></label>
+                <br><br>
+                <div class="row">
+                    <br>
+                    <div class="col-md-6"><button class="btn color-principal" style="font-size:1.5rem ; width: 6rem;"  (click)="poputaceptacioncantidad()">ok</button></div>
+                    
+                    <div class="col-md-6"><button class="btn btn-danger" style="font-size:1.5rem ; width: 8rem;" (click)="poputrechazarcantidad()">cancelar</button></div>
+                   
+                    <br>
+                </div>
+ 
+                <br>
+            </div>           
+        </div>
+
+    </div> 
+
+</div>
+
 </dx-popup>

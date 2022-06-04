@@ -39,7 +39,9 @@ export class PrincipalComponent implements OnInit {
   popupVisible = false
   popupTienda = false
   popupCompra = false
+  popupaceptarcantidad=false
   inhabilitarboton=false
+  existecarrito=false
   productoMostrado : Productocompleto = new Productocompleto()
   productoAComprar : Productocompleto = new Productocompleto()
   nuevaOrden : OrdenCompra = new OrdenCompra();
@@ -53,10 +55,12 @@ export class PrincipalComponent implements OnInit {
   productosOrden: ProductosPorOrden[] = [];
   productosOrdenDTO: ProductosPorOrdenDTO[] = [];
   isCorrecto = false
+  cantidadcorrecta = false
   buscartienda: Tienda = new Tienda();
   idelatienda="";
   isLoged = false;
   mensajeError = ""
+  contadorcarrito=0
   usuarioLogueado : Usuario = new Usuario();
   constructor(public router: Router,
     public _productoService: ProductoService,
@@ -121,6 +125,7 @@ export class PrincipalComponent implements OnInit {
         var lista = res as OrdenCompra[];
         if(lista.length != 0){
           this.nuevaOrden = lista[0]
+          
           this.traerProductosPorOrden()
           console.log(this.nuevaOrden)
         }
@@ -133,7 +138,16 @@ export class PrincipalComponent implements OnInit {
   traerProductosPorOrden(){
     this._productoPorOrdenService.traerListadoPorOrden(this.nuevaOrden).subscribe(
       (res) => { 
+        
         this.productosOrdenDTO = res as ProductosPorOrdenDTO[];
+        if(this.productosOrdenDTO.length !=0){
+          this.existecarrito=true
+          this.contadorcarrito=this.productosOrdenDTO.length
+        }
+        else{
+          this.existecarrito=false
+        }
+        
         this.calcularTotal();
       },
       (err) => {  Swal.fire("Error al guardar","Su producto no pudo ser agregado","error")} 
@@ -185,40 +199,83 @@ export class PrincipalComponent implements OnInit {
   }
 
   validarCantidad(){
+    this.isCorrecto = false
     if(this.nuevoProductoOrden.cantidad >0)
       this.isCorrecto = true
     else 
       this.isCorrecto = false
+    this.calcularTotalOrden();
     this.nuevoProductoOrden.id_producto = this.productoAComprar.id_producto;
     this.nuevoProductoOrden.precio_producto = this.productoAComprar.precio;
     if(this.productoAComprar.stock < this.nuevoProductoOrden.cantidad){
-      this.mensajeError = "La cantidad solicitada excede el stock disponible del producto, se asignó por defecto el stock disponible"
+      this.popupaceptarcantidad=true;
+
+/*       Swal.fire({
+        title: 'Cantidad no disponible',
+        text: "La cantidad solicitada excede el stock disponible del producto, se asignó por defecto el stock disponible",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'ok',
+        cancelButtonText :'cancelar',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.nuevoProductoOrden.cantidad = this.productoAComprar.stock;
+          this.calcularTotalOrden()
+         
+        }else{
+          this.popupCompra=false;
+
+        }
+      }) */
+/*       this.mensajeError = "La cantidad solicitada excede el stock disponible del producto, se asignó por defecto el stock disponible"
       this.nuevoProductoOrden.cantidad = this.productoAComprar.stock;
-      this.calcularTotalOrden()
+      this.calcularTotalOrden() */
     }else{
       this.mensajeError = ""
       this.calcularTotalOrden()
+      this.cantidadcorrecta=true;
     }  
   }
 
+  poputaceptacioncantidad(){
+    this.nuevoProductoOrden.cantidad = this.productoAComprar.stock;
+    this.calcularTotalOrden();
+    this.popupaceptarcantidad=false;
+    this.popupCompra=false;
+    this.validarTiendaProducto();
+
+  }
+  poputrechazarcantidad(){
+    this.popupaceptarcantidad=false;
+    this.popupCompra=false;
+
+  }
+
+ 
+
   validarTiendaProducto(){
-    if(this.productosOrdenDTO.length == 0)
+    this.validarCantidad();
+    if(this.cantidadcorrecta == true){
+      if(this.productosOrdenDTO.length == 0)
       this.solicitarProducto()
-    else{
-      if(this.productosOrdenDTO[0].id_tienda == this.productoAComprar.id_tienda){
-        var existe = this.productosOrdenDTO.find(element => element.id_producto == this.nuevoProductoOrden.id_producto)
-        if(existe == undefined){   
-          this.solicitarProducto()
+      else{
+        if(this.productosOrdenDTO[0].id_tienda == this.productoAComprar.id_tienda){
+          var existe = this.productosOrdenDTO.find(element => element.id_producto == this.nuevoProductoOrden.id_producto)
+          if(existe == undefined){   
+            this.solicitarProducto()
+          }else{
+            this.popupCompra = false;
+            Swal.fire("Producto no agregado","Ya existe este producto en su lista","error")
+          }
+          
         }else{
-          this.popupCompra = false;
-          Swal.fire("Producto no agregado","Ya existe este producto en su lista","error")
+          this.popupCompra = false
+          Swal.fire("Producto no agregado","Tiene una orden de compra pendiente en otra tienda,por favor finalicela para poder efectuar otro pedido de otra tienda","error")
         }
-        
-      }else{
-        this.popupCompra = false
-        Swal.fire("Producto no agregado","Tiene una orden de compra pendiente en otra tienda,por favor finalicela para poder efectuar otro pedido de otra tienda","error")
       }
+
     }
+
     
     
   }

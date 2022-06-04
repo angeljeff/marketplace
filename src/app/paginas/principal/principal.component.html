@@ -122,8 +122,11 @@
                         ======================================-->
                         <div class="ps-cart--mini">
 
-                            <a class="header__extra" href="#">
-                                <i class="icon-bag2"></i><span><i>0</i></span>
+                            <a *ngIf="!existecarrito" class="header__extra" href="#">
+                                <i class="icon-bag2 "></i><span><i>0</i></span>
+                            </a>
+                            <a *ngIf="existecarrito" class="header__extra" href="#">
+                                <i class="icon-bag2 text-warning"></i><span><i>{{contadorcarrito}}</i></span>
                             </a>
 
                             <div class="ps-cart__content">
@@ -464,13 +467,13 @@
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-4"><h5>Hora de apertura:</h5></div>
-                            <div class="col-md-8">{{datosTienda.hora_apertura}}</div>
+                            <div class="col-md-8">{{datosTienda.hora_apertura | date:'shortTime':'UTC'}}</div>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-4"><h5>Hora de cierre:</h5></div>
-                            <div class="col-md-8">{{datosTienda.hora_cierre}}</div>
+                            <div class="col-md-8">{{datosTienda.hora_cierre | date:'shortTime':'UTC'}}</div>
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -503,7 +506,7 @@
                 <div class="col-md-10">
                     <div class="table-responsive">
                     <div class="row">
-                        <div class="col-md-6"><img src="{{productoAComprar.imagen}}" alt="" style="width: auto;height: 250px;"></div>
+                        <div class="col-md-6"><img src="{{productoAComprar.imagen}}" alt="" style="width: auto;height: 25rem;"></div>
                         <div class="col-md-4">
                             <br><br>
                             <h4>{{productoAComprar.nombre}}</h4><br>
@@ -529,7 +532,7 @@
                                         <td class="price">${{productoAComprar.precio}}</td>
                                         <td>
                                             <div class="form-group--number">
-                                                <dx-number-box [(value)]="nuevoProductoOrden.cantidad" (onChange)="validarCantidad()" ></dx-number-box>
+                                                <dx-number-box [min]="0" [max]="99999999" [(value)]="nuevoProductoOrden.cantidad" (onChange)="validarCantidad()" ></dx-number-box>
                                                 </div>
                                         </td>
                                         <td>${{nuevoProductoOrden.total_producto}}</td>                             
@@ -560,5 +563,45 @@
         </div> 
 
     </div>
+
    
 </dx-popup>
+
+<dx-popup
+[width]="'20%'"
+[height]="'33%'"
+[showTitle]="true"
+title="Cantidad no disponible"
+[(visible)]="popupaceptarcantidad">
+<div *dxTemplate="let data of 'content'">
+    <div class="ps-section__content centrar">
+        <div class="row">
+            
+            <div class="col-md-12">
+                
+                <label for=""> La cantidad solicitada del producto . </label><label for=""><strong> {{productoAComprar .nombre}}</strong></label><label for=""> excede el stock disponible del producto</label><br><strong></strong><label for=""><strong>¿Desea asignar el stock màximo del producto, el cual es {{productoAComprar .stock}} ?</strong></label> 
+                <br>
+                <div class="row">
+                    <br><br>
+                    <div class="col-md-1"></div>
+                    <br>
+                    <div  class="col-md-4"><br><button class="btn color-principal"  (click)="poputaceptacioncantidad()">ok</button></div>
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4"><br><button class="btn btn-danger"  (click)="poputrechazarcantidad()">cancelar</button></div>
+                    <div class="col-md-1"></div>
+                    <br>
+                </div>
+                
+
+                <br>
+            </div>           
+        </div>
+
+    </div> 
+
+</div>
+
+</dx-popup>
+
+
+
