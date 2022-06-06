@@ -35,12 +35,13 @@ class Server {
         this.app.set('port', process.env.PORT || 3000);
         this.app.use((0, morgan_1.default)('dev'));
         this.app.use((0, cors_1.default)());
-        this.app.use(express_1.default.json());
         const bodyParser = require('body-parser');
+        this.app.use(bodyParser.json({ limit: '200mb', extended: true }));
+        this.app.use(bodyParser.urlencoded({ limit: '200mb', extended: true, parameterLimit: 100000 }));
+        this.app.use(bodyParser.text({ limit: '200mb' }));
         this.app.use(express_1.default.urlencoded({ extended: false }));
-        this.app.use(bodyParser.json({ limit: '50mb', extended: true }));
-        this.app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
         this.app.use(express_1.default.static(path_1.default.join(__dirname, 'frontend')));
+        this.app.use(express_1.default.json());
     }
     routes() {
         this.app.use('/usuario', userRoutes_1.default);

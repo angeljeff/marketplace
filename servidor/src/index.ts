@@ -40,12 +40,16 @@ class Server {
         this.app.set('port', process.env.PORT || 3000);
         this.app.use(morgan('dev'));
         this.app.use(cors());
-        this.app.use(express.json());
+        
+       
         const bodyParser = require('body-parser');
+        
+        this.app.use(bodyParser.json({limit: '200mb', extended: true}));
+        this.app.use(bodyParser.urlencoded({limit: '200mb', extended: true, parameterLimit:100000}));
+        this.app.use(bodyParser.text({ limit: '200mb' }));
         this.app.use(express.urlencoded({extended: false}));
-        this.app.use(bodyParser.json({limit: '50mb', extended: true}));
-        this.app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
         this.app.use(express.static(path.join(__dirname,'frontend')));
+        this.app.use(express.json());
 
     }
 

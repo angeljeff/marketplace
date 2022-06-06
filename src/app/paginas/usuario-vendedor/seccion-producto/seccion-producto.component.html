@@ -82,12 +82,20 @@
         <div class="col-md-10">
             <div class="row">
                 <div class="col-md-4">
-                    <div class="col-md-12">
+                    <div class="col-md-12" *ngIf="!isedicionpro;">
  
                         <img src="{{productonuevo.imagen}}" alt="">
                         <br><br><br>
                         <label>Escoge una imagen:</label><br>
-                        <input type="file" class="btn color-principal" (change)="handleFileSelect($event)" height="5em">
+                        <input type="file"  #archivo class="btn color-principal" (change)="handleFileSelect($event)" height="5em">
+                        <br>
+                    </div>
+                    <div class="col-md-12" *ngIf="isedicionpro;">
+ 
+                        <img src="{{producompletoaeditar.imagen}}" alt="">
+                        <br><br><br>
+                        <label>Escoge una imagen:</label><br>
+                        <input type="file" id="archivo" class="btn color-principal" (change)="handleFileSelect($event)" height="5em">
                         <br>
                     </div>
                     
@@ -102,15 +110,21 @@
                                         <div class="form-group">
                                            <div class="row">
                                                 <div class="col-md-3" style="margin-top: -1em;"><p>Nombre *</p></div>
-                                                <div class="col-md-9">
+                                                <div class="col-md-9" *ngIf="!isedicionpro;">
                                                     <dx-text-box  [(value)]="productonuevo.nombre"  class="controles" placeholder="Nombre del producto"> </dx-text-box>       
+                                                </div>
+                                                <div class="col-md-9" *ngIf="isedicionpro;">
+                                                    <dx-text-box  [(value)]="producompletoaeditar.nombre"  class="controles" placeholder="Nombre del producto"> </dx-text-box>       
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-md-3" style="margin-top: -1em;"><p>Categoria *</p></div>
-                                                <div class="col-md-9">
+                                                <div class="col-md-9" *ngIf="!isedicionpro" >
+                                                    <dx-select-box [items]="listacategorias" [(value)]="categorias.id_categoria"  valueExpr="id_categoria" displayExpr="descripcion_cat" placeholder="Selecciona la categoria"  (onValueChanged)="traersub($event)" ></dx-select-box>
+                                                </div>
+                                                <div class="col-md-9" *ngIf="isedicionpro;">
                                                     <dx-select-box [items]="listacategorias" [(value)]="categorias.id_categoria"  valueExpr="id_categoria" displayExpr="descripcion_cat" placeholder="Selecciona la categoria"  (onValueChanged)="traersub($event)" ></dx-select-box>
                                                 </div>
                                             </div>
@@ -125,11 +139,22 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="form-group"   *ngIf="isedicionpro;" >
+                                            <div class="row">
+                                                <div class="col-md-3" style="margin-top: -1em;"><p>Subcategoria *</p></div>
+                                                <div class="col-md-9">
+                                                    <dx-select-box [items]="listasubcategorias" [(value)]="producompletoaeditar.id_sub_categoria" valueExpr="id_sub_categoria" displayExpr="descripcion_sub" placeholder="Selecciona la subcategoria"></dx-select-box>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-md-3" style="margin-top: -1em;"><p>Precio *</p></div>
-                                                <div class="col-md-9">
+                                                <div class="col-md-9" *ngIf="!isedicionpro;">
                                                     <dx-number-box [(value)]="productonuevo.precio" type="number" class="controles" placeholder="Precio"></dx-number-box>
+                                                </div>
+                                                <div class="col-md-9" *ngIf="isedicionpro;">
+                                                    <dx-number-box [(value)]="producompletoaeditar.precio" type="number" class="controles" placeholder="Precio"></dx-number-box>
                                                 </div>
                                             </div>
                                         </div>
@@ -137,14 +162,20 @@
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-md-3" style="margin-top: -1em;"><p>Stock *</p></div>
-                                                <div class="col-md-9">
+                                                <div class="col-md-9" *ngIf="!isedicionpro;">
                                                     <dx-number-box  [(value)]="productonuevo.stock" class="controles" placeholder="Stock"></dx-number-box>
+                                                </div>
+                                                <div class="col-md-9" *ngIf="isedicionpro;">
+                                                    <dx-number-box  [(value)]="producompletoaeditar.stock" class="controles" placeholder="Stock"></dx-number-box>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div class="form-group" >
+                                        <div class="form-group" *ngIf="!isedicionpro;">
                                             <dx-text-area [height]="90" [maxLength]="500" [(value)]="productonuevo.descripcion" placeholder="Descripcion"></dx-text-area>
+                                        </div>
+                                        <div class="form-group" *ngIf="isedicionpro;">
+                                            <dx-text-area [height]="90" [maxLength]="500" [(value)]="producompletoaeditar.descripcion" placeholder="Descripcion"></dx-text-area>
                                         </div>
                                         
 
@@ -153,7 +184,7 @@
                                             <button class="ps-btn ps-btn--fullwidth color-principal" *ngIf="!isedicionpro;" (click)="verificarcampos()">Registrar</button>
                                         </div>
                                         <div class="form-group" >
-                                            <button class="ps-btn ps-btn--fullwidth color-principal" *ngIf="isedicionpro;" (click)="verificarcampos()">Actualizar</button>
+                                            <button class="ps-btn ps-btn--fullwidth color-principal" *ngIf="isedicionpro;" (click)="verificarcamposacutalizar()">Actualizar</button>
                                         </div>
                                     </div>
 

@@ -13,7 +13,8 @@ export class Productocompleto{
     descripcion_cat:string
     id_tienda: number;
     id_estado_pro:number;
-    nombre_ti:string
+    nombre_ti:string;
+    estado:number;
 
    
     constructor(){
@@ -28,6 +29,7 @@ export class Productocompleto{
        this.id_estado_pro= 1
        this.descripcion_sub=""
        this.id_categoria=0
+       this.estado=1
        this.descripcion_cat=""
        this.nombre_ti=""
        this.imagen= "https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png"

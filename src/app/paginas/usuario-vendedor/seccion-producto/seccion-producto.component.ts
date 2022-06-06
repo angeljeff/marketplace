@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit,ViewChild } from '@angular/core';
 import Swal from 'sweetalert2';
 import { Producto, Productodto, Productoreserva } from 'src/app/clases/producto';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,6 +12,8 @@ import { Tienda } from 'src/app/clases/tienda';
 import { TiendaService } from 'src/app/services/tienda.service';
 import { PercentPipe } from '@angular/common';
 import { Estadistica } from '../../usuario-administrador/seccion-estadistica-administrador/seccion-estadistica-administrador.component';
+import { Productocompleto } from 'src/app/clases/Productocompleto';
+import { ProductocompletoService } from 'src/app/services/productoscompletos';
 
 @Component({
   selector: 'app-seccion-producto',
@@ -19,6 +21,7 @@ import { Estadistica } from '../../usuario-administrador/seccion-estadistica-adm
   styleUrls: ['./seccion-producto.component.css']
 })
 export class SeccionProductoComponent implements OnInit {
+  @ViewChild('archivo') archivo:ElementRef | undefined;
     @Input() objetoUsuario: Usuario = new Usuario();
     productonuevo: Producto = new Producto();
     categorias: Categorias= new Categorias();
@@ -36,10 +39,12 @@ export class SeccionProductoComponent implements OnInit {
     consultatienda: Tienda = new Tienda();
     tiendaobtenida: Tienda = new Tienda();
     poseetienda=false
+  
 
     seccionNewProducto = false;
     seccionListProducto = true;
     seccionEstadistica = false;
+    producompletoaeditar: Productocompleto = new Productocompleto;
 
     listaproductos : Producto []=[]
     listasubcategorias : Subcategorias []=[]
@@ -53,12 +58,14 @@ export class SeccionProductoComponent implements OnInit {
     public router : Router,
     public _subcategoriaService: SubCategoriaService,
     public _categoriaService: CategoriaService,
-    public _tiendaService: TiendaService
+    public _tiendaService: TiendaService,
+    public _productocompletoService :ProductocompletoService,
     ) { }
 
   ngOnInit( ): void {
     this.consultartienda()
     this.traerListadocategorias()
+    
     
     
   }
@@ -95,29 +102,54 @@ export class SeccionProductoComponent implements OnInit {
         }).then((result) => {
           if (result.isConfirmed) {
             this.productonuevo= new Producto()
+            this.mostrarSecProducto(2);
+
           }
         }) 
       
       },
-      (err) => {  this.mostrarLoading = false; Swal.fire('error')}
+      (err) => {  this.mostrarLoading = false; Swal.fire(' HOLA error')
+    console.log(err)}
     ) 
  
   }
 
   
   editProduct = (e:any) => {  
-    this.editarProducto(e.row.data)  
+    this.editarProducto(e.row.data)
+    console.log(e.row.data); 
   }
 
   deleteProduct = (e:any) => {  
     this.eliminarProducto(e.row.data)  
   }
 
-  editarProducto(product: Producto){
+/*   editarProducto(product: Producto){
     this.mostrarSecProducto(2);
     this.isedicionpro = true;
     this.productonuevo = product;
-  }
+  } */
+
+  editarProducto(product: Producto){
+    this.producompletoaeditar= new Productocompleto();
+    
+    this._productocompletoService.obtener_productosporid(product).subscribe(
+      (res) => {console.log("si estoy recibiendo")
+         this.producompletoaeditar =res[0] ;
+        console.log("si estoy recibiendo")
+        this.mostrarSecProducto(2);
+        this.isedicionpro = true;
+        this.categorias.id_categoria= this.producompletoaeditar.id_categoria
+        this.traersub(this.categorias);
+       
+
+      
+      },
+      (err) => {console.log(err) }
+    )
+
+  } 
+
 
   eliminarProducto(product: Producto){
      Swal.fire({
@@ -171,9 +203,19 @@ export class SeccionProductoComponent implements OnInit {
 
 
   actualizar(){
+    this.productonuevo= new Producto()
     this.mensajeLoading = "Actualizando producto";
     this.mostrarLoading = true;
-    console.log(this.productonuevo)
+    this.productonuevo.id_producto =this.producompletoaeditar.id_producto.toString();
+    this.productonuevo.estado=1;
+    this.productonuevo.nombre =this.producompletoaeditar.nombre
+    this.productonuevo.precio=this.producompletoaeditar.precio
+    this.productonuevo.imagen=this.producompletoaeditar.imagen
+    this.productonuevo.stock=this.producompletoaeditar.stock
+    this.productonuevo.descripcion=this.producompletoaeditar.descripcion
+    this.productonuevo.id_sub_categoria=this.producompletoaeditar.id_sub_categoria
+    this.productonuevo.id_estado_pro=1
+
      this._productoService.actualizar(this.productonuevo).subscribe(
       (res) => {
         this.mostrarLoading = false;
@@ -186,7 +228,9 @@ export class SeccionProductoComponent implements OnInit {
         }).then((result) => {
           if (result.isConfirmed) {
             this.productonuevo= new Producto()
+            this.producompletoaeditar= new Productocompleto();
             this.isedicionpro = false
+            this.mostrarSecProducto(2)
           }
         }) 
       
@@ -216,7 +260,17 @@ export class SeccionProductoComponent implements OnInit {
         this.seccionNewProducto = true;
         this.seccionListProducto = false;
         this.seccionEstadistica = false;
+        this.isedicionpro= false;
+        this.edicionsubcategoria=false;
         this.productonuevo= new Producto()
+        this.productonuevo.id_sub_categoria=0;
+        this.edicionsubcategoria=false;
+        this.categorias.id_categoria=0;
+        if(this.archivo!==undefined)
+        this.archivo.nativeElement.value = null;
+        
+         
+       
       }
       else if(numero == 3){
         console.log("entre en if")
@@ -294,7 +348,11 @@ export class SeccionProductoComponent implements OnInit {
       this.subcategorias.id_categoria= this.categorias.id_categoria
       this._subcategoriaService.traerListaSubcategoriasporidcat(this.subcategorias).subscribe(
         (res) => { this.listasubcategorias = res as Subcategorias[];
-          this.edicionsubcategoria=true},
+          if(this.isedicionpro==false){
+            this.edicionsubcategoria=true
+
+          }
+          },
         (err) => { }
       )
 
@@ -321,6 +379,24 @@ verificarcampos(){
         }else{this.mostrarmensajes('Por favor establezca un precio válido al producto')}
       }else{this.mostrarmensajes('Debe seleccionar una subcategoría')}
     }else{this.mostrarmensajes('Debe seleccionar una categoría')}
+  }else{this.mostrarmensajes('Debe llenar el campo nombre de producto')}
+}
+
+verificarcamposacutalizar(){
+  if(this.producompletoaeditar.nombre !==""){
+      if(this.producompletoaeditar.id_sub_categoria!==0){
+        if(this.producompletoaeditar.precio >0 && this.producompletoaeditar.precio!==null){
+          if(this.producompletoaeditar.stock!==0 && this.producompletoaeditar.stock!==null){
+            if(this.producompletoaeditar.descripcion!==""){
+              if(this.producompletoaeditar.imagen!==""){
+              if(this.isedicionpro){
+                this.actualizar()
+              }
+            }else {this.mostrarmensajes('Debe agregar una imagen')}
+            }else{this.mostrarmensajes('Por favor establezca una breve descripción del producto')}
+          }else{this.mostrarmensajes('Por favor indique la disponibilidad del producto')}
+        }else{this.mostrarmensajes('Por favor establezca un precio válido al producto')}
+      }else{this.mostrarmensajes('Debe seleccionar una subcategoría')}
   }else{this.mostrarmensajes('Debe llenar el campo nombre de producto')}
 }
 
