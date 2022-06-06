@@ -31,8 +31,8 @@ class UsuarioControl {
     }
 
     public async actualizar(req: Request, res: Response): Promise<void> {
-        const agrega_usuario = await pool.query("UPDATE usuarios SET  correo= ?, contrasenia = ?, celular = ?, direccion = ? WHERE cedula = ?",
-        [req.body.correo, req.body.contrasenia, req.body.celular, req.body.direccion, req.params.cedula]);
+        const agrega_usuario = await pool.query("UPDATE usuarios SET  correo= ?, contrasenia = ?, celular = ?, direccion = ?, fecha_nacimiento = ? WHERE cedula = ?",
+        [req.body.correo, req.body.contrasenia, req.body.celular, req.body.direccion, req.body.fecha_nacimiento, req.params.cedula]);
         res.json({ message: 'Usuario ACTUALIZADO' });
     }
 

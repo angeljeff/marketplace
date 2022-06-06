@@ -49,7 +49,7 @@ class UsuarioControl {
     }
     actualizar(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const agrega_usuario = yield base_datos_1.default.query("UPDATE usuarios SET  correo= ?, contrasenia = ?, celular = ?, direccion = ? WHERE cedula = ?", [req.body.correo, req.body.contrasenia, req.body.celular, req.body.direccion, req.params.cedula]);
+            const agrega_usuario = yield base_datos_1.default.query("UPDATE usuarios SET  correo= ?, contrasenia = ?, celular = ?, direccion = ?, fecha_nacimiento = ? WHERE cedula = ?", [req.body.correo, req.body.contrasenia, req.body.celular, req.body.direccion, req.body.fecha_nacimiento, req.params.cedula]);
             res.json({ message: 'Usuario ACTUALIZADO' });
         });
     }

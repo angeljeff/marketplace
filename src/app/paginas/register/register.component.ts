@@ -1,3 +1,4 @@
+import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { range } from 'rxjs';
@@ -79,9 +80,10 @@ export class RegisterComponent implements OnInit {
     this._usuarioService.obtenerDatoCedula(usuarioBuscado).subscribe(
       (res) => {
         this.usuarioNuevo = res[0];
+        this.usuarioNuevo.cedula = '0'+this.usuarioNuevo.cedula; 
         this.usuarioNuevo.celular = '0'+this.usuarioNuevo.celular;
         this.fecha = this.usuarioNuevo.fecha_nacimiento;
-        console.log(this.usuarioNuevo.id_tipo_usuario)
+        console.log(this.usuarioNuevo.fecha_nacimiento)
         //this.nombreCanton = this.listaCantones.find(element => element.id_cantones == this.usuarioNuevo.id_cantones)?.descripcion ?? "" ;
         console.log(this.nombreCanton)
       },
@@ -158,7 +160,7 @@ export class RegisterComponent implements OnInit {
   actualizar(){
     this.mensajeLoading = "Actualizando Usuario";
     this.mostrarLoading = true;
-    this.usuarioNuevo.fecha_nacimiento = this.fecha;
+    this.usuarioNuevo.fecha_nacimiento = new Date(this.fecha); 
     console.log(this.usuarioNuevo)
      this._usuarioService.actualizar(this.usuarioNuevo).subscribe(
       (res) => {
@@ -188,7 +190,8 @@ export class RegisterComponent implements OnInit {
         }) 
       
       },
-      (err) => {  this.mostrarLoading = false; Swal.fire('error')}
+      (err) => {  this.mostrarLoading = false; Swal.fire('error')
+    console.log(err)}
     ) 
 
   }
