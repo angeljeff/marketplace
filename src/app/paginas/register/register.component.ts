@@ -161,7 +161,6 @@ export class RegisterComponent implements OnInit {
     this.mensajeLoading = "Actualizando Usuario";
     this.mostrarLoading = true;
     this.usuarioNuevo.fecha_nacimiento = new Date(this.fecha); 
-    console.log(this.usuarioNuevo)
      this._usuarioService.actualizar(this.usuarioNuevo).subscribe(
       (res) => {
         this.mostrarLoading = false;
