@@ -104,7 +104,8 @@
                 ======================================-->
                 <div class="header__content-center">
                     <form class="ps-form--quick-search" action="index.html" method="get" >
-                        <dx-autocomplete #data2
+                        <dx-autocomplete #inputentrada 
+                        #data2
                                             [dataSource]="listacompletaproductos"
                                             [(value)]="nomb"
                                             valueExpr="nombre"
@@ -226,32 +227,32 @@
                     <div class="ps-block__item">
                         <div class="ps-block__left" ><i class="icon-bug" style="color: green;"></i></div>
                         <div class="ps-block__right">
-                            <h4>Productos agroquímicos</h4>
-                            <p>Encuentra el producto que estás buscando</p>
+                           <h4 (click)="ponerenelinpute()" >Productos agroquímicos </h4>
+                            <p (click)="ponerenelinpute()">Encuentra el producto que estás buscando</p>
                         </div>
                     </div>
 
-                    <div class="ps-block__item">
-                        <div class="ps-block__left"><i class="icon-rocket" style="color: green;"></i></div>
+                     <div class="ps-block__item">
+                        <div class="ps-block__left"><i class="fa fa-quote-right" style="color: green;"></i></div>
                         <div class="ps-block__right">
-                            <h4>Entregas Seguras</h4>
-                            <p>Entregas a domicilio garantizadas</p>
+                            <h4 (click)="mostrarinfotienda()">Comentarios tiendas</h4>
+                            <p (click)="mostrarinfotienda()">Verifica las reseñas de la tienda</p>
                         </div>
-                    </div>
+                    </div> 
 
                     <div class="ps-block__item">
                         <div class="ps-block__left"><i class="icon-credit-card " style="color: green;"></i></div>
                         <div class="ps-block__right">
-                            <h4>Paga seguro</h4>
-                            <p>Realiza tu pedido de forma segura</p>
+                            <h4 (click)="mostrarpoputformasdepago()">Paga seguro</h4>
+                            <p (click)="mostrarpoputformasdepago()">Realiza tu pedido de forma segura</p>
                         </div>
                     </div>
 
                     <div class="ps-block__item">
                         <div class="ps-block__left"><i class="icon-bubbles" style="color: green;"></i></div>
                         <div class="ps-block__right">
-                            <h4>24/7 Soporte</h4>
-                            <p>Contacta con nosotros ante cualquier duda</p>
+                            <a href="#abajo"><h4>24/7 Soporte</h4></a>
+                            <a href="#abajo"><p>Contacta con nosotros ante cualquier duda</p></a>
                         </div>
                     </div>
 
@@ -280,7 +281,7 @@
                             <p><span>Tienda:</span>  {{element.nombre_ti}}</p>
                             <p><span>Categoría:</span>  {{element.descripcion_cat}}</p>
                             <p><span>Subcategoria:</span> {{element.descripcion_sub}}</p>
-                            <p><span>Precio:</span> {{element.precio}}</p>
+                            <p><span>Precio:</span> $ {{element.precio}}</p>
                              <div class="row buttonP" *ngIf="inhabilitarboton == true">
                                  <div class="col-md-6 " *ngIf="idelatienda == element.id_tienda.toString()">
                                       <button disabled class="color-principal btn" (click)="mostrarPopupCompra(element)">Comprar</button>
@@ -496,8 +497,8 @@
 
 
 <dx-popup
-    [width]="'50%'"
-    [height]="'70%'"
+    [width]="'51%'"
+    [height]="'71%'"
     [(visible)]="popupCompra">
     <div *dxTemplate="let data of 'content'">
         <div class="ps-section__content centrar">
@@ -506,7 +507,7 @@
                 <div class="col-md-10">
                     <div class="table-responsive">
                     <div class="row">
-                        <div class="col-md-6"><img src="{{productoAComprar.imagen}}" alt="" style="width: auto;height: 25rem;"></div>
+                        <div class="col-md-6"><img src="{{productoAComprar.imagen}}" alt="" style="width:auto; height: 24rem;"></div>
                         <div class="col-md-4">
                             <br><br>
                             <h4>{{productoAComprar.nombre}}</h4><br>
@@ -530,6 +531,7 @@
                                 <tbody>
                                     <tr>
                                         <td class="price">${{productoAComprar.precio}}</td>
+    
                                         <td>
                                             <div class="form-group--number">
                                                 <dx-number-box [min]="0" [max]="99999999" [(value)]="nuevoProductoOrden.cantidad" (onChange)="validarCantidad()" ></dx-number-box>
@@ -564,8 +566,11 @@
 
     </div>
 
+
+
    
 </dx-popup>
+<a name="abajo"></a>
 
 <dx-popup
 [width]="'20%'"
@@ -601,6 +606,55 @@ title="Cantidad no disponible"
 
 </div>
 
+</dx-popup>
+
+
+
+<dx-popup
+[width]="'22%'"
+[height]="'44%'"
+[showTitle]="true"
+[(visible)]="poputinformaciontienda">
+<div *dxTemplate="let data of 'content'">
+    <div class="ps-section__content centrar">
+        <div class="row">
+            <div class="col-md-12">
+                <img src="../../../assets/tiendapopup.svg " alt="">
+            </div>
+            <div class="col-md-12">
+                <br>
+                <label for="">Consulta los comentarios dejados por otros usuarios que han realizado pedidos a cada tienda para mayor seguridad y confianza al momento de realizar tu pedido. </label>  
+                <br>
+            </div>           
+        </div>
+    </div> 
+</div>
+</dx-popup>
+
+<dx-popup
+[width]="'25%'"
+[height]="'55%'"
+[showTitle]="true"
+[(visible)]="poputinformacionpago">
+<div *dxTemplate="let data of 'content'">
+    <div class="ps-section__content centrar">
+        <div class="row">
+            <div class="col-md-12">
+                <img id="imagenpago" src="../../../assets/pagoseguro.svg" alt="">
+            </div>
+            <div class="col-md-12">
+                <br>
+                <label for="" style="text-align: justify;">Dentro de la plataforma está configurada para aceptar 3 formas de pago, pero es elección de cada tienda elegir cúal método de pago aceptar por la compra de sus productos. <br> Las formas de pago son:</label>  
+                <ul>
+                    <li style="text-align: start;">Contacto Directo</li>
+                    <li style="text-align: start;">Pago contra Entrega</li>
+                    <li style="text-align: start;">Transferencia o depósito bancario</li>
+                </ul>
+                <br>
+            </div>           
+        </div>
+    </div> 
+</div>
 </dx-popup>
 
 

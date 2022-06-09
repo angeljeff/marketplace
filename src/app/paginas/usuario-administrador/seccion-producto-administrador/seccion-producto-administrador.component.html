@@ -21,6 +21,7 @@
         [dataSource]="listaproductosPendientes"
         keyExpr="id_producto"
         [showBorders]="true">
+        <dxo-header-filter [visible]="true"></dxo-header-filter>
         <dxi-column
             dataField="imagen"
             [width]="100"
@@ -30,7 +31,7 @@
             cellTemplate="cellTemplate"
         ></dxi-column>
         <dxi-column dataField="nombre" alignment="center" caption="Nombre Productos"></dxi-column>
-        <dxi-column dataField="id_tienda"  alignment="center"  caption="Tienda"></dxi-column>
+        <dxi-column dataField="nombre_ti"  alignment="center"  caption="Tienda" ></dxi-column>
         <dxi-column dataField="descripcion"  alignment="center"  caption="Descripcion"></dxi-column>
         <dxi-column dataField="precio"  alignment="center"  caption="Precio"></dxi-column>
         <dxi-column dataField="stock"  alignment="center"  caption="stock"></dxi-column>
@@ -64,6 +65,7 @@
         [dataSource]="listaproductosAprobados"
         keyExpr="id_producto"
         [showBorders]="true">
+        <dxo-header-filter [visible]="true"></dxo-header-filter>
         <dxi-column
             dataField="imagen"
             [width]="100"
@@ -73,7 +75,7 @@
             cellTemplate="cellTemplate"
         ></dxi-column>
         <dxi-column dataField="nombre" alignment="center" caption="Nombre Productos"></dxi-column>
-        <dxi-column dataField="id_tienda"  alignment="center"  caption="Tienda"></dxi-column>
+        <dxi-column dataField="nombre_ti"  alignment="center"  caption="Tienda"></dxi-column>
         <dxi-column dataField="descripcion"  alignment="center"  caption="Descripcion"></dxi-column>
         <dxi-column dataField="precio"  alignment="center"  caption="Precio"></dxi-column>
         <dxi-column dataField="stock"  alignment="center"  caption="stock"></dxi-column>
@@ -107,6 +109,7 @@
         [dataSource]="listaproductosRechazados"
         keyExpr="id_producto"
         [showBorders]="true">
+        <dxo-header-filter [visible]="true"></dxo-header-filter>
         <dxi-column
             dataField="imagen"
             [width]="100"
@@ -116,7 +119,7 @@
             cellTemplate="cellTemplate"
         ></dxi-column>
         <dxi-column dataField="nombre" alignment="center" caption="Nombre Productos"></dxi-column>
-        <dxi-column dataField="id_tienda"  alignment="center"  caption="Tienda"></dxi-column>
+        <dxi-column dataField="nombre_ti"  alignment="center"  caption="Tienda"></dxi-column>
         <dxi-column dataField="descripcion"  alignment="center"  caption="Descripcion"></dxi-column>
         <dxi-column dataField="precio"  alignment="center"  caption="Precio"></dxi-column>
         <dxi-column dataField="stock"  alignment="center"  caption="stock"></dxi-column>

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Usuario } from 'src/app/clases/usuario';
+import { Usuario, UsuarioTienda } from 'src/app/clases/usuario';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import Swal from 'sweetalert2';
 
@@ -19,6 +19,8 @@ export class SeccionUsuarioAdministradorComponent implements OnInit {
   seccionNuevoUsuario = false;
 
   listaUsuariosAdministradores : Usuario []=[]
+  listaUsuariosclientes : Usuario []=[]
+  listaUsuariospropietarios : UsuarioTienda []=[]
   usuarios: Usuario[] = []; 
 
   idEstadoTienda = 0;
@@ -32,7 +34,8 @@ export class SeccionUsuarioAdministradorComponent implements OnInit {
 
   ngOnInit( ): void {
     console.log(this.objetoUsuario.cedula + "este es usuario producto");
-    this.traerListadoUsuarios()
+   // this.traerListadoUsuarios()
+   this.traerListadoUsuariosclientes()
 
   }
 
@@ -40,16 +43,64 @@ export class SeccionUsuarioAdministradorComponent implements OnInit {
     if(numero == 1) {
       this.seccionListaUsuarios = true;
       this.seccionNuevoUsuario = false;
+      this.traerListadoUsuariosclientes()
     }  
     else if(numero == 2){
       this.seccionListaUsuarios = false;
       this.seccionNuevoUsuario = true;
+      this.traerListadoUsuariospropietariosdenegocios()
     }
   }
 
   traerListadoUsuarios(){
     this._usuarioService.listarUsuariosAdministradores().subscribe(
-      (res) => { this.listaUsuariosAdministradores = res as Usuario[]},
+      (res) => { this.listaUsuariosAdministradores = res as Usuario[]
+      
+      },
+      (err) => {  this.mostrarLoading = false; Swal.fire('error')}
+    ) 
+  }
+  traerListadoUsuariosclientes(){
+    this._usuarioService.listarUsuariosclientes().subscribe(
+      (res) => { this.listaUsuariosclientes = res as Usuario[]
+        this.listaUsuariosclientes.forEach(function (element){
+          var ced= new String(element.cedula) 
+          if(ced.length ==9){
+           element.cedula="0"+element.cedula
+         }
+          var cantidad= new String(element.celular) 
+          console.log(cantidad.length)
+          if(cantidad.length ==9){
+            element.celular="0"+element.celular
+          } 
+
+          
+          
+        })
+  
+      
+      },
+      (err) => {  this.mostrarLoading = false; Swal.fire('error')}
+    ) 
+  }
+  traerListadoUsuariospropietariosdenegocios(){
+    this._usuarioService.listarUsuariosPropietarios().subscribe(
+      (res) => { this. listaUsuariospropietarios = res as UsuarioTienda[]
+        this.listaUsuariospropietarios.forEach(function (element){
+          var ced= new String(element.cedula) 
+          if(ced.length ==9){
+           element.cedula="0"+element.cedula
+         }
+          var cantidad= new String(element.celular) 
+          console.log(cantidad.length)
+          if(cantidad.length ==9){
+            element.celular="0"+element.celular
+          } 
+
+          
+          
+        })
+      },
       (err) => {  this.mostrarLoading = false; Swal.fire('error')}
     ) 
   }

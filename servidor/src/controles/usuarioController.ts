@@ -18,6 +18,14 @@ class UsuarioControl {
         const lista = await pool.query('SELECT * FROM usuarios where id_tipo_usuario = 3');
         res.send(lista);
     }
+    public async listarClientes(req: Request, res: Response): Promise<void> {
+        const lista = await pool.query('SELECT * FROM usuarios where id_tipo_usuario = 2');
+        res.send(lista);
+    }
+    public async listarPropietariosdenegocios(req: Request, res: Response): Promise<void> {
+        const lista = await pool.query('SELECT u.cedula, u.nombres, u.apellidos, u.direccion, u.celular, u.genero, u.correo, u.fecha_nacimiento, u.contrasenia, u.id_tipo_usuario, u.id_cantones, t.nombre_ti FROM usuarios as u INNER JOIN tiendas as t on u.cedula=t.cedula where id_tipo_usuario = 1');
+        res.send(lista);
+    }
 
     public async listarUsuariosActivos(req: Request, res: Response): Promise<void> {
         const lista = await pool.query('SELECT * FROM usuarios where Activo = 1');

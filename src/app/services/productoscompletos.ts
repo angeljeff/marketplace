@@ -20,6 +20,11 @@ export class ProductocompletoService{
   obtener_productosporidsub(producto : Producto) {
     return this.http.post<any>(this.URL + `/listarporsub/${producto.id_sub_categoria}`, producto);
   }
+  obtener_completo_administrador() {
+    return this.http.get<any>(this.URL + "/listarprocompletoadmin");
+  }
+  
+  
 
   obtener_productosporid(producto : Producto) {
     console.log("entre a obtener el producto"+producto.id_producto)

@@ -11,6 +11,8 @@ class ControlUsuario {
     config() {
         this.router.get('/listar', control_usu.listar);
         this.router.get('/listarAdministradores', control_usu.listarAdministradores);
+        this.router.get('/listarClientes', control_usu.listarClientes);
+        this.router.get('/listarPropietariosdenegocios', control_usu.listarPropietariosdenegocios);
         this.router.get('/listarActivos', control_usu.listarUsuariosActivos);
         this.router.post('/obtener/:cedula', control_usu.obtenerPorCedula);
         this.router.post('/create', control_usu.crear);

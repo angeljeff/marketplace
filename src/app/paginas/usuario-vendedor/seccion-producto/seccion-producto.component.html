@@ -41,7 +41,9 @@
             id="gridContainer"
             [dataSource]="listaproductos"
             keyExpr="id_producto"
-            [showBorders]="true">
+            [showBorders]="true"
+            >
+            
             <dxi-column
                 dataField="imagen"
                 [width]="100"
@@ -69,6 +71,9 @@
                 <dxo-pager
                     [showPageSizeSelector]="true"
                     [allowedPageSizes]="[5,8,10]"
+                    [showNavigationButtons]="true"
+                    [showInfo]="true"
+                    infoText="Página {0} de {1}"
                 ></dxo-pager>
         </dx-data-grid>
     </div>
@@ -133,7 +138,7 @@
 
                                         <div class="form-group"  *ngIf="edicionsubcategoria" >
                                             <div class="row">
-                                                <div class="col-md-3" style="margin-top: -1em;"><p>Subcategoria *</p></div>
+                                                <div class="col-md-3" style="margin-top: -1em;"><p>Subcategoría *</p></div>
                                                 <div class="col-md-9">
                                                     <dx-select-box [items]="listasubcategorias" [(value)]="productonuevo.id_sub_categoria" valueExpr="id_sub_categoria" displayExpr="descripcion_sub" placeholder="Selecciona la subcategoria"></dx-select-box>
                                                 </div>
@@ -141,7 +146,7 @@
                                         </div>
                                         <div class="form-group"   *ngIf="isedicionpro;" >
                                             <div class="row">
-                                                <div class="col-md-3" style="margin-top: -1em;"><p>Subcategoria *</p></div>
+                                                <div class="col-md-3" style="margin-top: -1em;"><p>Subcategoría *</p></div>
                                                 <div class="col-md-9">
                                                     <dx-select-box [items]="listasubcategorias" [(value)]="producompletoaeditar.id_sub_categoria" valueExpr="id_sub_categoria" displayExpr="descripcion_sub" placeholder="Selecciona la subcategoria"></dx-select-box>
                                                 </div>

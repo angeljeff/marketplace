@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Producto } from 'src/app/clases/producto';
 import { ProductoService } from 'src/app/services/productos.services';
@@ -18,6 +18,8 @@ import { ProductosPorOrden, ProductosPorOrdenDTO } from 'src/app/clases/producto
 import { ProductoPorOrdenService } from 'src/app/services/productoPorOrden.service';
 import { OrdenCompraService } from 'src/app/services/ordenCompra.service';
 import { elementAt } from 'rxjs';
+import { DxAutocompleteComponent, DxTextBoxComponent } from 'devextreme-angular';
+import dxAutocomplete from 'devextreme/ui/autocomplete';
 
 @Component({
   selector: 'app-principal',
@@ -25,6 +27,7 @@ import { elementAt } from 'rxjs';
   styleUrls: ['./principal.component.css']
 })
 export class PrincipalComponent implements OnInit {
+  @ViewChild('inputentrada') public inputentrada:DxAutocompleteComponent | undefined;
 
   listaproductos : Producto []=[]
   listapro : Producto []=[]
@@ -42,6 +45,7 @@ export class PrincipalComponent implements OnInit {
   popupaceptarcantidad=false
   inhabilitarboton=false
   existecarrito=false
+  poputinformacionpago=false
   productoMostrado : Productocompleto = new Productocompleto()
   productoAComprar : Productocompleto = new Productocompleto()
   nuevaOrden : OrdenCompra = new OrdenCompra();
@@ -50,6 +54,7 @@ export class PrincipalComponent implements OnInit {
   totalCompra = 0;
   productotemproral: Producto = new Producto();
   cedula = ""
+  poputinformaciontienda=false
   tiendapoput: Tienda = new Tienda();
   datosTienda: Tienda = new Tienda();
   productosOrden: ProductosPorOrden[] = [];
@@ -165,6 +170,11 @@ export class PrincipalComponent implements OnInit {
     this.router.navigate(['/carrito-compras']);
   }
 
+  
+  mostrarpoputformasdepago(){
+    this.poputinformacionpago=true;
+  }
+
   eliminarRegistro(i: number,  producto : ProductosPorOrdenDTO) {
     Swal.fire({
       title: 'Eliminar Producto',
@@ -207,6 +217,7 @@ export class PrincipalComponent implements OnInit {
     this.calcularTotalOrden();
     this.nuevoProductoOrden.id_producto = this.productoAComprar.id_producto;
     this.nuevoProductoOrden.precio_producto = this.productoAComprar.precio;
+    
     if(this.productoAComprar.stock < this.nuevoProductoOrden.cantidad){
       this.popupaceptarcantidad=true;
 
@@ -429,6 +440,9 @@ export class PrincipalComponent implements OnInit {
   mandarMensaje(){
 
   }
+  mostrarinfotienda(){
+    this.poputinformaciontienda=true
+  }
 
   irPerfilUsuario(){
     if(this.usuarioLogueado.id_tipo_usuario == 1)
@@ -528,6 +542,12 @@ mostrardatostienda(){
 
   }
 
+  ponerenelinpute(){
+   
+    if( this.inputentrada!=undefined)
+      this.inputentrada.instance.focus();
+  
+  }
 
 
   itemClick(data:any) {
@@ -548,6 +568,5 @@ mostrardatostienda(){
     }
   }
 
- 
- 
 }
+

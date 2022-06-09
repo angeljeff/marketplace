@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { ProductoService } from 'src/app/services/productos.services';
 import { CategoriaService } from 'src/app/services/categorias.service';
 import { Usuario } from 'src/app/clases/usuario';
+import { ProductocompletoService } from 'src/app/services/productoscompletos';
+import { Productocompleto } from 'src/app/clases/Productocompleto';
 
 @Component({
   selector: 'app-seccion-producto-administrador',
@@ -21,9 +23,9 @@ export class SeccionProductoAdministradorComponent implements OnInit {
   seccionProAprobados = false;
   seccionProRechazados = false;
 
-  listaproductosPendientes : Producto []=[]
-  listaproductosAprobados : Producto []=[]
-  listaproductosRechazados : Producto []=[]
+  listaproductosPendientes : Productocompleto []=[]
+  listaproductosAprobados : Productocompleto []=[]
+  listaproductosRechazados : Productocompleto []=[]
   productos: Producto[] = []; 
 
   idEstadoProducto = 0;
@@ -32,7 +34,8 @@ export class SeccionProductoAdministradorComponent implements OnInit {
 
   constructor( public _productoService : ProductoService,
     public router : Router,
-    public _categoriaService: CategoriaService
+    public _categoriaService: CategoriaService,
+    public _productCompletoService: ProductocompletoService
     ) { }
 
   ngOnInit( ): void {
@@ -104,20 +107,24 @@ export class SeccionProductoAdministradorComponent implements OnInit {
   }
 
   traerListadoProductosporTienda(){
-    this._productoService.listarProductos().subscribe(
-      (res) => { var lista = res as Productodto[];
+    this._productCompletoService.obtener_completo_administrador().subscribe(
+      (res) => { var lista = res as Productocompleto[];
                  this.nuevoarregloproductos(lista)},
       (err) => { }
     )
   }
 
-  nuevoarregloproductos(lista: Productodto[]){
+  nuevoarregloproductos(lista: Productocompleto[]){
     this.listaproductosPendientes = []
     this.listaproductosAprobados = []
     this.listaproductosRechazados = []
     lista.forEach(element=>{
-      if(element.id_estado_pro==1)
+      console.log(element)
+      if(element.id_estado_pro==1){
+        console.log("entre aqui")
         this.listaproductosPendientes.push(element)
+      }
+        
       else if(element.id_estado_pro==2)
         this.listaproductosAprobados.push(element)
       else if(element.id_estado_pro==3)

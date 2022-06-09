@@ -34,6 +34,12 @@ class ProductoController {
             res.send(lista_productos_com);
         });
     }
+    listarprocompletoadmi(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const lista_productos_com = yield base_datos_1.default.query('SELECT pro.nombre, pro.id_producto, pro.precio, pro.imagen, pro.stock, pro.id_sub_categoria, pro.id_tienda, pro.descripcion, sub.descripcion_sub, cat.descripcion_cat, cat.id_categoria, ti.nombre_ti, pro.id_estado_pro FROM productos AS pro INNER JOIN sub_categorias AS sub ON pro.id_sub_categoria = sub.id_sub_categoria INNER JOIN categorias AS cat ON sub.id_categoria = cat.id_categoria INNER JOIN tiendas AS ti ON pro.id_tienda = ti.id_tienda where pro.estado=1');
+            res.send(lista_productos_com);
+        });
+    }
     listarprocompletoporid(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const producto = req.params.id_producto;

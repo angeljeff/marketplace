@@ -16,6 +16,13 @@ export class UsuarioService{
   listarUsuariosAdministradores() {
     return this.http.get<any>(this.URL + "/listarAdministradores");
   }
+  listarUsuariosclientes() {
+    return this.http.get<any>(this.URL + "/listarClientes");
+  }
+  listarUsuariosPropietarios() {
+    return this.http.get<any>(this.URL + "/listarPropietariosdenegocios");
+  }
+
 
   registrar(usuario : Usuario) {
     return this.http.post<any>(this.URL + "/create", usuario);

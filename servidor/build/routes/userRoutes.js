@@ -13,6 +13,8 @@ class ControlUsuario {
     config() {
         this.router.get('/listar', usuarioController_1.default.listar);
         this.router.get('/listarAdministradores', usuarioController_1.default.listarAdministradores);
+        this.router.get('/listarClientes', usuarioController_1.default.listarClientes);
+        this.router.get('/listarPropietariosdenegocios', usuarioController_1.default.listarPropietariosdenegocios);
         this.router.get('/listarActivos', usuarioController_1.default.listarUsuariosActivos);
         this.router.post('/obtener/:cedula', usuarioController_1.default.obtenerPorCedula);
         this.router.post('/create', usuarioController_1.default.crear);

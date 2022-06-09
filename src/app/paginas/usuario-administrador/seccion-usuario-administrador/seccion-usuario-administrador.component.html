@@ -1,14 +1,14 @@
 
 <ul class="ps-section__links">      
-    <li *ngIf="seccionListaUsuarios" style="background:#D8D8D8; padding:1rem;"><a (click)="mostrarSecProducto(1)">Usuarios Administradores</a></li>
-    <li *ngIf="!seccionListaUsuarios"><a (click)="mostrarSecProducto(1)">Usuarios Administradores</a></li>
+    <li *ngIf="seccionListaUsuarios" style="background:#D8D8D8; padding:1rem;"><a (click)="mostrarSecProducto(1)"> Clientes</a></li>
+    <li *ngIf="!seccionListaUsuarios"><a (click)="mostrarSecProducto(1)"> Clientes</a></li>
     
-    <li *ngIf="seccionNuevoUsuario" style="background:#D8D8D8; padding:1rem;"><a (click)="mostrarSecProducto(2)">Nuevo Administrador</a></li>
-    <li *ngIf="!seccionNuevoUsuario" ><a (click)="mostrarSecProducto(2)">Nuevo Administrador</a></li>
+    <li *ngIf="seccionNuevoUsuario" style="background:#D8D8D8; padding:1rem;"><a (click)="mostrarSecProducto(2)">Propietarios de tiendas</a></li>
+    <li *ngIf="!seccionNuevoUsuario" ><a (click)="mostrarSecProducto(2)">Propietarios de tiendas</a></li>
 
 </ul>
 
-<div class="ps-section__content" *ngIf="seccionListaUsuarios">
+<!-- <div class="ps-section__content" *ngIf="seccionListaUsuarios">
     <div class="row centrar">
         <div class="col-md-12"><h2>Lista de Administradores</h2></div>
     </div>
@@ -30,13 +30,42 @@
             </dx-data-grid>
         </div>
         <div class="col-md-2"></div>
-    </div>
-    
-    
-    
-</div>
+    </div>  
+</div> -->
 
-<div class="ps-section__content" *ngIf="seccionNuevoUsuario">
+ <div class="ps-section__content" *ngIf="seccionListaUsuarios">
+    <div class="row centrar">
+        <div class="col-md-12"><h2>Listado de clientes</h2></div>
+    </div>
+    <div class="row">
+
+        <div class="col-md-12">
+            <dx-data-grid
+                id="gridContainer"
+                [dataSource]="listaUsuariosclientes"
+                [showBorders]="true">
+                <dxi-column dataField="nombres" alignment="center" caption="Nombres"></dxi-column>
+                <dxi-column dataField="apellidos" alignment="center" caption="Apellidos"></dxi-column>
+                <dxi-column dataField="cedula" alignment="center" caption="Cédula"></dxi-column>
+                <dxi-column dataField="direccion" alignment="center" caption="Dirección"></dxi-column>
+                <!-- <dxi-column dataField="fecha_nacimiento" alignment="center" caption="Nombres"></dxi-column> -->
+                <dxi-column dataField="celular" alignment="center" caption="Celular"></dxi-column>
+                <dxi-column dataField="genero" alignment="center" caption="Género"></dxi-column>
+                
+                <dxi-column dataField="correo"  alignment="center"  caption="Correo"></dxi-column>
+                <dxo-export [enabled]="true" fileName="Lista Usuarios Clientes"></dxo-export>
+                    <dxo-paging [pageSize]="4"></dxo-paging>
+                    <dxo-pager
+                        [showPageSizeSelector]="true"
+                        [allowedPageSizes]="[5,8,10]"
+                    ></dxo-pager>
+            </dx-data-grid>
+        </div>
+
+    </div>  
+</div> 
+
+<!-- <div class="ps-section__content" *ngIf="seccionNuevoUsuario">
     <div class="container">
             <div class="ps-form--account ps-tab-root">
 
@@ -75,7 +104,41 @@
             </div>
         </div>
    
-</div>
+</div> -->
+
+<div class="ps-section__content" *ngIf="seccionNuevoUsuario">
+    <div class="row centrar">
+        <div class="col-md-12"><h2>Listado de Propietarios de negocios</h2></div>
+    </div>
+    <div class="row">
+
+        <div class="col-md-12">
+            <dx-data-grid
+                id="gridContainer"
+                [dataSource]="listaUsuariospropietarios"
+                [showBorders]="true">
+                <dxi-column dataField="nombres" alignment="center" caption="Nombres"></dxi-column>
+                <dxi-column dataField="apellidos" alignment="center" caption="Apellidos"></dxi-column>
+                <dxi-column dataField="cedula" alignment="center" caption="Cédula"></dxi-column>
+                <dxi-column dataField="direccion" alignment="center" caption="Dirección"></dxi-column>
+                <!-- <dxi-column dataField="fecha_nacimiento" alignment="center" caption="Nombres"></dxi-column> -->
+                <dxi-column dataField="celular" alignment="center" caption="Celular"></dxi-column>
+                <!-- <dxi-column dataField="genero" alignment="center" caption="Género"></dxi-column> -->
+                
+                <dxi-column dataField="correo"  alignment="center"  caption="Correo"></dxi-column>
+                <dxi-column dataField="nombre_ti"  alignment="center"  caption="Tienda"></dxi-column>
+
+                <dxo-export [enabled]="true" fileName="Lista Usuarios Clientes"></dxo-export>
+                    <dxo-paging [pageSize]="4"></dxo-paging>
+                    <dxo-pager
+                        [showPageSizeSelector]="true"
+                        [allowedPageSizes]="[5,8,10]"
+                    ></dxo-pager>
+            </dx-data-grid>
+        </div>
+
+    </div>  
+</div> 
 
 
 <div *ngIf="mostrarLoading">

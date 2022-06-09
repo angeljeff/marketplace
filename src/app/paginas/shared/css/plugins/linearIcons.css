@@ -2501,6 +2501,9 @@ p {
 .icon-bug:before {
 	content: "\e90a";
 }
+.icon-quote-right:before {
+	content: "\e90a";
+}
 .icon-code:before {
 	content: "\e90b";
 }

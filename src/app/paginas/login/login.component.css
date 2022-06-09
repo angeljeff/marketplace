@@ -19,3 +19,10 @@
 .controles{
     height: 4rem;
 }
+.tex-center a:hover{
+  color: green;
+
+}
+.centrar{
+  text-align:center;
+}

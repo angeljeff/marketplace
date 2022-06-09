@@ -34,6 +34,18 @@ class UsuarioControl {
             res.send(lista);
         });
     }
+    listarClientes(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const lista = yield base_datos_1.default.query('SELECT * FROM usuarios where id_tipo_usuario = 2');
+            res.send(lista);
+        });
+    }
+    listarPropietariosdenegocios(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const lista = yield base_datos_1.default.query('SELECT u.cedula, u.nombres, u.apellidos, u.direccion, u.celular, u.genero, u.correo, u.fecha_nacimiento, u.contrasenia, u.id_tipo_usuario, u.id_cantones, t.nombre_ti FROM usuarios as u INNER JOIN tiendas as t on u.cedula=t.cedula where id_tipo_usuario = 1');
+            res.send(lista);
+        });
+    }
     listarUsuariosActivos(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const lista = yield base_datos_1.default.query('SELECT * FROM usuarios where Activo = 1');

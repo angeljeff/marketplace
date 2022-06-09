@@ -12,6 +12,7 @@ class ProductoRoutes {
     }
     config() {
         this.router.get('/listar', productoController_1.default.listar);
+        this.router.get('/listarprocompletoadmin', productoController_1.default.listarprocompletoadmi);
         this.router.get('/listarProActivos', productoController_1.default.listarProductosActivos);
         this.router.get('/listarProcompletos', productoController_1.default.listarprocompleto);
         this.router.post('/listarporsub/:id_sub_categoria', productoController_1.default.listarporsubcategorias);

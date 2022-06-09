@@ -21,6 +21,10 @@
 .icon-user{
   color: white;
 }
+#imagenpago{
+  width: 11rem;
+  max-height: auto;
+}
 
 .propiedad :hover{
   color: #1db61d;
