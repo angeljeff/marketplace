@@ -52,6 +52,7 @@ export class ProductosTiendaComponent implements OnInit {
   cantidadcorrecta=false;
   existecarrito=false
   contadorcarrito=0
+  desactivarcarrito=false
    
   menus: ArrayMenu[] = [];
 
@@ -261,7 +262,11 @@ export class ProductosTiendaComponent implements OnInit {
     this.productosOrdenDTO.forEach(element=>{
       element.total_producto = element.cantidad * element.precio_producto
       this.totalCompra = this.totalCompra + element.total_producto
-    }) 
+    })
+    if(this.totalCompra==0)
+    this.desactivarcarrito=true
+    if(this.totalCompra!=0)
+    this.desactivarcarrito=false
   }
 
   eliminarRegistro(i: number,  producto : ProductosPorOrdenDTO) {
@@ -290,7 +295,6 @@ export class ProductosTiendaComponent implements OnInit {
   }
 
   calcularTotalOrden(){
-    console.log("entreeee")
     this.nuevoProductoOrden.total_producto = this.nuevoProductoOrden.cantidad * this.nuevoProductoOrden.precio_producto 
     console.log(this.nuevoProductoOrden)
   }
@@ -319,6 +323,8 @@ export class ProductosTiendaComponent implements OnInit {
     for(let i in this.listaprocompleto){
       if(this.listaprocompleto[i].id_tienda== this.idTienda ){
         this.listacompletaproductos.push(this.listaprocompleto[i])
+        
+        
       }
     }
 
@@ -344,13 +350,21 @@ export class ProductosTiendaComponent implements OnInit {
   }
 
   traerDatosTienda(){
+    this.bloquear=false
     this.buscartienda.cedula= this.usuarioLogueado.cedula
     this._tiendaService.obtener_datos_tienda(this.buscartienda).subscribe(
        (res) => {
          var tienda = res as Tienda[];
          if(tienda.length != 0){
            if(tienda[0].id_estado_tienda == 1)
-             this.bloquear = true;
+            for(let i in this.listacompletaproductos){
+             if(this.listacompletaproductos[i].id_tienda== Number(tienda[0].id_tienda) ){
+                this.bloquear=true
+               
+              
+              
+            }
+          }
          }
            
        },

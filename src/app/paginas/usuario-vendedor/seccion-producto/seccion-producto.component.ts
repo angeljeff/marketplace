@@ -89,7 +89,7 @@ export class SeccionProductoComponent implements OnInit {
     this.productonuevo.id_tienda = Number(this.tiendaobtenida.id_tienda)
     this.mensajeLoading = "Guardando Producto";
     this.mostrarLoading = true;
-    console.log(this.productonuevo)
+    
      this._productoService.registrar(this.productonuevo).subscribe(
       (res) => {
         this.mostrarLoading = false;

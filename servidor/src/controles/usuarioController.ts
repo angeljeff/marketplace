@@ -37,6 +37,18 @@ class UsuarioControl {
         const usuario = await pool.query(`SELECT * FROM usuarios where cedula ='${cedula}'`);
         res.send(usuario);
     }
+    public async obtenerPorCedulaycorreo(req: Request, res: Response): Promise<void> {
+        const cedula = req.body.cedula
+        const correo = req.body.correo
+        const usuario = await pool.query(`SELECT * FROM usuarios where cedula ='${cedula}' or correo='${correo}'`);
+        res.send(usuario);
+    }
+    public async obtenerPorCedulaycorreoactualizar(req: Request, res: Response): Promise<void> {
+        const cedula = req.body.cedula
+        const correo = req.body.correo
+        const usuario = await pool.query(`SELECT * FROM usuarios where   correo='${correo}' and cedula !='${cedula}'`);
+        res.send(usuario);
+    }
 
     public async actualizar(req: Request, res: Response): Promise<void> {
         const agrega_usuario = await pool.query("UPDATE usuarios SET  correo= ?, contrasenia = ?, celular = ?, direccion = ?, fecha_nacimiento = ? WHERE cedula = ?",

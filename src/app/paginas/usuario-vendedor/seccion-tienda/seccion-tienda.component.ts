@@ -60,7 +60,7 @@ export class SeccionTiendaComponent implements OnInit {
             this.mostrarFormularioRegistro = false;
             this.tiendainhabilitada=true  
           }else{
-            console.log("entre")
+            
             this.ll()
             this.isNewTienda = false;
             this.existeTienda = true;
@@ -177,8 +177,7 @@ export class SeccionTiendaComponent implements OnInit {
           var horasuma2 = new Date(this.newTienda.hora_cierre);
           horasuma2.setHours(horasuma2.getHours()+5);
           this.hora2 = horasuma2;
-          console.log(this.hora)
-          console.log(this.hora2)
+
          
         },
         (err) => { }

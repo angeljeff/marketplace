@@ -17,8 +17,12 @@ class ControlUsuario {
         this.router.post('/obtener/:cedula', control_usu.obtenerPorCedula);
         this.router.post('/create', control_usu.crear);
         this.router.post('/login', control_usu.login);
+        this.router.post('/obtenerporcorreoyced', control_usu.obtenerPorCedulaycorreo);
+        this.router.post('/obtenerporcorreoycedactualizar', control_usu.obtenerPorCedulaycorreoactualizar);
         this.router.put('/update/:cedula', control_usu.actualizar);
         this.router.put('/eliminar/:cedula', control_usu.eliminar);
+
+       
     }
 
 }

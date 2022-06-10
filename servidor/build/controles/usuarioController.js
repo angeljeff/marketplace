@@ -59,6 +59,22 @@ class UsuarioControl {
             res.send(usuario);
         });
     }
+    obtenerPorCedulaycorreo(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const cedula = req.body.cedula;
+            const correo = req.body.correo;
+            const usuario = yield base_datos_1.default.query(`SELECT * FROM usuarios where cedula ='${cedula}' or correo='${correo}'`);
+            res.send(usuario);
+        });
+    }
+    obtenerPorCedulaycorreoactualizar(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const cedula = req.body.cedula;
+            const correo = req.body.correo;
+            const usuario = yield base_datos_1.default.query(`SELECT * FROM usuarios where   correo='${correo}' and cedula !='${cedula}'`);
+            res.send(usuario);
+        });
+    }
     actualizar(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const agrega_usuario = yield base_datos_1.default.query("UPDATE usuarios SET  correo= ?, contrasenia = ?, celular = ?, direccion = ?, fecha_nacimiento = ? WHERE cedula = ?", [req.body.correo, req.body.contrasenia, req.body.celular, req.body.direccion, req.body.fecha_nacimiento, req.params.cedula]);

@@ -53,7 +53,7 @@
                                 <i class="icon-bag2 text-warning"></i><span><i>{{contadorcarrito}}</i></span>
                             </a>
 
-                            <div class="ps-cart__content">
+                            <div *ngIf="!desactivarcarrito" class="ps-cart__content">
                                 <div class="ps-cart__items">
                                     <div class="ps-product--cart-mobile" *ngFor="let element of productosOrdenDTO;let i = index">
                                         <div class="ps-product__thumbnail">

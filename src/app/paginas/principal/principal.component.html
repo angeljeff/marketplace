@@ -130,7 +130,7 @@
                                 <i class="icon-bag2 text-warning"></i><span><i>{{contadorcarrito}}</i></span>
                             </a>
 
-                            <div class="ps-cart__content">
+                            <div  *ngIf="!desactivarcarrito" class="ps-cart__content">
                                 <div class="ps-cart__items">
                                     <div class="ps-product--cart-mobile" *ngFor="let element of productosOrdenDTO;let i = index">
                                         <div class="ps-product__thumbnail">
@@ -155,7 +155,7 @@
                                     <div class="row">
                                         <div class="col-md-1"></div>
                                         <div class="col-md-10" style="text-align: center;">
-                                                <a class="ps-btn color-principal" (click)="verCarrito()">Ver Carrito</a>
+                                                <a class="ps-btn color-principal"  (click)="verCarrito()">Ver Carrito</a>
                                         </div>
                                         <div class="col-md-1"></div>
                                     </div>
@@ -193,7 +193,9 @@
         </div><!-- End Header Content-->
     </header>
 
-
+    <div *ngIf="mostrarLoading">
+        <app-loading [messagge]="mensajeLoading"></app-loading>
+    </div>
     <br><br><br><br>
     <div id="homepage-6">
     	<div class="ps-home-banner">
@@ -501,6 +503,7 @@
     [height]="'71%'"
     [(visible)]="popupCompra">
     <div *dxTemplate="let data of 'content'">
+        <dx-scroll-view width="100%" height="100%">
         <div class="ps-section__content centrar">
             <div class="row">
                 <div class="col-md-1"></div>
@@ -563,6 +566,7 @@
 
             </div> -->
         </div> 
+    </dx-scroll-view>
 
     </div>
 
@@ -579,6 +583,7 @@
 title="Cantidad no disponible"
 [(visible)]="popupaceptarcantidad">
 <div *dxTemplate="let data of 'content'">
+    <dx-scroll-view width="100%" height="100%">
     <div class="ps-section__content centrar">
         <div class="row">
             
@@ -603,6 +608,7 @@ title="Cantidad no disponible"
         </div>
 
     </div> 
+</dx-scroll-view>
 
 </div>
 
@@ -616,6 +622,7 @@ title="Cantidad no disponible"
 [showTitle]="true"
 [(visible)]="poputinformaciontienda">
 <div *dxTemplate="let data of 'content'">
+    <dx-scroll-view width="100%" height="100%">
     <div class="ps-section__content centrar">
         <div class="row">
             <div class="col-md-12">
@@ -627,7 +634,8 @@ title="Cantidad no disponible"
                 <br>
             </div>           
         </div>
-    </div> 
+    </div>
+</dx-scroll-view>
 </div>
 </dx-popup>
 
@@ -637,6 +645,7 @@ title="Cantidad no disponible"
 [showTitle]="true"
 [(visible)]="poputinformacionpago">
 <div *dxTemplate="let data of 'content'">
+    <dx-scroll-view width="100%" height="100%">
     <div class="ps-section__content centrar">
         <div class="row">
             <div class="col-md-12">
@@ -653,7 +662,8 @@ title="Cantidad no disponible"
                 <br>
             </div>           
         </div>
-    </div> 
+    </div>
+</dx-scroll-view>
 </div>
 </dx-popup>
 

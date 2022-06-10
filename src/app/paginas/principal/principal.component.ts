@@ -50,6 +50,7 @@ export class PrincipalComponent implements OnInit {
   productoAComprar : Productocompleto = new Productocompleto()
   nuevaOrden : OrdenCompra = new OrdenCompra();
   nuevoProductoOrden : ProductosPorOrden = new ProductosPorOrden();
+  desactivarcarrito=false
   
   totalCompra = 0;
   productotemproral: Producto = new Producto();
@@ -65,6 +66,8 @@ export class PrincipalComponent implements OnInit {
   idelatienda="";
   isLoged = false;
   mensajeError = ""
+  mostrarLoading=false
+  mensajeLoading=""
   contadorcarrito=0
   usuarioLogueado : Usuario = new Usuario();
   constructor(public router: Router,
@@ -132,7 +135,7 @@ export class PrincipalComponent implements OnInit {
           this.nuevaOrden = lista[0]
           
           this.traerProductosPorOrden()
-          console.log(this.nuevaOrden)
+          
         }
           
       },
@@ -205,7 +208,12 @@ export class PrincipalComponent implements OnInit {
     this.productosOrdenDTO.forEach(element=>{
       element.total_producto = element.cantidad * element.precio_producto
       this.totalCompra = this.totalCompra + element.total_producto
-    }) 
+    })
+    if(this.totalCompra==0)
+    this.desactivarcarrito=true
+    if(this.totalCompra!=0)
+    this.desactivarcarrito=false
+
   }
 
   validarCantidad(){
@@ -363,15 +371,19 @@ export class PrincipalComponent implements OnInit {
   }
 
   mostrarPopupTienda(idTienda : number){
-    this.popupTienda = true;
+    this.mensajeLoading = "Obteniendo datos";
+    this.mostrarLoading = true;
+    this.datosTienda= new Tienda() 
     this.tiendapoput.id_tienda = idTienda.toString()
     this._tiendaService.obtener_datos_tienda_porid(this.tiendapoput).subscribe(
       (res) => {
         var tienda = res as Tienda[];
-        this.datosTienda = tienda[0]     
+        this.datosTienda = tienda[0]
+        this.popupTienda = true;
+        this.mostrarLoading = false;   
       },
       (err) => { } )
-    
+      
     this.actualizarContadorTienda(this.datosTienda)
    
   }
@@ -379,7 +391,6 @@ export class PrincipalComponent implements OnInit {
   mostrarPopupCompra(producto : Productocompleto){
     this.nuevoProductoOrden.cantidad=0
     this.nuevoProductoOrden.total_producto=0
-    console.log(producto)
     if(this.isLoged){
       this.popupCompra = true;
       this.productoAComprar = producto;
@@ -458,7 +469,6 @@ export class PrincipalComponent implements OnInit {
     this.listaprocompleto=[]
     for (let i in this.listacompletaproductos){
       if(this.nomb == this.listacompletaproductos[i].nombre){
-        console.log("entre" + i)
      
         this.listaprocompleto.push(this.listacompletaproductos[i])
 

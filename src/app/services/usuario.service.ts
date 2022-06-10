@@ -35,5 +35,12 @@ export class UsuarioService{
   obtenerDatoCedula(usuario : Usuario) {
     return this.http.post<any>(this.URL + `/obtener/${usuario.cedula}`, usuario);
   }
+  obtenerDatoCedulaycorreo(usuario : Usuario) {
+    return this.http.post<any>(this.URL + "/obtenerporcorreoyced", usuario);
+  }
+  obtenerDatoCedulaycorreoactualizar(usuario : Usuario) {
+    return this.http.post<any>(this.URL + "/obtenerporcorreoycedactualizar", usuario);
+  }
+
   
 }

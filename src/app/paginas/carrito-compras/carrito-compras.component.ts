@@ -491,7 +491,6 @@ export class CarritoComprasComponent implements OnInit {
       this.productotemproral.id_sub_categoria = lista1[i],
       this._productoService.obtener_porid_subcategorias(this.productotemproral).subscribe(
         (res) => {  var lista = res as Producto[];
-          console.log(lista.length+ "esta es la longitud")
           cuenta++
           for( let j in lista){
             this.listaprocategoria.push(lista[j])

@@ -70,7 +70,6 @@ export class SeccionTiendaAdministradorComponent implements OnInit {
 
 
   editarTienda(tienda: Tienda){
-    console.log(tienda)
     Swal.fire({
       title: this.tituloPopup,
       text: this.textoPopup + tienda.nombre_ti,

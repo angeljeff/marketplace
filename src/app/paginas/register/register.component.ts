@@ -60,7 +60,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this.traerListadoCantones();
     this.traerListadoTiposUsuarios();
-    this.cargarUsuarioLogueado() 
+    this.cargarUsuarioLogueado()  
 
 
     this.route.queryParams.subscribe(params => {
@@ -80,28 +80,49 @@ export class RegisterComponent implements OnInit {
     this._usuarioService.obtenerDatoCedula(usuarioBuscado).subscribe(
       (res) => {
         this.usuarioNuevo = res[0];
+        this.traerListadoTiposUsuarios()
         this.usuarioNuevo.cedula = '0'+this.usuarioNuevo.cedula; 
         this.usuarioNuevo.celular = '0'+this.usuarioNuevo.celular;
         this.fecha = this.usuarioNuevo.fecha_nacimiento;
         console.log(this.usuarioNuevo.fecha_nacimiento)
         //this.nombreCanton = this.listaCantones.find(element => element.id_cantones == this.usuarioNuevo.id_cantones)?.descripcion ?? "" ;
-        console.log(this.nombreCanton)
+ 
       },
       (err) => { }
     )
   }
 
-  obtenerDatos(cedula : string){
-    this._usuarioService.obtenerDatoCedula(this.usuarioNuevo).subscribe(
+  obtenerDatos(){
+    this._usuarioService.obtenerDatoCedulaycorreo(this.usuarioNuevo).subscribe(
       (res) => {
         if (res.length > 0){
-          this.mostrarmensajes("Este usuario ya se encuentra registrado")
+          if(res[0].cedula==this.usuarioNuevo.cedula){
+            this.mostrarmensajes("Este usuario ya se encuentra registrado")
+          }
+          else if (res[0].correo==this.usuarioNuevo.correo){
+            this.mostrarmensajes("Este correo ya se encuentra registrado")
+          }
         }else{
           if(!this.isedicion){
             this.registrar()
             }else{
                this.actualizar()
               } 
+        }
+      },
+      (err) => { }
+    )
+  }
+
+  obtenerDatosactualizar(){
+    this._usuarioService.obtenerDatoCedulaycorreoactualizar(this.usuarioNuevo).subscribe(
+      (res) => {
+        if (res.length > 0){
+           if (res[0].correo==this.usuarioNuevo.correo){
+              this.mostrarmensajes("Este correo ya se encuentra registrado")
+            }
+        }else{
+          this.actualizar()
         }
       },
       (err) => { }
@@ -135,7 +156,6 @@ export class RegisterComponent implements OnInit {
     this.mensajeLoading = "Guardando Usuario";
     this.mostrarLoading = true;
     this.usuarioNuevo.fecha_nacimiento = new Date(this.fecha.toISOString());
-    console.log(this.usuarioNuevo)
      this._usuarioService.registrar(this.usuarioNuevo).subscribe(
       (res) => {
         this.mostrarLoading = false;
@@ -264,7 +284,7 @@ export class RegisterComponent implements OnInit {
                             if(2022 - (this.usuarioNuevo.fecha_nacimiento.getUTCFullYear() )>=18){
                               this.recorrerstring(this.usuarioNuevo.celular)
                               if(this.celular == true){
-                                this.obtenerDatos(this.usuarioNuevo.cedula)
+                                this.obtenerDatos()
                               }else{
                                 this.mostrarmensajes('Su celular debe ser solo números')
                               }
@@ -333,7 +353,7 @@ export class RegisterComponent implements OnInit {
       if(this.usuarioNuevo.celular !=="" && this.usuarioNuevo.celular.length === 10){
         if(this.usuarioNuevo.correo !==""){
           if(this.usuarioNuevo.contrasenia!=="" && this.usuarioNuevo.contrasenia.length >= 8){
-            this.actualizar()
+            this.obtenerDatosactualizar()
 
           }else{
         this.mostrarmensajes('Por favor indique una contraseña más segura')

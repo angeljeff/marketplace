@@ -163,7 +163,7 @@ export class SeccionPagoComponent implements OnInit {
       if(this.todosmetodos[j].id_metodo_pago == this.contactodirecto){
         this.nuevo_metodo_pago.id_metodo_pago_tienda = this.todosmetodos[j].id_metodo_pago_tienda
         if(this.tipoPago1==true){
-          console.log("entre 1 true")
+          
           this.nuevo_metodo_pago.estado_metodo = 1
           this._metodopagotiendaservice.actualizarmetodopagotienda(this.nuevo_metodo_pago).subscribe(
             (res) => {        },
