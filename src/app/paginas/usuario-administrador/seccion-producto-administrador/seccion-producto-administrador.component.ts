@@ -162,6 +162,9 @@ export class SeccionProductoAdministradorComponent implements OnInit {
 
   }
 
+  cancelar(){
+    this.poputaprobacion=false
+  }
 
 
   mostrarSecProducto(numero : number){

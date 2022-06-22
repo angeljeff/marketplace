@@ -271,6 +271,9 @@ export class OrdenesVendedorComponent implements OnInit {
   mostrarPago(){
     this.mostrarP = !this.mostrarP
   }
+  cancelar(){
+    this.poputaprobacion=false
+  }
 
 
   mostrarListaProductos = (e:any) => {  
