@@ -15,6 +15,7 @@ export class CorreoService{
   enviar_correo_contrasenia(correo : Correo) {
     return this.http.post<any>(this.URL + "/enviarcorreocontra", correo);
   }
+  
   enviar_correo_aprobacion_producto(correo : Correo) {
     return this.http.post<any>(this.URL + "/enviarcorreoaprueba", correo);
   }
