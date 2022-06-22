@@ -7,8 +7,8 @@ import { Correo } from "../clases/Correo";
   providedIn: "root",
 })
 export class CorreoService{
- // private URL = 'http://137.184.0.8:3000/bancos';
-  private URL = 'http://localhost:3000/correo';
+  private URL = 'http://137.184.0.8:3000/bancos';
+  //private URL = 'http://localhost:3000/correo';
 
   constructor(private http: HttpClient, private router: Router) {}
 
