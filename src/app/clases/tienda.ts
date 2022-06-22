@@ -12,6 +12,7 @@ export class Tienda{
     id_cantones: number;
     id_estado_tienda: number;
     cedula: string;
+    valor_envio:number;
     constructor(){
        this.nombre_ti = ""
        this.direccion = ""
@@ -25,6 +26,7 @@ export class Tienda{
        this.id_cantones=0
        this.id_estado_tienda=1
        this.cedula="24245"
+       this.valor_envio=0
 
     }
 }

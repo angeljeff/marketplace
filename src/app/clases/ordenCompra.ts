@@ -9,6 +9,7 @@ export class OrdenCompra{
     nombres: string
     cedula_envio: string
     cedula: string
+    observacion_pedido:string
 
     constructor(){
        this.id_orden_compra = 0
@@ -20,6 +21,7 @@ export class OrdenCompra{
        this.cedula_envio = ""
        this.cedula = ""
        this.total = 0
+       this.observacion_pedido= ""
       
     }
 }
@@ -36,6 +38,8 @@ export class OrdenCompraDto{
     cedula: string
     nombre_estado : string
     descripcion : string
+    observacion_pedido:string
+    nombre_ti:string
 
     constructor(){
        this.id_orden_compra = 0
@@ -49,6 +53,27 @@ export class OrdenCompraDto{
        this.descripcion = ""
        this.cedula = ""
        this.total = 0
+       this.observacion_pedido= ""
+       this.nombre_ti=""
+      
+    }
+}
+
+export class OrdenCompraEsta{
+    id_orden_compra : number
+    total:number
+    id_tienda:number
+    nombre_ti:string
+    
+   
+
+
+    constructor(){
+       this.id_orden_compra = 0
+       this.total=0
+       this.id_tienda=0
+       this.nombre_ti=""
+      
       
     }
 }

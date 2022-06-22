@@ -1,10 +1,12 @@
 import { PercentPipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { OrdenCompraEsta } from 'src/app/clases/ordenCompra';
 import { Producto } from 'src/app/clases/producto';
 import { Productocompleto } from 'src/app/clases/Productocompleto';
 import { Tienda } from 'src/app/clases/tienda';
 import { Usuario } from 'src/app/clases/usuario';
+import { OrdenCompraService } from 'src/app/services/ordenCompra.service';
 import { ProductoService } from 'src/app/services/productos.services';
 import { ProductocompletoService } from 'src/app/services/productoscompletos';
 import { TiendaService } from 'src/app/services/tienda.service';
@@ -22,11 +24,12 @@ export class SeccionEstadisticaAdministradorComponent implements OnInit {
 
     seccionEstadisticaProducto = true;
     seccionEstadisticaTienda = false;
+    arregloEstadisticaProductosvendidos: Estadistica [] = []
 
     listaProductos : Producto []=[]
     listaTiendas : Tienda []=[]
 
-    productos: Producto[] = [{
+/*     productos: Producto[] = [{
   nombre: 'Producto1',
   contador : 3,
   descripcion : "jjj",
@@ -231,20 +234,25 @@ export class SeccionEstadisticaAdministradorComponent implements OnInit {
   estado:1,
   imagen :  'https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png',
 }]; 
-
+ */
 
 tituloPopup = ""
 textoPopup = ""
 pipe: any = new PercentPipe('en-US');
 arregloEstadisticaProductos : Estadistica [] = []
 arregloEstadisticaTiendas : Estadistica [] = []
+arregloEstadisticaTiendasventaspresentacion : Estadistica [] = []
+estadisticastienda: OrdenCompraEsta [] = []
+estadisticastiendaventas: OrdenCompraEsta [] = []
+productoestadistica: OrdenCompraEsta = new OrdenCompraEsta();
 
 
 
   constructor( public router : Router,
     public _usuarioService : UsuarioService,
     public _tiendaService : TiendaService,
-    public _productoService : ProductoService) { }
+    public _productoService : ProductoService,
+    public _ordecompraService: OrdenCompraService) { }
 
   ngOnInit( ): void {
     this.traerListadoProductos()
@@ -265,7 +273,8 @@ arregloEstadisticaTiendas : Estadistica [] = []
   traerListadoProductos(){
     this._productoService.listarProductos().subscribe(
       (res) => {  this.listaProductos = res as Producto[];
-                  this.crearObjetoEstadistica()},
+                  this.crearObjetoEstadistica()
+                  this.crearObjetoEstadisticaUnidadesvendidas()},
       (err) => { })
   }
 
@@ -273,7 +282,8 @@ arregloEstadisticaTiendas : Estadistica [] = []
   traerListadoTiendas(){
      this._tiendaService.traerListaTiendas().subscribe(
       (res) => {  this.listaTiendas = res as Tienda[];
-                  this.crearObjetoEstadisticaTienda()},
+                  this.crearObjetoEstadisticaTienda()
+                  this.traer_orden_compra_estadisticas()},
       (err) => { })
   }
 
@@ -290,7 +300,20 @@ arregloEstadisticaTiendas : Estadistica [] = []
       }
     })
   }
-
+  crearObjetoEstadisticaUnidadesvendidas(){
+    this.arregloEstadisticaProductosvendidos=[]
+    var cont = 0;
+    this.listaProductos.sort((a,b) => (a.unidades_vendidas < b.unidades_vendidas ? 1 : -1));
+    this.listaProductos.forEach(element=>{
+      cont++
+      if(cont<=10){
+        var nuevaEstadistica = new Estadistica();
+        nuevaEstadistica.nombre = element.nombre
+        nuevaEstadistica.val = element.unidades_vendidas
+        this.arregloEstadisticaProductosvendidos.push(nuevaEstadistica)
+      }
+    })
+  }
   crearObjetoEstadisticaTienda(){
     var cont = 0;
     this.listaTiendas.sort((a,b) => (a.contador < b.contador ? 1 : -1));
@@ -305,6 +328,59 @@ arregloEstadisticaTiendas : Estadistica [] = []
     })
   }
 
+  traer_orden_compra_estadisticas(){
+     var lista: number[]=[]
+    this._ordecompraService.traerordencompraestadisticas().subscribe(    
+     (res) => {  this.estadisticastienda = res as OrdenCompraEsta[]; 
+      var longitud = this.estadisticastienda.length
+      this.estadisticastiendaventas=[]
+      lista.push(this.estadisticastienda[0].id_tienda)
+      for(let i=0; i<longitud; i++){
+        var contador=0
+        lista.forEach(e=>{
+          if(e==this.estadisticastienda[i].id_tienda){
+            contador=contador+1
+          }
+        })
+        if(contador==0){
+          lista.push(this.estadisticastienda[i].id_tienda)
+
+        }
+
+
+      }
+      var lingitud = lista.length 
+        for(let j=0; j<lingitud; j++){
+          this.productoestadistica = new OrdenCompraEsta(); 
+          var suma=0
+          this.estadisticastienda.forEach(element=>{
+          if(element.id_tienda== lista[j]){
+            this.productoestadistica=element
+            suma=suma+this.productoestadistica.total
+          }
+          })
+          this.productoestadistica.total=suma
+          this.estadisticastiendaventas.push(this.productoestadistica)
+        }
+        console.log(this.estadisticastiendaventas)
+        this.crearObjetoEstadisticaTiendaventas()
+
+      },
+    (err) => { })
+  }
+  crearObjetoEstadisticaTiendaventas(){
+    var cont = 0;
+    this.estadisticastiendaventas.sort((a,b) => (a.total < b.total ? 1 : -1));
+    this.estadisticastiendaventas.forEach(element=>{
+      cont++
+      if(cont<=10){
+        var nuevaEstadistica = new Estadistica();
+        nuevaEstadistica.nombre = element.nombre_ti
+        nuevaEstadistica.val = element.total
+        this.arregloEstadisticaTiendasventaspresentacion.push(nuevaEstadistica)
+      }
+    })
+  }
 
   customizeTooltip = (arg: any) => ({
     text: `${arg.valueText} - ${this.pipe.transform(arg.percent, '1.2-2')}`,

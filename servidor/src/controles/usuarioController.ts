@@ -55,6 +55,13 @@ class UsuarioControl {
         [req.body.correo, req.body.contrasenia, req.body.celular, req.body.direccion, req.body.fecha_nacimiento, req.params.cedula]);
         res.json({ message: 'Usuario ACTUALIZADO' });
     }
+    public async actualizarcontrasenia(req: Request, res: Response): Promise<void> {
+        console.log("es lo que estoy recibiendo"+req.body.contrasenia)
+        console.log("es lo que estoy recibiendo cedula"+req.params.cedula)
+        const agrega_usuario = await pool.query("UPDATE usuarios SET   contrasenia = ? WHERE cedula = ?",
+        [req.body.contrasenia, req.params.cedula]);
+        res.json({ message: 'Usuario ACTUALIZADO' });
+    }
 
     public async eliminar(req: Request, res: Response): Promise<void> {
         const usuario = await pool.query("UPDATE usuarios SET  Activo = 0 WHERE cedula = ?",[ req.params.cedula]);

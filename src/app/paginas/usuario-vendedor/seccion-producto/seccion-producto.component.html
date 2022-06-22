@@ -55,7 +55,9 @@
             <dxi-column dataField="descripcion"  alignment="center"  caption="Descripcion"></dxi-column>
             <dxi-column dataField="precio"  alignment="center"  caption="Precio"></dxi-column>
             <dxi-column dataField="stock"  alignment="center"  caption="stock"></dxi-column>
-            <dxi-column dataField="nombre_estado"  alignment="center"  caption="Estado"></dxi-column>
+            <dxi-column  dataField="nombre_estado"  alignment="center"  caption="Estado" ></dxi-column>
+            <dxi-column  dataField="comen_aprobacion"  alignment="center"  caption="Observación" ></dxi-column>
+            
             <div *dxTemplate="let data of 'cellTemplate'">
                 <img [src]="data.value" />
             </div>
@@ -206,6 +208,26 @@
     </div>
                         
 </div>
+
+
+<div *ngIf="seccionEstadistica">
+    <dx-pie-chart
+        type="doughnut"
+        title="Listado de Productos más vendidos"
+        palette="Soft Pastel"
+        [dataSource]="arregloEstadisticaProductosvendidos">
+        <dxi-series argumentField="nombre">
+            <dxo-label [visible]="true"  position="columns" [customizeText]="customizeLabel" >
+                <dxo-connector [visible]="true"></dxo-connector>
+            </dxo-label>
+        </dxi-series>
+        <dxo-export [enabled]="true"></dxo-export>     
+        <dxo-tooltip [enabled]="true" [customizeTooltip]="customizeTooltip">
+        </dxo-tooltip>
+    </dx-pie-chart>
+
+</div>
+<br><br>
 
 
 <div *ngIf="seccionEstadistica">

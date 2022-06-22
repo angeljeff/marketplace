@@ -11,6 +11,7 @@ class OrdenCompraRoutes {
 
     config() {
         this.router.get('/listar', ordencompraController.listar_orden_compra);
+        this.router.get('/ordencompraEst', ordencompraController.listarordenesparaestadistica);
         this.router.post('/obtener/:id_orden_compra', ordencompraController.obtenerPorid);
         this.router.post('/obtenerOrdenesPorTienda/:id_tienda', ordencompraController.obtenerOrdenesPorTienda);
         this.router.post('/traerOrdenUsuario/:cedula', ordencompraController.obtenerPorUsuarioCedula);

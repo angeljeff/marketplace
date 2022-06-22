@@ -20,6 +20,9 @@ import { OrdenCompraService } from 'src/app/services/ordenCompra.service';
 import { elementAt } from 'rxjs';
 import { DxAutocompleteComponent, DxTextBoxComponent } from 'devextreme-angular';
 import dxAutocomplete from 'devextreme/ui/autocomplete';
+import { transporter } from 'src/app/services/correo/envio_correo';
+import { CorreoService } from 'src/app/services/correoServices';
+import { Correo } from 'src/app/clases/Correo';
 
 @Component({
   selector: 'app-principal',
@@ -38,6 +41,7 @@ export class PrincipalComponent implements OnInit {
   listaprocompleto : Productocompleto []=[]
   listaprocompleto2 : Productocompleto []=[]
   listacompletaproductos : Productocompleto []=[]
+  arregloproductosbuscar : Productocompleto []=[]
   nomb=""
   popupVisible = false
   popupTienda = false
@@ -70,6 +74,7 @@ export class PrincipalComponent implements OnInit {
   mensajeLoading=""
   contadorcarrito=0
   usuarioLogueado : Usuario = new Usuario();
+  correo: Correo = new Correo();
   constructor(public router: Router,
     public _productoService: ProductoService,
     public authenService : AuthenService,
@@ -78,14 +83,18 @@ export class PrincipalComponent implements OnInit {
     public _productocomletoService: ProductocompletoService,
     public _productoPorOrdenService: ProductoPorOrdenService,
     public _ordenCompraService: OrdenCompraService,
-    public _tiendaService: TiendaService) { }
+    public _tiendaService: TiendaService,
+    public _correoService: CorreoService) { }
 
   ngOnInit(): void {
     this.cargarUsuarioLogueado();
     this.mandarMensaje();
     this.mostrarproductos();
+   
+    
 
   }
+
 
   cargarUsuarioLogueado() {
     new Promise((res, err) => {
@@ -138,6 +147,19 @@ export class PrincipalComponent implements OnInit {
           
         }
           
+      },
+      (err) => {  Swal.fire("Error al guardar","Su producto no pudo ser agregado","error")} 
+    )
+  }
+
+  enviarcorreocontrasenia(){
+    this.correo.email="angeljeff00@gmail.com";
+    this.correo.asunto="Recuperación de contraseña";
+    this.correo.mensaje="este  es el mensaje";
+    this._correoService.enviar_correo_contrasenia(this.correo).subscribe(
+      (res) => { console.log(res);
+        
+        
       },
       (err) => {  Swal.fire("Error al guardar","Su producto no pudo ser agregado","error")} 
     )
@@ -229,26 +251,6 @@ export class PrincipalComponent implements OnInit {
     if(this.productoAComprar.stock < this.nuevoProductoOrden.cantidad){
       this.popupaceptarcantidad=true;
 
-/*       Swal.fire({
-        title: 'Cantidad no disponible',
-        text: "La cantidad solicitada excede el stock disponible del producto, se asignó por defecto el stock disponible",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'ok',
-        cancelButtonText :'cancelar',
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.nuevoProductoOrden.cantidad = this.productoAComprar.stock;
-          this.calcularTotalOrden()
-         
-        }else{
-          this.popupCompra=false;
-
-        }
-      }) */
-/*       this.mensajeError = "La cantidad solicitada excede el stock disponible del producto, se asignó por defecto el stock disponible"
-      this.nuevoProductoOrden.cantidad = this.productoAComprar.stock;
-      this.calcularTotalOrden() */
     }else{
       this.mensajeError = ""
       this.calcularTotalOrden()
@@ -293,9 +295,7 @@ export class PrincipalComponent implements OnInit {
         }
       }
 
-    }
-
-    
+    }   
     
   }
 
@@ -310,7 +310,8 @@ export class PrincipalComponent implements OnInit {
           this._productoPorOrdenService.registrar(this.nuevoProductoOrden).subscribe(
             (res) => { 
               this.popupCompra = false;
-              this.traerProductosPorOrden()
+              this.traerOrdenCompraUsuario()
+              /* this.traerProductosPorOrden() */
               Swal.fire({
                 title: 'Producto Agregado',
                 text: "El producto se agregó a su carrito de compras",
@@ -468,8 +469,7 @@ export class PrincipalComponent implements OnInit {
   buscarproducto(){
     this.listaprocompleto=[]
     for (let i in this.listacompletaproductos){
-      if(this.nomb == this.listacompletaproductos[i].nombre){
-     
+      if(this.nomb.toLowerCase() == this.listacompletaproductos[i].nombre.toLocaleLowerCase()){
         this.listaprocompleto.push(this.listacompletaproductos[i])
 
       }
@@ -544,6 +544,8 @@ mostrardatostienda(){
     this._productocomletoService.traerpro_completos().subscribe(
       (res) => {  this.listaprocompleto = res as Productocompleto[];
         this.listacompletaproductos= this.listaprocompleto
+        this.arreglo_productos_buscar();
+
         console.log(this.listacompletaproductos)
        
               },
@@ -551,6 +553,32 @@ mostrardatostienda(){
   )
 
   }
+  arreglo_productos_buscar(){
+    this.arregloproductosbuscar= [];
+    for (let i in this.listacompletaproductos){
+      
+      if(i=="0"){
+        this.arregloproductosbuscar.push(this.listacompletaproductos[i])
+      }
+      else{
+        var contado=0
+        for(let j in this.arregloproductosbuscar){
+          if(this.listacompletaproductos[i].nombre.toLowerCase() == this.arregloproductosbuscar[j].nombre.toLowerCase()){
+            contado=contado+1;
+            
+          }
+        }
+        if(contado==0){
+          this.arregloproductosbuscar.push(this.listacompletaproductos[i])
+        }
+        
+     
+      }
+
+    }
+
+  }
+
 
   ponerenelinpute(){
    

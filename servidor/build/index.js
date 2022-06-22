@@ -25,6 +25,7 @@ const pagoporordenRouter_1 = __importDefault(require("./routes/pagoporordenRoute
 const productosxordenRouter_1 = __importDefault(require("./routes/productosxordenRouter"));
 const tipoUsuarioRouter_1 = __importDefault(require("./routes/tipoUsuarioRouter"));
 const VentasRouter_1 = __importDefault(require("./routes/VentasRouter"));
+const CorreoRouter_1 = __importDefault(require("./routes/CorreoRouter"));
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
@@ -62,6 +63,7 @@ class Server {
         this.app.use('/productosxorden', productosxordenRouter_1.default);
         this.app.use('/tipousuario', tipoUsuarioRouter_1.default);
         this.app.use('/ventas', VentasRouter_1.default);
+        this.app.use('/correo', CorreoRouter_1.default);
     }
     start() {
         this.app.listen(this.app.get('port'), () => {

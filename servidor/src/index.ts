@@ -21,6 +21,7 @@ import pago_orden from './routes/pagoporordenRouter';
 import productosxorden from './routes/productosxordenRouter';
 import tipo_usuario from './routes/tipoUsuarioRouter';
 import ventas from './routes/VentasRouter';
+import correo from './routes/CorreoRouter';
 
 
 
@@ -73,6 +74,7 @@ class Server {
         this.app.use('/productosxorden',productosxorden);
         this.app.use('/tipousuario',tipo_usuario);
         this.app.use('/ventas',ventas);
+        this.app.use('/correo',correo);
         
 
     }

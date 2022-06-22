@@ -7,9 +7,9 @@ import { Usuario } from "../clases/usuario";
 })
 export class UsuarioService{
   //private URL = 'http://192.168.100.251:3000/usuario';
-  private URL = "http://137.184.0.8:3000/usuario";
+  //private URL = "http://137.184.0.8:3000/usuario";
 
-  //private URL = 'http://localhost:3000/usuario';
+  private URL = 'http://localhost:3000/usuario';
 
   constructor(private http: HttpClient) {}
 
@@ -31,6 +31,13 @@ export class UsuarioService{
   actualizar(usuario : Usuario) {
     return this.http.put<any>(this.URL + `/update/${usuario.cedula}`, usuario);
   }
+  
+  actualizar_contrasenia(usuario : Usuario) {
+    console.log("es la contr aqq recibo "+usuario.contrasenia)
+   
+    return this.http.put<any>(this.URL + `/update_cont/${usuario.cedula}`, usuario);
+  }
+
 
   obtenerDatoCedula(usuario : Usuario) {
     return this.http.post<any>(this.URL + `/obtener/${usuario.cedula}`, usuario);

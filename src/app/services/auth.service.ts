@@ -12,6 +12,7 @@ export class AuthService {
   loggedIn:boolean;
   ingresousuario: Usuario = new Usuario();
   usuario: Usuario = new Usuario();
+
  
 
 
@@ -58,8 +59,10 @@ export class AuthService {
 
           },
           error => { 
+            
             Swal.fire({
               title: "Usuario o contraseña Incorrecto",
+              
               showClass: {popup: 'animate__animated animate__fadeInDown'},
               hideClass: {popup: 'animate__animated animate__fadeOutUp'}
             })

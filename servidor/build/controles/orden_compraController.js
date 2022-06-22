@@ -37,14 +37,14 @@ class OrdencompraController {
     obtenerPorUsuarioCedulaDTO(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const cedula = req.params.cedula;
-            const ord = yield base_datos_1.default.query(`SELECT orden.id_orden_compra , orden.total, orden.direccion, orden.celular, orden.nombres, orden.cedula_envio, orden.id_estado_pedido, orden.id_metodo_pago_tienda, orden.cedula, estado.nombre_estado, pago.descripcion, ti.nombre_ti FROM orden_compra as orden INNER JOIN metodo_pago_tienda as met on orden.id_metodo_pago_tienda = met.id_metodo_pago_tienda INNER JOIN metodo_pago as pago on met.id_metodo_pago = pago.id_metodo_pago INNER JOIN estado_pedido as estado on orden.id_estado_pedido = estado.id_estado_pedido INNER JOIN tiendas as ti ON met.id_tienda = ti.id_tienda where orden.cedula ='${cedula}'`);
+            const ord = yield base_datos_1.default.query(`SELECT orden.id_orden_compra , orden.total, orden.direccion, orden.celular, orden.nombres, orden.cedula_envio, orden.id_estado_pedido, orden.id_metodo_pago_tienda, orden.cedula, estado.nombre_estado, pago.descripcion, ti.nombre_ti, orden.observacion_pedido FROM orden_compra as orden INNER JOIN metodo_pago_tienda as met on orden.id_metodo_pago_tienda = met.id_metodo_pago_tienda INNER JOIN metodo_pago as pago on met.id_metodo_pago = pago.id_metodo_pago INNER JOIN estado_pedido as estado on orden.id_estado_pedido = estado.id_estado_pedido INNER JOIN tiendas as ti ON met.id_tienda = ti.id_tienda where orden.cedula ='${cedula}'`);
             res.send(ord);
         });
     }
     obtenerOrdenesPorTienda(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const idTienda = req.params.id_tienda;
-            const ord = yield base_datos_1.default.query(`SELECT orden.id_orden_compra , orden.total, orden.direccion, orden.celular, orden.nombres, orden.cedula_envio, orden.id_estado_pedido, orden.id_metodo_pago_tienda, orden.cedula, estado.nombre_estado, pago.descripcion, ti.nombre_ti FROM orden_compra as orden INNER JOIN metodo_pago_tienda as met on orden.id_metodo_pago_tienda = met.id_metodo_pago_tienda INNER JOIN metodo_pago as pago on met.id_metodo_pago = pago.id_metodo_pago INNER JOIN estado_pedido as estado on orden.id_estado_pedido = estado.id_estado_pedido INNER JOIN tiendas as ti ON met.id_tienda = ti.id_tienda where met.id_tienda = '${idTienda}'`);
+            const ord = yield base_datos_1.default.query(`SELECT orden.id_orden_compra , orden.total, orden.direccion, orden.celular, orden.nombres, orden.cedula_envio, orden.id_estado_pedido, orden.id_metodo_pago_tienda, orden.cedula, estado.nombre_estado, pago.descripcion, ti.nombre_ti, orden.observacion_pedido FROM orden_compra as orden INNER JOIN metodo_pago_tienda as met on orden.id_metodo_pago_tienda = met.id_metodo_pago_tienda INNER JOIN metodo_pago as pago on met.id_metodo_pago = pago.id_metodo_pago INNER JOIN estado_pedido as estado on orden.id_estado_pedido = estado.id_estado_pedido INNER JOIN tiendas as ti ON met.id_tienda = ti.id_tienda where met.id_tienda = '${idTienda}'`);
             res.send(ord);
         });
     }
@@ -62,8 +62,14 @@ class OrdencompraController {
     }
     actualizar_estado(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const agrega_pro = yield base_datos_1.default.query("UPDATE orden_compra SET  id_estado_pedido = ? WHERE id_orden_compra = ?", [req.body.id_estado_pedido, req.params.id_orden_compra]);
+            const agrega_pro = yield base_datos_1.default.query("UPDATE orden_compra SET  id_estado_pedido = ?, observacion_pedido = ? WHERE id_orden_compra = ?", [req.body.id_estado_pedido, req.body.observacion_pedido, req.params.id_orden_compra]);
             res.json({ message: 'Producto actualizado ' });
+        });
+    }
+    listarordenesparaestadistica(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const lista_ti_ac = yield base_datos_1.default.query('SELECT distinct ord.id_orden_compra, ord.total, p.id_tienda, ti.nombre_ti  FROM orden_compra as ord inner join productos_por_orden as pro on ord.id_orden_compra = pro.id_orden_compra inner join productos as p on pro.id_producto= p.id_producto inner join tiendas as ti on p.id_tienda = ti.id_tienda  where ord.id_estado_pedido = 2 order by p.id_tienda');
+            res.send(lista_ti_ac);
         });
     }
 }

@@ -30,6 +30,8 @@ import { Productos } from '../usuario-vendedor/usuario-vendedor.component';
 export class CarritoComprasComponent implements OnInit {
   @Input() mostrarMenu : boolean = true;
   mostrarPaso1 = true;
+  sUBTOTAL = 0;
+  _IVA=0;
   totalCompra = 0;
   popupVisible = false;
   mostrarPaso2 = false;
@@ -58,8 +60,10 @@ export class CarritoComprasComponent implements OnInit {
   productoaenviar: Producto = new Producto();
   camposedicion=false
   comprobarcedula:any ;
+  envio=0
   datosPago : DatosPago = new DatosPago()
   listaDatosCuenta : DatosPagopresentacion [] = []
+
 
   ordenes: OrdenCompra[] = []; 
   productosPorOrdenDTO: ProductosPorOrdenDTO[] = [];
@@ -84,7 +88,7 @@ export class CarritoComprasComponent implements OnInit {
   ngOnInit(): void {
     this.cargarUsuarioLogueado();
     //this.calcularTotal();
-    this.productoMostrado = this.productos[0];
+    /*  this.productoMostrado = this.productos[0];  */
   }
 
   cargarUsuarioLogueado() {
@@ -153,6 +157,10 @@ export class CarritoComprasComponent implements OnInit {
       (res) => { 
         var tiendas = res as Tienda[];
         this.datosTienda = tiendas[0];
+        this.envio=this.datosTienda.valor_envio
+        this._IVA=  Number((0.12 * this.sUBTOTAL).toFixed(2))
+        this.totalCompra= this.sUBTOTAL+ this._IVA + this.envio
+        console.log(this.datosTienda)
       },
       (err) => {  Swal.fire("Error al guardar","Su producto no pudo ser agregado","error")} 
     )
@@ -283,15 +291,20 @@ export class CarritoComprasComponent implements OnInit {
 
 
   calcularTotal(){
+    this.sUBTOTAL=0
     this.totalCompra = 0;
     this.productosPorOrdenDTO.forEach(element=>{
       this.idTienda = element.id_tienda
+      console.log("este es el id tienda"+this.idTienda)
       element.total_producto = element.cantidad * element.precio_producto
-      this.totalCompra = this.totalCompra + element.total_producto
+      this.sUBTOTAL=this.sUBTOTAL + element.total_producto
+      /* this.totalCompra = this.totalCompra + element.total_producto */
     }) 
     this.contador++
     if(this.contador == 1)
       this.traerMetodosPagoTienda()
+      /* LOS VALORES DE IVA - SUBTOTAL + ENVIO , ESTAN AL MOMENTO DE TRAER LA TIENDA */
+      
   }
 
  

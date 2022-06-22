@@ -81,6 +81,14 @@ class UsuarioControl {
             res.json({ message: 'Usuario ACTUALIZADO' });
         });
     }
+    actualizarcontrasenia(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log("es lo que estoy recibiendo" + req.body.contrasenia);
+            console.log("es lo que estoy recibiendo cedula" + req.params.cedula);
+            const agrega_usuario = yield base_datos_1.default.query("UPDATE usuarios SET   contrasenia = ? WHERE cedula = ?", [req.body.contrasenia, req.params.cedula]);
+            res.json({ message: 'Usuario ACTUALIZADO' });
+        });
+    }
     eliminar(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const usuario = yield base_datos_1.default.query("UPDATE usuarios SET  Activo = 0 WHERE cedula = ?", [req.params.cedula]);

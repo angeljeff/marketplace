@@ -7,9 +7,9 @@ import { Router } from "@angular/router";
 })
 export class TipoUsuarioService{
  
-  private URL = "http://137.184.0.8:3000/tipousuario";
+  //private URL = "http://137.184.0.8:3000/tipousuario";
 
-  //private URL = 'http://localhost:3000/tipousuario';
+  private URL = 'http://localhost:3000/tipousuario';
 
   constructor(private http: HttpClient, private router: Router) {}
 

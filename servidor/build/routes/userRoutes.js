@@ -22,6 +22,7 @@ class ControlUsuario {
         this.router.post('/obtenerporcorreoyced', usuarioController_1.default.obtenerPorCedulaycorreo);
         this.router.post('/obtenerporcorreoycedactualizar', usuarioController_1.default.obtenerPorCedulaycorreoactualizar);
         this.router.put('/update/:cedula', usuarioController_1.default.actualizar);
+        this.router.put('/update_cont/:cedula', usuarioController_1.default.actualizarcontrasenia);
         this.router.put('/eliminar/:cedula', usuarioController_1.default.eliminar);
     }
 }

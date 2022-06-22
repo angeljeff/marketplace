@@ -162,7 +162,7 @@
             <hr>
 
             <div class="d-flex flex-row-reverse">
-                <div class="p-2"><h3>Total <span>${{totalCompra}}</span></h3></div>             
+                <div class="p-2"><h3>Total <span>${{sUBTOTAL}}</span></h3></div>             
             </div>
             <div class="ps-section__cart-actions">
                 <a class="ps-btn color-principal" (click)="seguirComprando()">
@@ -182,7 +182,7 @@
 <div class="ps-checkout ps-section--shopping" *ngIf="mostrarPaso2">
     <div class="container">
         <div class="col-md-12 centrar">
-            <h1>Verificar Pedido</h1><br>
+            <h1>Verificar Pedido </h1><h2>{{this.datosTienda.nombre_ti}}</h2><br>
         </div>
 
         <div class="ps-section__content">
@@ -240,8 +240,12 @@
                                             </tbody>
 
                                         </table>
+                                        <h4 class="text-right">Subtotal  &nbsp;&nbsp;&nbsp; <span>${{sUBTOTAL}}</span></h4>
+                                        <h4 class="text-right">IVA 12% &nbsp;&nbsp;&nbsp;<span>${{_IVA}}</span></h4>
+                                        <h4 class="text-right">Valor envío &nbsp;&nbsp;&nbsp;&nbsp;<span>${{envio}}</span></h4>
+
                                         
-                                        <h2 class="text-right">Total <span>${{totalCompra}}</span></h2>
+                                        <h3 class="text-right">Total &nbsp;&nbsp;<span>${{totalCompra}}</span></h3>
                                     </div>
                                 </div>
 

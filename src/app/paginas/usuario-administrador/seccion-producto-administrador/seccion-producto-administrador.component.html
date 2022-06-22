@@ -145,5 +145,42 @@
 </div>
 
 
+<dx-popup
+[width]="'30%'"
+[height]="'60%'"
+[showTitle]="true"
+title={{tituloPopup}}
+[(visible)]="poputaprobacion">
+<div *dxTemplate="let data of 'content'">
+    <dx-scroll-view width="100%" height="100%">
+    <div class="ps-section__content centrar">
+        <div class="row">
+            <div class="col-md-12">
+                <img id="imagenpago" src="../../../assets/warning.svg" alt="">
+            </div>
+            <div class="col-md-12">
+                <br>
+                <h3 style="text-align: justify;" class="text-center">{{textoPopup}} {{actualizacionproducto.nombre}} </h3>
+                <label for="" style="font-size:2.2rem; margin-top:2rem;text-align: start;">Observación: </label>  
+                <dx-text-area [height]="90" [maxLength]="500" [(value)]="actualizacionproducto.comen_aprobacion" placeholder="Indica una observación para el producto"></dx-text-area>
+                <br>
+            </div>          
+        </div>
+        <div class="row text-center">
+            <br>
+            <div class="col-md-1"></div>
+            
+            <div  class="col-md-4"><br><button class="btn color-principal confirmar" (click)="actualizar_estado_pro()" >confirmar</button></div>
+            <div class="col-md-2"></div>
+            <div class="col-md-4"><br><button class="btn btn-danger cancelar"  >cancelar</button></div>
+            <div class="col-md-1"></div>
+            <br>
+        </div> 
+    </div>
+</dx-scroll-view>
+</div>
+</dx-popup>
+
+
 
                         

@@ -80,7 +80,9 @@
     <!--=====================================
     Login - Register Content
     ======================================--> 
-
+    <div *ngIf="mostrarLoading">
+        <app-loading [messagge]="mensajeLoading"></app-loading>
+    </div>
     <div class="ps-my-account">
         <div class="container">
             <div class="ps-form--account ps-tab-root">
@@ -97,11 +99,11 @@
                         <div class="ps-form__content">
                             <h5>Ingresa en tu cuenta</h5>
                             <div class="form-group">
-                                <dx-text-box [(value)]="user" class="controles" placeholder="Cédula" [disabled]="false"></dx-text-box>
+                                <dx-text-box [maxLength]="10" [(value)]="user" class="controles" placeholder="Cédula" [disabled]="false"></dx-text-box>
                             </div>
                             <div class="form-group form-forgot">
                                <!--  <dx-text-box [(value)]="password" class="controles" placeholder="Contraseña" [disabled]="false"></dx-text-box> -->
-                                <dx-text-box [(value)]="password" class="controles" placeholder="Contraseña" stylingMode="filled" [(mode)]="passwordMode"  > <dxi-button
+                                <dx-text-box [maxLength]="100" [(value)]="password" class="controles" placeholder="Contraseña" stylingMode="filled" [(mode)]="passwordMode"  > <dxi-button
                                     name="today" location="after" [options]="passwordButton" ></dxi-button></dx-text-box>
                             </div>
                             <div>
@@ -109,7 +111,10 @@
                             </div>
                             <br>
                             <div class="form-group tex-center col-lg-12 centrar">
-                                <a routerLink="/register" class="text-center" >¿No tienes cuenta? REGÍSTRATE</a>
+                                No tienes cuenta <a routerLink="/register" class="text-center" style="text-decoration-line: underline; color:#6FD1ED">REGÍSTRATE</a>
+                            </div>
+                            <div class="form-group tex-center col-lg-12 recordar" *ngIf="recuperarcont">
+                                <a  class="text-center" (click)="recuperar_contrasena()">He olvidado mi contraseña</a>
                             </div>
                             <br>
                         </div>

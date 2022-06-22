@@ -20,6 +20,7 @@ class ControlUsuario {
         this.router.post('/obtenerporcorreoyced', control_usu.obtenerPorCedulaycorreo);
         this.router.post('/obtenerporcorreoycedactualizar', control_usu.obtenerPorCedulaycorreoactualizar);
         this.router.put('/update/:cedula', control_usu.actualizar);
+        this.router.put('/update_cont/:cedula', control_usu.actualizarcontrasenia);
         this.router.put('/eliminar/:cedula', control_usu.eliminar);
 
        

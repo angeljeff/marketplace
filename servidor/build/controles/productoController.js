@@ -82,13 +82,13 @@ class ProductoController {
     }
     actualizar(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const agrega_producto = yield base_datos_1.default.query("UPDATE productos SET  nombre= ?, precio = ? , descripcion = ? , stock = ? , imagen = ? , id_sub_categoria = ? WHERE id_producto = ?", [req.body.nombre, req.body.precio, req.body.descripcion, req.body.stock, req.body.imagen, req.body.id_sub_categoria, req.params.id_producto]);
+            const agrega_producto = yield base_datos_1.default.query("UPDATE productos SET  nombre= ?, precio = ? , descripcion = ? , stock = ? , imagen = ? , id_sub_categoria = ?, id_estado_pro = ? WHERE id_producto = ?", [req.body.nombre, req.body.precio, req.body.descripcion, req.body.stock, req.body.imagen, req.body.id_sub_categoria, req.body.id_estado_pro, req.params.id_producto]);
             res.json({ message: 'Producto actualizado ' });
         });
     }
     actualizar_estado(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const agrega_producto = yield base_datos_1.default.query("UPDATE productos SET  id_estado_pro = ? WHERE id_producto = ?", [req.body.id_estado_pro, req.params.id_producto]);
+            const agrega_producto = yield base_datos_1.default.query("UPDATE productos SET  id_estado_pro = ?, comen_aprobacion = ? WHERE id_producto = ?", [req.body.id_estado_pro, req.body.comen_aprobacion, req.params.id_producto]);
             res.json({ message: 'Producto actualizado ' });
         });
     }
@@ -100,7 +100,7 @@ class ProductoController {
     }
     actualizar_stock(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const agrega_producto = yield base_datos_1.default.query("UPDATE productos SET  stock = ? WHERE id_producto = ?", [req.body.stock, req.params.id_producto]);
+            const agrega_producto = yield base_datos_1.default.query("UPDATE productos SET  stock = ?, unidades_vendidas=? WHERE id_producto = ?", [req.body.stock, req.body.unidades_vendidas, req.params.id_producto]);
             res.json({ message: 'Producto actualizado ' });
         });
     }

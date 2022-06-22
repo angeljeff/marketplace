@@ -57,7 +57,7 @@ class TiendaController {
     }
     actualizar_datos_tienda(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const actualiza_tienda = yield base_datos_1.default.query("UPDATE tiendas SET  nombre_ti= ?, direccion = ? , correo_electronico = ? , hora_apertura = ?, hora_cierre = ?, descripcion = ?, telefono = ? , id_cantones = ? WHERE id_tienda = ?", [req.body.nombre_ti, req.body.direccion, req.body.correo_electronico, req.body.hora_apertura, req.body.hora_cierre, req.body.descripcion, req.body.telefono, req.body.id_cantones, req.params.id_tienda]);
+            const actualiza_tienda = yield base_datos_1.default.query("UPDATE tiendas SET  nombre_ti= ?, direccion = ? , correo_electronico = ? , hora_apertura = ?, hora_cierre = ?, descripcion = ?, telefono = ? , valor_envio = ?, id_cantones = ? WHERE id_tienda = ?", [req.body.nombre_ti, req.body.direccion, req.body.correo_electronico, req.body.hora_apertura, req.body.hora_cierre, req.body.descripcion, req.body.telefono, req.body.valor_envio, req.body.id_cantones, req.params.id_tienda]);
             res.json({ message: 'tienda actualizada' });
         });
     }

@@ -24,3 +24,20 @@
     background-color: #1db61d;
     color: white;
 }
+#imagenpago{
+    width: 8rem;
+    height: auto;
+
+}
+
+.confirmar{
+    width: 12.5rem;
+    height: auto;
+    font-size: 2.5rem;
+}
+.cancelar{
+    width: 12rem;
+    height: auto;
+    font-size: 2.5rem;
+
+}

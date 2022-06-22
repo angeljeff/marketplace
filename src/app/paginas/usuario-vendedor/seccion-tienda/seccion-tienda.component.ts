@@ -191,13 +191,14 @@ export class SeccionTiendaComponent implements OnInit {
         if(this.newTienda.correo_electronico!==""){
           if(this.newTienda.id_cantones!==0 ){
             if(this.newTienda.telefono !=="" && this.newTienda.telefono.length==10 ){
-              if(this.newTienda.descripcion!=="" && this.newTienda.descripcion.length>= 10){
-                if(this.hora !== undefined){
-                  if(this.hora2 !== undefined){
-                    this.recorrerstring(this.newTienda.telefono)
-                    if (this.celular ==true){
-                      if(!this.isedicion){
-                      this.registrar()
+              if(this.newTienda.valor_envio !==0 && this.newTienda.valor_envio!==null   ){
+               if(this.newTienda.descripcion!=="" && this.newTienda.descripcion.length>= 10){
+                  if(this.hora !== undefined){
+                    if(this.hora2 !== undefined){
+                      this.recorrerstring(this.newTienda.telefono)
+                      if (this.celular ==true){
+                        if(!this.isedicion){
+                        this.registrar()
                     }else{
                       this.actualizar()
                     }  
@@ -213,6 +214,9 @@ export class SeccionTiendaComponent implements OnInit {
                 }
               }else{
             this.mostrarmensajes('Por favor establezca una breve descripción de la tienda')
+          }
+            }else{
+          this.mostrarmensajes('Por favor indique un precio por el envío de los productos')
           }
   
             }else{

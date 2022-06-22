@@ -49,6 +49,7 @@ export class SeccionProductoComponent implements OnInit {
     listaproductos : Producto []=[]
     listasubcategorias : Subcategorias []=[]
     arregloEstadisticaProductos : Estadistica [] = []
+    arregloEstadisticaProductosvendidos : Estadistica [] = []
     listacategorias : Categorias []=[]
     pipe: any = new PercentPipe('en-US');
   
@@ -315,16 +316,37 @@ export class SeccionProductoComponent implements OnInit {
      this.listaproductos.push(element)
     })
     this.crearObjetoEstadistica()
+    this.crearObjetoEstadisticaUnidadesvendidas();
 
   }
 
   crearObjetoEstadistica(){
     this.arregloEstadisticaProductos=[]
+    var cont = 0;
+    this.listaproductos.sort((a,b) => (a.contador < b.contador ? 1 : -1));
     this.listaproductos.forEach(element=>{
+      cont++
+      if(cont<=10){
       var nuevaEstadistica = new Estadistica();
       nuevaEstadistica.nombre = element.nombre
       nuevaEstadistica.val = element.contador
       this.arregloEstadisticaProductos.push(nuevaEstadistica)
+      }
+    })
+  }
+
+  crearObjetoEstadisticaUnidadesvendidas(){
+    this.arregloEstadisticaProductosvendidos=[]
+    var cont = 0;
+    this.listaproductos.sort((a,b) => (a.unidades_vendidas < b.unidades_vendidas ? 1 : -1));
+    this.listaproductos.forEach(element=>{
+      cont++
+      if(cont<=10){
+        var nuevaEstadistica = new Estadistica();
+        nuevaEstadistica.nombre = element.nombre
+        nuevaEstadistica.val = element.unidades_vendidas
+        this.arregloEstadisticaProductosvendidos.push(nuevaEstadistica)
+      }
     })
   }
 

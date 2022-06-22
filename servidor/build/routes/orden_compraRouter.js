@@ -12,6 +12,7 @@ class OrdenCompraRoutes {
     }
     config() {
         this.router.get('/listar', orden_compraController_1.default.listar_orden_compra);
+        this.router.get('/ordencompraEst', orden_compraController_1.default.listarordenesparaestadistica);
         this.router.post('/obtener/:id_orden_compra', orden_compraController_1.default.obtenerPorid);
         this.router.post('/obtenerOrdenesPorTienda/:id_tienda', orden_compraController_1.default.obtenerOrdenesPorTienda);
         this.router.post('/traerOrdenUsuario/:cedula', orden_compraController_1.default.obtenerPorUsuarioCedula);

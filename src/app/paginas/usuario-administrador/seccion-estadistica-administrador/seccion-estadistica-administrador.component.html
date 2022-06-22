@@ -7,6 +7,27 @@
     <li *ngIf="!seccionEstadisticaTienda" ><a (click)="mostrarSecEstadisticas(2)">Tiendas</a></li>
 </ul>
 
+
+<div class="ps-section__content" *ngIf="seccionEstadisticaProducto">
+    <dx-pie-chart
+        type="doughnut"
+        title="Listado de Productos más vendidos"
+        palette="Soft Pastel"
+        [dataSource]="arregloEstadisticaProductosvendidos">
+        <dxi-series argumentField="nombre">
+            <dxo-label [visible]="true"  position="columns" [customizeText]="customizeLabel" >
+                <dxo-connector [visible]="true"></dxo-connector>
+            </dxo-label>
+        </dxi-series>
+        <dxo-export [enabled]="true"></dxo-export>     
+        <dxo-tooltip [enabled]="true" [customizeTooltip]="customizeTooltip">
+        </dxo-tooltip>
+    </dx-pie-chart>
+<br><br>
+<hr>
+<br>
+</div>
+
 <div class="ps-section__content" *ngIf="seccionEstadisticaProducto">
     <dx-pie-chart
         type="doughnut"
@@ -25,6 +46,27 @@
 
 </div>
 
+<div class="ps-section__content" *ngIf="seccionEstadisticaTienda">
+    <dx-chart
+            title="Listado de Tiendas con más ventas"
+            [dataSource]="arregloEstadisticaTiendasventaspresentacion"
+            [rotated]="true">
+            <dxi-series color="#79cac4" type="bar" argumentField="nombre" valueField="val">
+                <dxo-label [visible]="true" backgroundColor="#c18e92"></dxo-label>
+            </dxi-series>
+            <dxo-argument-axis>
+                <dxo-label></dxo-label>
+            </dxo-argument-axis>
+            <dxi-value-axis>
+                <dxo-tick [visible]="false"></dxo-tick>
+                <dxo-label [visible]="false"></dxo-label>
+            </dxi-value-axis>
+            <dxo-export [enabled]="true"></dxo-export>
+            <dxo-legend [visible]="false"></dxo-legend>
+        </dx-chart>   
+</div>
+
+<br><br><br>
 <div class="ps-section__content" *ngIf="seccionEstadisticaTienda">
     <dx-chart
             title="Listado de Tiendas más visitadas"
