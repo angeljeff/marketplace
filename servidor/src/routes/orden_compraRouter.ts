@@ -19,6 +19,9 @@ class OrdenCompraRoutes {
         this.router.post('/agregar', ordencompraController.agregar_orden_compra);
         this.router.put('/actualizar/:id_orden_compra', ordencompraController.actualizar_orden_compra);
         this.router.put('/actualizarEstado/:id_orden_compra', ordencompraController.actualizar_estado);
+        this.router.put('/actualizarEstadoComprobante/:id_orden_compra', ordencompraController.actualizar_estado_porsubidadecomprobante);
+        
+        
     }
 
 }

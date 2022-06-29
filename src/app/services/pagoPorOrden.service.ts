@@ -20,6 +20,10 @@ export class PagoPorOrdenService{
     return this.http.post<any>(this.URL + `/traerPagoPorIdOrden/${orden.id_orden_compra}`, orden);
   }
 
+  actualizarPagoporIdOrden(pago : PagoPorOrden ) {
+    return this.http.put<any>(this.URL + `/actualizarpago/${pago.id_orden_compra}`, pago);
+  }
+
 
   
 }

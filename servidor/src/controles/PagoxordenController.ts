@@ -26,6 +26,11 @@ class PagoporordenController {
         const ord = await pool.query('SELECT * FROM pago_por_orden where id_orden_compra =  ? ', [req.params.id_orden_compra]);
         res.send(ord);
     }
+    public async actualizarPagoporIdorden(req: Request, res: Response): Promise<void> {
+        const agrega_orden = await pool.query("UPDATE pago_por_orden SET  imagen_comprobante = ? WHERE id_orden_compra = ?",
+        [req.body.imagen_comprobante, req.params.id_orden_compra]);
+        res.json({ message: 'Producto actualizado ' });
+    }
 
 
    

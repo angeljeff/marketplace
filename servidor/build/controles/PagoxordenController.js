@@ -39,6 +39,12 @@ class PagoporordenController {
             res.send(ord);
         });
     }
+    actualizarPagoporIdorden(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const agrega_orden = yield base_datos_1.default.query("UPDATE pago_por_orden SET  imagen_comprobante = ? WHERE id_orden_compra = ?", [req.body.imagen_comprobante, req.params.id_orden_compra]);
+            res.json({ message: 'Producto actualizado ' });
+        });
+    }
 }
 const pagoordenController = new PagoporordenController;
 exports.default = pagoordenController;

@@ -1,12 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { DatosEnvio } from 'src/app/clases/datosEnvio';
 import { OrdenCompra, OrdenCompraDto } from 'src/app/clases/ordenCompra';
+import { PagoPorOrden } from 'src/app/clases/pagoPorOrden';
 import { Pedido } from 'src/app/clases/pedido';
 import { Producto } from 'src/app/clases/producto';
 import { ProductosPorOrdenDTO } from 'src/app/clases/productosOrdenCompra';
 import { Usuario } from 'src/app/clases/usuario';
 import { OrdenCompraService } from 'src/app/services/ordenCompra.service';
+import { PagoPorOrdenService } from 'src/app/services/pagoPorOrden.service';
 import { ProductoPorOrdenService } from 'src/app/services/productoPorOrden.service';
 import Swal from 'sweetalert2';
 
@@ -16,6 +18,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./seccion-pedido.component.css']
 })
 export class SeccionPedidoComponent implements OnInit {
+  @ViewChild('archivo') archivo:ElementRef | undefined;
   @Input() objetoUsuario: Usuario = new Usuario();
   mostrarPaso1 = true;
   seccionLista = false;
@@ -31,6 +34,7 @@ export class SeccionPedidoComponent implements OnInit {
   dataContactoDirecto = false;
   dataTransferencia = false;
   listaPedidos : OrdenCompraDto [] = []
+  popupsubircomprobante=false
 
   ordenes: OrdenCompra[] = []; 
   nuevaOrden :OrdenCompra = new OrdenCompra()
@@ -41,11 +45,15 @@ export class SeccionPedidoComponent implements OnInit {
   pago2 = false;
   disablePago2 = true;
   imagenPago = ""
+  actualizacionordenestado:OrdenCompra = new OrdenCompra()
+  actualizacionordencomprobante:PagoPorOrden = new PagoPorOrden
+  
 
 
   constructor(private router: Router,
     public _ordenesService : OrdenCompraService,
-    public _productoPorOrdenService : ProductoPorOrdenService) { }
+    public _productoPorOrdenService : ProductoPorOrdenService,
+    public _pagoporordenService: PagoPorOrdenService) { }
 
   ngOnInit(): void {
     this.traerListadoOrdenes()
@@ -114,12 +122,72 @@ export class SeccionPedidoComponent implements OnInit {
   
 
   mostrarListaProductos = (e:any) => {  
-    console.log(e.row.data)
     this.nuevaOrden.id_orden_compra = e.row.data.id_orden_compra
     this.traerProductosPorOrden() 
     this.popupListaProductos = true;
     this.nombreTienda = (e.row.data.nombre_ti).toUpperCase();
   }
+  mostrar = (e:any) => {  
+    var datos = e.row.data
+    if(datos.nombre_estado =="Rechazado")
+      return true;
+    else
+    return false;
+  }
+
+  subircomprobante = (e:any) => {
+    this.imagenPago=""
+    this.popupsubircomprobante=true
+    this.actualizacionordenestado= new OrdenCompra
+    this.actualizacionordencomprobante= new PagoPorOrden
+    this.actualizacionordenestado=e.row.data
+    this.actualizacionordencomprobante.id_orden_compra=this.actualizacionordenestado.id_orden_compra
+    
+
+
+  }
+
+  cerrar(){
+    this.popupsubircomprobante=false
+    if(this.archivo!==undefined){
+      this.archivo.nativeElement.value = null;
+    }
+  }
+
+  validarImagenPago(){
+    if( this.imagenPago == "")
+      Swal.fire("No existe comprobante","Ingrese su comprobante de Pago","error")
+    else{
+      this.actualizacionordencomprobante.imagen_comprobante=this.imagenPago
+      this.actualizarcomprobante()
+    } 
+  }
+
+  actualizarcomprobante(){
+    this._pagoporordenService.actualizarPagoporIdOrden(this.actualizacionordencomprobante).subscribe(
+      (res) => {
+        this.actualizacionordenestado.id_estado_pedido= 4
+        this._ordenesService.actualizarEstadoOrdenPorComprobante(this.actualizacionordenestado).subscribe(
+          (res) => {
+            this.popupsubircomprobante=false
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Tu pedido ha sido actualizado',
+              showConfirmButton: false,
+              timer: 1500
+            })
+            this.listaPedidos  = []
+            if(this.archivo!==undefined){
+              this.archivo.nativeElement.value = null;
+            }
+            this.traerListadoOrdenes()
+          },(err) => { Swal.fire('error')}
+        ) 
+      },(err) => { Swal.fire('error')}
+    ) 
+  }
+
 
 
 

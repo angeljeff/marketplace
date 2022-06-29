@@ -30,6 +30,9 @@
                 <dxi-column type="buttons"  caption="Lista Productos">
                     <dxi-button icon="far fa-list-alt" [onClick]="mostrarListaProductos"></dxi-button>    
                 </dxi-column>
+                <dxi-column type="buttons" caption="Subir comprobante">
+                    <dxi-button  icon="fa fa-file" [visible]="mostrar" [onClick]="subircomprobante"></dxi-button>    
+                </dxi-column>
             <!--   <dxi-column type="buttons"  caption="Eliminar">
                     <dxi-button icon="fas fa-trash-alt" [onClick]="deleteProduct"></dxi-button>    
                 </dxi-column> -->
@@ -116,5 +119,43 @@
          </dx-scroll-view>
         
     </div>
-   
+</dx-popup>
+
+<dx-popup
+[width]="'30%'"
+[height]="'40%'" 
+[showCloseButton]="false"
+[showTitle]="true"
+title="Subir comprobante"
+
+
+[(visible)]="popupsubircomprobante">
+<div *dxTemplate="let data of 'content'">
+    <dx-scroll-view width="100%" height="100%">
+    <div class="ps-section__content centrar">
+        <div class="row">
+            
+            <div class="col-md-12">
+               <br>
+               <h4>Vuelve a subir el comprobante de pago correcto</h4>
+                <br>
+                <img src="{{imagenPago}}" alt="">
+                <br><br>
+                <input type="file" #archivo class="btn color-principal" (change)="handleFileSelect($event)" height="4em" width="auto">
+                <br><br><br>
+
+                <div class="row">
+                    <br><br>
+                    <div class="col-md-6"><button class="btn color-principal" style="font-size:1.6rem ; width: 8rem;"  (click)="validarImagenPago()">Subir</button></div>
+                    
+                    <div class="col-md-6"><button class="btn btn-danger" style="font-size:1.6rem ; width: 8rem;" (click)="cerrar()">cancelar</button></div>                
+                    <br>
+                </div>
+                <br>
+            </div>           
+        </div>
+    </div> 
+</dx-scroll-view>
+</div>
+
 </dx-popup>

@@ -66,6 +66,12 @@ class OrdencompraController {
             res.json({ message: 'Producto actualizado ' });
         });
     }
+    actualizar_estado_porsubidadecomprobante(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const agrega_pro = yield base_datos_1.default.query("UPDATE orden_compra SET  id_estado_pedido = ? WHERE id_orden_compra = ?", [req.body.id_estado_pedido, req.params.id_orden_compra]);
+            res.json({ message: 'Producto actualizado ' });
+        });
+    }
     listarordenesparaestadistica(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const lista_ti_ac = yield base_datos_1.default.query('SELECT distinct ord.id_orden_compra, ord.total, p.id_tienda, ti.nombre_ti  FROM orden_compra as ord inner join productos_por_orden as pro on ord.id_orden_compra = pro.id_orden_compra inner join productos as p on pro.id_producto= p.id_producto inner join tiendas as ti on p.id_tienda = ti.id_tienda  where ord.id_estado_pedido = 2 order by p.id_tienda');
