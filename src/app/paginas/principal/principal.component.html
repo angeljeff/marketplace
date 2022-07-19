@@ -193,7 +193,7 @@
         </div><!-- End Header Content-->
     </header>
 
-    <div *ngIf="mostrarLoading">
+    <div *ngIf="mostrarLoading==true">
         <app-loading [messagge]="mensajeLoading"></app-loading>
     </div>
     <br><br><br><br>
@@ -292,7 +292,7 @@
                                     <button  class="color-principal btn" (click)="mostrarPopupCompra(element)">Comprar</button>
                                </div>
                                  <div class="col-md-6">
-                                     <button class="color-principal btn" (click)="mostrarPopupTienda(element.id_tienda)">Ver Tienda</button>
+                                     <button class="color-principal btn" (click)="mostrarPopupTienda(element)">Ver Tienda</button>
                                  </div>
                              </div>
                              <div class="row buttonP" *ngIf="inhabilitarboton == false">
@@ -300,7 +300,7 @@
                                      <button  class="color-principal btn" (click)="mostrarPopupCompra(element)">Comprar</button>
                                 </div>
                                 <div class="col-md-6">
-                                    <button class="color-principal btn" (click)="mostrarPopupTienda(element.id_tienda)">Ver Tienda</button>
+                                    <button class="color-principal btn" (click)="mostrarPopupTienda(element)">Ver Tienda</button>
                                 </div>
                             </div>
                              <br>
@@ -438,15 +438,31 @@
 
 
 <dx-popup
-    [width]="'50%'"
-    [height]="'50%'"
+    [width]="'80%'"
+    [height]="'69%'"
     [title]="datosTienda.nombre_ti.toUpperCase()"
     [closeOnOutsideClick]="true"
     [(visible)]="popupTienda">
     <div *dxTemplate="let data of 'content'">
+        <!-- <dx-scroll-view width="100%" height="100%"> -->
         <div class="row">
-            <div class="col-md-4"><img src="../../../assets/img/shop-2.jpg" alt=""></div>
-            <div class="col-md-8">
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-12 " style="text-align: left;">
+                        <div class="row">
+                            <div class="col-md-7">
+                               <ngx-star-rating [ngModel]="ratingValor" [disabled]="true" [id]="'rating'"></ngx-star-rating> 
+                            </div>
+                            <div class="col-md-5">
+                                <label for="" style="margin-top:0.4rem">( {{contadorvotos}} votos)</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                         <img src="../../../assets/img/shop-2.jpg" alt=""></div>
+                    </div>
+                </div>
+            <div class="col-md-5">
                 <div class="row">
                     <div class="col-md-12"><h2></h2></div>
                     <div class="col-md-12">
@@ -485,14 +501,115 @@
                             <div class="col-md-8">{{datosTienda.descripcion}}</div>
                         </div>
                     </div> 
-                    <div class="col-md-12"><h3></h3></div>
+                    <div class="col-md-12">
+                        <div class="row centrar">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10">
+                                <br>
+                                <br><button class="color-principal btn2"  (click)="verProductosTienda(datosTienda.id_tienda)">Ver Productos Tienda</button>
+                            </div>
+                            <div class="col-md-1"></div>   
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-12" *ngIf="!habilitarcomentario">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <form [formGroup]="form">
+                                    <ngx-star-rating formControlName="rating"  [id]="'ratinng'" ></ngx-star-rating><p class="texto">Califica la tienda</p>
+        <!--                             <div>Rating: {{form.value.rating}}</div>
+                                    <p>form is valid: {{ form.valid ? 'true' : 'false' }}</p> -->
+                                </form>
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-12" >
+                        <div class="row" *ngIf="!habilitarcomentario">
+                            <div class="col-md-10">
+                                <div class="form-group" >
+                                    <dx-text-area [height]="70" [maxLength]="500" [(value)]="nuevo_comentario.comentario" placeholder="Agrega un comentario"></dx-text-area>
+                                </div>
+                            </div>
+                            <div class="col-md-2 align-self-center">
+                                <button class="color-principal btn3" (click)="registrarcomentario()" ><i class="fa fa-play" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                        <h4>Todos los comentarios:</h4>
+                        <div class="row">
+                            <div class="col-md-12" >
+                                <div class="container-fluid border border-secundary tamano overflow-auto" >
+                                    <div class="col-md-12 text-center" *ngIf="!existencomentarios">
+                                        <br><label for="" style="color:#CECDC9;"> Sin comentarios</label>
+                                    </div>
+                                    
+                                    <div class="col-md-12"  *ngFor="let element of TraerComentariosTiendaa" >
+                                        <div class="row" *ngIf="existencomentarios">
+                                            <div class="col-md-12" > 
+                                                <br><div class="icon" style="margin-top: 1.2rem;"><i class="fa fa-user"></i> {{element.nombres}} {{element.apellidos}} {{element.fecha}}</div><hr>
+                                            </div>
+                                            <div class="col-md-12  border border-secundary"> 
+                                                <label for="" style="margin-top:0.3rem;">{{element.comentario}}</label>
+                                            </div>         
+                                        </div>
+                                    </div>
+                                    <br>
+
+                                    <!--                                    <div *ngFor="let element of TraerComentariosTiendaa">
+                                    <div class="col-md-12" >
+                                        <div class="icon" style="margin-top: 1.2rem;"><i class="fa fa-user"></i>{{element.nombres}}{{element.apellidos}} {{element.fecha}}</div><hr>
+                                    </div>
+                                    <div class="col-md-12" >
+                                        <div class="form-group" >
+                                            <dx-text-area [height]="40" [maxLength]="500"  value={{element.comentario}} placeholder="Agrega un comentario" [disabled]="true"></dx-text-area>
+                                        </div>  
+                                    </div>
+                                    </div> -->
+                    <!--                 <div class="col-md-12">
+                                        <div class="icon" style="margin-top: 1.2rem;"><i class="fa fa-user"></i>nombre cliente 12/20/12</div><hr>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group" >
+                                            <dx-text-area [height]="60" [maxLength]="500"  value="noes mi comentario pero necesito saber si se ve bien pilassss" placeholder="Agrega un comentario" [disabled]="true"></dx-text-area>
+                                        </div>  
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="icon" style="margin-top: 1.2rem;"><i class="fa fa-user"></i>nombre cliente 12/20/12</div><hr>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group" >
+                                            <dx-text-area [height]="60" [maxLength]="500"  value="noes mi comentario pero necesito saber si se ve bien pilassss" placeholder="Agrega un comentario" [disabled]="true"></dx-text-area>
+                                        </div>  
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="icon" style="margin-top: 1.2rem;"><i class="fa fa-user"></i>nombre cliente 12/20/12</div><hr>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group" >
+                                            <dx-text-area [height]="60" [maxLength]="500"  value="noes mi comentario pero necesito saber si se ve bien pilassss" placeholder="Agrega un comentario" [disabled]="true"></dx-text-area>
+                                        </div>  
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="icon" style="margin-top: 1.2rem;"><i class="fa fa-user"></i>nombre cliente 12/20/12</div><hr>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group" >
+                                            <dx-text-area [height]="60" [maxLength]="500"  value="noes mi comentario pero necesito saber si se ve bien pilassss" placeholder="Agrega un comentario" [disabled]="true"></dx-text-area>
+                                        </div>  
+                                    </div> -->
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="row centrar">
-            <div class="col-md-12"><button class="color-principal btn2"  (click)="verProductosTienda(datosTienda.id_tienda)">Ver Productos Tienda</button></div>
-            
-        </div>
+  <!--   </dx-scroll-view> -->
+
     </div>
    
 </dx-popup>
@@ -649,6 +766,7 @@ title="Cantidad no disponible"
     <div class="ps-section__content centrar">
         <div class="row">
             <div class="col-md-12">
+                
                 <img id="imagenpago" src="../../../assets/pagoseguro.svg" alt="">
             </div>
             <div class="col-md-12">
@@ -660,6 +778,38 @@ title="Cantidad no disponible"
                     <li style="text-align: start;">Transferencia o depósito bancario</li>
                 </ul>
                 <br>
+            </div>           
+        </div>
+    </div>
+</dx-scroll-view>
+</div>
+</dx-popup>
+
+
+<dx-popup
+[width]="'25%'"
+[height]="'30%'"
+[showTitle]="true"
+[(visible)]="poputcalificatienda">
+<div *dxTemplate="let data of 'content'">
+    <dx-scroll-view width="100%" height="100%">
+    <div class="ps-section__content centrar">
+        <div class="row">
+            <div class="col-md-12">
+                <br>
+                <h3>{{mensajecalifa}}</h3>
+            </div>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <br><button class="btn btn-info"  (click)="cerrarpoput()">Ok</button>
+                    </div>
+                    <div class="col-md-4"></div>
+                </div>
+            
+
+
             </div>           
         </div>
     </div>

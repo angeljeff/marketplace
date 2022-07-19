@@ -37,6 +37,8 @@ export class RegisterComponent implements OnInit {
   passwordButton: any;
   isLoged = false;
   nombreUsuario = ""
+  poputterminos=false;
+  aceptarterminos=false;
   usuarioLogueado : Usuario = new Usuario();
 
   
@@ -229,6 +231,15 @@ export class RegisterComponent implements OnInit {
           },
           err => {})
     });
+  }
+
+  mostrar_check(){
+    console.log("aceptar terminos"+this.aceptarterminos)
+  }
+
+  mostrar_condiciones(){
+    this.poputterminos=true;
+
   }
 
   irPerfilUsuario(){

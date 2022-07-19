@@ -60,7 +60,11 @@
                 <dxi-column dataField="numero_cuenta" caption="Numero cuenta" ></dxi-column>
                 <dxi-column dataField="cedula_titular" caption="Cedula" ></dxi-column>
                 <dxi-column dataField="tipo_cuenta" caption="tipo" dataType="string"></dxi-column>
-                
+                <dxi-column type="buttons" caption="Acciones">
+                    <dxi-button text="Activar" [visible]="mostrar2" [onClick]="Activar" cssClass="btn"></dxi-button>
+                    <dxi-button text="Inactivar" [visible]="mostrar"  [onClick]="Inactivar" cssClass="btn"></dxi-button>    
+
+                </dxi-column>
 
             <!--  <dxi-column type="buttons" dataField="bt1" caption="Descargar" width="6%">
                     <dxi-button icon="fa fa-download" [onClick]="downloadFile"></dxi-button>   

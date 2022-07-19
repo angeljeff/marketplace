@@ -74,6 +74,7 @@ export class CarritoComprasComponent implements OnInit {
   cedula = ""
   nuevaOrden : OrdenCompra = new OrdenCompra()
   datosTienda : Tienda = new Tienda();
+  mostrarnohaycuenta=false
 
   constructor(private router: Router,
         public authenService : AuthenService,
@@ -159,7 +160,8 @@ export class CarritoComprasComponent implements OnInit {
         this.datosTienda = tiendas[0];
         this.envio=this.datosTienda.valor_envio
         this._IVA=  Number((0.12 * this.sUBTOTAL).toFixed(2))
-        this.totalCompra= this.sUBTOTAL+ this._IVA + this.envio
+        this.totalCompra= Number((this.sUBTOTAL+ this._IVA + this.envio).toFixed(2))
+        
         console.log(this.datosTienda)
       },
       (err) => {  Swal.fire("Error al guardar","Su producto no pudo ser agregado","error")} 
@@ -170,6 +172,10 @@ export class CarritoComprasComponent implements OnInit {
     this._datosPagoService.consultardatosbancarios(this.datosPago).subscribe(
       (res) => { 
         this.listaDatosCuenta = res as DatosPagopresentacion[];
+        if(this.listaDatosCuenta.length==0)
+          this.mostrarnohaycuenta=true
+        else
+        this.mostrarnohaycuenta=false
       },
       (err) => {  Swal.fire("error")} 
     )
@@ -438,6 +444,15 @@ export class CarritoComprasComponent implements OnInit {
       confirmButtonText: 'OK',
     }).then((result) => {
       if (result.isConfirmed) {
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Deja tu reseña',
+          text:'Ya puedes añadir un comentario a la tienda, dinos cómo fue tu experienca para conocimiento de los demás usuarios',
+          showConfirmButton: false,
+          timer: 3200
+        })
+        
         this.router.navigate(["/principal"]);
       }
     }) 

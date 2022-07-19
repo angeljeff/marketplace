@@ -22,6 +22,7 @@ import productosxorden from './routes/productosxordenRouter';
 import tipo_usuario from './routes/tipoUsuarioRouter';
 import ventas from './routes/VentasRouter';
 import correo from './routes/CorreoRouter';
+import comentario from './routes/comentariotiendaRouter';
 
 
 
@@ -75,6 +76,7 @@ class Server {
         this.app.use('/tipousuario',tipo_usuario);
         this.app.use('/ventas',ventas);
         this.app.use('/correo',correo);
+        this.app.use('/comentario',comentario);
         
 
     }

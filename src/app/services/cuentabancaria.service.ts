@@ -19,5 +19,14 @@ export class DatoscuentabancoService{
     return this.http.post<any>(this.URL + `/obtenermetodos/${cuentabanco.id_metodo_pago_tienda}`, cuentabanco);
   }
 
+  consultartodosdatosbancarios(cuentabanco : DatosPago) {
+    return this.http.post<any>(this.URL + `/obtenerdatospago/${cuentabanco.id_metodo_pago_tienda}`, cuentabanco);
+  }
+
+  actualizarestadocuentabancaria(cuentabanco : DatosPago) {
+    return this.http.put<any>(this.URL + `/activar/${cuentabanco.id_cuenta_banco}`, cuentabanco);
+  }
+
+
   
 }

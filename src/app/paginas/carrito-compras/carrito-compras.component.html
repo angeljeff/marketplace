@@ -291,7 +291,7 @@
                                              <div class="col-md-10">
                                                 <div class="row">
                                                     <div class="col-md-2"></div>
-                                                    <div class="col-md-10" >
+                                                    <div class="col-md-10" *ngIf="!mostrarnohaycuenta">
                                                         <div class="row ayuda card" style="margin-top: 1em;" *ngFor="let element of listaDatosCuenta;let i = index">
                                                             <div class="col-md-12 centrar"><p><span style="font-weight: bold;">Banco: </span>{{element.descripcion}}</p></div>
                                                             <div class="col-md-12"><p><span style="font-weight: bold;">Titular Cuenta: </span>{{element.titular_cuenta}}</p></div>
@@ -301,6 +301,10 @@
                                                             <br>
                                                         </div>
                                                         
+                                                    </div>
+                                                    <div class="col-md-10" *ngIf="mostrarnohaycuenta">
+                                                        <label for="" class="text-center"> No hay cuentas bancarias habilitadas por el momento, intente con otro método de pago</label>
+
                                                     </div>
                                                 </div>
                                              </div>

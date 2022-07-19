@@ -17,6 +17,7 @@ class OrdenCompraRoutes {
         this.router.post('/obtenerOrdenesPorTienda/:id_tienda', orden_compraController_1.default.obtenerOrdenesPorTienda);
         this.router.post('/traerOrdenUsuario/:cedula', orden_compraController_1.default.obtenerPorUsuarioCedula);
         this.router.post('/traerOrdenUsuarioDTO/:cedula', orden_compraController_1.default.obtenerPorUsuarioCedulaDTO);
+        this.router.post('/traerOrdencomentarios', orden_compraController_1.default.ordencompracomentario);
         this.router.post('/agregar', orden_compraController_1.default.agregar_orden_compra);
         this.router.put('/actualizar/:id_orden_compra', orden_compraController_1.default.actualizar_orden_compra);
         this.router.put('/actualizarEstado/:id_orden_compra', orden_compraController_1.default.actualizar_estado);

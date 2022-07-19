@@ -24,6 +24,9 @@ export class FormularioComponent implements OnInit {
   cuentabanco: DatosPago= new DatosPago()
   listadoDatosPagoBanco: DatosPago[] = [];
    listafinal:DatosPagopresentacion  [] = [];
+   actualizarpago: DatosPago = new DatosPago()
+   tituloPopup=""
+   textoPopup=""
 
 
   menu: string[] = [
@@ -147,8 +150,9 @@ export class FormularioComponent implements OnInit {
   
   }
   obtenercuentas(){
+    this.listafinal= []
     this.cuentabanco.id_metodo_pago_tienda= this.idPago
-    this.cuentabancaria.consultardatosbancarios(this.cuentabanco).subscribe(
+    this.cuentabancaria.consultartodosdatosbancarios(this.cuentabanco).subscribe(
       (res)=> {this.listafinal = res as DatosPagopresentacion[]
                if(this.listafinal.length !=0){
                  for(let i in this.listafinal){
@@ -160,6 +164,69 @@ export class FormularioComponent implements OnInit {
 
 
   }
+
+  mostrar = (e:any) => {  
+    var datos = e.row.data
+    if(datos.activacion ==1)
+      return true;
+    else
+    return false;
+  }
+
+  mostrar2 = (e:any) => {  
+    var datos = e.row.data
+    if(datos.activacion ==2)
+      return true;
+    else
+    return false;
+  }
+
+
+  Activar = (e:any) => { 
+    this.actualizarpago= new DatosPago
+    this.actualizarpago=e.row.data
+    this.actualizarpago.activacion = 1;
+    this.tituloPopup = "Activar cuenta"
+    this.textoPopup = "¿Está seguro de volver a activar esta cuenta bancaria ?"
+    this.editardatospago(this.actualizarpago)  
+  }
+
+Inactivar = (e:any) => { 
+  this.actualizarpago= new DatosPago
+  this.actualizarpago=e.row.data
+  this.actualizarpago.activacion = 2;
+  this.tituloPopup = "Inactivar cuenta"
+  this.textoPopup = "¿Está seguro de inactivar esta cuenta bancaria ?"
+  this.editardatospago(this.actualizarpago)  
+  } 
+
+
+  editardatospago(datos: DatosPago){
+    this.actualizarpago= datos
+      Swal.fire({
+      title: this.tituloPopup,
+      text: this.textoPopup ,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'OK',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.cuentabancaria.actualizarestadocuentabancaria(this.actualizarpago).subscribe(
+          (res) => { Swal.fire("Ok","Cuenta bancaria actualizada","success");
+          this.obtenercuentas()
+                    
+                  },
+                   
+          (err) => { Swal.fire('error')}
+        ) 
+      }
+    }) 
+    
+  
+  }
+
+ 
 
   validarCedula(cedula: string) {
     if (cedula.length === 10) {

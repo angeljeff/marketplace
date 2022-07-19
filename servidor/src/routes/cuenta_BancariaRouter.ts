@@ -14,6 +14,8 @@ class CuentaBanRoutes {
         this.router.post('/obtener/:id_cuenta_banco', cuentabancoController.obtenerPorid);
         this.router.post('/Agregarcuentabanco', cuentabancoController.agregar_cuenta_banco);
         this.router.post('/obtenermetodos/:id_metodo_pago_tienda', cuentabancoController.obtenerPoridmetodopago);
+        this.router.put('/activar/:id_cuenta_banco', cuentabancoController.actualizarestado);
+        this.router.post('/obtenerdatospago/:id_metodo_pago_tienda', cuentabancoController.obtenerPoridmetodopagotodos);
     }
 
 }

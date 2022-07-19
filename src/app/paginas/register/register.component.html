@@ -180,10 +180,19 @@
                                         <dxi-validation-rule type="required"  message="Contraseña es requerida"></dxi-validation-rule>     
                                     </dx-validator><dxi-button
                                     name="today" location="after" [options]="passwordButton" ></dxi-button></dx-text-box>
-                                </div>   
+                                </div>
+                            <div class="form-group si" *ngIf="!isedicion">
+                                <dx-check-box [value]="false" [(ngModel)]="aceptarterminos" (click)="mostrar_check()"></dx-check-box><a  class="text-center terminos" (click)="mostrar_condiciones()">   Términos y condiciones</a>
+                                </div>  
+                                
 
                             <div class="form-group" *ngIf="!isedicion">
-                                <button class="ps-btn ps-btn--fullwidth color-principal" (click)="verificarcampos()">Registrar</button>
+                                <div  *ngIf="!aceptarterminos">
+                                <button class="ps-btn ps-btn--fullwidth bot"  (click)="verificarcampos()" disabled>Registrar</button>
+                                </div>
+                                <div  *ngIf="aceptarterminos">
+                                    <button class="ps-btn ps-btn--fullwidth color-principal" (click)="verificarcampos()">Registrar</button>
+                                </div>
                             </div>
 
                             <div class="form-group"  *ngIf="isedicion">
@@ -201,7 +210,58 @@
 
         </div>
 
-    </div>
-
-	
+    </div>	
 </body>
+
+
+<dx-popup
+[width]="'60%'"
+[height]="'50%'"
+[showTitle]="true"
+title="Términos y condiciones"
+[(visible)]="poputterminos">
+<div *dxTemplate="let data of 'content'">
+    <dx-scroll-view width="100%" height="100%">
+    <div class="ps-section__content centrar">
+        <div class="row">
+            <div class="col-md-12">
+                
+            </div>
+            <div class="col-md-12">
+                <br>
+                <h4>Propietarios de negocios</h4><hr>
+                <label for="" style="text-align: justify;">Cómo propietario de negocio se deben aceptar los siguientes términos y condiciones para poder vender los productos dentro de la plataforma. </label>  
+                <ul>
+                    <li style="text-align: start;">Está legalmente habilitado para ofrecer y vender los productos que ofrecerá a los clientes.</li>
+                    <li style="text-align: start;">Es propietario y/o comercializador legítimo de todos los Productos</li>
+                    <li style="text-align: start;">Los Productos han sido diseñados y fabricados de conformidad con las leyes del país en que se encuentran registrados</li>
+                    <li style="text-align: start;">Los Productos cumplen con todas las especificaciones de calidad requeridas para su comercialización bajo las leyes de la República de Ecuador, incluyendo sin limitarse a ello, los registros y permisos sanitarios aplicables.</li>
+                    <li style="text-align: start;">Respecto de los Productos fabricados en el exterior, éstos han sido importados cumpliendo los requisitos legales y tienen todas las licencias, permisos y autorizaciones para su comercialización en Ecuador</li>
+                    <li style="text-align: start;">Agromarket tendrá derecho a rechazar la información entregada por el Vendedor, así como a pedir aclaraciones, complementaciones y correcciones de manera que ésta sea completa, veraz y suficiente.</li>
+                    <li style="text-align: start;">El precio de venta de los Productos en el e-Marketplace será determinado por el Vendedor, a su entera discreción, sin perjuicio que deberá ofrecer precios preferentes a los clientes </li>
+                    <li style="text-align: start;">Será de exclusiva responsabilidad del Vendedor mantener un stock suficiente de los Productos ofrecidos a través del e-Marketplace y mantener indemne a Agromarket de cualquier reclamo relacionado con quiebres de stock. </li>
+                    <li style="text-align: start;">El Vendedor entiende y acepta que el contenido cargado en relación con los productos publicados en el portal son su responsabilidad.</li>
+                    <li style="text-align: start;">Agromarket se reserva el derecho de rechazar razonablemente y a su entera discreción uno o varios Productos para su promoción en el e-Marketplace una vez cargado el producto en la plataforma</li>
+                    <li style="text-align: start;">La plataforma tendrá a disposición de inactivar la tienda junto con todos sus productos si así lo considera necesario</li>
+                </ul>
+                <br>
+            </div> 
+            <div class="col-md-12">
+                <br>
+                <h4>Clientes</h4><hr>
+                <label for="" style="text-align: justify;">Cómo clientes se deben aceptar los siguientes términos y condiciones para poder solicitar los productos dentro de la plataforma. </label>  
+                <ul>
+                    <li style="text-align: start;">Soy mayor de edad y estoy dispuesto a proporcionar mi información para fines comerciales.</li>
+                    <li style="text-align: start;">Realizar el pago correspondiente a la cuenta otorgada por el vendedor.</li>
+                    <li style="text-align: start;">Estoy de acuerdo que cualquier producto en malas condiciones o no entregado a tiempo es responsabilidad exclusiva de la tienda y no de la plataforma.</li>
+                    <li style="text-align: start;">Solicitar los productos necesarios y no realizar pedidos sin razón alguna.</li>
+                    <li style="text-align: start;">La aceptación de los métodos de pago y el envío de los productos es exclusividad de la tienda.</li>
+                    <li style="text-align: start;">Mi información personal será visualizada por la tienda al momento de solicitar la orden de pedido con los productos. </li>
+                </ul>
+                <br>
+            </div>              
+        </div>
+    </div>
+</dx-scroll-view>
+</div>
+</dx-popup>

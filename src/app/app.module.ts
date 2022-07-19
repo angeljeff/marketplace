@@ -17,7 +17,7 @@ import { SeccionTiendaComponent } from './paginas/usuario-vendedor/seccion-tiend
 import { SeccionProductoComponent } from './paginas/usuario-vendedor/seccion-producto/seccion-producto.component';
 import { OrdenesVendedorComponent } from './paginas/usuario-vendedor/ordenes-vendedor/ordenes-vendedor.component';
 import { LoadingComponent } from './paginas/shared/loading/loading.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SeccionPagoComponent } from './paginas/usuario-vendedor/seccion-pago/seccion-pago.component';
 import { FormularioComponent } from './paginas/usuario-vendedor/seccion-pago/formulario/formulario.component';
 import { SeccionPedidoComponent } from './paginas/usuario-vendedor/seccion-pedido/seccion-pedido.component';
@@ -31,6 +31,9 @@ import { SeccionEstadisticaAdministradorComponent } from './paginas/usuario-admi
 import { SeccionUsuarioAdministradorComponent } from './paginas/usuario-administrador/seccion-usuario-administrador/seccion-usuario-administrador.component';
 import { UsuarioCompradorComponent } from './paginas/usuario-comprador/usuario-comprador.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { NgxStarRatingModule } from 'ngx-star-rating';
+
+
 
 @NgModule({
   declarations: [
@@ -82,7 +85,11 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     DxRadioGroupModule,
     DxScrollViewModule,
     DxPieChartModule,
-    DxChartModule
+    DxChartModule,
+    NgxStarRatingModule,
+    FormsModule,
+    ReactiveFormsModule
+   
    
   ],
   providers: [AuthService,{

@@ -78,6 +78,14 @@ class OrdencompraController {
             res.send(lista_ti_ac);
         });
     }
+    ordencompracomentario(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const idtienda = req.body.id_tienda;
+            const cedula = req.body.cedula;
+            const lista_ti_ac = yield base_datos_1.default.query(`SELECT distinct ord.* FROM orden_compra as ord inner join productos_por_orden as pro on ord.id_orden_compra = pro.id_orden_compra inner join productos as p on pro.id_producto= p.id_producto  where ord.direccion !="" and ord.cedula='${cedula}' and p.id_tienda='${idtienda}'`);
+            res.send(lista_ti_ac);
+        });
+    }
 }
 const ordencompraController = new OrdencompraController;
 exports.default = ordencompraController;

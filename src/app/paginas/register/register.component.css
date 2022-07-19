@@ -25,3 +25,22 @@
 .inputDate{
   width: 100%;
 }
+
+.terminos{
+  text-align:center;
+  font-size: 1.8rem;
+  color:#68A7D1 ;
+}
+
+.si a:hover{
+  color: #63EABA ;
+
+}
+
+.bot{
+  background-color:  #A9F5D0;
+}
+.bot:hover{
+  background-color:  #A9F5D0;
+  color: black;
+}

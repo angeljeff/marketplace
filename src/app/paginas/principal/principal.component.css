@@ -67,6 +67,14 @@
   border-color: transparent;
 }
 
+.btn3{
+  font-size: 9pt;
+  width: 60%;
+  height: 1.8em;
+  border-color: transparent;
+  margin-left: -2.5rem;
+}
+
 .color-principal{
     background-color: #1db61d;
     color: white;
@@ -81,4 +89,27 @@
     font-size: 16px;
     text-align: center;
     font-weight: bold;
+}
+
+::ng-deep label.star {
+  
+  padding: 0 5px !important;
+  font-size: 20px !important;
+  color: #444;
+  transition: all .2s !important;
+}
+
+
+::ng-deep label.star :hover {
+  transform: rotate(0deg) scale(1.2) !important;
+  
+}
+
+.texto{
+  font-size: 12pt;
+  font-weight: bold;
+}
+
+.tamano{
+  height: 25rem;
 }

@@ -9,7 +9,7 @@ import { Producto } from "../clases/producto";
 export class ProductoService{
   private URL = "http://137.184.0.8:3000/producto";
 
-  //private URL = 'http://localhost:3000/producto';
+ // private URL = 'http://localhost:3000/producto';
 
   constructor(private http: HttpClient, private router: Router) {}
 

@@ -30,7 +30,14 @@ class CuentabancoController {
     obtenerPoridmetodopago(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const cuenta = req.params.id_metodo_pago_tienda;
-            const cuen = yield base_datos_1.default.query(`SELECT dato.tipo_cuenta, dato.numero_cuenta,dato.titular_cuenta, dato.cedula_titular, bn.descripcion FROM datos_cuentas_bancaria as dato INNER JOIN bancos as bn on dato.id_banco = bn.id_banco where id_metodo_pago_tienda ='${cuenta}'`);
+            const cuen = yield base_datos_1.default.query(`SELECT dato.tipo_cuenta, dato.numero_cuenta,dato.titular_cuenta, dato.cedula_titular, dato.activacion, bn.descripcion FROM datos_cuentas_bancaria as dato INNER JOIN bancos as bn on dato.id_banco = bn.id_banco where dato.activacion=1 and id_metodo_pago_tienda ='${cuenta}'`);
+            res.send(cuen);
+        });
+    }
+    obtenerPoridmetodopagotodos(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const cuenta = req.params.id_metodo_pago_tienda;
+            const cuen = yield base_datos_1.default.query(`SELECT dato.tipo_cuenta, dato.numero_cuenta,dato.titular_cuenta, dato.cedula_titular, dato.activacion, bn.descripcion, dato.id_cuenta_banco FROM datos_cuentas_bancaria as dato INNER JOIN bancos as bn on dato.id_banco = bn.id_banco where id_metodo_pago_tienda ='${cuenta}'`);
             res.send(cuen);
         });
     }
@@ -38,6 +45,13 @@ class CuentabancoController {
         return __awaiter(this, void 0, void 0, function* () {
             const agrega_cuenta = yield base_datos_1.default.query('INSERT INTO datos_cuentas_bancaria set  ? ', [req.body]);
             res.json({ message: 'cuenta bancaria agregada ' });
+        });
+    }
+    actualizarestado(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log("este es el activa" + req.body.activacion);
+            const agrega_producto = yield base_datos_1.default.query("UPDATE datos_cuentas_bancaria SET activacion = ? WHERE id_cuenta_banco = ?", [req.body.activacion, req.params.id_cuenta_banco]);
+            res.json({ message: 'Producto actualizado ' });
         });
     }
 }

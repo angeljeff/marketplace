@@ -7,6 +7,7 @@ export class DatosPago{
     numero_cuenta:string;
     tipo_cuenta: string;
     id_metodo_pago_tienda:number
+    activacion:number
 
    
     constructor(){
@@ -17,6 +18,7 @@ export class DatosPago{
        this.tipo_cuenta = ""
        this.id_metodo_pago_tienda=0
        this.id_cuenta_banco=""
+       this.activacion=1
 
     }
 }
@@ -30,6 +32,7 @@ export class DatosPagopresentacion{
     tipo_cuenta: string;
     id_metodo_pago_tienda:number
     descripcion: string
+    activacion:number
 
    
     constructor(){
@@ -41,6 +44,7 @@ export class DatosPagopresentacion{
        this.id_metodo_pago_tienda=0
        this.id_cuenta_banco=""
        this.descripcion=""
+       this.activacion=1
 
     }
 }

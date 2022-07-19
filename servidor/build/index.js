@@ -26,6 +26,7 @@ const productosxordenRouter_1 = __importDefault(require("./routes/productosxorde
 const tipoUsuarioRouter_1 = __importDefault(require("./routes/tipoUsuarioRouter"));
 const VentasRouter_1 = __importDefault(require("./routes/VentasRouter"));
 const CorreoRouter_1 = __importDefault(require("./routes/CorreoRouter"));
+const comentariotiendaRouter_1 = __importDefault(require("./routes/comentariotiendaRouter"));
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
@@ -64,6 +65,7 @@ class Server {
         this.app.use('/tipousuario', tipoUsuarioRouter_1.default);
         this.app.use('/ventas', VentasRouter_1.default);
         this.app.use('/correo', CorreoRouter_1.default);
+        this.app.use('/comentario', comentariotiendaRouter_1.default);
     }
     start() {
         this.app.listen(this.app.get('port'), () => {

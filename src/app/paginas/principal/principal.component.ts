@@ -23,6 +23,12 @@ import dxAutocomplete from 'devextreme/ui/autocomplete';
 import { transporter } from 'src/app/services/correo/envio_correo';
 import { CorreoService } from 'src/app/services/correoServices';
 import { Correo } from 'src/app/clases/Correo';
+import { NgxStarRatingModule } from 'ngx-star-rating';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { runInThisContext } from 'vm';
+import { Comentarios, ComentariosDTO } from 'src/app/clases/Comentarios';
+import { ComentariosTiendaService } from 'src/app/services/comentarios.service';
+import { threadId } from 'worker_threads';
 
 @Component({
   selector: 'app-principal',
@@ -54,11 +60,12 @@ export class PrincipalComponent implements OnInit {
   productoAComprar : Productocompleto = new Productocompleto()
   nuevaOrden : OrdenCompra = new OrdenCompra();
   nuevoProductoOrden : ProductosPorOrden = new ProductosPorOrden();
-  desactivarcarrito=false
+  desactivarcarrito=true
   
   totalCompra = 0;
   productotemproral: Producto = new Producto();
   cedula = ""
+  ratingValor = 0;
   poputinformaciontienda=false
   tiendapoput: Tienda = new Tienda();
   datosTienda: Tienda = new Tienda();
@@ -73,8 +80,21 @@ export class PrincipalComponent implements OnInit {
   mostrarLoading=false
   mensajeLoading=""
   contadorcarrito=0
+  contadortienda=0
+  rating3 = 0;
   usuarioLogueado : Usuario = new Usuario();
   correo: Correo = new Correo();
+  form: FormGroup ;
+  habilitarcomentario=false;
+  TraerComentariosTiendaa : ComentariosDTO [] = [];
+  comentario_idtienda: Comentarios = new Comentarios();
+  nuevo_comentario: Comentarios = new Comentarios();
+  poputcalificatienda=false;
+  mensajecalifa="";
+  existencomentarios=true;
+  ordencomentario: Tienda = new Tienda;
+  contadorvotos=0
+
   constructor(public router: Router,
     public _productoService: ProductoService,
     public authenService : AuthenService,
@@ -84,12 +104,21 @@ export class PrincipalComponent implements OnInit {
     public _productoPorOrdenService: ProductoPorOrdenService,
     public _ordenCompraService: OrdenCompraService,
     public _tiendaService: TiendaService,
-    public _correoService: CorreoService) { }
+    public _correoService: CorreoService,
+    public fb: FormBuilder,
+    public _comentarioService: ComentariosTiendaService
+    ) { 
+      
+      this.rating3 = 0;
+      this.form = this.fb.group({
+      rating: ['', Validators.required],
+    })}
 
   ngOnInit(): void {
     this.cargarUsuarioLogueado();
     this.mandarMensaje();
     this.mostrarproductos();
+    
    
     
 
@@ -111,6 +140,8 @@ export class PrincipalComponent implements OnInit {
             this.nuevaOrden.cedula = this.usuarioLogueado.cedula
             this.traerOrdenCompraUsuario();
             this.traerDatosTienda();
+            /* this.traerComentariosTienda(); */
+            
           },
           err => {})
     });
@@ -164,6 +195,8 @@ export class PrincipalComponent implements OnInit {
       (err) => {  Swal.fire("Error al guardar","Su producto no pudo ser agregado","error")} 
     )
   }
+
+
 
   traerProductosPorOrden(){
     this._productoPorOrdenService.traerListadoPorOrden(this.nuevaOrden).subscribe(
@@ -371,23 +404,144 @@ export class PrincipalComponent implements OnInit {
     this.actualizarContadorProducto(nuevoProducto)
   }
 
-  mostrarPopupTienda(idTienda : number){
+  mostrarPopupTienda(element : Productocompleto){
+    this.nuevo_comentario = new Comentarios
+    this.form.controls['rating'].setValue(null);
+    console.log("este es el contador"+this.contadortienda);
+    this.datosTienda= new Tienda(); 
     this.mensajeLoading = "Obteniendo datos";
     this.mostrarLoading = true;
-    this.datosTienda= new Tienda() 
-    this.tiendapoput.id_tienda = idTienda.toString()
+    this.tiendapoput.id_tienda = element.id_tienda.toString()
     this._tiendaService.obtener_datos_tienda_porid(this.tiendapoput).subscribe(
       (res) => {
-        var tienda = res as Tienda[];
-        this.datosTienda = tienda[0]
+        var tienda = res as Tienda[]; 
+        this.datosTienda = tienda[0];
         this.popupTienda = true;
-        this.mostrarLoading = false;   
+        this.mostrarLoading = false;
+        if(this.contadortienda==0){
+          this.actualizarContadorTienda(this.datosTienda);
+          this.consultarordenesparacomentario(this.datosTienda.id_tienda.toString())
+          this.mostrarPopupTienda(element);
+          this.traerComentariosTienda(this.datosTienda.id_tienda.toString())
+          this.contadortienda=1;
+        }else{
+          this.consultarordenesparacomentario(this.datosTienda.id_tienda.toString())
+          this.actualizarContadorTienda(this.datosTienda); 
+          this.traerComentariosTienda(this.datosTienda.id_tienda.toString())   
+        }
+
+
+           
       },
       (err) => { } )
       
-    this.actualizarContadorTienda(this.datosTienda)
    
   }
+
+  consultarordenesparacomentario(id: string){
+    this.ordencomentario = new Tienda
+    this.ordencomentario.id_tienda= id;
+    this.ordencomentario.cedula= this.usuarioLogueado.cedula;
+    this._ordenCompraService.obtenerOrdenesPorusuarioytienda(this.ordencomentario).subscribe(
+      (res) => {
+        var ordenesusariosentienda= res as OrdenCompra[];
+        if(ordenesusariosentienda.length >0){
+          this.habilitarcomentario=false
+        }
+        else{
+          this.habilitarcomentario=true
+
+        }
+        console.log(ordenesusariosentienda)
+
+           
+      },
+      (err) => { } )
+
+
+  }
+
+  traerComentariosTienda(id : string){
+    console.log("esteeee id"+id)
+    this.TraerComentariosTiendaa=[];
+    this.comentario_idtienda.id_tienda= id;
+    console.log("esteeee id a enviar"+ this.comentario_idtienda.id_tienda)
+    this._comentarioService.traer_comentarios_xtienda(this.comentario_idtienda).subscribe(
+      (res) => {
+        this.TraerComentariosTiendaa = res as ComentariosDTO[];
+        console.log(this.TraerComentariosTiendaa.length)
+        if(this.TraerComentariosTiendaa.length ==0){
+          this.ratingValor=0;
+          this.existencomentarios=false;
+          this.contadorvotos=0;
+        }else{
+          this.existencomentarios=true;
+          console.log(this.TraerComentariosTiendaa);
+          var suma=0;
+          this.contadorvotos=0;
+          this.TraerComentariosTiendaa.forEach(element=>{
+            suma= suma + element.puntuacion
+            this.contadorvotos++
+          })
+          var promedio=suma/this.contadorvotos;
+          console.log(promedio)
+          this.ratingValor=Math.round(promedio);
+
+        }
+
+      },
+      (err) => { } )
+  }
+
+/*   getValueRating(){
+    var dd = this.form.value.rating
+    console.log(this.form.value.rating)
+    //this.form.controls['dept'].setValue(selected.id);
+    this.ratingValor= dd
+  } */
+
+  cerrarpoput(){
+    this.poputcalificatienda=false;
+  }
+
+registrarcomentario(){
+  this.mensajecalifa="";
+  var rati= this.form.value.rating
+  if (rati==null  || rati==0){
+    this.mensajecalifa="Debe otorgar una calificación a la tienda"
+    this.poputcalificatienda=true;
+  }
+  if(this.nuevo_comentario.comentario==""){
+    this.mensajecalifa="Debe escribir un comentario sobre la tienda"
+    this.poputcalificatienda=true;
+  }
+  if(rati!= null && rati!=0 && this.nuevo_comentario.comentario!=""){
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+    var toda = dd + '/' + mm + '/' + yyyy;
+    this.nuevo_comentario.id_tienda= this.datosTienda.id_tienda;
+    this.nuevo_comentario.cedula=this.usuarioLogueado.cedula;
+    this.nuevo_comentario.puntuacion=rati
+    /* this.nuevo_comentario.comentario="ESTE ES EL NUEVO COMENTARIO"; */
+    /* let date: Date = new Date(toda); */
+    this.nuevo_comentario.fecha= toda;
+    console.log(this.nuevo_comentario);
+    this._comentarioService.registrar_comentarios(this.nuevo_comentario).subscribe(
+      (res) => {
+        this.traerComentariosTienda(this.nuevo_comentario.id_tienda.toString())
+      this.nuevo_comentario= new Comentarios
+      this.form.controls['rating'].setValue(null);
+       
+      },
+      (err) => { } )
+
+  }
+ 
+
+}
+
 
   mostrarPopupCompra(producto : Productocompleto){
     this.nuevoProductoOrden.cantidad=0
@@ -586,6 +740,13 @@ mostrardatostienda(){
       this.inputentrada.instance.focus();
   
   }
+
+/*   agregarcomentario(){
+    this.rating3 = 0;
+    this.form = this.fb.group({
+      rating: ['', Validators.required],
+    })
+  } */
 
 
   itemClick(data:any) {

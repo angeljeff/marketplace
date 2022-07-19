@@ -62,6 +62,12 @@ class OrdencompraController {
         const lista_ti_ac = await pool.query('SELECT distinct ord.id_orden_compra, ord.total, p.id_tienda, ti.nombre_ti  FROM orden_compra as ord inner join productos_por_orden as pro on ord.id_orden_compra = pro.id_orden_compra inner join productos as p on pro.id_producto= p.id_producto inner join tiendas as ti on p.id_tienda = ti.id_tienda  where ord.id_estado_pedido = 2 order by p.id_tienda');
         res.send(lista_ti_ac);
     }
+    public async ordencompracomentario(req: Request, res: Response): Promise<void> {
+        const idtienda= req.body.id_tienda 
+        const cedula= req.body.cedula
+        const lista_ti_ac = await pool.query(`SELECT distinct ord.* FROM orden_compra as ord inner join productos_por_orden as pro on ord.id_orden_compra = pro.id_orden_compra inner join productos as p on pro.id_producto= p.id_producto  where ord.direccion !="" and ord.cedula='${cedula}' and p.id_tienda='${idtienda}'`);
+        res.send(lista_ti_ac);
+    }
 
    
 }
