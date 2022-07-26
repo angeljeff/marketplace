@@ -47,7 +47,19 @@ export class LoginComponent implements OnInit {
   
 
   ngOnInit(): void {
+    this.cargarUsuarioLogueado()
     
+  }
+
+
+  cargarUsuarioLogueado() {
+    new Promise((res, err) => {
+      var cedula = localStorage.getItem("cedulaUser") ?? "";
+      if(cedula!=""){
+      this.router.navigate(["/principal"]);
+      }
+
+    });
   }
 
   mostrarFormularioRegistro(){

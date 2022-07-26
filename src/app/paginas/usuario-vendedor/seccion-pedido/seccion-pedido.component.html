@@ -20,6 +20,8 @@
                 [dataSource]="listaPedidos"
                 [showBorders]="true">
                 <dxi-column dataField="id_orden_compra" alignment="center" caption="ID"></dxi-column>
+                <dxi-column dataField="fecha_orden" dataType="date"  format= "dd/MM/yyyy" alignment="center" caption="fecha pedido"></dxi-column>
+
                 <dxi-column dataField="nombre_ti"  alignment="center"  caption="Nombre Tienda"></dxi-column>
                <!--  <dxi-column dataField="cantidadProductos"  alignment="center"  caption="Cantidad Productos"></dxi-column> -->
                 <dxi-column dataField="total"  alignment="center"  caption="Total"></dxi-column>

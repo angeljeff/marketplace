@@ -19,7 +19,9 @@ import { PagoPorOrdenService } from 'src/app/services/pagoPorOrden.service';
 import { ProductoPorOrdenService } from 'src/app/services/productoPorOrden.service';
 import { ProductoService } from 'src/app/services/productos.services';
 import { TiendaService } from 'src/app/services/tienda.service';
+import { DatePipe } from '@angular/common'
 import Swal from 'sweetalert2';
+import { runInThisContext } from 'vm';
 import { Productos } from '../usuario-vendedor/usuario-vendedor.component';
 
 @Component({
@@ -55,6 +57,7 @@ export class CarritoComprasComponent implements OnInit {
   idTienda = 0
   contador = 0
   hola=""
+  fecha= new Date()
   popupaceptarcantidad=false
   productorecibido: Producto = new Producto();
   productoaenviar: Producto = new Producto();
@@ -84,7 +87,8 @@ export class CarritoComprasComponent implements OnInit {
         public _tiendaService : TiendaService,
         public _datosPagoService : DatoscuentabancoService,
         public _pagoPorOrdenService : PagoPorOrdenService,
-        public _productoService: ProductoService) { }
+        public _productoService: ProductoService
+        ) { }
 
   ngOnInit(): void {
     this.cargarUsuarioLogueado();
@@ -186,6 +190,7 @@ export class CarritoComprasComponent implements OnInit {
     metodoPago.id_tienda = this.idTienda
     this._metodoPagoTienda.consultarmetodopagotienda(metodoPago).subscribe(
       (res) => { 
+        this.listadoMetodosPago=[]
         this.listadoMetodosPago = res as Met_pag_tienda[];
         this.validarMetodos();
       },
@@ -196,7 +201,6 @@ export class CarritoComprasComponent implements OnInit {
   }
 
   validarMetodos(){
-    console.log(this.listadoMetodosPago)
     this.listadoMetodosPago.forEach(element=>{
       if(element.id_metodo_pago == 1) {
         this.isPago1 = element.estado_metodo==1 ? false : true
@@ -268,9 +272,8 @@ export class CarritoComprasComponent implements OnInit {
   } 
 
   actualizarCantidadProducto(product : ProductosPorOrdenDTO){
-    this.calcularTotal();
     this._productoPorOrdenService.actualizarProducto(product).subscribe(
-      (res) => { },
+      (res) => { this.calcularTotal();},
       (err) => {  Swal.fire("error")} 
     )
   }
@@ -292,7 +295,6 @@ export class CarritoComprasComponent implements OnInit {
     var binaryString = readerEvt.target.result;
     var base64textString= btoa(binaryString);
     this.imagenPago ="data:image/png;base64,"+ base64textString
-    console.log(this.imagenPago);
   }
 
 
@@ -307,7 +309,7 @@ export class CarritoComprasComponent implements OnInit {
       /* this.totalCompra = this.totalCompra + element.total_producto */
     }) 
     this.contador++
-    if(this.contador == 1)
+    if(this.contador >= 1)
       this.traerMetodosPagoTienda()
       /* LOS VALORES DE IVA - SUBTOTAL + ENVIO , ESTAN AL MOMENTO DE TRAER LA TIENDA */
       
@@ -362,8 +364,10 @@ export class CarritoComprasComponent implements OnInit {
   }
 
   validarImagenPago(){
-    if(this.dataTransferencia && this.imagenPago == "")
+    if(this.dataTransferencia && this.imagenPago == "" && this.mostrarnohaycuenta==false)
       Swal.fire("No existe comprobante","Ingrese su comprobante de Pago","error")
+    else if(this.mostrarnohaycuenta && this.dataTransferencia)
+    Swal.fire("No hay cuentas bancarias habilitadas por el momento","intente con otro método de pago","error")
     else
       this.realizarPedido()
     
@@ -412,7 +416,6 @@ export class CarritoComprasComponent implements OnInit {
       if (result.isConfirmed) {
         this.nuevaOrden.id_estado_pedido = 4
         this.nuevaOrden.total = this.totalCompra
-        console.log(this.nuevaOrden)
         this._ordenCompraService.actualizarOrden(this.nuevaOrden).subscribe(
           (res) => { 
             if(this.dataTransferencia){
@@ -541,7 +544,6 @@ export class CarritoComprasComponent implements OnInit {
         this.listapro.push(listaproductos[i])
       }
     }
-    console.log("esta es el arreglo final", this.listapro)
   }
 
   
@@ -595,6 +597,7 @@ export class CarritoComprasComponent implements OnInit {
   }
 
   validarCedula(cedula: string) {
+    console.log(cedula)
     if (cedula.length === 10) {
       const digitoRegion = cedula.substring(0, 2);
       if (digitoRegion >= String(0) && digitoRegion <= String(24)) {

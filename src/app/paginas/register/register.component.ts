@@ -219,15 +219,16 @@ export class RegisterComponent implements OnInit {
   cargarUsuarioLogueado() {
     new Promise((res, err) => {
       var cedula = localStorage.getItem("cedulaUser") ?? "";
-      this.authenService.getUserLogueado(cedula)
-        .subscribe(
+        this.authenService.getUserLogueado(cedula).subscribe(
           res => {
             var arreglo = res as Usuario[];
             this.isLoged = true;
             this.usuarioLogueado = arreglo[0];
             var array = this.usuarioLogueado.nombres.split(" ");
             this.nombreUsuario = array[0];
-            
+            if(this.usuarioLogueado.id_tipo_usuario==2 || this.usuarioLogueado.id_tipo_usuario==1 || this.usuarioLogueado.id_tipo_usuario==3){
+            this.router.navigate(["/principal"]);}
+
           },
           err => {})
     });

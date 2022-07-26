@@ -32,6 +32,7 @@ import { SeccionUsuarioAdministradorComponent } from './paginas/usuario-administ
 import { UsuarioCompradorComponent } from './paginas/usuario-comprador/usuario-comprador.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { NgxStarRatingModule } from 'ngx-star-rating';
+import { DxoSearchPanelComponent } from 'devextreme-angular/ui/nested';
 
 
 
@@ -89,6 +90,7 @@ import { NgxStarRatingModule } from 'ngx-star-rating';
     NgxStarRatingModule,
     FormsModule,
     ReactiveFormsModule
+    
    
    
   ],

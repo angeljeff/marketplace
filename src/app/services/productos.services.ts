@@ -20,6 +20,9 @@ export class ProductoService{
   obtener_productos(producto : Producto) {
     return this.http.post<any>(this.URL + `/obtenerpro/${producto.id_tienda}`, producto);
   }
+  obtener_codigo_productos(producto : Producto) {
+    return this.http.post<any>(this.URL + `/obtenercodigo/${producto.id_tienda}`, producto);
+  }
 
   obtener_todos_productos_activos() {
     return this.http.get<any>(this.URL + `/listarProActivos`);

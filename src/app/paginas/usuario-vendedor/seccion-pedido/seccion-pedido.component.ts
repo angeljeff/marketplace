@@ -94,6 +94,7 @@ export class SeccionPedidoComponent implements OnInit {
   }
 
   calcularTotal(){
+    this.totalCompra =0;
     this.productosPorOrdenDTO.forEach(element=>{
       element.total_producto = element.cantidad * element.precio_producto
       this.totalCompra = this.totalCompra + element.total_producto

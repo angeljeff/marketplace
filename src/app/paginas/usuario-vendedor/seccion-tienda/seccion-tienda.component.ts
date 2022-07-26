@@ -26,6 +26,7 @@ export class SeccionTiendaComponent implements OnInit {
   nowApertura: Date = new Date();
   hora:any;
   hora2:any;
+  primerdigito=""
 
   nowCierre: Date = new Date();
   cc = ""
@@ -65,6 +66,11 @@ export class SeccionTiendaComponent implements OnInit {
             this.isNewTienda = false;
             this.existeTienda = true;
             this.tiendaEncontrada = tienda[0]
+            var telefono= this.tiendaEncontrada.telefono.toString()
+            if(telefono.length ===9){
+              this.primerdigito="0"
+            }
+            
           }
          
         }else{

@@ -14,6 +14,7 @@ class CorreoRoutes {
         this.router.post('/enviarcorreocontra', CorreoController_1.default.enviarcorreocontrasenia);
         this.router.post('/enviarcorreoaprueba', CorreoController_1.default.enviarcorreoaprobaproducto);
         this.router.post('/enviarcorreoapruebapedido', CorreoController_1.default.enviarcorreoaprobapedido);
+        this.router.post('/enviarcorreotienda', CorreoController_1.default.enviarcorreotienda);
     }
 }
 const correo = new CorreoRoutes();

@@ -277,11 +277,13 @@ title="Cantidad no disponible"
                 <label for=""> La cantidad solicitada del producto . </label><label for=""><strong> {{productoAComprar .nombre}}</strong></label><label for=""> excede el stock disponible del producto</label><br><strong></strong><label for=""><strong>¿Desea asignar el stock màximo del producto, el cúal es {{productoAComprar .stock}} ?</strong></label>
                 <br><br>
                 <div class="row">
+                    <br><br>
+                    <div class="col-md-1"></div>
                     <br>
-                    <div class="col-md-6"><button class="btn color-principal" style="font-size:1.5rem ; width: 6rem;"  (click)="poputaceptacioncantidad()">ok</button></div>
-                    
-                    <div class="col-md-6"><button class="btn btn-danger" style="font-size:1.5rem ; width: 8rem;" (click)="poputrechazarcantidad()">cancelar</button></div>
-                   
+                    <div  class="col-md-4"><br><button class="btn color-principal"  (click)="poputaceptacioncantidad()">ok</button></div>
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4"><br><button class="btn btn-danger"  (click)="poputrechazarcantidad()">cancelar</button></div>
+                    <div class="col-md-1"></div>
                     <br>
                 </div>
  

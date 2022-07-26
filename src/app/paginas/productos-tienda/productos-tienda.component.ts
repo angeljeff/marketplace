@@ -110,6 +110,7 @@ export class ProductosTiendaComponent implements OnInit {
   }
 
   mostrarPopupCompra(producto : Productocompleto){
+    this.isCorrecto = false
     this.nuevoProductoOrden.cantidad=0
     this.nuevoProductoOrden.total_producto=0
     console.log(producto)

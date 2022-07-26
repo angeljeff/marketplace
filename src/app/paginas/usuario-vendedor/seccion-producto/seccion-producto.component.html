@@ -43,7 +43,7 @@
             keyExpr="id_producto"
             [showBorders]="true"
             >
-            
+            <dxo-search-panel [visible]="true"></dxo-search-panel>
             <dxi-column
                 dataField="imagen"
                 [width]="100"
@@ -51,6 +51,7 @@
                 [allowSorting]="false"
                 cellTemplate="cellTemplate"
             ></dxi-column>
+            <dxi-column dataField="codigo" alignment="center" caption="Código producto "></dxi-column>
             <dxi-column dataField="nombre" alignment="center" caption="Nombre Productos"></dxi-column>
             <dxi-column dataField="descripcion"  alignment="center"  caption="Descripcion"></dxi-column>
             <dxi-column dataField="precio"  alignment="center"  caption="Precio"></dxi-column>
@@ -115,13 +116,36 @@
                                 <div class="ps-tab active">
                                     <div class="ps-form__content">
                                         <div class="form-group">
+                                            <div class="row">
+                                                 <div class="col-md-3" style="margin-top: -1em;"><p>Código *</p></div>
+                                                 <div class="col-md-8  " *ngIf="!isedicionpro;">
+                                                     <dx-text-box   [maxLength]="8" pattern="[A-Za-z0-9]" [(value)]="productonuevo.codigo"  class="controles" placeholder="Código del producto">
+                                                        <dx-validator>
+                                                            <dxi-validation-rule type="required"  message="El código del producto es requerido"></dxi-validation-rule>
+                                                            <dxi-validation-rule type="pattern" pattern="[A-Za-z0-9]" message="Debe ingresar un código válido"></dxi-validation-rule></dx-validator> </dx-text-box>       
+                                                 </div>
+                                                 <div class="col-md-9" *ngIf="isedicionpro;">
+                                                     <dx-text-box  [(value)]="producompletoaeditar.codigo" [disabled]="true" class="controles" > </dx-text-box>       
+                                                 </div>
+                                                 <div class="col-md-1 text-align-start" *ngIf="!isedicionpro;">
+                                                    <span  title="El código es propio para cada producto, debe constar entre 4 a 8 carácteres, puede ingresar un código de solo números, solo letras o una combinación de letras y números, le recomendamos utilizar el código de barras del producto para mayor facilidad."><i style="margin-top:1rem;" class="fa fa-info-circle fa-lg" aria-hidden="true"></i></span>
+                                                 </div>
+                                             </div>
+                                         </div>
+                                        <div class="form-group">
                                            <div class="row">
                                                 <div class="col-md-3" style="margin-top: -1em;"><p>Nombre *</p></div>
                                                 <div class="col-md-9" *ngIf="!isedicionpro;">
-                                                    <dx-text-box  [(value)]="productonuevo.nombre"  class="controles" placeholder="Nombre del producto"> </dx-text-box>       
+                                                    <dx-text-box  [maxLength]="30" [(value)]="productonuevo.nombre"  class="controles" placeholder="Nombre del producto"> 
+                                                        <dx-validator>
+                                                            <dxi-validation-rule type="required"  message="El nombre del producto es requerido"></dxi-validation-rule></dx-validator>
+                                                    </dx-text-box>       
                                                 </div>
                                                 <div class="col-md-9" *ngIf="isedicionpro;">
-                                                    <dx-text-box  [(value)]="producompletoaeditar.nombre"  class="controles" placeholder="Nombre del producto"> </dx-text-box>       
+                                                    <dx-text-box  [maxLength]="30" [(value)]="producompletoaeditar.nombre"  class="controles" placeholder="Nombre del producto"> </dx-text-box>       
+                                                    <dx-validator>
+                                                        <dxi-validation-rule type="required"  message="El nombre del producto es requerido"></dxi-validation-rule></dx-validator>
+                                                
                                                 </div>
                                             </div>
                                         </div>
@@ -156,12 +180,12 @@
                                         </div>
                                         <div class="form-group">
                                             <div class="row">
-                                                <div class="col-md-3" style="margin-top: -1em;"><p>Precio *</p></div>
+                                                <div class="col-md-3" style="margin-top: -1em;"><p>Precio $ *</p></div>
                                                 <div class="col-md-9" *ngIf="!isedicionpro;">
-                                                    <dx-number-box [(value)]="productonuevo.precio" type="number" class="controles" placeholder="Precio"></dx-number-box>
+                                                    <dx-number-box [min]="1" [max]="999999999" [(value)]="productonuevo.precio" type="number" class="controles" placeholder="Precio"></dx-number-box>
                                                 </div>
                                                 <div class="col-md-9" *ngIf="isedicionpro;">
-                                                    <dx-number-box [(value)]="producompletoaeditar.precio" type="number" class="controles" placeholder="Precio"></dx-number-box>
+                                                    <dx-number-box [min]="1" [max]="999999999" [(value)]="producompletoaeditar.precio" type="number" class="controles" placeholder="Precio"></dx-number-box>
                                                 </div>
                                             </div>
                                         </div>
@@ -170,10 +194,10 @@
                                             <div class="row">
                                                 <div class="col-md-3" style="margin-top: -1em;"><p>Stock *</p></div>
                                                 <div class="col-md-9" *ngIf="!isedicionpro;">
-                                                    <dx-number-box  [(value)]="productonuevo.stock" class="controles" placeholder="Stock"></dx-number-box>
+                                                    <dx-number-box [min]="10" [max]="9999999999" [(value)]="productonuevo.stock" class="controles" placeholder="Stock"></dx-number-box>
                                                 </div>
                                                 <div class="col-md-9" *ngIf="isedicionpro;">
-                                                    <dx-number-box  [(value)]="producompletoaeditar.stock" class="controles" placeholder="Stock"></dx-number-box>
+                                                    <dx-number-box [min]="10" [max]="9999999999" [(value)]="producompletoaeditar.stock" class="controles" placeholder="Stock"></dx-number-box>
                                                 </div>
                                             </div>
                                         </div>

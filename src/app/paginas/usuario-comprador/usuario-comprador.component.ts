@@ -47,8 +47,10 @@ export class UsuarioCompradorComponent implements OnInit {
   cargarUsuarioLogueado() {
     new Promise((res, err) => {
       var cedula = localStorage.getItem("cedulaUser") ?? "";
-      this.authenService.getUserLogueado(cedula)
-        .subscribe(
+      if(cedula==""){
+      this.router.navigate(["/login"]);
+      }else{
+        this.authenService.getUserLogueado(cedula).subscribe(
           res => {
             var arreglo = res as Usuario[];
             this.isLoged = true;
@@ -57,11 +59,16 @@ export class UsuarioCompradorComponent implements OnInit {
             this.nombreUsuario = array[0];
             var cedul= this.usuarioLogueado.cedula.toString()
             if(cedul.length ===9){
-              console.log(cedul.length + "esta es la longitud del cedula")
               this.primerdigito="0"
             }
+            if(this.usuarioLogueado.id_tipo_usuario!=2){
+            this.router.navigate(["/principal"]);}
+
           },
           err => {})
+
+      }
+
     });
   }
 

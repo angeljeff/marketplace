@@ -14,16 +14,22 @@ class ProductoController {
         res.send(lista_productos);
     }
     public async listarprocompleto(req: Request, res: Response): Promise<void> {
-        const lista_productos_com = await pool.query('SELECT pro.nombre, pro.id_producto, pro.precio, pro.imagen, pro.stock, pro.id_sub_categoria, pro.id_tienda, pro.descripcion, sub.descripcion_sub, cat.descripcion_cat, cat.id_categoria, ti.nombre_ti FROM productos AS pro INNER JOIN sub_categorias AS sub ON pro.id_sub_categoria = sub.id_sub_categoria INNER JOIN categorias AS cat ON sub.id_categoria = cat.id_categoria INNER JOIN tiendas AS ti ON pro.id_tienda = ti.id_tienda where ti.id_estado_tienda=1 and pro.id_estado_pro = 2 and pro.estado=1');
+        const lista_productos_com = await pool.query('SELECT pro.nombre,pro.codigo, pro.id_producto, pro.precio, pro.imagen, pro.stock, pro.id_sub_categoria, pro.id_tienda, pro.descripcion, sub.descripcion_sub, cat.descripcion_cat, cat.id_categoria, ti.nombre_ti FROM productos AS pro INNER JOIN sub_categorias AS sub ON pro.id_sub_categoria = sub.id_sub_categoria INNER JOIN categorias AS cat ON sub.id_categoria = cat.id_categoria INNER JOIN tiendas AS ti ON pro.id_tienda = ti.id_tienda where ti.id_estado_tienda=1 and pro.id_estado_pro = 2 and pro.estado=1');
         res.send(lista_productos_com);
     }
     public async listarprocompletoadmi(req: Request, res: Response): Promise<void> {
-        const lista_productos_com = await pool.query('SELECT pro.nombre, pro.id_producto, pro.precio, pro.imagen, pro.stock, pro.id_sub_categoria, pro.id_tienda, pro.descripcion, sub.descripcion_sub, cat.descripcion_cat, cat.id_categoria, ti.nombre_ti, pro.id_estado_pro FROM productos AS pro INNER JOIN sub_categorias AS sub ON pro.id_sub_categoria = sub.id_sub_categoria INNER JOIN categorias AS cat ON sub.id_categoria = cat.id_categoria INNER JOIN tiendas AS ti ON pro.id_tienda = ti.id_tienda where pro.estado=1');
+        const lista_productos_com = await pool.query('SELECT pro.nombre, pro.codigo, pro.id_producto, pro.precio, pro.imagen, pro.stock, pro.id_sub_categoria, pro.id_tienda, pro.descripcion, sub.descripcion_sub, cat.descripcion_cat, cat.id_categoria, ti.nombre_ti, pro.id_estado_pro FROM productos AS pro INNER JOIN sub_categorias AS sub ON pro.id_sub_categoria = sub.id_sub_categoria INNER JOIN categorias AS cat ON sub.id_categoria = cat.id_categoria INNER JOIN tiendas AS ti ON pro.id_tienda = ti.id_tienda where pro.estado=1');
         res.send(lista_productos_com);
     }
     public async listarprocompletoporid(req: Request, res: Response): Promise<void> {
         const producto = req.params.id_producto
-        const lista_productos_comq = await pool.query(`SELECT pro.nombre, pro.id_producto, pro.precio, pro.imagen, pro.stock, pro.id_sub_categoria, pro.id_tienda, pro.descripcion, sub.descripcion_sub, cat.descripcion_cat, cat.id_categoria, ti.nombre_ti FROM productos AS pro INNER JOIN sub_categorias AS sub ON pro.id_sub_categoria = sub.id_sub_categoria INNER JOIN categorias AS cat ON sub.id_categoria = cat.id_categoria INNER JOIN tiendas AS ti ON pro.id_tienda = ti.id_tienda where  pro.id_producto ='${producto}'`);
+        const lista_productos_comq = await pool.query(`SELECT pro.nombre, pro.codigo, pro.id_producto, pro.precio, pro.imagen, pro.stock, pro.id_sub_categoria, pro.id_tienda, pro.descripcion, sub.descripcion_sub, cat.descripcion_cat, cat.id_categoria, ti.nombre_ti FROM productos AS pro INNER JOIN sub_categorias AS sub ON pro.id_sub_categoria = sub.id_sub_categoria INNER JOIN categorias AS cat ON sub.id_categoria = cat.id_categoria INNER JOIN tiendas AS ti ON pro.id_tienda = ti.id_tienda where  pro.id_producto ='${producto}'`);
+        res.send(lista_productos_comq);
+    }
+    public async listarproporcodigo(req: Request, res: Response): Promise<void> {
+        const tienda = req.params.id_tienda
+        const codigo = req.body.codigo
+        const lista_productos_comq = await pool.query(`SELECT * from productos where  codigo ='${codigo}' and id_tienda='${tienda}'`);
         res.send(lista_productos_comq);
     }
     public async listarporsubcategorias(req: Request, res: Response): Promise<void> {

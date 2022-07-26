@@ -71,7 +71,7 @@ class UsuarioControl {
         return __awaiter(this, void 0, void 0, function* () {
             const cedula = req.body.cedula;
             const correo = req.body.correo;
-            const usuario = yield base_datos_1.default.query(`SELECT * FROM usuarios where   correo='${correo}' and cedula !='${cedula}'`);
+            const usuario = yield base_datos_1.default.query(`SELECT * FROM usuarios where correo='${correo}' and cedula !='${cedula}'`);
             res.send(usuario);
         });
     }

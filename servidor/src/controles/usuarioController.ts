@@ -46,7 +46,7 @@ class UsuarioControl {
     public async obtenerPorCedulaycorreoactualizar(req: Request, res: Response): Promise<void> {
         const cedula = req.body.cedula
         const correo = req.body.correo
-        const usuario = await pool.query(`SELECT * FROM usuarios where   correo='${correo}' and cedula !='${cedula}'`);
+        const usuario = await pool.query(`SELECT * FROM usuarios where correo='${correo}' and cedula !='${cedula}'`);
         res.send(usuario);
     }
 

@@ -10,6 +10,7 @@ export class OrdenCompra{
     cedula_envio: string
     cedula: string
     observacion_pedido:string
+    fecha_orden:Date
 
     constructor(){
        this.id_orden_compra = 0
@@ -22,6 +23,7 @@ export class OrdenCompra{
        this.cedula = ""
        this.total = 0
        this.observacion_pedido= ""
+       this.fecha_orden=new Date()
       
     }
 }
@@ -40,6 +42,7 @@ export class OrdenCompraDto{
     descripcion : string
     observacion_pedido:string
     nombre_ti:string
+    fecha_orden:Date
 
     constructor(){
        this.id_orden_compra = 0
@@ -55,6 +58,8 @@ export class OrdenCompraDto{
        this.total = 0
        this.observacion_pedido= ""
        this.nombre_ti=""
+       this.fecha_orden=new Date()
+       
       
     }
 }

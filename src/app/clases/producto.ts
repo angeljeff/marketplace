@@ -13,6 +13,7 @@ export class Producto{
     estado:number;
     comen_aprobacion: string;
     unidades_vendidas: number;
+    codigo:string
 
    
     constructor(){
@@ -29,6 +30,7 @@ export class Producto{
        this.imagen= ""
        this.comen_aprobacion= ""
        this.unidades_vendidas=0
+       this.codigo=""
 
     }
 }
@@ -49,6 +51,7 @@ export class Productodto{
     estado:number;
     comen_aprobacion: string;
     unidades_vendidas: number;
+    codigo:string;
    
     constructor(){
        this.id_producto = ""
@@ -65,6 +68,7 @@ export class Productodto{
        this.comen_aprobacion= ""
        this.imagen= "https://agroactivocol.com/wp-content/uploads/2020/06/fosfitek-boro-producto.png"
        this.unidades_vendidas=0
+       this.codigo=""
 
     }
 }

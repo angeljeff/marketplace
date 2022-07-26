@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
-import { Correo } from "../clases/Correo";
+import { Correo, CorreoPedido, CorreoStock } from "../clases/Correo";
 
 @Injectable({
   providedIn: "root",
@@ -20,9 +20,13 @@ export class CorreoService{
     return this.http.post<any>(this.URL + "/enviarcorreoaprueba", correo);
   }
 
-  enviar_correo_aprobacion_pedido(correo : Correo) {
+  enviar_correo_aprobacion_pedido(correo : CorreoPedido) {
     return this.http.post<any>(this.URL + "/enviarcorreoapruebapedido", correo);
   }
+  enviar_correo_a_tienda(correo : CorreoStock) {
+    return this.http.post<any>(this.URL + "/enviarcorreotienda", correo);
+  }
+  
   
 
   

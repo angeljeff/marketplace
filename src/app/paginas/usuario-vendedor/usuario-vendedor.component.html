@@ -13,24 +13,25 @@
                     <!--=====================================
                     Logo
                     ======================================-->
-                    <a class="ps-logo" href="index.html">
+                    <a class="ps-logo" title="inicio" href="index.html">
                     <img src="../../../assets/icono.png" class="pt-3" alt="">
                     </a>
                     <!--=====================================
                     Menú
                     ======================================-->
-                    <div class="menu--product-categories">
-                        <div class="menu__toggle" (click)="redirigir()">
+<!--                     <div class="menu--product-categories">
+                         <div class="menu__toggle" (click)="redirigir()">
                             <i class="icon-menu"></i>
                         </div>
-                    </div><!-- End menu-->
+                    </div>  -->
+                    <!-- End menu-->
                 </div><!-- End Header Content Left-->
                 <!--=====================================
                 Search
                 ======================================-->
                 <div class="header__content-center">
                     <form class="ps-form--quick-search" action="index.html" method="get" >
-                        <dx-autocomplete #data2
+                        <dx-autocomplete #data2 
                                             [dataSource]="listacompletaproductos"
                                             valueExpr="nombre"
                                             placeholder="Nombre del producto" class="buscador">

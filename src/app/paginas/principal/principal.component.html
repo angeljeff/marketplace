@@ -11,7 +11,7 @@
                     <!--=====================================
                     Logo
                     ======================================-->
-                    <a class="ps-logo" href="index.html">
+                    <a class="ps-logo" title="Inicio" href="index.html">
                     <img src="../../../assets/icono.png" class="pt-3" alt="">
                     </a>
                     <!--=====================================
@@ -179,7 +179,7 @@
 
                         <div class="ps-block--user-header" *ngIf="isLoged">
                             <div class="ps-block__left">
-                                <i style="cursor:pointer;" class="icon-user" (click)="irPerfilUsuario()"></i>
+                                <i style="cursor:pointer;" class="icon-user" title="panel administración" (click)="irPerfilUsuario()"></i>
                             </div>
                             <div class="ps-block__right" *ngIf="isLoged">
                                 <a (click)="irPerfilUsuario()">{{nombreUsuario}}</a>
@@ -480,7 +480,7 @@
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-4"><h5>Telefono de contacto:</h5></div>
-                            <div class="col-md-8">{{datosTienda.telefono}}</div>
+                            <div class="col-md-8">{{primerdigito}}{{datosTienda.telefono}}</div>
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -507,6 +507,7 @@
                             <div class="col-md-10">
                                 <br>
                                 <br><button class="color-principal btn2"  (click)="verProductosTienda(datosTienda.id_tienda)">Ver Productos Tienda</button>
+                                <br>
                             </div>
                             <div class="col-md-1"></div>   
                         </div>
@@ -696,6 +697,7 @@
 <dx-popup
 [width]="'30%'"
 [height]="'35%'"
+[showCloseButton]="false"
 [showTitle]="true"
 title="Cantidad no disponible"
 [(visible)]="popupaceptarcantidad">
@@ -706,7 +708,7 @@ title="Cantidad no disponible"
             
             <div class="col-md-12">
                 
-                <label for=""> La cantidad solicitada del producto . </label><label for=""><strong> {{productoAComprar .nombre}}</strong></label><label for=""> excede el stock disponible del producto</label><br><strong></strong><label for=""><strong>¿Desea asignar el stock màximo del producto, el cual es {{productoAComprar .stock}} ?</strong></label> 
+                <label for=""> La cantidad solicitada del producto . </label><label for=""><strong> {{productoAComprar.nombre}}</strong></label><label for=""> excede el stock disponible del producto</label><br><strong></strong><label for=""><strong>¿Desea asignar el stock màximo del producto, el cual es {{productoAComprar .stock}} ?</strong></label> 
                 <br>
                 <div class="row">
                     <br><br>

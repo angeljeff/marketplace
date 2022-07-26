@@ -47,8 +47,10 @@ export class UsuarioVendedorComponent implements OnInit {
   cargarUsuarioLogueado() {
     new Promise((res, err) => {
       var cedula = localStorage.getItem("cedulaUser") ?? "";
-      this.authenService.getUserLogueado(cedula)
-        .subscribe(
+      if(cedula==""){
+      this.router.navigate(["/login"]);
+      }else{
+        this.authenService.getUserLogueado(cedula).subscribe(
           res => {
             var arreglo = res as Usuario[];
             this.isLoged = true;
@@ -59,8 +61,14 @@ export class UsuarioVendedorComponent implements OnInit {
             if(cedul.length ===9){
               this.primerdigito="0"
             }
+            if(this.usuarioLogueado.id_tipo_usuario!=1){
+              this.router.navigate(["/principal"]);}
+
           },
           err => {})
+
+      }
+
     });
   }
 

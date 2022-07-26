@@ -39,6 +39,7 @@ export class SeccionProductoComponent implements OnInit {
     consultatienda: Tienda = new Tienda();
     tiendaobtenida: Tienda = new Tienda();
     poseetienda=false
+    productocodigo: Producto= new Producto();
   
 
     seccionNewProducto = false;
@@ -383,26 +384,45 @@ export class SeccionProductoComponent implements OnInit {
 }
 
 verificarcampos(){
-  if(this.productonuevo.nombre !==""){
-    if(this.edicionsubcategoria!==false){
-      if(this.productonuevo.id_sub_categoria!==0){
-        if(this.productonuevo.precio >0 && this.productonuevo.precio!==null){
-          if(this.productonuevo.stock!==0 && this.productonuevo.stock!==null){
-            if(this.productonuevo.descripcion!==""){
-              if(this.productonuevo.imagen!==""){
-              if(!this.isedicionpro){
-                this.registrar()
-              }else{
-                this.actualizar()
-              }
-            }else {this.mostrarmensajes('Debe agregar una imagen')}
-            }else{this.mostrarmensajes('Por favor establezca una breve descripción del producto')}
-          }else{this.mostrarmensajes('Por favor indique la disponibilidad del producto')}
-        }else{this.mostrarmensajes('Por favor establezca un precio válido al producto')}
-      }else{this.mostrarmensajes('Debe seleccionar una subcategoría')}
-    }else{this.mostrarmensajes('Debe seleccionar una categoría')}
-  }else{this.mostrarmensajes('Debe llenar el campo nombre de producto')}
-}
+  this.productocodigo= new Producto;
+  var cod=this.productonuevo.codigo
+  if(this.productonuevo.codigo !=="" && cod.length>=4){
+  this.recorrerstring(this.productonuevo.codigo)
+    if (this.codigo ==true){
+      if(this.productonuevo.nombre !==""){
+        if(this.edicionsubcategoria!==false){
+          if(this.productonuevo.id_sub_categoria!==0){
+            if(this.productonuevo.precio >0 && this.productonuevo.precio!==null){
+              if(this.productonuevo.stock!==0 && this.productonuevo.stock!==null){
+                if(this.productonuevo.descripcion!==""){
+                  if(this.productonuevo.imagen!==""){
+                  if(!this.isedicionpro){
+                    this.productocodigo.id_tienda= Number(this.tiendaobtenida.id_tienda)
+                    this.productocodigo.codigo=this.productonuevo.codigo 
+                    this._productoService.obtener_codigo_productos(this.productocodigo).subscribe(
+                      (res) => { var lista = res as Producto[];
+                        if(+lista.length==0){
+                          this.registrar()
+                        }else{
+                          this.mostrarmensajes('Ya registrastes un producto con este código '+this.productonuevo.codigo +', registra otro código')
+                        }
+                      },
+                      (err) => { }
+                    )
+                    
+                  }else{
+                    this.actualizar()
+                  }
+                }else {this.mostrarmensajes('Debe agregar una imagen')}
+                }else{this.mostrarmensajes('Por favor establezca una breve descripción del producto')}
+              }else{this.mostrarmensajes('Por favor indique la disponibilidad del producto')}
+            }else{this.mostrarmensajes('Por favor establezca un precio válido al producto')}
+          }else{this.mostrarmensajes('Debe seleccionar una subcategoría')}
+        }else{this.mostrarmensajes('Debe seleccionar una categoría')}
+      }else{this.mostrarmensajes('Debe llenar el campo nombre de producto')}
+    }else{this.mostrarmensajes('Debe ingresar un código válido')}
+  }else{this.mostrarmensajes('Debe ingresar un código entre 4 a 8 carácteres ')}
+    }
 
 verificarcamposacutalizar(){
   if(this.producompletoaeditar.nombre !==""){
@@ -436,9 +456,7 @@ mostrarmensajes(texto: string){
 
 }
 
-
 obtenerDatosPoridproducto(){
-
   this.productobuscado.id_producto = "3";
   this.edicionsubcategoria=true
   this._productoService.obtener_productosporid(this.productobuscado).subscribe(
@@ -449,5 +467,35 @@ obtenerDatosPoridproducto(){
     (err) => { }
   )
 }
+
+codigo=true
+recorrerstring(letra:string){
+  for( var i = 0; i < letra.length; i++){
+    this.codigo=true
+    var b=letra.charAt(i)
+    if ((b == 'z') ||(b == 'y') ||(b == 'x') ||(b == 'w') ||(b == 'v') ||(b == 'u') ||
+    (b == 't') ||(b == 's') ||(b == 'r') ||(b == 'q') ||(b == 'p') ||(b == 'o') ||(b == 'ñ') 
+    ||(b == 'n') ||(b == 'm') ||(b == 'l') ||(b == 'k') ||(b == 'j') ||(b == 'i') ||(b == 'h') 
+    ||(b == 'g') ||(b == 'f') ||(b == 'e') ||(b == 'd') ||(b == 'c') ||(b == 'b') ||(b == 'a')
+     ||(b == 'Z') ||(b == 'Y') ||(b == 'X') ||(b == 'W') ||(b == 'V') ||(b == 'U') ||
+    (b == 'T') ||(b == 'S') ||(b == 'R') ||(b == 'Q') ||(b == 'P') ||(b == 'Ñ') ||(b == 'O') 
+    ||(b == 'N') ||(b == 'M') ||(b == 'L') ||(b == 'K') ||(b == 'J') ||(b == 'I') ||
+    (b == 'H') ||(b == 'G') ||(b == 'F') ||(b == 'D') ||(b == 'C') ||(b == 'B') ||(b == 'A') 
+    ||(b == '0') ||(b == '1') ||(b == '2')||(b == '3')||(b == '4')||(b == '5')||(b == '6')||
+    (b == '7')||(b == '8')||(b == '9')){
+
+    }
+    else{
+      this.codigo= false
+      break
+
+    }
+  }
+
+}
+
+
+
+
 
 }

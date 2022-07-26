@@ -22,7 +22,7 @@ import { DxAutocompleteComponent, DxTextBoxComponent } from 'devextreme-angular'
 import dxAutocomplete from 'devextreme/ui/autocomplete';
 import { transporter } from 'src/app/services/correo/envio_correo';
 import { CorreoService } from 'src/app/services/correoServices';
-import { Correo } from 'src/app/clases/Correo';
+import { Correo, CorreoStock } from 'src/app/clases/Correo';
 import { NgxStarRatingModule } from 'ngx-star-rating';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { runInThisContext } from 'vm';
@@ -61,6 +61,7 @@ export class PrincipalComponent implements OnInit {
   nuevaOrden : OrdenCompra = new OrdenCompra();
   nuevoProductoOrden : ProductosPorOrden = new ProductosPorOrden();
   desactivarcarrito=true
+ tiendascorre: Tienda[]=[];
   
   totalCompra = 0;
   productotemproral: Producto = new Producto();
@@ -94,6 +95,9 @@ export class PrincipalComponent implements OnInit {
   existencomentarios=true;
   ordencomentario: Tienda = new Tienda;
   contadorvotos=0
+  primerdigito="";
+  correotienda: CorreoStock = new CorreoStock();
+  consultarcorreotienda: Tienda = new Tienda();
 
   constructor(public router: Router,
     public _productoService: ProductoService,
@@ -116,12 +120,8 @@ export class PrincipalComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarUsuarioLogueado();
-    this.mandarMensaje();
     this.mostrarproductos();
-    
-   
-    
-
+ 
   }
 
 
@@ -134,7 +134,6 @@ export class PrincipalComponent implements OnInit {
             var arreglo = res as Usuario[];
             this.isLoged = true;
             this.usuarioLogueado = arreglo[0];
-            console.log(this.usuarioLogueado );
             var array = this.usuarioLogueado.nombres.split(" ");
             this.nombreUsuario = array[0];
             this.nuevaOrden.cedula = this.usuarioLogueado.cedula
@@ -156,8 +155,6 @@ export class PrincipalComponent implements OnInit {
              this.inhabilitarboton = true;
              this.idelatienda=tienda[0].id_tienda;
 
-             
-  
            }
           
          }
@@ -182,20 +179,6 @@ export class PrincipalComponent implements OnInit {
       (err) => {  Swal.fire("Error al guardar","Su producto no pudo ser agregado","error")} 
     )
   }
-
-  enviarcorreocontrasenia(){
-    this.correo.email="angeljeff00@gmail.com";
-    this.correo.asunto="Recuperación de contraseña";
-    this.correo.mensaje="este  es el mensaje";
-    this._correoService.enviar_correo_contrasenia(this.correo).subscribe(
-      (res) => { console.log(res);
-        
-        
-      },
-      (err) => {  Swal.fire("Error al guardar","Su producto no pudo ser agregado","error")} 
-    )
-  }
-
 
 
   traerProductosPorOrden(){
@@ -282,6 +265,7 @@ export class PrincipalComponent implements OnInit {
     this.nuevoProductoOrden.precio_producto = this.productoAComprar.precio;
     
     if(this.productoAComprar.stock < this.nuevoProductoOrden.cantidad){
+      this.enviarcorreoconinfocliente()
       this.popupaceptarcantidad=true;
 
     }else{
@@ -289,6 +273,42 @@ export class PrincipalComponent implements OnInit {
       this.calcularTotalOrden()
       this.cantidadcorrecta=true;
     }  
+  }
+  enviarcorreoconinfocliente(){
+    this.consultarcorreotienda= new Tienda();
+    this.tiendascorre= [];
+    this.correotienda.asunto="Actualización stock producto";
+    this.consultarcorreotienda.id_tienda= this.productoAComprar.id_tienda.toString();
+
+    this._tiendaService.obtener_datos_tienda_porid(this.consultarcorreotienda).subscribe(
+      (res) => { 
+        this.tiendascorre = res as Tienda[];
+        console.log(this.tiendascorre[0].correo_electronico)
+        this.correotienda.email = this.tiendascorre[0].correo_electronico;
+        this.correotienda.nombre_producto=this.productoAComprar.nombre;
+        this.correotienda.nombre= this.usuarioLogueado.nombres;
+        this.correotienda.apellidos=this.usuarioLogueado.apellidos;
+        this.correotienda.cantidad=this.nuevoProductoOrden.cantidad.toString();
+        this.correotienda.email_cliente=this.usuarioLogueado.correo;
+        var telefono= this.usuarioLogueado.celular.toString()
+        if(telefono.length ===9){
+          var celular="0"+this.usuarioLogueado.celular.toString()}
+          else{ var celular=this.usuarioLogueado.celular.toString() }
+        this.correotienda.celular_cliente=celular;
+        var fech=new Date().toLocaleDateString('en-GB', { year: 'numeric', month: '2-digit', day: '2-digit' })
+        this.correotienda.fecha= fech
+        this._correoService.enviar_correo_a_tienda(this.correotienda).subscribe(
+          (res) => { console.log("estoy en la respuesta"+res);
+            
+          },
+          (err) => {  Swal.fire("Error","No se pudo enviar el correo","error")})
+       
+        
+      },
+      (err) => {  } )
+    
+
+
   }
 
   poputaceptacioncantidad(){
@@ -302,7 +322,6 @@ export class PrincipalComponent implements OnInit {
   poputrechazarcantidad(){
     this.popupaceptarcantidad=false;
     this.popupCompra=false;
-
   }
 
  
@@ -320,8 +339,7 @@ export class PrincipalComponent implements OnInit {
           }else{
             this.popupCompra = false;
             Swal.fire("Producto no agregado","Ya existe este producto en su lista","error")
-          }
-          
+          }    
         }else{
           this.popupCompra = false
           Swal.fire("Producto no agregado","Tiene una orden de compra pendiente en otra tienda,por favor finalicela para poder efectuar otro pedido de otra tienda","error")
@@ -391,7 +409,6 @@ export class PrincipalComponent implements OnInit {
   }
 
   calcularTotalOrden(){
-    console.log("entreeee")
     this.nuevoProductoOrden.total_producto = this.nuevoProductoOrden.cantidad * this.nuevoProductoOrden.precio_producto 
     console.log(this.nuevoProductoOrden)
   }
@@ -407,7 +424,6 @@ export class PrincipalComponent implements OnInit {
   mostrarPopupTienda(element : Productocompleto){
     this.nuevo_comentario = new Comentarios
     this.form.controls['rating'].setValue(null);
-    console.log("este es el contador"+this.contadortienda);
     this.datosTienda= new Tienda(); 
     this.mensajeLoading = "Obteniendo datos";
     this.mostrarLoading = true;
@@ -416,6 +432,10 @@ export class PrincipalComponent implements OnInit {
       (res) => {
         var tienda = res as Tienda[]; 
         this.datosTienda = tienda[0];
+        var telefono= this.datosTienda.telefono.toString()
+        if(telefono.length ===9){
+          this.primerdigito="0"
+        }
         this.popupTienda = true;
         this.mostrarLoading = false;
         if(this.contadortienda==0){
@@ -450,11 +470,7 @@ export class PrincipalComponent implements OnInit {
         }
         else{
           this.habilitarcomentario=true
-
-        }
-        console.log(ordenesusariosentienda)
-
-           
+        }   
       },
       (err) => { } )
 
@@ -462,10 +478,8 @@ export class PrincipalComponent implements OnInit {
   }
 
   traerComentariosTienda(id : string){
-    console.log("esteeee id"+id)
     this.TraerComentariosTiendaa=[];
     this.comentario_idtienda.id_tienda= id;
-    console.log("esteeee id a enviar"+ this.comentario_idtienda.id_tienda)
     this._comentarioService.traer_comentarios_xtienda(this.comentario_idtienda).subscribe(
       (res) => {
         this.TraerComentariosTiendaa = res as ComentariosDTO[];
@@ -493,12 +507,6 @@ export class PrincipalComponent implements OnInit {
       (err) => { } )
   }
 
-/*   getValueRating(){
-    var dd = this.form.value.rating
-    console.log(this.form.value.rating)
-    //this.form.controls['dept'].setValue(selected.id);
-    this.ratingValor= dd
-  } */
 
   cerrarpoput(){
     this.poputcalificatienda=false;
@@ -527,7 +535,6 @@ registrarcomentario(){
     /* this.nuevo_comentario.comentario="ESTE ES EL NUEVO COMENTARIO"; */
     /* let date: Date = new Date(toda); */
     this.nuevo_comentario.fecha= toda;
-    console.log(this.nuevo_comentario);
     this._comentarioService.registrar_comentarios(this.nuevo_comentario).subscribe(
       (res) => {
         this.traerComentariosTienda(this.nuevo_comentario.id_tienda.toString())
@@ -544,13 +551,12 @@ registrarcomentario(){
 
 
   mostrarPopupCompra(producto : Productocompleto){
+    this.isCorrecto = false
     this.nuevoProductoOrden.cantidad=0
     this.nuevoProductoOrden.total_producto=0
     if(this.isLoged){
       this.popupCompra = true;
       this.productoAComprar = producto;
-
-
 
     }else{
       Swal.fire({
@@ -603,9 +609,7 @@ registrarcomentario(){
   }
 
 
-  mandarMensaje(){
 
-  }
   mostrarinfotienda(){
     this.poputinformaciontienda=true
   }
@@ -671,7 +675,6 @@ registrarcomentario(){
         this.listapro.push(listaproductos[i])
       }
     }
-    console.log("esta es el arreglo final", this.listapro)
   }
 
 iniciodepagina(){
@@ -741,18 +744,10 @@ mostrardatostienda(){
   
   }
 
-/*   agregarcomentario(){
-    this.rating3 = 0;
-    this.form = this.fb.group({
-      rating: ['', Validators.required],
-    })
-  } */
-
 
   itemClick(data:any) {
     const item = data.itemData;
 
-    console.log(item);
     switch (item.name) {
       case "Item1":
         this.router.navigate(["/pagina"]);

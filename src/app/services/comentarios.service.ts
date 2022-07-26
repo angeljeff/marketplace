@@ -7,7 +7,7 @@ import { Comentarios } from "../clases/Comentarios";
 })
 export class ComentariosTiendaService{
   private URL = "http://137.184.0.8:3000/comentario";
- // private URL = 'http://localhost:3000/comentario';
+ //private URL = 'http://localhost:3000/comentario';
 
   constructor(private http: HttpClient) {}
 

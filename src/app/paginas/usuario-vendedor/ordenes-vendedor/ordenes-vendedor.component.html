@@ -18,6 +18,7 @@
             [dataSource]="listaPedidosSolicitados"
             [showBorders]="true">
             <dxi-column dataField="id_orden_compra" alignment="center" caption="ID"></dxi-column>
+            <dxi-column dataField="fecha_orden" dataType="date"  format= "dd/MM/yyyy" alignment="center" caption="fecha"></dxi-column>
             <dxi-column dataField="nombres"  alignment="center"  caption="Nombre Comprador"></dxi-column>
            <!--  <dxi-column dataField="cantidadProductos"  alignment="center"  caption="Cantidad Productos"></dxi-column> -->
             <dxi-column dataField="total"  alignment="center"  caption="Total"></dxi-column>
@@ -55,6 +56,7 @@
             [dataSource]="listaPedidos"
             [showBorders]="true">
             <dxi-column dataField="id_orden_compra" alignment="center" caption="ID"></dxi-column>
+            <dxi-column dataField="fecha_orden" dataType="date"  format= "dd/MM/yyyy" alignment="center" caption="fecha"></dxi-column>
             <dxi-column dataField="nombres"  alignment="center"  caption="Nombre Comprador"></dxi-column>
            <!--  <dxi-column dataField="cantidadProductos"  alignment="center"  caption="Cantidad Productos"></dxi-column> -->
             <dxi-column dataField="total"  alignment="center"  caption="Total"></dxi-column>
@@ -87,14 +89,17 @@
     <div *dxTemplate="let data of 'content'">
          <dx-scroll-view width="100%" height="100%">
              <div class="centrar"><h3>Pedido # {{ordenaMostrar.id_orden_compra}}</h3></div>
-             
+            
              <div class="row" style="margin:1em">
                 <div class="col-md-6"><h4>Nombre Comprador: <span style="font-weight: normal;">{{ordenaMostrar.nombres}}</span> </h4></div> 
-                <div class="col-md-6"><h4>Cédula: <span style="font-weight: normal;">{{ordenaMostrar.cedula}}</span> </h4></div> 
-                <div class="col-md-6"><h4>Celular: <span style="font-weight: normal;">{{ordenaMostrar.celular}}</span> </h4></div> 
-                <div class="col-md-6"><h4>Dirección: <span style="font-weight: normal;">{{ordenaMostrar.direccion}}</span> </h4></div> 
+                <div class="col-md-6"><h4>Cédula: <span style="font-weight: normal;">{{primerdigito}}{{ordenaMostrar.cedula}}</span> </h4></div> 
+                <div class="col-md-6"><h4>Celular: <span style="font-weight: normal;">{{digito}}{{ordenaMostrar.celular}}</span> </h4></div> 
+                <div class="col-md-6"><h4>Dirección: <span style="font-weight: normal;">{{ordenaMostrar.direccion}}</span> </h4></div>
+                <div class="col-md-6"><h4>Fecha Pedido: <span style="font-weight: normal;" >{{ordenaMostrar.fecha_orden | date:'dd-MM-yyyy'}}</span> </h4></div>
+                <div class="col-md-6"><h4>Total: <span style="font-weight: normal;">{{ordenaMostrar.total}}</span> </h4></div>      
                 <div class="col-md-6"><h4>Forma Pago: <span style="font-weight: normal;">{{ordenaMostrar.descripcion}}</span> </h4><button class="btn color-principal" *ngIf="ordenaMostrar.descripcion == 'Transferencia/ Depósito Bancario'" (click)="mostrarPago()">Ver Pago</button></div> 
-                <div class="col-md-6"><h4>Total: <span style="font-weight: normal;">{{ordenaMostrar.total}}</span> </h4></div>  
+                
+                
             </div>
 
             <div *ngIf="mostrarP">
@@ -129,9 +134,11 @@
                 </div>
                 <hr>
 
-                <div class="d-flex flex-row-reverse" style="margin-right: 2em;">
-                    <div class="p-2"><h3>Total <span>${{totalCompra}}</span></h3></div>             
-                </div>
+                    <h4 class="text-right">Subtotal  &nbsp;&nbsp;&nbsp; <span>${{sUBTOTAL}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></h4>
+                    <h4 class="text-right">IVA 12% &nbsp;&nbsp;&nbsp;<span>${{_IVA}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></h4>
+                    <h4 class="text-right">Valor envío &nbsp;&nbsp;&nbsp;&nbsp;<span>${{envio}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></h4>
+                    <h4 class="text-right">Total &nbsp;&nbsp;<span>${{totalCompra}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></h4>
+
             </div> 
          </dx-scroll-view>
         

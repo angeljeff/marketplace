@@ -169,7 +169,7 @@
                     <i class="icon-arrow-left"></i> Seguir comprando
                 </a>
 
-                <a class="ps-btn color-principal" (click)="cambiarPantalla(2)">
+                <a *ngIf="sUBTOTAL>0" class="ps-btn color-principal" (click)="cambiarPantalla(2)">
                     Continuar <i class="icon-arrow-right"></i> 
                 </a>
             </div>
@@ -199,20 +199,22 @@
                                 <label>Nombres<sup>*</sup></label>
                                 <dx-text-box [(value)]="nuevaOrden.nombres" [disabled]="!camposedicion" placeholder="Nombres completos"></dx-text-box>
                             </div>
-
-                             <div class="form-group">
-                                <label>Celular<sup>*</sup></label>
-                                <dx-text-box [(value)]="nuevaOrden.celular" [disabled]="!camposedicion" placeholder="Celular"></dx-text-box>
+                            <div class="form-group">
+                                <label>Cédula<sup>*</sup></label>
+                                <dx-text-box [(value)]="nuevaOrden.cedula_envio" [disabled]="!camposedicion" placeholder="Cédula para el envío"></dx-text-box>
                             </div>
+
+
 
                              <div class="form-group">
                                 <label>Dirección<sup>*</sup></label>
                                 <dx-text-box [(value)]="nuevaOrden.direccion" [disabled]="!camposedicion"  placeholder="Dirección de entrega"></dx-text-box>
                             </div>
                             <div class="form-group">
-                                <label>Cédula<sup>*</sup></label>
-                                <dx-text-box [(value)]="nuevaOrden.cedula_envio" [disabled]="!camposedicion" placeholder="Cédula para el envío"></dx-text-box>
+                                <label>Celular<sup>*</sup></label>
+                                <dx-text-box [(value)]="nuevaOrden.celular" [disabled]="!camposedicion" placeholder="Celular"></dx-text-box>
                             </div>
+
                             
                         </div>
 
@@ -304,12 +306,12 @@
                                                     </div>
                                                     <div class="col-md-10" *ngIf="mostrarnohaycuenta">
                                                         <label for="" class="text-center"> No hay cuentas bancarias habilitadas por el momento, intente con otro método de pago</label>
-
+                                                        <br>
                                                     </div>
                                                 </div>
                                              </div>
                                          </div>
-                                         <div class="row">
+                                         <div class="row" *ngIf="!mostrarnohaycuenta">
 
                                            
                                              <div class="col-md-10">
@@ -384,7 +386,7 @@
 
 <dx-popup
 [width]="'20%'"
-[height]="'33%'" 
+[height]="'38%'" 
 [showCloseButton]="false"
 [showTitle]="true"
 title="Cantidad no disponible"

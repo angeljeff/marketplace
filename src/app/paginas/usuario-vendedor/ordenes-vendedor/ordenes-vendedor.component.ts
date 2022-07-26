@@ -1,7 +1,7 @@
 import { core } from '@angular/compiler';
 import { Component, Input, OnInit } from '@angular/core';
 import { iif } from 'rxjs';
-import { Correo } from 'src/app/clases/Correo';
+import { Correo, CorreoPedido } from 'src/app/clases/Correo';
 import { OrdenCompra, OrdenCompraDto } from 'src/app/clases/ordenCompra';
 import { PagoPorOrden } from 'src/app/clases/pagoPorOrden';
 import { Producto } from 'src/app/clases/producto';
@@ -18,6 +18,7 @@ import { TiendaService } from 'src/app/services/tienda.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { VentasService } from 'src/app/services/ventasService';
 import Swal from 'sweetalert2';
+
 import { Productos } from '../usuario-vendedor.component';
 
 @Component({
@@ -43,7 +44,7 @@ export class OrdenesVendedorComponent implements OnInit {
   orden_actaulizar_stock: OrdenCompraDto= new OrdenCompraDto
   orden_actaulizar: OrdenCompra= new OrdenCompra
   actualizacionorden: OrdenCompraDto= new OrdenCompraDto
-  correo: Correo = new Correo()
+  correo: CorreoPedido = new CorreoPedido()
 
   tienda : Tienda = new Tienda()
   mostrarP = false
@@ -53,6 +54,12 @@ export class OrdenesVendedorComponent implements OnInit {
   seccionTodasordenes: boolean= false;
   listaProductos: Producto []=[]
   usuario: Usuario = new Usuario()
+  fechaorden:any="";
+  sUBTOTAL: number=0;
+   _IVA: number=0;
+  envio: number=0;
+  primerdigito=""
+  digito=""
 
   constructor(public _ordenesService : OrdenCompraService,
     public _tiendaService: TiendaService,
@@ -61,7 +68,8 @@ export class OrdenesVendedorComponent implements OnInit {
     public _ventasService : VentasService,
     public _productoPorOrdenService : ProductoPorOrdenService,
     public _correoService: CorreoService,
-    public _usuarioService: UsuarioService) { }
+    public _usuarioService: UsuarioService
+    ) { }
 
   ngOnInit(): void {
     this.traerListadoProductos()
@@ -212,6 +220,9 @@ export class OrdenesVendedorComponent implements OnInit {
     this.correo.asunto="Respuesta al pedido realizado";
     console.log("este es el correo"+this.correo.email)
     this.correo.mensaje=this.orden_actaulizar_stock.nombre_ti;
+    /* this.correo.fecha=this.actualizacionorden.fecha_orden.toDateString() */
+    var fech=new Date(this.actualizacionorden.fecha_orden).toLocaleDateString('fr-CA', { year: 'numeric', month: '2-digit', day: '2-digit' })
+    this.correo.fecha= fech
     this._correoService.enviar_correo_aprobacion_pedido(this.correo).subscribe(
       (res) => { console.log("estoy en la respuesta"+res);
       
@@ -282,6 +293,16 @@ export class OrdenesVendedorComponent implements OnInit {
     this.traerProductosPorOrden() 
     this.traerImagenPago()
     this.ordenaMostrar = e.row.data
+    this.ordenaMostrar.fecha_orden = e.row.data.fecha_orden
+    var telefono= this.ordenaMostrar.celular.toString()
+    if(telefono.length ===9){
+      this.primerdigito="0"
+    }
+    var ced= this.ordenaMostrar.cedula.toString()
+    if(ced.length ===9){
+      this.digito="0"
+    }
+
     this.popupListaProductos = true;
     //this.nombreTienda = (e.row.data.nombre_ti).toUpperCase();
   }
@@ -296,12 +317,34 @@ export class OrdenesVendedorComponent implements OnInit {
       (err) => {  Swal.fire("error")} 
     )
   }
+/*   traerDatosTienda(){
+    this._tiendaService.obtener_datos_tienda_porid(this.datosTienda).subscribe(
+      (res) => { 
+        var tiendas = res as Tienda[];
+        this.datosTienda = tiendas[0];
+        this.envio=this.datosTienda.valor_envio
+        this._IVA=  Number((0.12 * this.sUBTOTAL).toFixed(2))
+        var subsinenvio=Number((this.sUBTOTAL+ this._IVA ).toFixed(2))
+        this.totalCompra= Number((this.sUBTOTAL+ this._IVA + this.envio).toFixed(2))
+        
+        console.log(this.datosTienda)
+      },
+      (err) => {  Swal.fire("Error al guardar","Su producto no pudo ser agregado","error")} 
+    )
+  } */
 
   calcularTotal(){
+    this.sUBTOTAL=0
+    this.totalCompra = 0;
+    this._IVA=0;
     this.productosPorOrdenDTO.forEach(element=>{
       element.total_producto = element.cantidad * element.precio_producto
-      this.totalCompra = this.totalCompra + element.total_producto
-    }) 
+      this.sUBTOTAL=this.sUBTOTAL + element.total_producto
+    })
+    this._IVA=  Number((0.12 * this.sUBTOTAL).toFixed(2))
+    var subsinenvio=Number((this.sUBTOTAL+ this._IVA ).toFixed(2))
+    this.envio=this.ordenaMostrar.total - subsinenvio
+    this.totalCompra= Number((this.sUBTOTAL+ this._IVA + this.envio).toFixed(2))
   }
 
   

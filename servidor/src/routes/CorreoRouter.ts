@@ -13,6 +13,7 @@ class CorreoRoutes {
         this.router.post('/enviarcorreocontra', CorreoenviarController.enviarcorreocontrasenia);
         this.router.post('/enviarcorreoaprueba', CorreoenviarController.enviarcorreoaprobaproducto);
         this.router.post('/enviarcorreoapruebapedido', CorreoenviarController.enviarcorreoaprobapedido);
+        this.router.post('/enviarcorreotienda', CorreoenviarController.enviarcorreotienda);
         
        
     }
