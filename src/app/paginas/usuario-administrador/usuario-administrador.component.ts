@@ -59,7 +59,6 @@ export class UsuarioAdministradorComponent implements OnInit {
             }
             if(this.usuarioLogueado.id_tipo_usuario!=3){
               this.router.navigate(["/principal"]);}
-
           },
           err => {})
 
