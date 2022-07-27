@@ -61,7 +61,6 @@ export class UsuarioAdministradorComponent implements OnInit {
               this.router.navigate(["/principal"]);}
           },
           err => {})
-
       }
 
     });
