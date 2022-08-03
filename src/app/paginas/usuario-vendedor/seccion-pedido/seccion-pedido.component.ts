@@ -130,7 +130,7 @@ export class SeccionPedidoComponent implements OnInit {
   }
   mostrar = (e:any) => {  
     var datos = e.row.data
-    if(datos.nombre_estado =="Rechazado")
+    if(datos.nombre_estado =="Rechazado" && datos.descripcion=="Transferencia/ Depósito Bancario")
       return true;
     else
     return false;

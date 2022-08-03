@@ -14,6 +14,8 @@ import { PercentPipe } from '@angular/common';
 import { Estadistica } from '../../usuario-administrador/seccion-estadistica-administrador/seccion-estadistica-administrador.component';
 import { Productocompleto } from 'src/app/clases/Productocompleto';
 import { ProductocompletoService } from 'src/app/services/productoscompletos';
+import { VentasService } from 'src/app/services/ventasService';
+import { VentasPrediccion, VentasPrediccionString } from 'src/app/clases/ventas';
 
 @Component({
   selector: 'app-seccion-producto',
@@ -40,6 +42,7 @@ export class SeccionProductoComponent implements OnInit {
     tiendaobtenida: Tienda = new Tienda();
     poseetienda=false
     productocodigo: Producto= new Producto();
+
   
 
     seccionNewProducto = false;
@@ -62,14 +65,13 @@ export class SeccionProductoComponent implements OnInit {
     public _categoriaService: CategoriaService,
     public _tiendaService: TiendaService,
     public _productocompletoService :ProductocompletoService,
+    public _ventasService: VentasService
     ) { }
 
   ngOnInit( ): void {
     this.consultartienda()
     this.traerListadocategorias()
-    
-    
-    
+      
   }
 
   consultartienda(){
@@ -303,7 +305,10 @@ export class SeccionProductoComponent implements OnInit {
     return `${arg.argumentText} - ${arg.valueText} (${arg.percentText})`;
   }
 
+ 
 
+
+  //finaliza estadisiticas ventas
   nuevoarregloproductos(lista: Productodto[]){
     this.listaproductos= []
 

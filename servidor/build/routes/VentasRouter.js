@@ -14,6 +14,7 @@ class VentasRoutes {
         this.router.get('/listar', VentasController_1.default.listar_ventas);
         this.router.get('/obtener/:id_venta', VentasController_1.default.obtenerPorid);
         this.router.post('/Agregar', VentasController_1.default.agregar_ventas);
+        this.router.post('/prediccion/:fecha', VentasController_1.default.consultar_ventas_prediccion);
     }
 }
 const ventas = new VentasRoutes();

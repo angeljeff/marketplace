@@ -22,6 +22,12 @@ class VentasController {
         res.json({ message: 'venta agregada ' });
     }
 
+    public async consultar_ventas_prediccion(req: Request, res: Response): Promise<void> {
+        const fecha=req.params.fecha
+        const agrega_ventas = await pool.query(`SELECT v.fecha, sum(orden.total) as total FROM ventas as v inner join orden_compra as orden on v.id_orden_compra= orden.id_orden_compra where fecha >='${fecha}' group by v.fecha`);
+        res.send(agrega_ventas);
+    }
+
 
    
 }

@@ -20,6 +20,7 @@ export class UsuarioAdministradorComponent implements OnInit {
   seccionTienda = false;
   seccionEstadisticas = false;
   seccionPedido = false;
+  seccionProyeccion = false;
   isLoged = false;
   nombreUsuario = ""
   usuarioLogueado : Usuario = new Usuario();
@@ -124,25 +125,36 @@ export class UsuarioAdministradorComponent implements OnInit {
         this.seccionProducto = false;
         this.seccionUsuarios = false;
         this.seccionEstadisticas = false;
+        this.seccionProyeccion=false;
        break;
       case 2:
         this.seccionTienda = false;
         this.seccionProducto = true;
         this.seccionUsuarios = false;
         this.seccionEstadisticas = false;
+        this.seccionProyeccion=false;
         break;
       case 3:
         this.seccionTienda = false;
         this.seccionProducto = false;
         this.seccionUsuarios = true;
         this.seccionEstadisticas = false;
+        this.seccionProyeccion=false;
         break;
       case 4:
         this.seccionTienda = false;
         this.seccionProducto = false;
         this.seccionUsuarios = false;
         this.seccionEstadisticas = true;
+        this.seccionProyeccion=false;
         break;
+        case 5:
+          this.seccionTienda = false;
+          this.seccionProducto = false;
+          this.seccionUsuarios = false;
+          this.seccionEstadisticas = false;
+          this.seccionProyeccion=true;
+          break;
       default:    
     }  
     

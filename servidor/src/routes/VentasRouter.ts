@@ -13,6 +13,7 @@ class VentasRoutes {
         this.router.get('/listar', ventasController.listar_ventas);
         this.router.get('/obtener/:id_venta', ventasController.obtenerPorid);
         this.router.post('/Agregar', ventasController.agregar_ventas);
+        this.router.post('/prediccion/:fecha', ventasController.consultar_ventas_prediccion);
     }
 
 }

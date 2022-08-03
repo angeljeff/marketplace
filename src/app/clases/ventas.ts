@@ -11,3 +11,26 @@ export class Ventas{
 
     }
 }
+
+
+export class VentasPrediccion{
+    fecha : Date
+    total : number
+    
+    constructor(){
+       this.fecha = new Date()
+       this.total=0
+
+    }
+}
+
+export class VentasPrediccionString{
+    fecha : string
+    total : number
+    
+    constructor(){
+       this.fecha = ""
+       this.total=0
+
+    }
+}

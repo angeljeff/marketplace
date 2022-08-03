@@ -8,7 +8,7 @@ import { Tienda } from "../clases/tienda";
 })
 export class OrdenCompraService{
   private URL = "http://137.184.0.8:3000/ordencompra";
- // private URL = 'http://localhost:3000/ordencompra';
+  //private URL = 'http://localhost:3000/ordencompra';
 
   constructor(private http: HttpClient) {}
 

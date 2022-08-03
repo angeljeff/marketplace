@@ -163,11 +163,11 @@
 
                         </div>
 
-                        <div class="row ml-lg-auto pt-5 ">
+                        <div class="row ml-lg-auto pt-5 margen">
 
                             <div class="col-lg-2 col-6"> </div><!-- box /-->
 
-                            <div class="col-lg-2 col-6 margen" (click)="mostrarSeccion(1)" >
+                            <div class="col-lg-2 col-6 " (click)="mostrarSeccion(1)" >
                                 <div class="text-center">
                                     <a *ngIf="seccionTienda">
                                         <h1 style="cursor:pointer;"><i class="fas fa-store text-success"></i></h1>
@@ -180,42 +180,55 @@
                                 </div>
                             </div><!-- box /-->
 
-                            <div class="col-lg-2 col-6 margen" (click)="mostrarSeccion(2)">
+                            <div class="col-lg-2 col-6 " (click)="mostrarSeccion(2)">
                                 <div class="text-center">
                                     <a *ngIf="seccionProducto">
                                         <h1 style="cursor:pointer;"><i class="fas fa-shopping-bag text-success"></i></h1>
-                                        <h4 class="text-success" style="margin-left: -0.4em;">Productos</h4>
+                                        <h4 class="text-success" >Productos</h4>
                                     </a>
                                     <a *ngIf="!seccionProducto">
                                         <h1 style="cursor:pointer;"><i class="fas fa-shopping-bag text-white"></i></h1>
-                                        <h4 class="text-white" style="margin-left: -0.4em;">Productos</h4>
+                                        <h4 class="text-white" >Productos</h4>
                                     </a>
                                 </div>
                             </div><!-- box /-->
 
-                            <div class="col-lg-2 col-6 margen" (click)="mostrarSeccion(3)">
+                            <div class="col-lg-2 col-6 " (click)="mostrarSeccion(3)">
                                 <div class="text-center">
                                     <a *ngIf="seccionUsuarios">
                                         <h1 style="cursor:pointer;"><i class="fas fa-user text-success"></i></h1>
-                                        <h4 class="text-success">Usuarios </h4>
+                                        <h4 class="text-success" style="margin-left: 0.2em;">Usuarios </h4>
                                     </a>
                                     <a *ngIf="!seccionUsuarios">
                                         <h1 style="cursor:pointer;"><i class="fas fa-user text-white"></i></h1>
-                                        <h4 class="text-white">Usuarios </h4>
+                                        <h4 class="text-white" style="margin-left: 0.2em;">Usuarios </h4>
                                     </a>
                                 </div>
                             </div><!-- box /-->
                 
 
-                            <div class="col-lg-2 col-6 margen" (click)="mostrarSeccion(4)">
+                            <div class="col-lg-2 col-6 " (click)="mostrarSeccion(4)">
                                 <div class="text-center">
                                     <a *ngIf="seccionEstadisticas">
-                                        <h1 style="cursor:pointer;"><i class="fas fa-clipboard-list text-success"></i></h1>
+                                        <h1 style="cursor:pointer;"><i class="fas fa-chart-pie text-success"></i></h1>
                                         <h4 class="text-success" style="margin-left: -0.4em;">Estadísticas </h4>
                                     </a>
                                     <a *ngIf="!seccionEstadisticas">
-                                        <h1 style="cursor:pointer;"><i class="fas fa-clipboard-list text-white"></i></h1>
+                                        <h1 style="cursor:pointer;"><i class="fas fa-chart-pie text-white"></i></h1>
                                         <h4 class="text-white" style="margin-left: -0.4em;">Estadísticas </h4>
+                                    </a>
+                                </div>
+                            </div><!-- box /-->
+
+                            <div class="col-lg-2 col-6 " (click)="mostrarSeccion(5)">
+                                <div class="text-center">
+                                    <a *ngIf="seccionProyeccion">
+                                        <h1 style="cursor:pointer; margin-left: 0.5em;"><i class="fas fa-chart-line text-success"></i></h1>
+                                        <h4 class="text-success" style="margin-left: 0.4em;">Proyección </h4>
+                                    </a>
+                                    <a *ngIf="!seccionProyeccion">
+                                        <h1 style="cursor:pointer; margin-left: 0.5em;"><i class="fas fa-chart-line text-white"></i></h1>
+                                        <h4 class="text-white" style="margin-left: 0.4em;">Proyección </h4>
                                     </a>
                                 </div>
                             </div><!-- box /-->
@@ -240,6 +253,10 @@
 
                 <div class="ps-section__content" *ngIf="seccionEstadisticas">
                     <app-seccion-estadistica-administrador [objetoUsuario]="usuarioLogueado"></app-seccion-estadistica-administrador>
+                </div>
+
+                <div class="ps-section__content" *ngIf="seccionProyeccion">
+                    <app-seccion-proyeccion-administrador [objetoUsuario]="usuarioLogueado"></app-seccion-proyeccion-administrador>
                 </div>
             </div>
 

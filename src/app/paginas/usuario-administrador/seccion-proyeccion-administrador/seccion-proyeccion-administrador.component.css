@@ -1,0 +1,43 @@
+.color-principal{
+    background-color: #1db61d;
+    color: white;
+}
+
+.centrar{
+    text-align: center;
+}
+
+ ::ng-deep .datagrid-table .datagrid-column {
+    justify-content: center;
+  }
+
+
+  .form-group p{
+      color: black;
+  }
+
+  input[type="file"] {
+    height: 3em;
+}
+
+::ng-deep  .dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-edit .dx-link{
+    background-color: #1db61d;
+    color: white;
+}
+#imagenpago{
+    width: 8rem;
+    height: auto;
+
+}
+
+.confirmar{
+    width: 12.5rem;
+    height: auto;
+    font-size: 2.5rem;
+}
+.cancelar{
+    width: 12rem;
+    height: auto;
+    font-size: 2.5rem;
+
+}

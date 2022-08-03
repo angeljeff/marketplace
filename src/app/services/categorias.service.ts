@@ -7,7 +7,7 @@ import { Router } from "@angular/router";
 })
 export class CategoriaService{
   private URL = "http://137.184.0.8:3000/Categoria";
- // private URL = 'http://localhost:3000/Categoria';
+  //private URL = 'http://localhost:3000/Categoria';
 
   constructor(private http: HttpClient, private router: Router) {}
 

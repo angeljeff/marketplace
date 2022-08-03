@@ -33,6 +33,13 @@ class VentasController {
             res.json({ message: 'venta agregada ' });
         });
     }
+    consultar_ventas_prediccion(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const fecha = req.params.fecha;
+            const agrega_ventas = yield base_datos_1.default.query(`SELECT v.fecha, sum(orden.total) as total FROM ventas as v inner join orden_compra as orden on v.id_orden_compra= orden.id_orden_compra where fecha >='${fecha}' group by v.fecha`);
+            res.send(agrega_ventas);
+        });
+    }
 }
 const ventasController = new VentasController;
 exports.default = ventasController;

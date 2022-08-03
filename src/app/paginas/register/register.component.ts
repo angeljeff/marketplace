@@ -226,7 +226,7 @@ export class RegisterComponent implements OnInit {
             this.usuarioLogueado = arreglo[0];
             var array = this.usuarioLogueado.nombres.split(" ");
             this.nombreUsuario = array[0];
-            if(this.usuarioLogueado.id_tipo_usuario==2 || this.usuarioLogueado.id_tipo_usuario==1 || this.usuarioLogueado.id_tipo_usuario==3){
+            if((this.usuarioLogueado.id_tipo_usuario==2 || this.usuarioLogueado.id_tipo_usuario==1 || this.usuarioLogueado.id_tipo_usuario==3) && !this.isedicion){
             this.router.navigate(["/principal"]);}
 
           },
