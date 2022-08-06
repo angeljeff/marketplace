@@ -192,7 +192,15 @@ export class CarritoComprasComponent implements OnInit {
       (res) => { 
         this.listadoMetodosPago=[]
         this.listadoMetodosPago = res as Met_pag_tienda[];
-        this.validarMetodos();
+        if(this.listadoMetodosPago.length ==0){
+          this.isPago1=true;
+          this.isPago2=true;
+          this.isPago3=true;
+
+        }else{
+          this.validarMetodos();
+        }
+        
       },
       (err) => {  Swal.fire("Error al guardar","Su producto no pudo ser agregado","error")} 
     )

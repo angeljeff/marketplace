@@ -104,7 +104,7 @@ export class SeccionPagoComponent implements OnInit {
       this.nuevo_metodo_pago.id_metodo_pago= this.lista[i]
       this.nuevo_metodo_pago.estado_metodo=0
       this._metodopagotiendaservice.agregarmetodopagotienda(this.nuevo_metodo_pago).subscribe(
-        (res) => {        
+        (res) => {   this.obtenermetodosdepago()     
         },
         (err) => {  this.mostrarLoading = false; Swal.fire('error')}
       )
@@ -214,7 +214,8 @@ export class SeccionPagoComponent implements OnInit {
       showCancelButton: false,
       confirmButtonText: 'OK'
     }).then((result) => {
-      if (result.isConfirmed) {}
+      if (result.isConfirmed) {
+      }
     })
 
   }

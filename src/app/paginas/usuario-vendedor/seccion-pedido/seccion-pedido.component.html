@@ -58,7 +58,7 @@
 
 <dx-popup
     [width]="'60%'"
-    [height]="'70%'"
+    [height]="'75%'"
     [showTitle]="true"
     [title]="titulo"
     [closeOnOutsideClick]="true"
@@ -114,9 +114,10 @@
                 </div>
                 <hr>
 
-                <div class="d-flex flex-row-reverse" style="margin-right: 2em;">
-                    <div class="p-2"><h3>Total <span>${{totalCompra}}</span></h3></div>             
-                </div>
+                <h4 class="text-right">Subtotal  &nbsp;&nbsp;&nbsp; <span>${{sUBTOTAL}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></h4>
+                <h4 class="text-right">IVA 12% &nbsp;&nbsp;&nbsp;<span>${{_IVA}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></h4>
+                <h4 class="text-right">Valor envío &nbsp;&nbsp;&nbsp;&nbsp;<span>${{envio}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></h4>
+                <h4 class="text-right">Total &nbsp;&nbsp;<span>${{totalCompra}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></h4>
             </div> 
          </dx-scroll-view>
         

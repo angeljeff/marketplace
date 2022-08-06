@@ -41,6 +41,10 @@ export class SeccionPedidoComponent implements OnInit {
   productosPorOrdenDTO: ProductosPorOrdenDTO[] = []; 
 
   productos: Producto[] = []; 
+  sUBTOTAL=0
+  _IVA=0
+  envio=0
+
 
   pago2 = false;
   disablePago2 = true;
@@ -94,11 +98,17 @@ export class SeccionPedidoComponent implements OnInit {
   }
 
   calcularTotal(){
-    this.totalCompra =0;
+    this.sUBTOTAL=0
+    this.totalCompra = 0;
+    this._IVA=0;
     this.productosPorOrdenDTO.forEach(element=>{
       element.total_producto = element.cantidad * element.precio_producto
-      this.totalCompra = this.totalCompra + element.total_producto
+      this.sUBTOTAL=this.sUBTOTAL + element.total_producto
     }) 
+    this._IVA=  Number((0.12 * this.sUBTOTAL).toFixed(2))
+    var subsinenvio=Number((this.sUBTOTAL+ this._IVA ).toFixed(2))
+    this.envio=this.nuevaOrden.total - subsinenvio
+    this.totalCompra= Number((this.sUBTOTAL+ this._IVA + this.envio).toFixed(2))
   }
 
   mostrarPopupProducto(productoOrden : ProductosPorOrdenDTO){

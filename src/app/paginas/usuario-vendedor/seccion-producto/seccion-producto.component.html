@@ -119,7 +119,7 @@
                                             <div class="row">
                                                  <div class="col-md-3" style="margin-top: -1em;"><p>Código *</p></div>
                                                  <div class="col-md-8  " *ngIf="!isedicionpro;">
-                                                     <dx-text-box   [maxLength]="8" pattern="[A-Za-z0-9]" [(value)]="productonuevo.codigo"  class="controles" placeholder="Código del producto">
+                                                     <dx-text-box   [maxLength]="12" pattern="[A-Za-z0-9]" [(value)]="productonuevo.codigo"  class="controles" placeholder="Código del producto">
                                                         <dx-validator>
                                                             <dxi-validation-rule type="required"  message="El código del producto es requerido"></dxi-validation-rule>
                                                             <dxi-validation-rule type="pattern" pattern="[A-Za-z0-9]" message="Debe ingresar un código válido"></dxi-validation-rule></dx-validator> </dx-text-box>       
@@ -128,7 +128,7 @@
                                                      <dx-text-box  [(value)]="producompletoaeditar.codigo" [disabled]="true" class="controles" > </dx-text-box>       
                                                  </div>
                                                  <div class="col-md-1 text-align-start" *ngIf="!isedicionpro;">
-                                                    <span  title="El código es propio para cada producto, debe constar entre 4 a 8 carácteres, puede ingresar un código de solo números, solo letras o una combinación de letras y números, le recomendamos utilizar el código de barras del producto para mayor facilidad."><i style="margin-top:1rem;" class="fa fa-info-circle fa-lg" aria-hidden="true"></i></span>
+                                                    <span  title="El código es propio para cada producto, debe constar entre 4 a 12 carácteres, puede ingresar un código de solo números, solo letras o una combinación de letras y números, le recomendamos utilizar el código de barras del producto para mayor facilidad."><i style="margin-top:1rem;" class="fa fa-info-circle fa-lg" aria-hidden="true"></i></span>
                                                  </div>
                                              </div>
                                          </div>
