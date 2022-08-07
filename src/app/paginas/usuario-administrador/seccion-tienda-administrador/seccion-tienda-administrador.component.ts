@@ -49,6 +49,12 @@ export class SeccionTiendaAdministradorComponent implements OnInit {
       else if(element.id_estado_tienda == 2)
         this.listaTiendasInactivas.push(element)
     })
+    this.listaTiendasActivas.forEach(ele=>{
+      var horasuma = new Date(ele.hora_apertura);
+      ele.hora_apertura=new Date(horasuma.setHours(horasuma.getHours()+5));
+      var horacierre= new Date(ele.hora_cierre);
+      ele.hora_cierre=new Date(horacierre.setHours(horacierre.getHours()+5));
+    } )
   }
 
   INTienda = (e:any) => { 
@@ -94,6 +100,9 @@ export class SeccionTiendaAdministradorComponent implements OnInit {
       }
     }) 
   }
+
+
+
 
 
   mostrarSecProducto(numero : number){

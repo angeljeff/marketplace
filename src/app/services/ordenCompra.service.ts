@@ -47,6 +47,11 @@ export class OrdenCompraService{
     return this.http.post<any>(this.URL + `/traerOrdencomentarios`, tienda);
   }
 
+  traerordenporid(orden : OrdenCompra ) {
+    return this.http.post<any>(this.URL + `/obtener/${orden.id_orden_compra}`, orden);
+  }
+
+
   
   
 

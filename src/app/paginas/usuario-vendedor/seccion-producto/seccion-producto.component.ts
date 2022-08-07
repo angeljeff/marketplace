@@ -426,7 +426,7 @@ verificarcampos(){
         }else{this.mostrarmensajes('Debe seleccionar una categoría')}
       }else{this.mostrarmensajes('Debe llenar el campo nombre de producto')}
     }else{this.mostrarmensajes('Debe ingresar un código válido')}
-  }else{this.mostrarmensajes('Debe ingresar un código entre 4 a 8 carácteres ')}
+  }else{this.mostrarmensajes('Debe ingresar un código entre 4 a 12 carácteres ')}
     }
 
 verificarcamposacutalizar(){

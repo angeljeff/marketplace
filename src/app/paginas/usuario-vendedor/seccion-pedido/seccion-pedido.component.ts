@@ -35,6 +35,7 @@ export class SeccionPedidoComponent implements OnInit {
   dataTransferencia = false;
   listaPedidos : OrdenCompraDto [] = []
   popupsubircomprobante=false
+  ordenpedido: OrdenCompraDto= new OrdenCompraDto()
 
   ordenes: OrdenCompra[] = []; 
   nuevaOrden :OrdenCompra = new OrdenCompra()
@@ -98,17 +99,24 @@ export class SeccionPedidoComponent implements OnInit {
   }
 
   calcularTotal(){
-    this.sUBTOTAL=0
-    this.totalCompra = 0;
-    this._IVA=0;
-    this.productosPorOrdenDTO.forEach(element=>{
-      element.total_producto = element.cantidad * element.precio_producto
-      this.sUBTOTAL=this.sUBTOTAL + element.total_producto
-    }) 
-    this._IVA=  Number((0.12 * this.sUBTOTAL).toFixed(2))
-    var subsinenvio=Number((this.sUBTOTAL+ this._IVA ).toFixed(2))
-    this.envio=this.nuevaOrden.total - subsinenvio
-    this.totalCompra= Number((this.sUBTOTAL+ this._IVA + this.envio).toFixed(2))
+    this.ordenpedido= new OrdenCompraDto
+    this._ordenesService.traerordenporid(this.nuevaOrden).subscribe(
+      (res) => { var ords = res as OrdenCompraDto;
+        this.ordenpedido=ords
+        this.sUBTOTAL=0
+        this.totalCompra = 0;
+        this._IVA=0;
+        this.productosPorOrdenDTO.forEach(element=>{
+          element.total_producto = element.cantidad * element.precio_producto
+          this.sUBTOTAL=this.sUBTOTAL + element.total_producto
+        }) 
+        this._IVA=  Number((0.12 * this.sUBTOTAL).toFixed(2))
+        var subsinenvio=Number((this.sUBTOTAL+ this._IVA ).toFixed(2))
+        this.envio=this.ordenpedido.total - subsinenvio
+        this.totalCompra= Number((this.sUBTOTAL+ this._IVA + this.envio).toFixed(2))
+      },
+      (err) => { }
+    ) 
   }
 
   mostrarPopupProducto(productoOrden : ProductosPorOrdenDTO){

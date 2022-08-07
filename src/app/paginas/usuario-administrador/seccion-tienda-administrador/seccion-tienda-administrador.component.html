@@ -20,8 +20,8 @@
         <dxi-column dataField="nombre_ti" alignment="center" caption="Nombre"></dxi-column>
         <dxi-column dataField="direccion"  alignment="center"  caption="Direccion"></dxi-column>
         <dxi-column dataField="descripcion"  alignment="center"  caption="Descripcion"></dxi-column>
-        <dxi-column dataField="hora_apertura"  alignment="center"  caption="Hora apertura"></dxi-column>
-        <dxi-column dataField="hora_cierre"  alignment="center"  caption="Hora cierre" dataType="date" format="shortDate"></dxi-column>
+        <dxi-column dataField="hora_apertura"  alignment="center" dataType="date" format="shortTime" caption="Hora apertura"></dxi-column>
+        <dxi-column dataField="hora_cierre"  alignment="center"  caption="Hora cierre" dataType="date" format="shortTime"></dxi-column>
 
         <dxi-column type="buttons"  caption="Inactivar">
             <dxi-button text="Inactivar" cssClass="btn" [onClick]="INTienda"></dxi-button>    
