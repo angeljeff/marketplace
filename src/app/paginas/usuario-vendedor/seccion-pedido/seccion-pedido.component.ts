@@ -35,7 +35,7 @@ export class SeccionPedidoComponent implements OnInit {
   dataTransferencia = false;
   listaPedidos : OrdenCompraDto [] = []
   popupsubircomprobante=false
-  ordenpedido: OrdenCompraDto= new OrdenCompraDto()
+  ordenpedido: OrdenCompra[]= []
 
   ordenes: OrdenCompra[] = []; 
   nuevaOrden :OrdenCompra = new OrdenCompra()
@@ -99,10 +99,10 @@ export class SeccionPedidoComponent implements OnInit {
   }
 
   calcularTotal(){
-    this.ordenpedido= new OrdenCompraDto
+    this.ordenpedido= []
+    console.log("esla orden a consultar"+this.nuevaOrden.id_orden_compra)
     this._ordenesService.traerordenporid(this.nuevaOrden).subscribe(
-      (res) => { var ords = res as OrdenCompraDto;
-        this.ordenpedido=ords
+      (res) => { this.ordenpedido = res as OrdenCompra[];
         this.sUBTOTAL=0
         this.totalCompra = 0;
         this._IVA=0;
@@ -112,7 +112,7 @@ export class SeccionPedidoComponent implements OnInit {
         }) 
         this._IVA=  Number((0.12 * this.sUBTOTAL).toFixed(2))
         var subsinenvio=Number((this.sUBTOTAL+ this._IVA ).toFixed(2))
-        this.envio=this.ordenpedido.total - subsinenvio
+        this.envio=this.ordenpedido[0].total - subsinenvio
         this.totalCompra= Number((this.sUBTOTAL+ this._IVA + this.envio).toFixed(2))
       },
       (err) => { }

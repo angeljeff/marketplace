@@ -461,7 +461,7 @@ export class CarritoComprasComponent implements OnInit {
           title: 'Deja tu reseña',
           text:'Ya puedes añadir un comentario a la tienda, dinos cómo fue tu experienca para conocimiento de los demás usuarios',
           showConfirmButton: false,
-          timer: 3200
+          timer: 3500
         })
         
         this.router.navigate(["/principal"]);
