@@ -7,6 +7,7 @@ import { Tienda } from 'src/app/clases/tienda';
 import { Usuario } from 'src/app/clases/usuario';
 import { CantonService } from 'src/app/services/cantones.service';
 import { TiendaService } from 'src/app/services/tienda.service';
+import { verificarRuc } from 'udv-ec';
 import Swal from 'sweetalert2';
 
 
@@ -244,6 +245,75 @@ export class SeccionTiendaComponent implements OnInit {
     }
     else {
       this.mostrarmensajes('Debe indicar un nombre a su tienda')
+    }
+  }
+
+  verificarcampos2(){
+    if(this.newTienda.ruc !=="" && this.newTienda.ruc.length==13  ){
+      if(this.newTienda.representante_legal!=="" && this.newTienda.representante_legal.length>=10){
+        var rucvalidacion=verificarRuc(this.newTienda.ruc)
+        if(rucvalidacion){
+          if(this.newTienda.nombre_ti !==""){
+            if(this.newTienda.direccion!==""){
+              if(this.newTienda.correo_electronico!==""){
+                if(this.newTienda.id_cantones!==0 ){
+                  if(this.newTienda.telefono !=="" && this.newTienda.telefono.length==10 ){
+                    if(this.newTienda.valor_envio !==0 && this.newTienda.valor_envio!==null   ){
+                    if(this.newTienda.descripcion!=="" && this.newTienda.descripcion.length>= 10){
+                        if(this.hora !== undefined){
+                          if(this.hora2 !== undefined){
+                            this.recorrerstring(this.newTienda.telefono)
+                            if (this.celular ==true){
+                              if(!this.isedicion){
+                              this.registrar()
+                          }else{
+                            this.actualizar()
+                          }  
+                          }else{
+                            this.mostrarmensajes('El celular debe contener solo números')
+                          }
+                          
+                        }else{
+                          this.mostrarmensajes('Por favor registre una hora de cierre')
+                        }
+                      }else{
+                        this.mostrarmensajes('Por favor registre una hora de apertura')
+                      }
+                    }else{
+                  this.mostrarmensajes('Por favor establezca una breve descripción de la tienda')
+                }
+                  }else{
+                this.mostrarmensajes('Por favor indique un precio por el envío de los productos')
+                }
+        
+                  }else{
+                this.mostrarmensajes('Por favor indique el telefono de contacto')
+              }
+        
+                }else{
+              this.mostrarmensajes('Debe indicar el cantón a la que pertenece la tienda')
+            }
+        
+              }else{
+              this.mostrarmensajes('Indique el correo electrónico de la tienda')
+            }
+        
+            }else{
+              this.mostrarmensajes('Indique la direccion de su tienda')
+            }
+            
+          }
+          else {
+            this.mostrarmensajes('Debe indicar un nombre a su tienda')
+          }
+        }else{
+          this.mostrarmensajes('Debe indicar un RUC válido')
+        }
+      }else{
+        this.mostrarmensajes('Por favor indique los dos nombres y los dos apellidos del representante legal')
+      }
+    }else{
+      this.mostrarmensajes('Debe indicar un RUC válido')
     }
   }
   

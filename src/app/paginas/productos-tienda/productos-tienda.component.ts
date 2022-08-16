@@ -324,10 +324,9 @@ export class ProductosTiendaComponent implements OnInit {
     for(let i in this.listaprocompleto){
       if(this.listaprocompleto[i].id_tienda== this.idTienda ){
         this.listacompletaproductos.push(this.listaprocompleto[i])
-        
-        
       }
     }
+    this.listaprocompleto=this.listacompletaproductos
 
   }
 
@@ -413,6 +412,7 @@ export class ProductosTiendaComponent implements OnInit {
         this.listaprocompleto.push(this.listacompletaproductos[i])
       }
     }
+    
   }
   traerListadocategorias(){
     this._categoriaService.traerListaCtegorias().subscribe(

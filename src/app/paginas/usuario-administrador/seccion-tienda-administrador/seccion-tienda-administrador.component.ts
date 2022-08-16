@@ -55,6 +55,12 @@ export class SeccionTiendaAdministradorComponent implements OnInit {
       var horacierre= new Date(ele.hora_cierre);
       ele.hora_cierre=new Date(horacierre.setHours(horacierre.getHours()+5));
     } )
+    this.listaTiendasInactivas.forEach(ele=>{
+      var horasuma = new Date(ele.hora_apertura);
+      ele.hora_apertura=new Date(horasuma.setHours(horasuma.getHours()+5));
+      var horacierre= new Date(ele.hora_cierre);
+      ele.hora_cierre=new Date(horacierre.setHours(horacierre.getHours()+5));
+    } )
   }
 
   INTienda = (e:any) => { 

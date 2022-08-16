@@ -70,14 +70,37 @@
                             <h5 *ngIf="isedicion">Actualice los datos de su tienda</h5>
 
                             <div class="form-group">
-                                <dx-text-box [(value)]="newTienda.nombre_ti" class="controles" placeholder="Nombre Tienda"></dx-text-box>
+                                <dx-text-box pattern="[0-9]{13}" [maxLength]="13" [(value)]="newTienda.ruc" [disabled]="isedicion" class="controles" placeholder="Ingrese RUC">
+                                    <dx-validator>
+                                        <dxi-validation-rule type="required"  message="Número de RUC es requerido"></dxi-validation-rule>
+                                        <dxi-validation-rule type="pattern" pattern="[0-9]{13}" message="Debe ingresar un RUC válido">
+
+                                        </dxi-validation-rule></dx-validator></dx-text-box>
+
                             </div>
 
                             <div class="form-group">
-                                <dx-text-box [(value)]="newTienda.direccion" class="controles" placeholder="Dirección"></dx-text-box>
+                                <dx-text-box [(value)]="newTienda.representante_legal" [maxLength]="53" [disabled]="isedicion" class="controles" placeholder="Representante Legal">
+                                <dx-validator>
+                                    <dxi-validation-rule type="required"  message="Nombres completos del representante legal es requerido"></dxi-validation-rule>
+                                    </dx-validator></dx-text-box>
+                            </div>
+
+                            <div class="form-group">
+                                <dx-text-box [(value)]="newTienda.nombre_ti" [maxLength]="25" class="controles" placeholder="Nombre Tienda">
+                                    <dx-validator>
+                                        <dxi-validation-rule type="required"  message="Nombre de tienda es requerido"></dxi-validation-rule>
+                                        </dx-validator></dx-text-box>
+                            </div>
+
+                            <div class="form-group">
+                                <dx-text-box [(value)]="newTienda.direccion" class="controles" placeholder="Dirección">
+                                    <dx-validator>
+                                        <dxi-validation-rule type="required"  message="Dirección de tienda es requerido"></dxi-validation-rule>
+                                        </dx-validator></dx-text-box>
                             </div>
                             <div class="form-group">
-                                <dx-text-box [(value)]="newTienda.correo_electronico" class="controles" placeholder="Correo electronico">
+                                <dx-text-box [(value)]="newTienda.correo_electronico"  class="controles" placeholder="Correo electronico">
                                     <dx-validator> <dxi-validation-rule type="required"  message="Correo es requerido" ></dxi-validation-rule>
                                         <dxi-validation-rule   type="email"  message="Correo es invalido"  ></dxi-validation-rule>  </dx-validator>  </dx-text-box>
                             </div>
@@ -85,7 +108,12 @@
                                 <dx-select-box [items]="listaCantones" [(value)]="newTienda.id_cantones"  valueExpr="id_cantones" displayExpr="descripcion" placeholder="Seleccionar canton"></dx-select-box>
                             </div>
                             <div class="form-group">
-                                <dx-text-box [(value)]="newTienda.telefono" class="controles" placeholder="Celular contacto"></dx-text-box>
+                                <dx-text-box pattern="[0-9]{10}" [maxLength]="10" [(value)]="newTienda.telefono" class="controles" placeholder="Celular contacto">
+                                    <dx-validator>
+                                        <dxi-validation-rule type="required"  message="Número de celular es requerido"></dxi-validation-rule>
+                                        <dxi-validation-rule type="pattern" pattern="[0-9]{10}" message="Debe ingresar un número de celular válido">
+
+                                        </dxi-validation-rule></dx-validator></dx-text-box>
                             </div>
                             <div class="row">
                             <div class="col-md-1 text-center">
@@ -116,7 +144,7 @@
                             </div>
 
                             <div class="form-group">
-                                <button class="ps-btn ps-btn--fullwidth color-principal" *ngIf="!isedicion" (click)=" verificarcampos()">Registrar</button>
+                                <button class="ps-btn ps-btn--fullwidth color-principal" *ngIf="!isedicion" (click)=" verificarcampos2()">Registrar</button>
                             </div>
 
                             <br>
@@ -150,6 +178,7 @@
                     <div class="col-md-6 negrita">
                         <p><span>Teléfono contacto: </span>{{primerdigito}}{{tiendaEncontrada.telefono}}</p>
                         <p><span>Dirección: </span>{{tiendaEncontrada.direccion}}</p>
+                        <p><span>Correo electrónico: </span>{{tiendaEncontrada.correo_electronico}}</p>
                         <p><span>Descripción: </span></p>
                         <p>{{tiendaEncontrada.descripcion}}</p>
                         <p><span>Hora apertura: </span>{{tiendaEncontrada.hora_apertura | date:'shortTime':'UTC'}}</p>

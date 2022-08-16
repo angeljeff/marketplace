@@ -19,7 +19,7 @@ export class OrdenCompra{
        this.direccion = ""
        this.celular = ""
        this.nombres = ""
-       this.cedula_envio = ""
+       this.cedula_envio = "0"
        this.cedula = ""
        this.total = 0
        this.observacion_pedido= ""
@@ -49,9 +49,9 @@ export class OrdenCompraDto{
        this.id_estado_pedido = 0
        this.id_metodo_pago_tienda = 0
        this.direccion = ""
-       this.celular = ""
+       this.celular = "0"
        this.nombres = ""
-       this.cedula_envio = ""
+       this.cedula_envio = "0"
        this.nombre_estado = ""
        this.descripcion = ""
        this.cedula = ""

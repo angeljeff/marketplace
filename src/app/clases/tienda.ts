@@ -13,10 +13,12 @@ export class Tienda{
     id_estado_tienda: number;
     cedula: string;
     valor_envio:number;
+    ruc:string;
+    representante_legal:string;
     constructor(){
        this.nombre_ti = ""
        this.direccion = ""
-       this.telefono = ""
+       this.telefono = "0"
        this.hora_apertura = new Date()
        this.hora_cierre = new Date()
        this.descripcion = ""
@@ -27,6 +29,8 @@ export class Tienda{
        this.id_estado_tienda=1
        this.cedula="24245"
        this.valor_envio=0
+       this.ruc=""
+       this.representante_legal=""
 
     }
 }

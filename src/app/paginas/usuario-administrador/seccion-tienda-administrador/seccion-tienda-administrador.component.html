@@ -17,6 +17,8 @@
         [dataSource]="listaTiendasActivas"
         [showBorders]="true">
         <dxi-column dataField="id_tienda" alignment="center" caption="ID"></dxi-column>
+        <dxi-column dataField="ruc" alignment="center" caption="RUC"></dxi-column>
+        <dxi-column dataField="representante_legal" alignment="center" caption="R_legal"></dxi-column>
         <dxi-column dataField="nombre_ti" alignment="center" caption="Nombre"></dxi-column>
         <dxi-column dataField="direccion"  alignment="center"  caption="Direccion"></dxi-column>
         <dxi-column dataField="descripcion"  alignment="center"  caption="Descripcion"></dxi-column>
@@ -45,11 +47,13 @@
         [dataSource]="listaTiendasInactivas"
         [showBorders]="true">
         <dxi-column dataField="id_tienda" alignment="center" caption="ID"></dxi-column>
+        <dxi-column dataField="ruc" alignment="center" caption="RUC"></dxi-column>
+        <dxi-column dataField="representante_legal" alignment="center" caption="R_legal"></dxi-column>
         <dxi-column dataField="nombre_ti" alignment="center" caption="Nombre"></dxi-column>
         <dxi-column dataField="direccion"  alignment="center"  caption="Direccion"></dxi-column>
         <dxi-column dataField="descripcion"  alignment="center"  caption="Descripcion"></dxi-column>
-        <dxi-column dataField="hora_apertura"  alignment="center"  caption="Hora apertura"></dxi-column>
-        <dxi-column dataField="hora_cierre"  alignment="center"  caption="Hora cierre"></dxi-column>
+        <dxi-column dataField="hora_apertura"  alignment="center"  caption="Hora apertura" dataType="date" format="shortTime"></dxi-column>
+        <dxi-column dataField="hora_cierre"  alignment="center"  caption="Hora cierre" dataType="date" format="shortTime"></dxi-column>
 
         <dxi-column type="buttons"  caption="Activar">
             <dxi-button text="Activar" cssClass="btn" [onClick]="ACTienda"></dxi-button>    

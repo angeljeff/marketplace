@@ -34,7 +34,7 @@
                                             valueExpr="nombre"
                                             placeholder="Nombre del producto" class="buscador">
                                         </dx-autocomplete>
-                        <button >Buscar</button>
+                        <button (click)="buscarproducto()">Buscar</button>
                     </form>
                 </div>
 
@@ -121,7 +121,7 @@
             </div>
             
             <div class="row">
-                <div class="col-md-4" *ngFor="let element of listacompletaproductos">
+                <div class="col-md-4" *ngFor="let element of listaprocompleto">
                    <br>
                    <div class="card cardProductos">
                        <br>

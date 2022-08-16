@@ -29,6 +29,7 @@ import { runInThisContext } from 'vm';
 import { Comentarios, ComentariosDTO } from 'src/app/clases/Comentarios';
 import { ComentariosTiendaService } from 'src/app/services/comentarios.service';
 import { threadId } from 'worker_threads';
+import { DATE_PIPE_DEFAULT_TIMEZONE } from '@angular/common';
 
 @Component({
   selector: 'app-principal',
@@ -353,7 +354,11 @@ export class PrincipalComponent implements OnInit {
   solicitarProducto(){
     this.nuevaOrden.id_estado_pedido = 1
     this.nuevaOrden.id_metodo_pago_tienda = 11
+    this.nuevaOrden.celular="0"
     if(this.nuevaOrden.id_orden_compra == 0){
+      var fecha = new Date()
+      console.log("si entre")
+      this.nuevaOrden.fecha_orden= new Date(this.nuevaOrden.fecha_orden.toISOString())
       this._ordenCompraService.registrar(this.nuevaOrden).subscribe(
         (res) => { 
           var productoOrden = res;

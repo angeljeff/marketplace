@@ -311,7 +311,6 @@ export class CarritoComprasComponent implements OnInit {
     this.totalCompra = 0;
     this.productosPorOrdenDTO.forEach(element=>{
       this.idTienda = element.id_tienda
-      console.log("este es el id tienda"+this.idTienda)
       element.total_producto = element.cantidad * element.precio_producto
       this.sUBTOTAL=this.sUBTOTAL + element.total_producto
       /* this.totalCompra = this.totalCompra + element.total_producto */
@@ -424,6 +423,7 @@ export class CarritoComprasComponent implements OnInit {
       if (result.isConfirmed) {
         this.nuevaOrden.id_estado_pedido = 4
         this.nuevaOrden.total = this.totalCompra
+        this.nuevaOrden.fecha_orden= new Date()
         this._ordenCompraService.actualizarOrden(this.nuevaOrden).subscribe(
           (res) => { 
             if(this.dataTransferencia){

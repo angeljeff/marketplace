@@ -391,6 +391,7 @@ export class SeccionProductoComponent implements OnInit {
 verificarcampos(){
   this.productocodigo= new Producto;
   var cod=this.productonuevo.codigo
+  this.productonuevo.id_producto="0"
   if(this.productonuevo.codigo !=="" && cod.length>=4){
   this.recorrerstring(this.productonuevo.codigo)
     if (this.codigo ==true){

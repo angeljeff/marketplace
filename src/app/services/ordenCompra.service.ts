@@ -48,7 +48,6 @@ export class OrdenCompraService{
   }
 
   traerordenporid(orden : OrdenCompra ) {
-    console.log("es el id que me llega"+orden.id_orden_compra)
     return this.http.post<any>(this.URL + `/obtener/${orden.id_orden_compra}`, orden);
   }
 
